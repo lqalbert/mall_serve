@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/cosmetics','CosmeticsController');
+Route::resource('/customerinformation','CustomerInformationController');
+Route::resource('/department','DepartmentController');
+Route::resource('/employee','EmployeeController');
+Route::resource('/goodsout','GoodsOutController');
