@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/orderlist','OrderListController');
+Route::resource('/inventorylist','InventoryListController');
+Route::resource('/group','GroupController');
+Route::resource('/goodsinto','GoodsIntoController');
+Route::resource('/expressinfo','ExpressInfoController');
