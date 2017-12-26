@@ -3,55 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\EmployeeRepository;
+use App\Services\Employee\EmployeeService;
 
 class EmployeeController extends Controller
 {
+    private $repository = null;
+    public function  __construct(EmployeeRepository $repository) 
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return [
-            'items'=>[
-                [
-                        'head'=> '',
-                        'account'=> '李青',
-                        'realname'=> '李青',
-                        'department_name'=> '成都部',
-                        'role'=> '普通员工',
-                        'sex'=> '男',
-                        'id_card'=> '52148962466558875112',
-                        'phone'=> '028-12354',
-                        'mphone'=> '13524674554',
-                        'qq'=> '325641574',
-                        'qq_nickname'=> 'sb',
-                        'weixin'=> 'sdfsdf',
-                        'weixin_nikname'=> 'fsdfs',
-                        'address'=> '天堂一街',
-                        'ip'=> '192.168.0.11',
-                        'location'=> '成都',
-                        'lg_time'=> '2017-11-24 17=>08=>41',
-                        'out_time'=> '2017-11-24 19=>08=>41',
-                        'creator'=> '系统管理员',
-                        'created_at'=> '2017-11-28 14=>35=>10'
-                ]
-            ],
-            'total'=>400
-            
-        ];
+        $business = $request->query('business', 'default');
+        $result = [];
+        switch ($business){
+            case 'select':
+                break;
+            default:
+                $service = app('App\Services\Employee\EmployeeService');
+                $result = $service->get();
+        }
+        return $result;
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param \Illuminate\Http\Reqeust
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request )
     {
-        //
+        
     }
 
     /**
@@ -62,7 +51,14 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        $re = $this->repository->create($data);
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error();
+        }
     }
 
     /**
