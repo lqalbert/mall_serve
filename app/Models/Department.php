@@ -42,7 +42,8 @@ class Department extends Model
     protected $appends = [
         'type_text',
         'user',
-        'phone'
+        'phone',
+
     ];
 
     private static $types = array(
@@ -85,7 +86,9 @@ class Department extends Model
      */
     public function getPhoneAttribute()
     {
-        return '8080850';
+        return '80808501';
     }
+
+
     
 }

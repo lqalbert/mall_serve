@@ -30,7 +30,7 @@ class GroupService
 //         }
         return [
             'items'=> $collection->makeHidden('department'),
-            'totle'=> $result->total()
+            'total'=> $result->total()
         ];
         
     }

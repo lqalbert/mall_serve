@@ -30,7 +30,6 @@ class DepartmentController extends Controller
         switch ($business) {
             case 'DepartmentType':
                 $result = Department::getType();
-                var_dump('11');
                 break;
             case 'select':
                 if ($request->has('type')) {
@@ -47,7 +46,7 @@ class DepartmentController extends Controller
             default:
 //                 $service = new DepartmentService($this->repository);
                 $service = app('App\Services\Department\DepartmentService');
-              //  var_dump($service);die;
+
                 $result = $service->get();
                 break;
         }

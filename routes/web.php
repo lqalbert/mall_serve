@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::resource('/cosmetics','CosmeticsController');
 Route::resource('/customerinformation','CustomerInformationController');
-Route::resource('/department','DepartmentController');
+Route::resource('/departments','DepartmentController');
 Route::resource('/employee','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
+Route::resource('/groups','GroupController');
