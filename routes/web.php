@@ -15,9 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('/upload', 'UploadController@index')->name('upload');
+
+
 Route::resource('/cosmetics','CosmeticsController');
 Route::resource('/customerinformation','CustomerInformationController');
 Route::resource('/departments','DepartmentController');
-Route::resource('/employee','EmployeeController');
+Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/groups','GroupController');

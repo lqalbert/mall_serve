@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\EmployeeRepository;
 use App\Services\Employee\EmployeeService;
@@ -52,6 +53,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+       // DD($data);
         $data['password'] = bcrypt($data['password']);
         $re = $this->repository->create($data);
         if ($re) {
@@ -92,7 +94,12 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $re = $this->repository->update($request->input(), $id);
+        if ($re) {
+            return $this->success(User::find($id));
+        } else {
+            return $this->error();
+        }
     }
 
     /**
@@ -104,5 +111,11 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+        $re = $this->repository->delete($id);
+        if ($re) {
+            return $this->success(1);;
+        } else {
+            return $this->error();
+        }
     }
 }
