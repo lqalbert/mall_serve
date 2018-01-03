@@ -20,3 +20,5 @@ Route::resource('/inventorylist','InventoryListController');
 Route::resource('/group','GroupController');
 Route::resource('/goodsinto','GoodsIntoController');
 Route::resource('/expressinfo','ExpressInfoController');
+
+Route::resource('/department','DepartmentController');
