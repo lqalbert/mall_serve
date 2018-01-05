@@ -3,50 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\GroupRepository;
-use App\Models\Group;
-
-class GroupController extends Controller
+use App\Models\GoodsType;
+use App\Repositories\GoodsTypeRepository;
+class GoodsTypeController extends Controller
 {
+
     private $repository = null;
-    
-    public function  __construct(GroupRepository $reporitory) 
+    public function  __construct(GoodsTypeRepository $goodsTypeRepository) 
     {
-        $this->repository = $reporitory;
-        
+        $this->repository = $goodsTypeRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $business = $request->query('business', 'default');
-        $result = [];
-        switch ($business) {
-            case 'select':
-                $result =  [
-                'items'=>[
-                'id'=>1,
-                'name'=>'asdfasf'
-                    ],
-                    [
-                    'id'=>1,
-                    'name'=>'asdfasf'
-                        ],
-                        [
-                        'id'=>1,
-                        'name'=>'asdfasf'
-                            ]
-                            ];
-            default:
-                $service = app('App\Services\Group\GroupService');
-                $result = $service->get();
-                break;
-        }
-        return $result;
     }
 
     /**
@@ -68,12 +43,6 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         //
-        $re = $this->repository->create($request->input());
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error();
-        }
     }
 
     /**
@@ -107,13 +76,7 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //update 返回 bool
-        $re = $this->repository->update($request->input(), $id);
-        if ($re) {
-            return $this->success(Group::find($id));
-        } else {
-            return $this->error();
-        }
+        //
     }
 
     /**
@@ -127,9 +90,11 @@ class GroupController extends Controller
         //返回 int
         $re = $this->repository->delete($id);
         if ($re) {
-            return $this->success(1);;
+            //return $this->success(1);
+            return 1;
         } else {
-            return $this->error();
+            //return $this->error();
+            return 2;
         }
     }
 }

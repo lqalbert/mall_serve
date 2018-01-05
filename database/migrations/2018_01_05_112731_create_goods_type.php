@@ -4,24 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartmentBasic extends Migration
+class CreateGoodsType extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
+     * 
      */
     public function up()
     {
-        Schema::create('department_basic', function (Blueprint $table) {
+        Schema::create('goods_type', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 20);
-            $table->unsignedInteger('manager_id')->nullable();
-            $table->unsignedTinyInteger('type')->default(0);
+            $table->string('type_name', 20);
+            $table->string('type_attr', 50);
             $table->tinyInteger('status')
                 ->default(1)
                 ->comment('状态 1 启用 0 禁用');
-            $table->string('remarks', 200);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +33,6 @@ class CreateDepartmentBasic extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department_basic');
+        Schema::dropIfExists('goods_type');
     }
 }

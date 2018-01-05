@@ -22,7 +22,7 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        // return ['id'=>1,'name'=>'asdf'];
+        // return ['id'=>1,'name'=>'asdf'];die;
         $business = $request->query('business', 'default');
         
         $result = [];
@@ -71,9 +71,8 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         //
-        
-//         throw new \Exception('test');
-//         dd($request->input());
+        //throw new \Exception('test');
+        //dd($request->input());
         $re = $this->repository->create($request->input());
         if ($re) {
             return $this->success($re);

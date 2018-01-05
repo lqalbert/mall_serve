@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Repositories\GroupRepository;
-use App\Models\Group;
+use App\Repositories\EmployeeRepository;
+use App\Services\Employee\EmployeeService;
 
-class GroupController extends Controller
+class EmployeeController extends Controller
 {
     private $repository = null;
-    
-    public function  __construct(GroupRepository $reporitory) 
+    public function  __construct(EmployeeRepository $repository) 
     {
-        $this->repository = $reporitory;
-        
+        $this->repository = $repository;
     }
     /**
      * Display a listing of the resource.
@@ -22,29 +21,14 @@ class GroupController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $business = $request->query('business', 'default');
         $result = [];
-        switch ($business) {
+        switch ($business){
             case 'select':
-                $result =  [
-                'items'=>[
-                'id'=>1,
-                'name'=>'asdfasf'
-                    ],
-                    [
-                    'id'=>1,
-                    'name'=>'asdfasf'
-                        ],
-                        [
-                        'id'=>1,
-                        'name'=>'asdfasf'
-                            ]
-                            ];
-            default:
-                $service = app('App\Services\Group\GroupService');
-                $result = $service->get();
                 break;
+            default:
+                $service = app('App\Services\Employee\EmployeeService');
+                $result = $service->get();
         }
         return $result;
     }
@@ -52,11 +36,12 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param \Illuminate\Http\Reqeust
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request )
     {
-        //
+        
     }
 
     /**
@@ -67,8 +52,10 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $re = $this->repository->create($request->input());
+        $data = $request->all();
+       // DD($data);
+        $data['password'] = bcrypt($data['password']);
+        $re = $this->repository->create($data);
         if ($re) {
             return $this->success($re);
         } else {
@@ -107,10 +94,9 @@ class GroupController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //update 返回 bool
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success(Group::find($id));
+            return $this->success(User::find($id));
         } else {
             return $this->error();
         }
@@ -124,7 +110,7 @@ class GroupController extends Controller
      */
     public function destroy($id)
     {
-        //返回 int
+        //
         $re = $this->repository->delete($id);
         if ($re) {
             return $this->success(1);;

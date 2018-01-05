@@ -72,7 +72,7 @@ class Group extends Model
     public function getDepartmentnameAttribute()
     {
         // return $this->manager->phone;
-//         return 'xx部';
+        // return 'xx部';
         return $this->department->name;
     }
     

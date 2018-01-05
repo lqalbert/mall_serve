@@ -17,8 +17,15 @@ Route::get('/', function () {
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');
-Route::resource('/group','GroupController');
-Route::resource('/goodsinto','GoodsIntoController');
+Route::resource('/departments','DepartmentController');
+Route::resource('/groups','GroupController');
 Route::resource('/expressinfo','ExpressInfoController');
+Route::post('/upload', 'UploadController@index')->name('upload');
+Route::resource('/cosmetics','CosmeticsController');
+Route::resource('/customerinformation','CustomerInformationController');
+Route::resource('/employees','EmployeeController');
+Route::resource('/goodsout','GoodsOutController');
+Route::resource('/goodsinto','GoodsIntoController');
+Route::resource('/goodsspecs','GoodsSpecsController');
+Route::resource('/goodstype','GoodsTypeController');
 
-Route::resource('/department','DepartmentController');

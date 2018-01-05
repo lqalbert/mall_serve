@@ -3,7 +3,7 @@ namespace App\Services\Department;
 
 use App\Repositories\DepartmentRepository;
 use Illuminate\Http\Request;
-// use App\Repositories\Criteria\Department\Name as SearchDepartName;
+use App\Repositories\Criteria\Department\Name as SearchDepartName;
 use App\Repositories\Criteria\Department\Type;
 
 class DepartmentService
