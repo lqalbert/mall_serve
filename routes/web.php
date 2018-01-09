@@ -14,6 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/categorys/{pid}','CategoryController@getLevels');
+Route::resource('/categorys','CategoryController');
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');
@@ -21,8 +23,11 @@ Route::resource('/departments','DepartmentController');
 Route::resource('/groups','GroupController');
 Route::resource('/expressinfo','ExpressInfoController');
 Route::post('/upload', 'UploadController@index')->name('upload');
+
+
 Route::resource('/cosmetics','CosmeticsController');
 Route::resource('/customerinformation','CustomerInformationController');
+Route::resource('/departments','DepartmentController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');
