@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/categorys/{pid}','CategoryController@getLevels');
+
+
 
 Route::post('/upload', 'UploadController@index')->name('upload');
 
@@ -24,3 +27,4 @@ Route::resource('/departments','DepartmentController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/groups','GroupController');
+Route::resource('/categorys','CategoryController');
