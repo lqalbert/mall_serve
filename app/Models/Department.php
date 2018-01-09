@@ -49,8 +49,8 @@ class Department extends Model
         '销售部',
         '推广部',
         '客服部',
-        '投顾部',
-        '风控部'
+//         '投顾部',
+//         '风控部'
     );
 
     public static function getType($index = null)

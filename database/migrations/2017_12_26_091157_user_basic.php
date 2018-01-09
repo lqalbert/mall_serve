@@ -26,8 +26,8 @@ class UserBasic extends Migration
             $table->unsignedInteger('role_id')->comment('员工职位ID');
             $table->string('role_name', 40)->comment('员工职位名称');
             $table->unsignedTinyInteger('sex')->default(0)->comment('0 未定义 1 男 2 女');
-            $table->string('phone',20)->comment('员工固话');
-            $table->string('phone_number',20)->comment('员工手机号');
+            $table->string('telephone',20)->comment('员工固话');
+            $table->string('mobilephone',20)->comment('员工手机号');
             $table->string('id_card',20)->comment('员工身份证号');
             $table->string('weixin',20)->comment('员工微信号');
             $table->string('weixin_nickname',20)->comment('员工微信昵称');
