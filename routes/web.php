@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//登录 退出
+Route::post('/login', 'LoginController@login');
+Route::post('/logout', 'LOginController@out');
+
 Route::get('/categorys/{pid}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
 

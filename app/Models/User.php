@@ -5,11 +5,32 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Zizaco\Entrust\Traits\EntrustUserTrait;
+/**
+ * @todo use 这里有方法同名的 冲突 Authenticatable 与  EntrustUserTrait 都有can
+ * @author hyf
+ *
+ */
 class User extends Authenticatable
 {
+    
+    use Notifiable, SoftDeletes, EntrustUserTrait {
+        EntrustUserTrait::restore insteadof SoftDeletes;
+        
+//         EntrustUserTrait::can as may;
+//         Authorizable::can insteadof EntrustUserTrait;
+    }
+    
     use Notifiable;
-    use SoftDeletes;
+    
+    
+    /**
+     * 这将会建立User与Role之间的关联关系：
+     * 在User模型中添加roles()、hasRole($name)、can($permission)
+     * 以及ability($roles,$permissions,$options)方法
+     */
+    
+    
     protected $table="user_basic";
 
 
