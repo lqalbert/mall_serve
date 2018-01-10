@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Zizaco\Entrust\EntrustRole;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @var string name 角色的唯一名称，如"admin","owner"
@@ -15,12 +16,12 @@ class Role extends EntrustRole
 {
     //
     
-    protected static function boot()
+    public static function boot()
     {
         parent::boot();
         
         static::addGlobalScope('hide', function(Builder $builder){
-            $builder->where('hidden', 1);
+            $builder->where('hidden', 0);
         });
     }
 }
