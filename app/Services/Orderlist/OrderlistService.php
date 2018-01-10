@@ -55,4 +55,22 @@ class OrderlistService
 //             'total'=>400
 //         ];
     }
+    public function get_order_status($status){
+        $status = app()->makeWith('App\Repositories\Criteria\Orderlist\Order_status', ['status'=>$status]);
+        $this->repository->pushCriteria($status);
+        $result = $this->repository->paginate();
+        return [
+            'items'=> $result->getCollection(),
+            'total'=> $result->total()
+        ];
+    }
+    public function get_deliver_status($status){
+        $status = app()->makeWith('App\Repositories\Criteria\Orderlist\Deliver_status', ['status'=>$status]);
+        $this->repository->pushCriteria($status);
+        $result = $this->repository->paginate();
+        return [
+            'items'=> $result->getCollection(),
+            'total'=> $result->total()
+        ];
+    }
 }
