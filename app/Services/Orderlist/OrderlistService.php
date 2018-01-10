@@ -16,8 +16,28 @@ class OrderlistService
         $this->request = $request;
     }
 
-    public function  get()
+    public function get()
     {
+        if ($this->request->has('order_sn')) {
+            $order_sn = app()->makeWith('App\Repositories\Criteria\Orderlist\Ordersn', ['order_sn'=>$this->request->order_sn]);
+            $this->repository->pushCriteria($order_sn);
+        }
+        if ($this->request->has('goods_name')) {
+            $goods_name = app()->makeWith('App\Repositories\Criteria\Orderlist\Goodsname', ['goods_name'=>$this->request->goods_name]);
+            $this->repository->pushCriteria($goods_name);
+        }
+        if ($this->request->has('consignee')) {
+            $consignee = app()->makeWith('App\Repositories\Criteria\Orderlist\Consignee', ['consignee'=>$this->request->consignee]);
+            $this->repository->pushCriteria($consignee);
+        }
+        if ($this->request->has('type')) {
+           $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['status'=>$this->request->type]);
+           $this->repository->pushCriteria($order_status);
+        }
+        if ($this->request->has('deliver')) {
+            $deliver= app()->makeWith('App\Repositories\Criteria\Orderlist\Deliver', ['deliver'=>$this->request->deliver]);
+            $this->repository->pushCriteria($deliver);
+        }
         $result = $this->repository->paginate();
         return [
             'items'=> $result->getCollection(),
