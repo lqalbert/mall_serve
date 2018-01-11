@@ -39,10 +39,10 @@ class MakeRole extends Command
      */
     public function handle()
     {
-        //由于外键的原因下面一行会报错
+        
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::statement('truncate table roles');
-
+    
         //生成角色
         $administrator = new Role();
         $administrator->name = 'administrator';

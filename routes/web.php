@@ -28,6 +28,7 @@ Route::resource('/departments','DepartmentController');
 Route::resource('/groups','GroupController');
 Route::resource('/expressinfo','ExpressInfoController');
 Route::post('/upload', 'UploadController@index')->name('upload');
+Route::resource('/roles','RoleController');
 
 
 Route::resource('/cosmetics','CosmeticsController');

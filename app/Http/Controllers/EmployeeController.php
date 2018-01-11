@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\EmployeeRepository;
 use App\Services\Employee\EmployeeService;
+use App\Events\AddEmployee;
 
 class EmployeeController extends Controller
 {
@@ -57,6 +58,7 @@ class EmployeeController extends Controller
         $data['password'] = bcrypt($data['password']);
         $re = $this->repository->create($data);
         if ($re) {
+//             event(new AddEmployee($re));
             return $this->success($re);
         } else {
             return $this->error();

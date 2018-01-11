@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
+use App\Events\AddEmployee;
 /**
  * @todo use 这里有方法同名的 冲突 Authenticatable 与  EntrustUserTrait 都有can
  * @author hyf
@@ -13,7 +14,11 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
  */
 class User extends Authenticatable
 {
-    
+    /**
+     * 这将会建立User与Role之间的关联关系：
+     * 在User模型中添加roles()、hasRole($name)、can($permission)
+     * 以及ability($roles,$permissions,$options)方法
+     */
     use Notifiable, SoftDeletes, EntrustUserTrait {
         EntrustUserTrait::restore insteadof SoftDeletes;
         
@@ -25,10 +30,13 @@ class User extends Authenticatable
     
     
     /**
-     * 这将会建立User与Role之间的关联关系：
-     * 在User模型中添加roles()、hasRole($name)、can($permission)
-     * 以及ability($roles,$permissions,$options)方法
+     * 模型的事件映射
+     * @var string
      */
+    protected $event = [
+        'created' => AddEmployee::class
+    ];
+    
     
     
     protected $table="user_basic";
