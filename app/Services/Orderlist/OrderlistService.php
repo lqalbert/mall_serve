@@ -18,32 +18,31 @@ class OrderlistService
 
     public function get()
     {
+        $where = array();
         if ($this->request->has('order_sn')) {
-            $order_sn = app()->makeWith('App\Repositories\Criteria\Orderlist\Ordersn', ['order_sn'=>$this->request->order_sn]);
-            $this->repository->pushCriteria($order_sn);
+            $where[]=['order_sn','=',$this->request->order_sn];
         }
         if ($this->request->has('goods_name')) {
-            $goods_name = app()->makeWith('App\Repositories\Criteria\Orderlist\Goodsname', ['goods_name'=>$this->request->goods_name]);
-            $this->repository->pushCriteria($goods_name);
+            $where[]=['goods_name','like',$this->request->goods_name."%"];
         }
         if ($this->request->has('consignee')) {
-            $consignee = app()->makeWith('App\Repositories\Criteria\Orderlist\Consignee', ['consignee'=>$this->request->consignee]);
-            $this->repository->pushCriteria($consignee);
+            $where[]=['consignee','like',$this->request->consignee."%"];
         }
         if ($this->request->has('type')) {
-           $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['status'=>$this->request->type]);
-           $this->repository->pushCriteria($order_status);
+            $where[]=['order_status','=', $this->request->type];
         }
         if ($this->request->has('deliver')) {
-            $deliver= app()->makeWith('App\Repositories\Criteria\Orderlist\Deliver', ['deliver'=>$this->request->deliver]);
-            $this->repository->pushCriteria($deliver);
+            $where[]=['shipping_status', '=', $this->request->deliver];
         }
         if ($this->request->has('start')) {
-            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\Starttime', ['start_time'=>$this->request->start]);
-            $this->repository->pushCriteria($order_status);
+            $where[]=['order_time','>=', $this->request->start];
         }
         if ($this->request->has('end')) {
-            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\Endtime', ['end_time'=>$this->request->end]);
+            $where[]=['order_time','<=', $this->request->end];
+        }
+        if(count($where)>0)
+        {
+            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where]);
             $this->repository->pushCriteria($order_status);
         }
         $result = $this->repository->paginate();

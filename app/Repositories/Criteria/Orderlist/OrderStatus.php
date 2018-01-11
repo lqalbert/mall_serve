@@ -9,12 +9,11 @@ class OrderStatus extends Criteria
     /**
      *  @var string
      */
-    private $order_status = null;
+    private $where = null;
 
-    public function  __construct($status)
+    public function  __construct($where)
     {
-        $this->order_status = $status;
-       // var_dump($status);die;
+        $this->where = $where;
     }
 
     /**
@@ -26,7 +25,7 @@ class OrderStatus extends Criteria
      */
     public function  apply($model, Repository $repository)
     {
-        $query = $model->where('order_status', $this->order_status);
+        $query = $model->where($this->where);
         return $query;
     }
 }
