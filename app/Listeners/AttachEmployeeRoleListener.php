@@ -43,12 +43,12 @@ class AttachEmployeeRoleListener
         
 //         Log::info('[event] attach employee relative Role', $relative);
         
-        $hideRoles = [];
+        $hideRoles = [$role];
         foreach ($relative as $value){
             $hideRoles[] = Role::withoutGlobalScope('hide')->where('name', $value)->first();
         }
         
-//         Log::info('[event] attach employee hideRoles Role', $hideRoles);
+        Log::info('[event] attach employee hideRoles Role', $hideRoles);
         //以防万一
         if ($hideRoles) {
            

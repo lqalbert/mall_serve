@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
         ];
         $user = User::create($userRow);
         
-        $user->attachRole($adminRole);
+//         $user->attachRole($adminRole);
 //         $user->roles()->attach($adminRole->id); 
         
         

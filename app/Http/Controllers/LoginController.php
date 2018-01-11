@@ -13,7 +13,10 @@ class LoginController extends Controller
     {
         
         if (Auth::attempt(['account'=>$request->input('account'), 'password'=>$request->input('password')])) {
-            return $this->success(Auth::user(), '登录成功');
+            $user = Auth::user();
+//             $user->roles()->withoutGlobalScope('hide');
+            $user->roles;
+            return $this->success($user, '登录成功');
         } else {
             return $this->error(null, '账号或密码错误');
         }

@@ -27,6 +27,10 @@ class EmployeeController extends Controller
         switch ($business){
             case 'select':
                 break;
+            case 'pickToGroup':
+                $service = app('App\Services\Employee\PickAbleGMService');
+                $result = $service->get();
+                break;
             default:
                 $service = app('App\Services\Employee\EmployeeService');
                 $result = $service->get();
