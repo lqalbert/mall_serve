@@ -38,6 +38,14 @@ class OrderlistService
             $deliver= app()->makeWith('App\Repositories\Criteria\Orderlist\Deliver', ['deliver'=>$this->request->deliver]);
             $this->repository->pushCriteria($deliver);
         }
+        if ($this->request->has('start')) {
+            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\Starttime', ['start_time'=>$this->request->start]);
+            $this->repository->pushCriteria($order_status);
+        }
+        if ($this->request->has('end')) {
+            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\Endtime', ['end_time'=>$this->request->end]);
+            $this->repository->pushCriteria($order_status);
+        }
         $result = $this->repository->paginate();
         return [
             'items'=> $result->getCollection(),
