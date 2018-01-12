@@ -3,6 +3,7 @@ namespace  App\Services\Employee;
 
 use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeService
 {
@@ -15,10 +16,35 @@ class EmployeeService
         $this->repository = $repositiry;
         $this->request = $request;
     }
-    
+  public function getData()
+  {
+      $fields=['user_basic.id','user_basic.account','user_basic.realname','user_basic.head','user_basic.qq','user_basic.qq_nickname','user_basic.sex','user_basic.telephone','user_basic.mobile_phone','user_basic.id_card','user_basic.weixin','user_basic.weixin_nickname','user_basic.address','location','user_basic.ip','user_basic.create_name','department_basic.name as department_name','group_basic.name as group_name'];
+
+        $where=[];
+        $result =DB::table('user_basic')
+            ->join('department_basic','department_basic.id','=','user_basic.department_id')
+            ->join('group_basic','group_basic.id','=','user_basic.group_id')
+            ->whereNull('user_basic.deleted_at')
+            ->whereNull('department_basic.deleted_at')
+            ->whereNull('group_basic.deleted_at')
+            ->select($fields)
+            ->get();
+        $count =DB::table('user_basic')
+            ->join('department_basic','department_basic.id','=','user_basic.department_id')
+            ->join('group_basic','group_basic.id','=','user_basic.group_id')
+            ->whereNull('user_basic.deleted_at')
+            ->whereNull('department_basic.deleted_at')
+            ->whereNull('group_basic.deleted_at')
+            ->select($fields)
+            ->count();
+      return [
+          'items'=>$result,
+          'total'=>$count
+      ];
+  }
     public function  get() 
     {
-        $re = $this->repository->paginate($this->request->input('pageSize', 20));
+        $re = $this->repository->with(['department_basic'])->all();
         return [
             'items'=>$re->getCollection(),
             'total'=>$re->total()

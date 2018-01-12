@@ -5,7 +5,6 @@ use App\Repositories\DepartmentRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\Department\Name as SearchDepartName;
 use App\Repositories\Criteria\Department\Type;
-
 class DepartmentService
 {
     /**
@@ -38,6 +37,6 @@ class DepartmentService
         return [
             'items'=> $result->getCollection(),
             'totle'=> $result->total()
-        ]; 
+        ];
     }
 }

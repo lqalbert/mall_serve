@@ -21,6 +21,8 @@ Route::post('/logout', 'LoginController@out');
 
 Route::get('/categorys/{pid}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
+Route::get('/tree','CategoryController@getCascade');
+Route::resource('/customers','CustomerController');
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');
@@ -33,7 +35,7 @@ Route::resource('/roles','RoleController');
 
 Route::resource('/cosmetics','CosmeticsController');
 Route::resource('/customerinformation','CustomerInformationController');
-
+Route::resource('/departments','DepartmentController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');
