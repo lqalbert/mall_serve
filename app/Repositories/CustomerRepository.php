@@ -19,7 +19,7 @@ class CustomerRepository extends Repository
     
     public function model()
     {
-        return 'App\Models\CustomerInfo';
+        return 'App\Models\CustomerBasic';
     }
     
     
@@ -29,7 +29,7 @@ class CustomerRepository extends Repository
     public function  join($table, $field, $foreField) 
     {
         
-        $re = $this->model->join($table, "customer_basic.$field", '=', $table.".".$foreField);
+         $this->model->join($table, "customer_basic.$field", '=', $table.".".$foreField);
         return $this;
     }
     

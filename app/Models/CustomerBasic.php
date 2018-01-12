@@ -28,24 +28,28 @@ class CustomerBasic extends Model
     protected $fillable = [
         'name',
         'sex',
-        'source',
-        'property',
-        'province',
-        'city',
-        'creator',
-        'quality',
         'age',
-        'proceeds',
-        'manner',
-        'vigour',
-        'question',
-        'profit',
-        'attritude',
-        'occupation',
-        'desire'  
+//        'source',
+//        'property',
+//        'province',
+//        'city',
+//        'creator',
+//        'quality',
+//        'proceeds',
+//        'manner',
+//        'vigour',
+//        'question',
+//        'profit',
+//        'attritude',
+//        'occupation',
+//        'desire'
         
     ];
-
+    protected $hidden = [
+        "created_at",
+        "updated_at",
+        "deleted_at"
+    ];
     private static $source = [
         "东方财富",
         "今日头条",

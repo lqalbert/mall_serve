@@ -31,8 +31,8 @@ class User extends Authenticatable
         'department_name',
         'group_name',
         'sex',
-        'phone',
-        'phone_number',
+        'telephone',
+        'mobile_phone',
         'realname',
         'address',
         'qq',
@@ -43,12 +43,14 @@ class User extends Authenticatable
         'id_card',
         'ip',
         'create_name',
-        'lg_time',
-        'out_time',
         'location',
 
     ];
-
+    protected $appends = [
+        'lg_time',
+        'out_time',
+        'role'
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -56,8 +58,22 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'created_at',
+        'updated_at',
+        'deleted_at'
     ];
-    
+    public function getLgTimeAttribute()
+    {
+        return '2018-01-11';
+    }
+    public function getOutTimeAttribute()
+    {
+        return '2018-01-11';
+    }
+    public function getRoleAttribute()
+    {
+        return '普通';
+    }
     public function  getHeadAttribute($value) 
     {
         return asset($value);

@@ -14,12 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/employee','EmployeeController@test');
+
+
 Route::get('/categorys/{pid}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
+Route::get('/tree','CategoryController@getCascade');
+Route::resource('/customers','CustomerController');
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');
-Route::resource('/departments','DepartmentController');
 Route::resource('/groups','GroupController');
 Route::resource('/expressinfo','ExpressInfoController');
 Route::post('/upload', 'UploadController@index')->name('upload');

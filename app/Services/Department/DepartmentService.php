@@ -5,7 +5,6 @@ use App\Repositories\DepartmentRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\Department\Name as SearchDepartName;
 use App\Repositories\Criteria\Department\Type;
-
 class DepartmentService
 {
     /**
@@ -29,15 +28,15 @@ class DepartmentService
             $name = app()->makeWith('App\Repositories\Criteria\Department\Name', ['name'=>$this->request->name]);
             $this->repository->pushCriteria($name);
         }
-        
+
         if ($this->request->has('type')) {
             $this->repository->pushCriteria(new Type($this->request->input('type')));
         }
-        
+
         $result = $this->repository->paginate();
         return [
             'items'=> $result->getCollection(),
-            'totle'=> $result->total()
+            'total'=> $result->total()
         ];
     }
 }

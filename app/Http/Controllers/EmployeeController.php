@@ -10,9 +10,11 @@ use App\Services\Employee\EmployeeService;
 class EmployeeController extends Controller
 {
     private $repository = null;
-    public function  __construct(EmployeeRepository $repository) 
+    private $service = null;
+    public function  __construct(EmployeeRepository $repository,EmployeeService $employeeService)
     {
         $this->repository = $repository;
+        $this->service = $employeeService;
     }
     /**
      * Display a listing of the resource.
@@ -27,8 +29,7 @@ class EmployeeController extends Controller
             case 'select':
                 break;
             default:
-                $service = app('App\Services\Employee\EmployeeService');
-                $result = $service->get();
+                $result = $this->service->getData();
         }
         return $result;
     }
@@ -42,6 +43,12 @@ class EmployeeController extends Controller
     public function create(Request $request )
     {
         
+    }
+    public function test(Request $request )
+    {
+        $service = app('App\Services\Employee\EmployeeService');
+        $result = $service->getData();
+        return $result;
     }
 
     /**
