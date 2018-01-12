@@ -25,7 +25,7 @@ class CreateExpressInfosTable extends Migration
             $table->string('consignee',20)->comment('收货人');
             $table->string('express_phone',15)->comment('联系电话');
             $table->string('address',60)->comment('地址');
-            $table->timestamp('order_time')->comment('订单日期');
+            $table->timestamp('order_time')->nullable()->comment('订单日期');
             $table->string('express_remark',50)->comment('物流备注');
             $table->timestamps();
             $table->softDeletes();
