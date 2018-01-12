@@ -38,6 +38,6 @@ class DepartmentService
         return [
             'items'=> $result->getCollection(),
             'totle'=> $result->total()
-        ];
+        ]; 
     }
 }
