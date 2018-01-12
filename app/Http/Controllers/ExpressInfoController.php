@@ -3,32 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ExpressInfo;
+use App\Repositories\ExpressInfoRepository;
 
 class ExpressInfoController extends Controller
 {
+
+    private $repository = null;
+    public function  __construct(ExpressInfoRepository $expressInfoRepository) 
+    {
+        $this->repository = $expressInfoRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return [
-            'items'=>[
-                [
-                    'order_number' => '354628754',
-                    'express_no' => '8008208820',
-                    'express' => '顺丰',
-                    'express_status' => '运送中',
-                    'express_time' => '2017-12-15',
-                    'express_name' => '李四',
-                    'express_phone' => '13562478625',
-                    'address' => '四川成都青羊区'
-                ],
-            ],
-            'total'=>100
-        ];
+        $business = $request->query('business', 'default');
+        $result = [];
+        switch ($business) {
+            case 'ExpressStatus':
+                $result = ExpressInfo::getExpressStatus();
+                break;
+            
+            default:
+                $service = app('App\Services\ExpressInfo\ExpressInfoService');
+                $result = $service->get();
+                break;
+        }
+        return $result;
     }
 
     /**

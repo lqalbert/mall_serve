@@ -77,7 +77,7 @@ class DepartmentController extends Controller
         if ($re) {
             return $this->success($re);
         } else {
-            return $this->error();
+            return $this->error($re);
         }
     }
 
