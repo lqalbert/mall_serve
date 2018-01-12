@@ -61,7 +61,7 @@ class User extends Authenticatable
         'group_name',
         'sex',
         'telephone',
-        'mobile_phone',
+        'mobilephone',
         'realname',
         'address',
         'qq',
