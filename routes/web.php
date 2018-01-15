@@ -36,6 +36,7 @@ Route::resource('/roles','RoleController');
 Route::resource('/cosmetics','CosmeticsController');
 Route::resource('/customerinformation','CustomerInformationController');
 Route::resource('/departments','DepartmentController');
+Route::resource('/orderlists','OrderlistController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');
