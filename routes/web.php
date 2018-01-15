@@ -23,6 +23,7 @@ Route::get('/categorys/{pid}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
 Route::get('/tree','CategoryController@getCascade');
 Route::resource('/customers','CustomerController');
+Route::get('/employees{gid}','EmployeeController@getUserByGId');
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');

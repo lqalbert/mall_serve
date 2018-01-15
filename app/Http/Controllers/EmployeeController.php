@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\EmployeeRepository;
 use App\Services\Employee\EmployeeService;
 use App\Events\AddEmployee;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -38,7 +39,11 @@ class EmployeeController extends Controller
         }
         return $result;
     }
-
+    public function getUserByGId(Request $request,$gid )
+    {
+         $data=DB::table('user_basic')->where('group_id','=',$gid)->get();
+        return $data;
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +52,7 @@ class EmployeeController extends Controller
      */
     public function create(Request $request )
     {
-        
+
     }
     public function test(Request $request )
     {
