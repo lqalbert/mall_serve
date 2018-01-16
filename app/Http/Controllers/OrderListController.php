@@ -41,4 +41,24 @@ class OrderlistController extends Controller
         }
         return $result;
     }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //update 返回 bool
+        //var_dump(Department::find($id));die();
+        $re = $this->repository->update($request->input(), $id);
+        if ($re) {
+            return $this->success(Orderlist::find($id));
+            //return 1;
+        } else {
+            return $this->error();
+            //return 2;
+        }
+    }
 }
