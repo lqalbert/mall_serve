@@ -37,8 +37,6 @@ class Orderlist extends Model
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
 
     protected $appends = [
-        'user',
-        'phone',
         'order_type'
 
     ];
@@ -58,20 +56,6 @@ class Orderlist extends Model
                 return self::$types[$index];
             }
         return self::$types[0];
-    }
-    /**
-     * 获得联系人姓名
-     */
-    public function getUserAttribute()
-    {
-        return '未实现';
-    }
-    /**
-     * 获得联系人电话
-     */
-    public function getPhoneAttribute()
-    {
-        return '80808501';
     }
     public function getOrderTypeAttribute()
     {
