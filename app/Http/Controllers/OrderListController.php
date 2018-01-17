@@ -61,4 +61,22 @@ class OrderlistController extends Controller
             //return 2;
         }
     }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //返回 int
+        $re = $this->repository->delete($id);
+        if ($re) {
+            //return $this->success(1);
+            return 1;
+        } else {
+            //return $this->error();
+            return 2;
+        }
+    }
 }
