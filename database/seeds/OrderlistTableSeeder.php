@@ -31,6 +31,8 @@ class OrderlistTableSeeder extends Seeder
             'employee' => '1',
             'user_phone' => '13333333333',
             'det_address' => '',
+            'shipping_name' => '2321',
+            'shipping_status' => 'pre_deliver',
         ]);
         DB::table('orderlist')->insert([
             'order_sn' => str_random(8),
