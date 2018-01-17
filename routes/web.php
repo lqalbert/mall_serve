@@ -25,6 +25,7 @@ Route::get('/tree','CategoryController@getCascade');
 Route::resource('/customers','CustomerController');
 
 Route::resource('/orderlist','OrderListController');
+Route::resource('/buyorders','BuyOrderController');
 Route::resource('/inventorylist','InventoryListController');
 Route::resource('/departments','DepartmentController');
 Route::resource('/groups','GroupController');
