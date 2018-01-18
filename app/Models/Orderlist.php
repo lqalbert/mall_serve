@@ -24,10 +24,12 @@ class Orderlist extends Model
      */
     protected $fillable = [
         'order_sn',
-        'order_type',
+        'order_status',
         'o_shop',
         'goods_name',
-        'order_status'
+        'order_status',
+        'shipping_status',
+        'check_status'
     ];
     /**
      * 在数组中想要隐藏的属性。
@@ -40,22 +42,54 @@ class Orderlist extends Model
         'order_type'
 
     ];
-    private static $types = array(
-        '销售部',
-        '推广部',
-        '客服部',
-        '投顾部',
-        '风控部'
+    private static $status = array(
+        'pre_pay'       =>   '未付款',
+        'pre_affirm'    =>   '待确认',
+        'done'          =>   '已完成',
+        'closed'        =>   '已关闭',
+        'refund'        =>   '退款中'
     );
-    public static function getType($index = null)
+    private static $s_status = array(
+        'pre_deliver'   =>   '待发货',
+        'delivered'     =>   '发货中',
+        'received'      =>   '已收货',
+    );
+    private static $c_status = array(
+        '未通过',
+        '已通过',
+        '未审核'
+    );
+    public static function getStatus($index = null,$status = array())
     {
         if ($index === null) {
-            return self::$types;
+            return $status;
         } else
-            if (is_numeric($index) && in_array(intval($index), array_keys(self::$types))) {
-                return self::$types[$index];
+            if (isset($index) && in_array($index, array_keys($status))) {
+                return $status[$index];
             }
-        return self::$types[0];
+        $key = array_keys($status);
+        return $status[$key[0]];
+    }
+    /*
+     * 生成订单类型对应的汉字文本
+     */
+    public function getOrderStatusAttribute()
+    {
+        return self::getStatus($this->attributes['order_status'],self::$status);
+    }
+    /*
+     * 生成发货类型对应的汉字文本
+     */
+    public function getShippingStatusAttribute()
+    {
+        return self::getStatus($this->attributes['shipping_status'],self::$s_status);
+    }
+    /*
+     * 生成审核状态对应的汉字文本
+     */
+    public function getCheckStatusAttribute()
+    {
+        return self::getStatus($this->attributes['check_status'],self::$c_status);
     }
     public function getOrderTypeAttribute()
     {
