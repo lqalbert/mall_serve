@@ -24,7 +24,7 @@ class UploadController extends Controller
     
     public function  index() 
     {
-
+        //var_dump($_FILES);die();
         $re = $this->getFileInfo();
         $data = $re;
         $data['user_id'] = 1;
@@ -50,7 +50,7 @@ class UploadController extends Controller
         $subdir = $this->request->input('subdir', 'files');
         $public = $this->request->input('ispublic', true);
         $uploadFile = $this->request->file('avatar');
-        
+
         $re = [];
         $re['file_name'] = $uploadFile->getClientOriginalName();
         $re['size'] = $uploadFile->getClientSize();

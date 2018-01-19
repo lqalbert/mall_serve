@@ -33,7 +33,7 @@ Route::post('/upload', 'UploadController@index')->name('upload');
 Route::resource('/roles','RoleController');
 
 
-Route::resource('/cosmetics','CosmeticsController');
+Route::resource('/goodsdetails','GoodsDetailsController');
 Route::resource('/customerinformation','CustomerInformationController');
 Route::resource('/departments','DepartmentController');
 Route::resource('/orderlists','OrderlistController');

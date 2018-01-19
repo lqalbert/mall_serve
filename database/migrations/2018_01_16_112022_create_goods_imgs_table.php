@@ -16,8 +16,7 @@ class CreateGoodsImgsTable extends Migration
         Schema::create('goods_imgs', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('goods_id')->comment('商品ID');
-            $table->string('path')->comment('图片路径');
-//             $table->
+            $table->string('url')->comment('图片地址');
             $table->timestamps();
             $table->softDeletes();
         });

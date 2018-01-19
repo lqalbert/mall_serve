@@ -58,19 +58,19 @@ class ExpressInfoService{
     }
 
 	  
-	  /**
-	   * [setEndTime 设置查询时间段结束]
-	   */
-	  protected function setEndTime(){
-	    $end = $this->request->end;
-	    $today = Date('Y-m-d');
-	    if($end >=  $today){
-	      $end = Date('Y-m-d H:i:s', strtotime($today) + 86400);
-	    }else{
-	      $end = Date('Y-m-d H:i:s', strtotime($end) + 86400);
-	    }
-	    return $end;
-	  }
+    /**
+    * [setEndTime 设置查询时间段结束]
+    */
+    protected function setEndTime(){
+        $end = $this->request->end;
+        $today = Date('Y-m-d');
+        if($end >=  $today){
+          $end = Date('Y-m-d H:i:s', strtotime($today) + 86400);
+        }else{
+          $end = Date('Y-m-d H:i:s', strtotime($end) + 86400);
+        }
+        return $end;
+    }
 
 
 

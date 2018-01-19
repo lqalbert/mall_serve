@@ -14,11 +14,11 @@ class CreateGoodsCategoriesTable extends Migration
     public function up()
     {
         Schema::create('goods_categories', function (Blueprint $table) {
-//             $table->increments('id');
+            //$table->increments('id');
 //             $table->timestamps();
 
-            $table->integer('goods_id')->unsigned();
-            $table->integer('cate_id')->unsigned();
+            $table->integer('goods_id')->unsigned()->comment('商品ID');
+            $table->integer('cate_id')->unsigned()->comment('分类ID');
             
             $table->foreign('goods_id')->references('id')->on('goods_basic')
             ->onUpdate('cascade')->onDelete('cascade');
@@ -26,6 +26,7 @@ class CreateGoodsCategoriesTable extends Migration
             ->onUpdate('cascade')->onDelete('cascade');
             
             $table->primary(['goods_id', 'cate_id']);
+            //$table->timestamps();
         });
     }
 
