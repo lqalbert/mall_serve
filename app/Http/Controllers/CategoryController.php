@@ -24,9 +24,14 @@ class CategoryController extends Controller
         return $result;
 
     }
-public function getLevels(Category $category,$pid){
-       $data=$category->where('level','=',$pid)->get();
+public function getLevels(Category $category,$lel){
+       $data=$category->where('level','=',$lel)->get();
         return $data;
+}
+//通过商品类型id判断是否有子级
+public function haveChildren(Category $category,$id){
+       $data = count($category->where('pid','=',$id)->get()) ? 1 : 0 ;
+        return ['items'=>$data] ;
 }
 //   返回商品类别选择的级联数据
 

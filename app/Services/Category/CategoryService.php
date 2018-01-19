@@ -41,7 +41,7 @@ class CategoryService
     }
     public function  get() 
     {
-       $data = $this->repository->all();
+        $data = $this->repository->all();
         $result = $this->cate_list($data);
         return [
             'items'=>$result,

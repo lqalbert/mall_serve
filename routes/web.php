@@ -19,16 +19,20 @@ Route::get('/', function () {
 Route::post('/login', 'LoginController@login');
 Route::post('/logout', 'LoginController@out');
 
-Route::get('/categorys/{pid}','CategoryController@getLevels');
+Route::get('/categorys/{lel}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
 Route::get('/tree','CategoryController@getCascade');
+Route::get('/deleteCategory/{id}','CategoryController@haveChildren');
 Route::resource('/customers','CustomerController');
-Route::get('/employees{gid}','EmployeeController@getUserByGId');
+Route::get('/employees/{gid}','EmployeeController@getUserByGId');
+Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
+
 
 Route::resource('/orderlist','OrderListController');
 Route::resource('/inventorylist','InventoryListController');
 Route::resource('/departments','DepartmentController');
 Route::resource('/groups','GroupController');
+
 Route::resource('/expressinfo','ExpressInfoController');
 Route::post('/upload', 'UploadController@index')->name('upload');
 Route::resource('/roles','RoleController');
@@ -43,4 +47,6 @@ Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');
 Route::resource('/goodsspecs','GoodsSpecsController');
 Route::resource('/goodstype','GoodsTypeController');
+Route::resource('/deliveryaddress','DeliveryAddressController');
+Route::resource('/orderbasic','OrderBasicController');
 

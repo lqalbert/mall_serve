@@ -41,7 +41,12 @@ class EmployeeController extends Controller
     }
     public function getUserByGId(Request $request,$gid )
     {
-         $data=DB::table('user_basic')->where('group_id','=',$gid)->get();
+        $fields=['user_basic.id as user_id','user_basic.realname','user_basic.qq','group_basic.name as role_name','user_basic.mobilephone as phone'];
+         $data=DB::table('user_basic')
+             ->join('group_basic','group_basic.id','=','user_basic.group_id')
+             ->where('user_basic.group_id','=',$gid)
+             ->select($fields)
+             ->get();
         return $data;
     }
     /**
