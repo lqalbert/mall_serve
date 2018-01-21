@@ -24,34 +24,34 @@ class CategoryController extends Controller
         return $result;
 
     }
-public function getLevels(Category $category,$pid){
-       $data=$category->where('level','=',$pid)->get();
-        return $data;
-}
-//   返回商品类别选择的级联数据
-
-public function getCascade(){
-    $arr= $this->index()['items'];
-    return ['items'=>$this->getTree($arr)] ;
-
-}
-public function getTree($array){
-         $child=[];
-        foreach ($array as $k => $v) {
-            $child[$k]['value']=$v->id;
-            $child[$k]['id']=$v->id;
-            $child[$k]['pid']=$v->pid;
-            $child[$k]['label']=$v->label;
-            $child[$k]['level']=$v->level;
-            if (!empty($v->children)) {
-                $child[$k]['children']= $this->getTree($v->children);
-            }
-        }
-        return $child;
-
-
-
-}
+	public function getLevels(Category $category,$pid){
+	       $data=$category->where('level','=',$pid)->get();
+	        return $data;
+	}
+	//   返回商品类别选择的级联数据
+	
+	public function getCascade(){
+	    $arr= $this->index()['items'];
+	    return ['items'=>$this->getTree($arr)] ;
+	
+	}
+	public function getTree($array){
+	         $child=[];
+	        foreach ($array as $k => $v) {
+	            $child[$k]['value']=$v->id;
+	            $child[$k]['id']=$v->id;
+	            $child[$k]['pid']=$v->pid;
+	            $child[$k]['label']=$v->label;
+	            $child[$k]['level']=$v->level;
+	            if (!empty($v->children)) {
+	                $child[$k]['children']= $this->getTree($v->children);
+	            }
+	        }
+	        return $child;
+	
+	
+	
+	}
     /**
      * Show the form for creating a new resource.
      *
