@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Repositories\EmployeeRepository;
 use App\Services\Employee\EmployeeService;
 use App\Events\AddEmployee;
+use App\Repositories\Criteria\Employee\Group;
 
 class EmployeeController extends Controller
 {
@@ -28,6 +29,10 @@ class EmployeeController extends Controller
         $result = [];
         switch ($business){
             case 'select':
+            	if ($request->has('group_id')) {
+            		$this->repository->pushCriteria(new Group($request->input('group_id')));
+            	}
+            	$result = $this->repository->all($request->input('fields', ['id', 'realname']));  	
                 break;
             case 'pickToGroup':
                 $service = app('App\Services\Employee\PickAbleGMService');
