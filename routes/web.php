@@ -45,7 +45,7 @@ Route::resource('/roles','RoleController');
 Route::resource('/goodsdetails','GoodsDetailsController');
 Route::resource('/customerinformation','CustomerInformationController');
 Route::resource('/departments','DepartmentController');
-Route::resource('/orderlists','OrderlistController');
+Route::resource('/orderlists','OrderListController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');

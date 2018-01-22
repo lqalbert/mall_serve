@@ -8,7 +8,7 @@ class Orderlist extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'orderlist';
+    protected $table = 'order_basic';
     /**
      * 需要被转换成日期的属性。 softdelete 需要
      *
@@ -43,20 +43,20 @@ class Orderlist extends Model
 
     ];
     private static $status = array(
-        'pre_pay'       =>   '未付款',
-        'pre_affirm'    =>   '待确认',
-        'done'          =>   '已完成',
-        'closed'        =>   '已关闭',
-        'refund'        =>   '退款中'
+        '未付款',
+        '待确认',
+        '已完成',
+        '已关闭',
+        '退款中'
     );
     private static $s_status = array(
-        'pre_deliver'   =>   '待发货',
-        'delivered'     =>   '发货中',
-        'received'      =>   '已收货',
+        '待发货',
+        '发货中',
+        '已收货',
     );
     private static $c_status = array(
         '未通过',
-        '已通过',
+        '通过',
         '未审核'
     );
     public static function getStatus($index = null,$status = array())
