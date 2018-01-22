@@ -41,6 +41,6 @@ class CreateOrderlistTable extends Migration
      */
     public function down()
     {
-        //
+    	Schema::dropIfExists('orderlist');
     }
 }
