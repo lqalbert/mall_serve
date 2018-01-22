@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Models\Group;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
@@ -54,6 +55,12 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    通过部门ID获取该部门的所有小组
+    public function getGroupsByPid($pid)
+    {
+      $data=DB::table('group_basic')->where('department_id','=',$pid)->select('id','name')->get();
+      return ['items'=>$data];
+    }
     public function create()
     {
         //

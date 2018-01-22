@@ -24,20 +24,24 @@ class CategoryController extends Controller
         return $result;
 
     }
-    public function getLevels(Category $category,$pid){
-        $data=$category->where('level','=',$pid)->get();
+public function getLevels(Category $category,$pid){
+       $data=$category->where('level','=',$pid)->get();
         return $data;
-    }
+}
+//通过商品类型id判断是否有子级
+public function haveChildren(Category $category,$id){
+       $data = count($category->where('pid','=',$id)->get()) ? 1 : 0 ;
+        return ['items'=>$data] ;
+}
+//   返回商品类别选择的级联数据
 
-    //返回商品类别选择的级联数据
-    public function getCascade(){
-        $arr= $this->index()['items'];
-        return ['items'=>$this->getTree($arr)] ;
+public function getCascade(){
+    $arr= $this->index()['items'];
+    return ['items'=>$this->getTree($arr)] ;
 
-    }
-
-    public function getTree($array){
-        $child=[];
+}
+public function getTree($array){
+         $child=[];
         foreach ($array as $k => $v) {
             $child[$k]['value']=$v->id;
             $child[$k]['id']=$v->id;
@@ -49,7 +53,10 @@ class CategoryController extends Controller
             }
         }
         return $child;
-    }
+
+
+
+}
     /**
      * Show the form for creating a new resource.
      *

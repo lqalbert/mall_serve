@@ -57,8 +57,6 @@ class User extends Authenticatable
         'role_id',
         'group_id',
         'department_id',
-        'department_name',
-        'group_name',
         'sex',
         'telephone',
         'mobilephone',

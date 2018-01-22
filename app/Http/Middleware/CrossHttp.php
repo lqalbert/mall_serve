@@ -19,8 +19,8 @@ class CrossHttp
 
         $response = $next($request);
         $response->header('Access-Control-Allow-Origin', '*');
-        $response->header('Access-Control-Allow-Headers', 'x-requested-with,Content-Type,Origin, Cookie, Accept');
         $response->header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, OPTIONS');
+        $response->header('Access-Control-Allow-Headers', 'x-requested-with,Content-Type,Origin, Cookie, Accept');
         // $response->header('Access-Control-Allow-Credentials', 'true');
         return $response;
 
