@@ -7,6 +7,7 @@ use App\Models\GoodsDetails;
 use App\Repositories\GoodsDetailsRepository;
 use App\Models\GoodsCategory;
 use App\Models\GoodsImg;
+use App\Models\Goods;
 
 class GoodsDetailsController extends Controller
 {
@@ -62,40 +63,23 @@ class GoodsDetailsController extends Controller
      */
     public function store(Request $request)
     {
-        $data = [
-            'goods_name'=>$request->input('goods_name'),
-            'goods_price'=>$request->input('goods_price'),
-            'goods_number'=>$request->input('goods_number'),
-            'unit_type'=>$request->input('unit_type'),
-            'description'=>$request->input('description'),
-            'cover_url'=>$request->input('img_path')[0],
-            'status'=>$request->input('status'),
-        ];
-        $re = $this->repository->create($data);
 
-        if ($re) {
-            $cateData = ['goods_id'=>$re->id];
-            $imgData = ['goods_id'=>$re->id];
-
-            foreach ($request->input('cate_id') as $k => $v) {
-                $cateData['cate_id'] = $v;
-                $res = $this->categoryModel->create($cateData);
-                if (!$res) {
-                    $this->error($res);
-                }
-            }
-
-            foreach ($request->input('img_path') as $key => $value) {
-                $imgData['url'] = $value;
-                $resu = $this->goodsImgMdodel->create($imgData);
-                if (!$resu) {
-                    $this->error($resu);
-                }
-            }
-
-        } else {
-            return $this->error($re);
-        }
+    	//事务
+    	$goodsModel = Goods::create($request->all());
+    	
+    	$imgs = $request->input('img_path', []);
+    	foreach ($imgs as $img){
+    		$imgModel = $goodsModel->imgs()->create(['url'=>$img]);
+    	}
+    	
+    	$cates = $request->input('cate_id', []);
+    	$goodsModel->category()->attach($cates);
+    	// end of 事务
+    	
+    	return $this->success($goodsModel);
+    	
+    	
+    	
     }
 
     /**
@@ -129,7 +113,8 @@ class GoodsDetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+    	//$cates = $request->input('cate_id', []);
+    	//$goodsModel->cateogry()->sync($cates);
     }
 
     /**

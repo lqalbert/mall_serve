@@ -19,4 +19,12 @@ class Category extends Model
         'updated_at',
         'deleted_at'
     ];
+    
+    /**
+     * 
+     */
+    public function goods()
+    {
+    	return $this->belongsToMany('App\Models\Goods', 'goods_categories',  'cate_id', 'goods_id');
+    }
 }

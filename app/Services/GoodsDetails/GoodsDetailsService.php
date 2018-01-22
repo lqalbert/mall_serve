@@ -3,6 +3,9 @@ namespace App\Services\GoodsDetails;
 
 use App\Repositories\GoodsDetailsRepository;
 use Illuminate\Http\Request;
+use App\Alg\ModelCollection;
+use App\Repositories\Criteria\Goods\Name;
+use App\Repositories\Criteria\Goods\Categories;
 
 class GoodsDetailsService{
 
@@ -23,11 +26,30 @@ class GoodsDetailsService{
 
     public function  get() 
     {
- 
+ 		
+    	if ($this->request->has('goods_name')) {
+    		$this->repository->pushCriteria( new Name($this->request->input('goods_name')));
+    	}
+    	
+    	if ($this->request->has('cate_id')) {
+    		$this->repository->pushCriteria( new Categories($this->request->input('cate_id')));
+    	}
+
+    	
         $result = $this->repository->paginate();
+        
+        $collection = $result->getCollection();
+        
+//         $collection = ModelCollection::setAppends($collection, ['imgs']);
+		
+        foreach ($collection as &$model) {
+        	$model->imgs;
+        	$model->category;
+        }
+        
         return [
-            'items'=> $result->getCollection(),
-            'totle'=> $result->total()
+        		'items'=> $collection,
+            	'totle'=> $result->total()
         ]; 
     }
 
