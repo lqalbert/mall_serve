@@ -17,7 +17,6 @@ class CategoryController extends Controller
     {
         $this->repository = $categoryRepository;
     }
-
     public function index()
     {
         $service = app('App\Services\Category\CategoryService');
@@ -25,7 +24,6 @@ class CategoryController extends Controller
         return $result;
 
     }
-
     public function getLevels(Category $category,$pid){
         $data=$category->where('level','=',$pid)->get();
         return $data;

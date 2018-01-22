@@ -18,6 +18,7 @@ Route::get('/', function () {
 //登录 退出
 Route::post('/login', 'LoginController@login');
 Route::post('/logout', 'LoginController@out');
+Route::resource('/deposits', 'DepositController');
 
 Route::get('/categorys/{pid}','CategoryController@getLevels');
 Route::resource('/categorys','CategoryController');
