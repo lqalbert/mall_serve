@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\Goods\Name;
 use App\Repositories\Criteria\Goods\Categories;
+use App\Models\GoodsImg;
 
 class GoodsDetailsService{
 
@@ -47,6 +48,12 @@ class GoodsDetailsService{
         	$model->category;
         }
         
+        
+        //$result = $this->repository->paginate();
+        // foreach ($result->getCollection() as $flight) {
+        //     echo $flight->id;
+        // }
+
         return [
         		'items'=> $collection,
             	'totle'=> $result->total()
