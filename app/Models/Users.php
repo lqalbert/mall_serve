@@ -4,11 +4,11 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Orderlist extends Model
+class Users extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'orderlist';
+    protected $table = 'users';
     /**
      * 需要被转换成日期的属性。 softdelete 需要
      *

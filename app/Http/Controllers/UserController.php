@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Orderlist;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Repositories\Criteria\Orderlist\Time;
 
-class OrderlistController extends Controller
+class UserController extends Controller
 {
     //
-    
     private $repository = null;
     public function  __construct(OrderlistRepository $repository)
     {
@@ -27,16 +26,12 @@ class OrderlistController extends Controller
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business){
-            case 'Orderlist':
-                $service = app('App\Services\Orderlist\OrderlistService');
-                $result = $service->get();
-                break;
             case 'select':
-                $service = app('App\Services\Orderlist\OrderlistService');
+                $service = app('App\Services\Users\UsersService');
                 $result = $service->get();
                 break;
             default:
-                $service = app('App\Services\Orderlist\OrderlistService');
+                $service = app('App\Services\Users\UsersService');
                 $result = $service->get();
         }
         return $result;

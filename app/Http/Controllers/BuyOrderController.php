@@ -1,17 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Orderlist;
+use App\Models\BuyOrder;
 use Illuminate\Http\Request;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Repositories\Criteria\Orderlist\Time;
 
-class OrderlistController extends Controller
+class BuyOrderController extends Controller
 {
     //
-    
     private $repository = null;
     public function  __construct(OrderlistRepository $repository)
     {
@@ -27,7 +25,7 @@ class OrderlistController extends Controller
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business){
-            case 'Orderlist':
+            case 'BuyOrder':
                 $service = app('App\Services\Orderlist\OrderlistService');
                 $result = $service->get();
                 break;
@@ -62,16 +60,6 @@ class OrderlistController extends Controller
         }
     }
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-    /**
      * Remove the specified resource from storage.
      *
      * @param int $id
@@ -87,6 +75,24 @@ class OrderlistController extends Controller
         } else {
             //return $this->error();
             return 2;
+        }
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        //throw new \Exception('test');
+        //dd($request->input());
+        $re = $this->repository->create($request->input());
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error($re);
         }
     }
 }
