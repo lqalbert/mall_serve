@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\OrderBasic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderBasicController extends Controller
 {
@@ -21,12 +22,22 @@ class OrderBasicController extends Controller
      */
     public function index(Request $request)
     {
-        $fields=['order_basic.goods_name','order_basic.category_id as category_name','order_basic.goods_number','order_basic.remark'];
+
+        $fields=['order_basic.id','order_basic.cus_id','order_basic.goods_name','order_basic.category_id','order_basic.goods_number','order_basic.remark'];
         $data=$this->model
-//            ->join('category_base','category_base.id','=','order_basic.category_id')
             ->where('cus_id','=',$request->cus_id)
             ->select($fields)
             ->get();
+        foreach ($data as $k => $v){
+            $cat_ids=explode(',',$v['category_id']);
+            $category_names=DB::table('category_base')->whereIn('id',$cat_ids)->select('label')->get();
+            $dev=[];
+            foreach ($category_names as $k1 => $v1){
+               $dev[]=$v1->label;
+            }
+            $data[$k]['category_name']=implode('/',$dev);
+        }
+
         return ['items'=>$data];
     }
 
@@ -89,7 +100,8 @@ class OrderBasicController extends Controller
     public function update(Request $request, OrderBasic $orderBasic,$id)
     {
         $data=[
-            'goods_id'=>$request->goods_id,
+            'cus_id'=>$request->cus_id,
+            'goods_id'=>'1',//暂时未关联goods表
             'goods_name'=>$request->goods_name,
             'category_id'=>$request->category_id,
             'goods_number'=>$request->goods_number,
