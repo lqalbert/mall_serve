@@ -3,40 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\DB;
 
 class InventoryListController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * todo 写不同的逻辑 select 、 default
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+    	$re = Inventory::all();
+    	foreach ($re as  &$model){
+//     		$model->type_text;
+    		$model->setAppends(['type_text']);
+    	}
         return [
-            'items'=>[
-                [
-                    'name' => '老白金',
-                    'type_text' => '保健品',
-                    'phone' => '15',
-                    'qq' => '324568554',
-                    'weixin' => '012',
-                    'address' => '15645555555555',
-                    'id_card' => '李清',
-                ],
-                [
-                    'name' => '老白金',
-                    'type_text' => '保健品',
-                    'phone' => '15',
-                    'qq' => '324568554',
-                    'weixin' => '012',
-                    'address' => '15645555555555',
-                    'id_card' => '李清',
-                ],
-
-            ],
-            'total'=>100
+        	'items'=> $re,
+            'total'=> $re->count()
 
         ];
     }
@@ -59,7 +45,24 @@ class InventoryListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = Inventory::make($request->all());
+        
+        if ($model->type==2) {
+        	$oldModel = Inventory::find($request->input('ventory_id'));
+        	$model->goods_name = $oldModel->goods_name;
+        	$model->goods_version = $oldModel->goods_version;
+        	$model->goods_batch = $oldModel->goods_batch;
+        }
+        
+        $model->user = DB::table('user_basic')->where('id', $model->user_id)->value('realname');
+        
+        
+        $re = $model->save();
+        if ($re) {
+        	return $this->success($model);
+        } else {
+        	return $this->error();
+        }
     }
 
     /**

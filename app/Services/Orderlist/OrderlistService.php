@@ -19,6 +19,9 @@ class OrderlistService
     public function get()
     {
         $where = array();
+        if ($this->request->has('sn')) {
+        	$where[]=['order_sn','like',$this->request->sn."%"];
+        }
         if ($this->request->has('order_sn')) {
             $where[]=['order_sn','=',$this->request->order_sn];
         }

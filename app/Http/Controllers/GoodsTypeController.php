@@ -21,7 +21,13 @@ class GoodsTypeController extends Controller
      */
     public function index()
     {
-        //
+//     	'items'=> Deposit::orderBy('id','desc')->get(),
+//     	'total'=> Deposit::count()
+		
+    	return [
+    			'items'=> GoodsType::select('id','type_name as name')->get(),
+    			'total'=> GoodsType::count()
+    	];
     }
 
     /**
