@@ -13,16 +13,46 @@ class InventoryListController extends Controller
      * todo 写不同的逻辑 select 、 default
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    	$re = Inventory::all();
-    	foreach ($re as  &$model){
+        
+
+        $query = Inventory::orderBy('id','desc');
+        
+        if ($request->has('goods_name')) {
+            $query->where('goods_name','like',$request->input('goods_name')."%");
+        }
+        
+        if ($request->has('goods_batch')) {
+            $query->where('goods_batch', 'like',$request->input('goods_batch')."%");
+        }
+        
+        if ($request->has('goods_version')) {
+            $query->where('goods_version', 'like',$request->input('goods_version')."%");
+        }
+        
+        if ($request->has('goods_version')) {
+            $query->where('goods_version', 'like',$request->input('goods_version')."%");
+        }
+        
+        if ($request->has('goods_type')) {
+            $query->where('goods_type', $request->input('goods_type'));
+        }
+        
+        if ($request->has('fields')) {
+            $query->select($request->input('fields'));
+        }
+        
+        
+        $re = $query->paginate($request->input('pageSize'));
+        $collection = $re->getCollection();
+        foreach ($collection as  &$model){
 //     		$model->type_text;
     		$model->setAppends(['type_text']);
     	}
         return [
-        	'items'=> $re,
-            'total'=> $re->count()
+            'items'=> $collection,
+            'total'=> $re->total()
 
         ];
     }
