@@ -4,17 +4,18 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class OrderGoods extends Model
+class BuyOrder extends Model
 {
     //
     use SoftDeletes;
-    protected $table = 'order_goods';
+    protected $table = 'order_basic';
     /**
      * 需要被转换成日期的属性。 softdelete 需要
      *
      * @var array
      */
     protected $dates = [
+        'deleted_at'
     ];
     /**
      * 可以被批量赋值的属性。
@@ -22,6 +23,10 @@ class OrderGoods extends Model
      * @var array
      */
     protected $fillable = [
+        'order_sn',
+        'order_status',
+        'o_shop',
+        'goods_name',
     ];
     /**
      * 在数组中想要隐藏的属性。

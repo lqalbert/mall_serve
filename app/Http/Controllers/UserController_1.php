@@ -8,7 +8,7 @@ use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Repositories\Criteria\Orderlist\Time;
 
-class UserController extends Controller
+class UserController1 extends Controller
 {
     //
     private $repository = null;

@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Repositories\OrderlistRepository;
-use App\Services\Orderlist\OrderlistService;
-use App\Repositories\Criteria\Orderlist\Time;
 
-class BuyOrderController extends Controller
+use Illuminate\Http\Request;
+use App\Models\OrderGoods;
+use App\Services\Ordergoods\OrdergoodsService;
+use App\Repositories\OrdergoodsRepository;
+use App\Repositories\Criteria\Ordergoods\Ordergoods as OrdergoodsC;
+class OrderGoodsController extends Controller
 {
     //
     private $repository = null;
-    public function  __construct(OrderlistRepository $repository)
+    public function  __construct(OrdergoodsRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -24,16 +25,12 @@ class BuyOrderController extends Controller
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business){
-            case 'BuyOrder':
-                $service = app('App\Services\Orderlist\OrderlistService');
-                $result = $service->get();
-                break;
             case 'select':
-                $service = app('App\Services\Orderlist\OrderlistService');
+                $service = app('App\Services\Ordergoods\OrdergoodsService');
                 $result = $service->get();
                 break;
             default:
-                $service = app('App\Services\Orderlist\OrderlistService');
+                $service = app('App\Services\Ordergoods\OrdergoodsService');
                 $result = $service->get();
         }
         return $result;
@@ -51,11 +48,28 @@ class BuyOrderController extends Controller
         //var_dump(Department::find($id));die();
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success($re);
+            return $this->success(Orderlist::find($id));
             //return 1;
         } else {
             return $this->error();
             //return 2;
+        }
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        //throw new \Exception('test');
+        $re = $this->repository->create($request->input());
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error($re);
         }
     }
     /**
@@ -84,24 +98,6 @@ class BuyOrderController extends Controller
         } else {
             //return $this->error();
             return 2;
-        }
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        //throw new \Exception('test');
-        //dd($request->input());
-        $re = $this->repository->create($request->input());
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
         }
     }
 }

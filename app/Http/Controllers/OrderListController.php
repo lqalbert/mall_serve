@@ -11,7 +11,7 @@ use App\Repositories\Criteria\Orderlist\Time;
 class OrderlistController extends Controller
 {
     //
-    
+
     private $repository = null;
     public function  __construct(OrderlistRepository $repository)
     {
