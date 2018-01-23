@@ -27,9 +27,6 @@ class Orderlist extends Model
         'order_status',
         'o_shop',
         'goods_name',
-        'order_status',
-        'shipping_status',
-        'check_status'
     ];
     /**
      * 在数组中想要隐藏的属性。
@@ -39,60 +36,6 @@ class Orderlist extends Model
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
 
     protected $appends = [
-        'order_type'
 
     ];
-    private static $status = array(
-        '未付款',
-        '待确认',
-        '已完成',
-        '已关闭',
-        '退款中'
-    );
-    private static $s_status = array(
-        '待发货',
-        '发货中',
-        '已收货',
-    );
-    private static $c_status = array(
-        '未通过',
-        '通过',
-        '未审核'
-    );
-    public static function getStatus($index = null,$status = array())
-    {
-        if ($index === null) {
-            return $status;
-        } else
-            if (isset($index) && in_array($index, array_keys($status))) {
-                return $status[$index];
-            }
-        $key = array_keys($status);
-        return $status[$key[0]];
-    }
-    /*
-     * 生成订单类型对应的汉字文本
-     */
-    public function getOrderStatusAttribute()
-    {
-        return self::getStatus($this->attributes['order_status'],self::$status);
-    }
-    /*
-     * 生成发货类型对应的汉字文本
-     */
-    public function getShippingStatusAttribute()
-    {
-        return self::getStatus($this->attributes['shipping_status'],self::$s_status);
-    }
-    /*
-     * 生成审核状态对应的汉字文本
-     */
-    public function getCheckStatusAttribute()
-    {
-        return self::getStatus($this->attributes['check_status'],self::$c_status);
-    }
-    public function getOrderTypeAttribute()
-    {
-        return '1';
-    }
 }
