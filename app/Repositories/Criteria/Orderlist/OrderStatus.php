@@ -10,10 +10,12 @@ class OrderStatus extends Criteria
      *  @var string
      */
     private $where = null;
+    private $whereIn = null;
 
-    public function  __construct($where)
+    public function  __construct($where,$whereIn)
     {
         $this->where = $where;
+        $this->whereIn = $whereIn;
     }
 
     /**
@@ -26,6 +28,10 @@ class OrderStatus extends Criteria
     public function  apply($model, Repository $repository)
     {
         $query = $model->where($this->where);
+        if($this->whereIn)
+        {
+            $query = $model->where($this->where)->whereIn('goods_id',$this->whereIn);
+        }
         return $query;
     }
 }

@@ -13,9 +13,12 @@ class OrderbasicTableSeeder extends Seeder
     {
         //
         DB::table('order_basic')->insert([
-            'user_id' => 2,
+            'deal_id' => 2,
+            'deal_name' => '',
+            'auditor_id' => 1,
+            'auditor_name' => 'admin',
             'cus_id'  => 1,
-            'delivery_address_id'  => 1,
+            'address_id'  => 1,
             'goods_id' => '1,2,3',
             'order_status' => '1',
             'order_all_money'  => 13,
@@ -24,12 +27,14 @@ class OrderbasicTableSeeder extends Seeder
             'check_status' => '0',
             'distribution_type' => '',
             'order_time' => date('Y-m-d',time()),
-            'remarks' => 'dasdas',
         ]);
         DB::table('order_basic')->insert([
-            'user_id' => 3,
+            'deal_id' => 3,
+            'deal_name' => '',
+            'auditor_id' => 1,
+            'auditor_name' => 'admin',
             'cus_id'  => 2,
-            'delivery_address_id'  => 2,
+            'address_id'  => 2,
             'goods_id' => '2,3,4',
             'order_status' => '0',
             'order_all_money'  => 22,
@@ -38,12 +43,12 @@ class OrderbasicTableSeeder extends Seeder
             'check_status' => '0',
             'distribution_type' => '',
             'order_time' => date('Y-m-d',time()),
-            'remarks' => 'fsdfsd',
         ]);
         DB::table('order_basic')->insert([
-            'user_id' => 4,
+            'deal_id' => 4,
+            'deal_name' => '',
             'cus_id'  => 2,
-            'delivery_address_id'  => 2,
+            'address_id'  => 2,
             'goods_id' => '3,4,5',
             'order_status' => '0',
             'order_all_money'  => 22,
@@ -52,7 +57,6 @@ class OrderbasicTableSeeder extends Seeder
             'check_status' => '0',
             'distribution_type' => 'fsdf',
             'order_time' => date('Y-m-d',time()),
-            'remarks' => 'hfghfh',
         ]);
     }
 }

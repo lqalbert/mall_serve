@@ -30,7 +30,7 @@ class Orderlist extends Model
         'goods_name',
         'cus_id',
         'cus_name',
-        'user_id'
+        'deal_id'
     ];
     protected $appends = [
         'cus_name',
@@ -118,7 +118,7 @@ class Orderlist extends Model
      */
     public function getUserNameAttribute()
     {
-        return self::getType($this->attributes['user_id'],$this->get_employeeinfo());
+        return self::getType($this->attributes['deal_id'],$this->get_employeeinfo());
     }
     /**
      * 在数组中想要隐藏的属性。

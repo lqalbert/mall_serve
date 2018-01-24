@@ -15,20 +15,24 @@ class CreateOrderBasicTable extends Migration
     {
         Schema::create('order_basic', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedMediumInteger('user_id')->comment('成交员工ID');
-            $table->unsignedMediumInteger('cus_id')->comment('购买用户ID');
-            $table->unsignedMediumInteger('delivery_address_id')->comment('收货地址ID');
-            $table->string('goods_id',60)->comment('商品ID');
+            $table->unsignedMediumInteger('deal_id')->comment('成交员工ID')->nullable();
+            $table->string('deal_name')->comment('成交员工姓名')->nullable();
+            $table->unsignedMediumInteger('auditor_id')->comment('审核员工ID')->nullable();
+            $table->string('auditor_name')->comment('审核员工姓名')->nullable();
+            $table->unsignedMediumInteger('cus_id')->comment('购买用户ID')->nullable();
+            $table->unsignedMediumInteger('address_id')->comment('收货地址ID')->nullable();
+            $table->string('goods_id',60)->comment('商品ID')->nullable();
             $table->enum('order_status', [0,1,2,3,4])->default(0)->comment('订单状态0待付款1待确认2已完成3已关闭4退货中');
             $table->float('order_all_money',24)->comment('总金额')->nullable();
             $table->float('order_pay_money',24)->comment('应付金额')->nullable();
             $table->enum('shipping_status', [0,1,2])->default(0)->comment('发货状态0待发货1已发货2已收货');
             $table->enum('check_status', [0,1,2])->default(0)->comment('审核状态0未通过1通过2未审核');
             $table->string('distribution_type', 60)->comment('配送方式')->nullable();
-            $table->date('order_time')->comment('下单时间(为付款完成时间)');
-            $table->string('remarks')->comment('备注');
-            $table->softDeletes();
+            $table->date('order_time')->comment('下单时间(为付款完成时间)')->nullable();
+            $table->date('auditor_time')->comment('审核时间')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 
