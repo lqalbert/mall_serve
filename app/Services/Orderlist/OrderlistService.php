@@ -25,7 +25,7 @@ class OrderlistService
         }
         if ($this->request->has('goods_name')) {
             $goods = DB::table('goods_basic')
-                ->where('goods_name', 'like', $this->request->goods_name."%")
+                ->where('goods_name', 'like', "%".$this->request->goods_name."%")
                 ->get();
             $ids = array();
             foreach($goods as $v)
@@ -39,7 +39,7 @@ class OrderlistService
         }
         if ($this->request->has('sale_name')) {
             $sales = DB::table('user_basic')
-                ->where('real_name', 'like', $this->request->sale_name."%")
+                ->where('realname', 'like', "%".$this->request->sale_name."%")
                 ->get();
             foreach ($sales as $v){
                 $where[] = ['deal_id',$v->id];
