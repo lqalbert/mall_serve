@@ -39,7 +39,12 @@ class EmployeeService
             ->whereNull('group_basic.deleted_at')
             ->select($fields)
             ->count();
+        $users=[];
+        foreach ($result as $k => $v){
+            $users[$v->id]=$v;
+        }
       return [
+          'users'=>$users,
           'items'=>$result,
           'total'=>$count
       ];

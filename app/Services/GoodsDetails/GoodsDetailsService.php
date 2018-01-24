@@ -41,15 +41,17 @@ class GoodsDetailsService{
         $collection = $result->getCollection();
         
 //         $collection = ModelCollection::setAppends($collection, ['imgs']);
-		
+		$goodsInfo=[];
         foreach ($collection as &$model) {
         	$model->imgs;
         	$model->category;
+        	$goodsInfo[$model->id]=$model;
         }
         
         return [
         		'items'=> $collection,
-            	'totle'=> $result->total()
+        		'goods'=> $goodsInfo,
+            	'total'=> $result->total()
         ]; 
     }
 

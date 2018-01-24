@@ -13,10 +13,14 @@ class OrderBasic extends Model
     ];
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
     protected $fillable = [
-        'category_id',
+        'deal_id',
+        'deal_name',
+        'address_id',
         'goods_id',
         'cus_id',
-        'goods_number',
-        'remark'
+        'order_goods',
+        'order_all_money',
+        'order_pay_money',
+
     ];
 }
