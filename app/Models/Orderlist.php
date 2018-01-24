@@ -104,7 +104,7 @@ class Orderlist extends Model
             if ($index && in_array($index, array_keys($types))) {
                 return $types[$index];
             }
-        return $types[0];
+        return $types;
     }
     /*
      * 获取客户的姓名
