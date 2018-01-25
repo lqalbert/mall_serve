@@ -26,8 +26,10 @@ class Goods extends Model
     		'status',
     ];
     
+    //多对多
     public function category() 
     {
+        //->withTimestamps()
         return $this->belongsToMany('App\Models\Category', 'goods_categories', 'goods_id', 'cate_id');
     }
     
@@ -35,6 +37,7 @@ class Goods extends Model
     	return $this->hasMany('App\Models\GoodsCategory');
     }
     
+    //1对多
     public function imgs() 
     {
         return $this->hasMany('App\Models\GoodsImg', 'goods_id');
@@ -48,6 +51,9 @@ class Goods extends Model
      */
     public function getCoverUrlAttribute($value)
     {
-    	return asset($value);
+        if($value){
+            $value = asset($value);
+        }
+    	return $value;
     }
 }

@@ -16,9 +16,12 @@ class GoodsDetailsRepository extends Repository{
 //         $this->model->load('imgs', 'category');
     }
     
-	public function  model() 
-	{
-	    return 'App\Models\Goods';
-	}
+		public function  model() 
+		{
+		    return 'App\Models\Goods';
+		}
+
+
+		
 
 }

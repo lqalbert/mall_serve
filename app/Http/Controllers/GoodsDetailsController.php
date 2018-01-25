@@ -30,6 +30,13 @@ class GoodsDetailsController extends Controller
      */
     public function index(Request $request)
     {
+
+         // $re = Goods::find(3)->imgs;
+         // foreach ($re as $url) {
+         //     echo $url->url;
+         // }
+         // die;
+
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business) {
@@ -63,9 +70,13 @@ class GoodsDetailsController extends Controller
      */
     public function store(Request $request)
     {
-
-    	//事务
-    	$goodsModel = Goods::create($request->all());
+        $data = [];
+        $data = $request->all();
+        if(!empty($data['img_path'])){
+            $data['cover_url'] = $data['img_path'][0];
+        }
+    	//事务transaction()
+    	$goodsModel = Goods::create($data);
     	
     	$imgs = $request->input('img_path', []);
     	foreach ($imgs as $img){
@@ -113,8 +124,60 @@ class GoodsDetailsController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	//$cates = $request->input('cate_id', []);
-    	//$goodsModel->cateogry()->sync($cates);
+        $data = [];
+        $data = $request->all();
+        if($request->input('cover_url')){
+            $coverArr = explode('/',$request->input('cover_url'));
+            $data['cover_url'] = '/'.$coverArr[count($coverArr)-2].'/'.$coverArr[count($coverArr)-1];
+        }
+
+        if($data['cover_url'] && count($data['del_imgs']) == count($data['imgs'])){
+            if(!empty($data['img_path'])){
+                $data['cover_url'] = $data['img_path'][0];
+            }else{
+                $data['cover_url'] = '';
+            }
+        }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && count($data['del_imgs'])>0){
+            $imgArr = array_column($data['imgs'],'url');
+            $diff = array_diff($imgArr,$data['del_imgs']);
+            $data['cover_url'] = reset($diff);
+        }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && empty($data['del_imgs'])){
+            $coverArr = explode('/',$request->input('cover_url'));
+            $data['cover_url'] = '/'.$coverArr[count($coverArr)-2].'/'.$coverArr[count($coverArr)-1];
+        }else if(!empty($data['img_path'])){
+            $data['cover_url'] = $data['img_path'][0];
+        }
+
+        $goodsModel = Goods::find($id);
+
+        $goodsModel->update($data);
+
+        $cates = $request->input('cate_id', []);
+        $goodsModel->category()->sync($cates);
+
+        if($data['imgs']){
+            $goodsModel->imgs()->delete();
+
+            $imgArr = array_column($data['imgs'],'url');
+            $diff = array_diff($imgArr,$data['del_imgs']);
+
+            foreach ($data['img_path'] as $v) {
+                array_push($diff,$v);
+            }
+
+            foreach ($diff as $value) {
+                $goodsModel->imgs()->create(['url'=>$value]);
+            }
+            
+        }else{
+            foreach ($data['img_path'] as $value){
+                $goodsModel->imgs()->create(['url'=>$value]);
+            }
+        }
+
+        return $this->success($goodsModel);
+
+
     }
 
     /**

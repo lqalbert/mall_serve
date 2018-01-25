@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\Goods\Name;
 use App\Repositories\Criteria\Goods\Categories;
+use App\Repositories\Criteria\Goods\Number;
+use App\Models\GoodsImg;
 
 class GoodsDetailsService{
 
@@ -26,7 +28,7 @@ class GoodsDetailsService{
 
     public function  get() 
     {
- 		
+
     	if ($this->request->has('goods_name')) {
     		$this->repository->pushCriteria( new Name($this->request->input('goods_name')));
     	}
@@ -34,6 +36,10 @@ class GoodsDetailsService{
     	if ($this->request->has('cate_id')) {
     		$this->repository->pushCriteria( new Categories($this->request->input('cate_id')));
     	}
+
+        if ($this->request->has('goods_number')) {
+            $this->repository->pushCriteria( new Number($this->request->input('goods_number')));
+        }
 
     	
         $result = $this->repository->paginate();
@@ -47,9 +53,15 @@ class GoodsDetailsService{
         	$model->category;
         }
         
+        
+        //$result = $this->repository->paginate();
+        // foreach ($result->getCollection() as $flight) {
+        //     echo $flight->id;
+        // }
+
         return [
         		'items'=> $collection,
-            	'totle'=> $result->total()
+            	'total'=> $result->total()
         ]; 
     }
 
