@@ -46,6 +46,7 @@ Route::resource('/goodsdetails','GoodsDetailsController');
 Route::resource('/customerinformation','CustomerInformationController');
 Route::resource('/departments','DepartmentController');
 // Route::resource('/orderlists','OrderListController');
+Route::resource('/ordergoods','OrderGoodsController');
 Route::resource('/employees','EmployeeController');
 Route::resource('/goodsout','GoodsOutController');
 Route::resource('/goodsinto','GoodsIntoController');

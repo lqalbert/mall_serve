@@ -1,21 +1,21 @@
 <?php
-namespace App\Repositories\Criteria\Orderlist;
+namespace App\Repositories\Criteria\Ordergoods;
 
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Bosnadev\Repositories\Criteria\Criteria;
 
-class OrderStatus extends Criteria
+class Ordergoods extends Criteria
 {
     /**
      *  @var string
      */
-    private $where = null;
     private $whereIn = null;
+    private $where = null;
 
     public function  __construct($where,$whereIn)
     {
-        $this->where = $where;
         $this->whereIn = $whereIn;
+        $this->where = $where;
     }
 
     /**
@@ -27,10 +27,13 @@ class OrderStatus extends Criteria
      */
     public function  apply($model, Repository $repository)
     {
-        $query = $model->where($this->where);
         if($this->whereIn)
         {
-            $query = $model->where($this->where)->whereIn('goods_id',$this->whereIn);
+            $query = $model->whereIn('goods_id',$this->whereIn[0]);
+        }
+        if($this->where)
+        {
+            $query = $model->where($this->where);
         }
         return $query;
     }

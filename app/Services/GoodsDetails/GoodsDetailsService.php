@@ -16,10 +16,10 @@ class GoodsDetailsService{
      * @var unknown
      */
     private $repository = null;
-    
+
     private $request = null;
-    
-    public function  __construct(GoodsDetailsRepository $goodsDetailsRepository, Request $request) 
+
+    public function  __construct(GoodsDetailsRepository $goodsDetailsRepository, Request $request)
     {
         $this->repository = $goodsDetailsRepository;
         $this->request = $request;
@@ -53,15 +53,9 @@ class GoodsDetailsService{
         	$model->category;
         }
         
-        
-        //$result = $this->repository->paginate();
-        // foreach ($result->getCollection() as $flight) {
-        //     echo $flight->id;
-        // }
-
         return [
         		'items'=> $collection,
-            	'total'=> $result->total()
+            	'totle'=> $result->total()
         ]; 
     }
 

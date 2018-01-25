@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\models\OrderBasic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Repositories\OrderlistRepository;
+use App\Services\Orderlist\OrderlistService;
 class OrderBasicController extends Controller
 {
 
 
     private $model = null;
-    public function  __construct(OrderBasic $OrderBasic)
+    private $repository = null;
+    public function  __construct(OrderBasic $OrderBasic,OrderlistRepository $repository)
     {
         $this->model = $OrderBasic;
+        $this->repository = $repository;
     }
     /**
      * Display a listing of the resource.
@@ -22,23 +25,21 @@ class OrderBasicController extends Controller
      */
     public function index(Request $request)
     {
-
-        $fields=['order_basic.id','order_basic.cus_id','order_basic.goods_name','order_basic.category_id','order_basic.goods_number','order_basic.remark'];
-        $data=$this->model
-            ->where('cus_id','=',$request->cus_id)
-            ->select($fields)
-            ->get();
-        foreach ($data as $k => $v){
-            $cat_ids=explode(',',$v['category_id']);
-            $category_names=DB::table('category_base')->whereIn('id',$cat_ids)->select('label')->get();
-            $dev=[];
-            foreach ($category_names as $k1 => $v1){
-               $dev[]=$v1->label;
-            }
-            $data[$k]['category_name']=implode('/',$dev);
+        $business = $request->query('business', 'default');
+        switch ($business){
+            case 'Orderlist':
+                $service = app('App\Services\Orderlist\OrderlistService');
+                $result = $service->get();
+                break;
+            case 'select':
+                $service = app('App\Services\Orderlist\OrderlistService');
+                $result = $service->get();
+                break;
+            default:
+                $service = app('App\Services\Orderlist\OrderlistService');
+                $result = $service->get();
         }
-
-        return ['items'=>$data];
+        return $result;
     }
 
     /**
@@ -61,11 +62,21 @@ class OrderBasicController extends Controller
     {
         $this->model->cus_id = $request->cus_id;
         $this->model->goods_id = $request->goods_id;
-        $this->model->goods_name = $request->goods_name;
-        $this->model->category_id = $request->category_id;
-        $this->model->goods_number = $request->goods_number;
-        $this->model->remark = $request->remark;
+        $this->model->deal_id = $request->deal_id;
+        $this->model->deal_name = $request->deal_name;
+        $this->model->address_id = $request->address_id;
+        $this->model->order_all_money = $request->order_all_money;
+        $this->model->order_pay_money = $request->order_pay_money;
         $this->model->save();
+        $order_id=$this->model->id;
+        $orderGoods=$request->order_goods;
+        $data=[];
+        foreach ($orderGoods as $k => $v){
+            $v['order_id'] = $order_id;
+            unset($v['moneyNotes']);
+            $data[$k]=$v;
+        }
+        DB::table('order_goods')->insert($data);
     }
 
     /**
@@ -99,15 +110,14 @@ class OrderBasicController extends Controller
      */
     public function update(Request $request, OrderBasic $orderBasic,$id)
     {
-        $data=[
-            'cus_id'=>$request->cus_id,
-            'goods_id'=>'1',//暂时未关联goods表
-            'goods_name'=>$request->goods_name,
-            'category_id'=>$request->category_id,
-            'goods_number'=>$request->goods_number,
-            'remark'=>$request->remark,
-        ];
-        $this->model->where('id','=',$id)->update($data);
+        $re = $this->repository->update($request->input(), $id);
+        if ($re) {
+            return $this->success(OrderBasic::find($id));
+            //return 1;
+        } else {
+            return $this->error();
+            //return 2;
+        }
     }
 
     /**

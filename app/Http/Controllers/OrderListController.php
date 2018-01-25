@@ -11,7 +11,7 @@ use App\Repositories\Criteria\Orderlist\Time;
 class OrderlistController extends Controller
 {
     //
-    
+
     private $repository = null;
     public function  __construct(OrderlistRepository $repository)
     {
@@ -88,5 +88,32 @@ class OrderlistController extends Controller
             //return $this->error();
             return 2;
         }
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $this->model->cus_id = $request->cus_id;
+        $this->model->goods_id = $request->goods_id;
+        $this->model->deal_id = $request->deal_id;
+        $this->model->deal_name = $request->deal_name;
+        $this->model->address_id = $request->address_id;
+        $this->model->order_all_money = $request->order_all_money;
+        $this->model->order_pay_money = $request->order_pay_money;
+        $this->model->save();
+        $order_id=$this->model->id;
+        $orderGoods=$request->order_goods;
+        $data=[];
+        foreach ($orderGoods as $k => $v){
+            $v['order_id'] = $order_id;
+            unset($v['moneyNotes']);
+            $data[$k]=$v;
+        }
+        DB::table('order_goods')->insert($data);
     }
 }

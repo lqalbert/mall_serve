@@ -43,6 +43,9 @@ class CustomerService
         if($this->request->has('name')){
             $where['customer_basic.name']=$this->request->name;
         }
+        if($this->request->has('id')){
+            $where['customer_basic.id']=$this->request->id;
+        }
         if($this->request->has('phone')){
             $where['customer_contact.phone']=$this->request->phone;
         }

@@ -39,7 +39,6 @@ class Users extends Model
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
 
     protected $appends = [
-        'order_type'
 
     ];
     private static $status = array(

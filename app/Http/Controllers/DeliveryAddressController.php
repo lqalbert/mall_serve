@@ -23,7 +23,11 @@ class DeliveryAddressController extends Controller
     public function index(Request $request)
     {
         $data=$this->model->where('cus_id','=',$request->cus_id)->get();
-        return ['items'=>$data];
+        $address=[];
+        foreach ($data as $k => $v){
+            $address[$v->id]=$v;
+        }
+        return ['items'=>$data,'address'=>$address];
     }
 
     /**
