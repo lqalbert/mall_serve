@@ -1,19 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\GoodsSpecs;
-use App\Repositories\GoodsSpecsRepository;
-class GoodsSpecsController extends Controller
+
+class GoodsOutController extends Controller
 {
-
-    private $repository = null;
-    public function  __construct(GoodsSpecsRepository $goodsSpecsRepository) 
-    {
-        $this->repository = $goodsSpecsRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +13,23 @@ class GoodsSpecsController extends Controller
      */
     public function index()
     {
-        //
+     return [
+         'items'=>[
+             [
+                    'order_sn'=>'201710281532580000',
+                    'goods_name' => '华硕笔记本电脑',
+                    'consignee'=>'张三=>18236521452',
+                    'order_all_money'=>'5999.00',
+                    'order_pay_money'=>'5999.00',
+                    'order_status'=>'待确认',
+                    'pay_name'=>'支付宝',
+                    'shipping_status'=>'待发货',
+                    'shipping_name'=>'顺丰',
+                    'order_time'=>'2017-10-28 15=>32=>24',
+             ]
+         ],
+         'total'=>400
+     ];
     }
 
     /**
@@ -87,14 +95,6 @@ class GoodsSpecsController extends Controller
      */
     public function destroy($id)
     {
-        //返回 int
-        $re = $this->repository->delete($id);
-        if ($re) {
-            //return $this->success(1);
-            return 1;
-        } else {
-            //return $this->error();
-            return 2;
-        }
+        //
     }
 }

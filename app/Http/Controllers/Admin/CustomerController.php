@@ -1,12 +1,18 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Role;
-
-class RoleController extends Controller
+use App\Services\Customer\CustomerService;
+class CustomerController extends Controller
 {
+    private $service = null;
+    private $request = null;
+
+    public function  __construct(CustomerService $CustomerService, Request $request)
+    {
+        $this->service = $CustomerService;
+        $this->request = $request;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,11 +20,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $result = Role::all();
-        return [
-            'items'=> $result,
-            'totle'=> count($result)
-        ];
+
+        return   $this->service->getData();
+
     }
 
     /**
@@ -37,9 +41,9 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $this->service->storeData();
     }
 
     /**
@@ -71,9 +75,10 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        //
+        $this->service->upDate($id);
+
     }
 
     /**
@@ -84,6 +89,7 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->service->destroyData($id);
+
     }
 }

@@ -1,19 +1,20 @@
 <?php
-namespace App\Http\Controllers;
+
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Department;
-use App\Services\Department\DepartmentService;
-use App\Repositories\DepartmentRepository;
-use App\Repositories\Criteria\Department\Type;
+use App\Repositories\GroupRepository;
+use App\Models\Group;
+use Illuminate\Support\Facades\DB;
 
-class DepartmentController extends Controller
+class GroupController extends Controller
 {
-
     private $repository = null;
-    public function  __construct(DepartmentRepository $departmentReporitory) 
+    
+    public function  __construct(GroupRepository $reporitory) 
     {
-        $this->repository = $departmentReporitory;
+        $this->repository = $reporitory;
+        
     }
     /**
      * Display a listing of the resource.
@@ -22,33 +23,30 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        // return ['id'=>1,'name'=>'asdf'];die;
+        //
         $business = $request->query('business', 'default');
-        
         $result = [];
         switch ($business) {
-            case 'DepartmentType':
-                $result = Department::getType();
-                break;
             case 'select':
-                if ($request->has('type')) {
-                    $type = new Type($request->input('type')); // $request->type;
-                    $this->repository->pushCriteria($type);
-                }
-                $result = $this->repository->all($request->input('fields')); 
-                $result->makeHidden([
-                    'type_text',
-                    'user',
-                    'phone'
-                ]);
-                break;
+                $result =  [
+                'items'=>[
+                'id'=>1,
+                'name'=>'asdfasf'
+                    ],
+                    [
+                    'id'=>1,
+                    'name'=>'asdfasf'
+                        ],
+                        [
+                        'id'=>1,
+                        'name'=>'asdfasf'
+                            ]
+                            ];
             default:
-//                 $service = new DepartmentService($this->repository);
-                $service = app('App\Services\Department\DepartmentService');
+                $service = app('App\Services\Group\GroupService');
                 $result = $service->get();
                 break;
         }
-        
         return $result;
     }
 
@@ -57,6 +55,12 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+//    通过部门ID获取该部门的所有小组
+    public function getGroupsByPid($pid)
+    {
+      $data=DB::table('group_basic')->where('department_id','=',$pid)->select('id','name')->get();
+      return ['items'=>$data];
+    }
     public function create()
     {
         //
@@ -65,26 +69,24 @@ class DepartmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request            
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
-        //throw new \Exception('test');
-        //dd($request->input());
         $re = $this->repository->create($request->input());
         if ($re) {
             return $this->success($re);
         } else {
-            return $this->error($re);
+            return $this->error();
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id            
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,40 +97,36 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id            
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        
-        
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request            
-     * @param int $id            
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //update 返回 bool
-        //var_dump(Department::find($id));die();
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success(Department::find($id));
-            //return 1;
+            return $this->success(Group::find($id));
         } else {
             return $this->error();
-            //return 2;
         }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id            
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -136,11 +134,9 @@ class DepartmentController extends Controller
         //返回 int
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success(1);;
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error();
         }
     }
 }

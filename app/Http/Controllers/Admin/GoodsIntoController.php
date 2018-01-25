@@ -1,19 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Services\Customer\CustomerService;
-class CustomerController extends Controller
-{
-    private $service = null;
-    private $request = null;
 
-    public function  __construct(CustomerService $CustomerService, Request $request)
-    {
-        $this->service = $CustomerService;
-        $this->request = $request;
-    }
+class GoodsIntoController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
@@ -21,9 +13,23 @@ class CustomerController extends Controller
      */
     public function index()
     {
-
-        return   $this->service->getData();
-
+        //
+        return [
+            'items'=>[
+                [
+                    'pdt_type' => '保健品',
+                    'pdt_name' => '强力雄兽丸',
+                    'into_name' => '健仁堂',
+                    'batch_no' => '20171212',
+                    'expiry_date' => '2018-03-03',
+                    'pdt_time' => '2017-08-08',
+                    'pdt_num' => '100',
+                    'pdt_price' => '1000',
+                    'into_time' => '2017-10-10'
+                ],
+            ],
+            'total'=>100
+        ];
     }
 
     /**
@@ -42,9 +48,9 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        $this->service->storeData();
+        //
     }
 
     /**
@@ -76,10 +82,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        $this->service->upDate($id);
-
+        //
     }
 
     /**
@@ -90,7 +95,6 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $this->service->destroyData($id);
-
+        //
     }
 }

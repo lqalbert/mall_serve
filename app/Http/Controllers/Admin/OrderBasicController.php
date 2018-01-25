@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Orderlist;
+use App\models\OrderBasic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
-use App\Repositories\Criteria\Orderlist\Time;
-
-class OrderlistController extends Controller
+class OrderBasicController extends Controller
 {
-    //
 
+
+    private $model = null;
     private $repository = null;
-    public function  __construct(OrderlistRepository $repository)
+    public function  __construct(OrderBasic $OrderBasic,OrderlistRepository $repository)
     {
+        $this->model = $OrderBasic;
         $this->repository = $repository;
     }
     /**
@@ -25,7 +26,6 @@ class OrderlistController extends Controller
     public function index(Request $request)
     {
         $business = $request->query('business', 'default');
-        $result = [];
         switch ($business){
             case 'Orderlist':
                 $service = app('App\Services\Orderlist\OrderlistService');
@@ -41,54 +41,17 @@ class OrderlistController extends Controller
         }
         return $result;
     }
+
     /**
-     * Update the specified resource in storage.
+     * Show the form for creating a new resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //update 返回 bool
-        //var_dump(Department::find($id));die();
-        $re = $this->repository->update($request->input(), $id);
-        if ($re) {
-            return $this->success(Orderlist::find($id));
-            //return 1;
-        } else {
-            return $this->error();
-            //return 2;
-        }
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function create()
     {
         //
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //返回 int
-        $re = $this->repository->delete($id);
-        if ($re) {
-            //return $this->success(1);
-            return 1;
-        } else {
-            //return $this->error();
-            return 2;
-        }
-    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -97,7 +60,6 @@ class OrderlistController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->model->cus_id = $request->cus_id;
         $this->model->goods_id = $request->goods_id;
         $this->model->deal_id = $request->deal_id;
@@ -115,5 +77,57 @@ class OrderlistController extends Controller
             $data[$k]=$v;
         }
         DB::table('order_goods')->insert($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\models\OrderBasic  $orderBasic
+     * @return \Illuminate\Http\Response
+     */
+    public function show(OrderBasic $orderBasic)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\models\OrderBasic  $orderBasic
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(OrderBasic $orderBasic)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\OrderBasic  $orderBasic
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, OrderBasic $orderBasic,$id)
+    {
+        $re = $this->repository->update($request->input(), $id);
+        if ($re) {
+            return $this->success(OrderBasic::find($id));
+            //return 1;
+        } else {
+            return $this->error();
+            //return 2;
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\models\OrderBasic  $orderBasic
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(OrderBasic $orderBasic,$id)
+    {
+        $this->model->destroy($id);
     }
 }

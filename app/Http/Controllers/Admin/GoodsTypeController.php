@@ -1,40 +1,33 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\ExpressInfo;
-use App\Repositories\ExpressInfoRepository;
-
-class ExpressInfoController extends Controller
+use App\Models\GoodsType;
+use App\Repositories\GoodsTypeRepository;
+class GoodsTypeController extends Controller
 {
 
     private $repository = null;
-    public function  __construct(ExpressInfoRepository $expressInfoRepository) 
+    public function  __construct(GoodsTypeRepository $goodsTypeRepository) 
     {
-        $this->repository = $expressInfoRepository;
+        $this->repository = $goodsTypeRepository;
     }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */       
-    public function index(Request $request)
+     */
+    public function index()
     {
-        $business = $request->query('business', 'default');
-        $result = [];
-        switch ($business) {
-            case 'ExpressStatus':
-                $result = ExpressInfo::getExpressStatus();
-                break;
-            
-            default:
-                $service = app('App\Services\ExpressInfo\ExpressInfoService');
-                $result = $service->get();
-                break;
-        }
-        return $result;
+//     	'items'=> Deposit::orderBy('id','desc')->get(),
+//     	'total'=> Deposit::count()
+		
+    	return [
+    			'items'=> GoodsType::select('id','type_name as name')->get(),
+    			'total'=> GoodsType::count()
+    	];
     }
 
     /**
@@ -55,12 +48,7 @@ class ExpressInfoController extends Controller
      */
     public function store(Request $request)
     {
-        $model = ExpressInfo::create($request->all());
-        if ($model) {
-        	return $this->success($model);
-        } else {
-        	return $this->error();
-        }
+        //
     }
 
     /**
@@ -105,6 +93,14 @@ class ExpressInfoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //返回 int
+        $re = $this->repository->delete($id);
+        if ($re) {
+            //return $this->success(1);
+            return 1;
+        } else {
+            //return $this->error();
+            return 2;
+        }
     }
 }

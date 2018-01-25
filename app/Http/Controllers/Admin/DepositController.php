@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\Deposit;
+use Monolog\Handler\IFTTTHandler;
+use PhpParser\Node\Stmt\If_;
 
-class GoodsIntoController extends Controller
+class DepositController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,23 +16,11 @@ class GoodsIntoController extends Controller
      */
     public function index()
     {
-        //
-        return [
-            'items'=>[
-                [
-                    'pdt_type' => '保健品',
-                    'pdt_name' => '强力雄兽丸',
-                    'into_name' => '健仁堂',
-                    'batch_no' => '20171212',
-                    'expiry_date' => '2018-03-03',
-                    'pdt_time' => '2017-08-08',
-                    'pdt_num' => '100',
-                    'pdt_price' => '1000',
-                    'into_time' => '2017-10-10'
-                ],
-            ],
-            'total'=>100
-        ];
+    	
+    	return [
+    			'items'=> Deposit::orderBy('id','desc')->get(),
+    			'total'=> Deposit::count()
+    	];
     }
 
     /**
@@ -50,7 +41,12 @@ class GoodsIntoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	$model = Deposit::create($request->all());
+    	if ($model) {
+    		return $this->success($model);
+    	} else {
+    		return $this->error();
+    	}
     }
 
     /**

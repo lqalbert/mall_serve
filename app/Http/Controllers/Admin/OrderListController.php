@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Models\Orderlist;
 use Illuminate\Http\Request;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Repositories\Criteria\Orderlist\Time;
 
-class BuyOrderController extends Controller
+class OrderlistController extends Controller
 {
     //
+
     private $repository = null;
     public function  __construct(OrderlistRepository $repository)
     {
@@ -24,7 +27,7 @@ class BuyOrderController extends Controller
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business){
-            case 'BuyOrder':
+            case 'Orderlist':
                 $service = app('App\Services\Orderlist\OrderlistService');
                 $result = $service->get();
                 break;
@@ -51,7 +54,7 @@ class BuyOrderController extends Controller
         //var_dump(Department::find($id));die();
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success($re);
+            return $this->success(Orderlist::find($id));
             //return 1;
         } else {
             return $this->error();
@@ -89,19 +92,28 @@ class BuyOrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
-        //throw new \Exception('test');
-        //dd($request->input());
-        $re = $this->repository->create($request->input());
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
+
+        $this->model->cus_id = $request->cus_id;
+        $this->model->goods_id = $request->goods_id;
+        $this->model->deal_id = $request->deal_id;
+        $this->model->deal_name = $request->deal_name;
+        $this->model->address_id = $request->address_id;
+        $this->model->order_all_money = $request->order_all_money;
+        $this->model->order_pay_money = $request->order_pay_money;
+        $this->model->save();
+        $order_id=$this->model->id;
+        $orderGoods=$request->order_goods;
+        $data=[];
+        foreach ($orderGoods as $k => $v){
+            $v['order_id'] = $order_id;
+            unset($v['moneyNotes']);
+            $data[$k]=$v;
         }
+        DB::table('order_goods')->insert($data);
     }
 }

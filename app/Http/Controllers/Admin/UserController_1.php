@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\OrderGoods;
-use App\Services\Ordergoods\OrdergoodsService;
-use App\Repositories\OrdergoodsRepository;
-use App\Repositories\Criteria\Ordergoods\Ordergoods as OrdergoodsC;
-class OrderGoodsController extends Controller
+use App\Models\User;
+use App\Repositories\OrderlistRepository;
+use App\Services\Orderlist\OrderlistService;
+use App\Repositories\Criteria\Orderlist\Time;
+
+class UserController1 extends Controller
 {
     //
     private $repository = null;
-    public function  __construct(OrdergoodsRepository $repository)
+    public function  __construct(OrderlistRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -26,11 +27,11 @@ class OrderGoodsController extends Controller
         $result = [];
         switch ($business){
             case 'select':
-                $service = app('App\Services\Ordergoods\OrdergoodsService');
+                $service = app('App\Services\Users\UsersService');
                 $result = $service->get();
                 break;
             default:
-                $service = app('App\Services\Ordergoods\OrdergoodsService');
+                $service = app('App\Services\Users\UsersService');
                 $result = $service->get();
         }
         return $result;
@@ -53,23 +54,6 @@ class OrderGoodsController extends Controller
         } else {
             return $this->error();
             //return 2;
-        }
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        //throw new \Exception('test');
-        $re = $this->repository->create($request->input());
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
         }
     }
     /**

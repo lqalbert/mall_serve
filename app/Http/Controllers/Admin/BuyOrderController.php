@@ -1,14 +1,11 @@
 <?php
-
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Repositories\Criteria\Orderlist\Time;
 
-class UserController1 extends Controller
+class BuyOrderController extends Controller
 {
     //
     private $repository = null;
@@ -26,12 +23,16 @@ class UserController1 extends Controller
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business){
+            case 'BuyOrder':
+                $service = app('App\Services\Orderlist\OrderlistService');
+                $result = $service->get();
+                break;
             case 'select':
-                $service = app('App\Services\Users\UsersService');
+                $service = app('App\Services\Orderlist\OrderlistService');
                 $result = $service->get();
                 break;
             default:
-                $service = app('App\Services\Users\UsersService');
+                $service = app('App\Services\Orderlist\OrderlistService');
                 $result = $service->get();
         }
         return $result;
@@ -49,7 +50,7 @@ class UserController1 extends Controller
         //var_dump(Department::find($id));die();
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success(Orderlist::find($id));
+            return $this->success($re);
             //return 1;
         } else {
             return $this->error();
@@ -82,6 +83,24 @@ class UserController1 extends Controller
         } else {
             //return $this->error();
             return 2;
+        }
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+        //throw new \Exception('test');
+        //dd($request->input());
+        $re = $this->repository->create($request->input());
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error($re);
         }
     }
 }

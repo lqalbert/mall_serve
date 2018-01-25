@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\Deposit;
-use Monolog\Handler\IFTTTHandler;
-use PhpParser\Node\Stmt\If_;
-
-class DepositController extends Controller
+use App\Models\GoodsSpecs;
+use App\Repositories\GoodsSpecsRepository;
+class GoodsSpecsController extends Controller
 {
+
+    private $repository = null;
+    public function  __construct(GoodsSpecsRepository $goodsSpecsRepository) 
+    {
+        $this->repository = $goodsSpecsRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +21,7 @@ class DepositController extends Controller
      */
     public function index()
     {
-    	
-    	return [
-    			'items'=> Deposit::orderBy('id','desc')->get(),
-    			'total'=> Deposit::count()
-    	];
+        //
     }
 
     /**
@@ -41,12 +42,7 @@ class DepositController extends Controller
      */
     public function store(Request $request)
     {
-    	$model = Deposit::create($request->all());
-    	if ($model) {
-    		return $this->success($model);
-    	} else {
-    		return $this->error();
-    	}
+        //
     }
 
     /**
@@ -91,6 +87,14 @@ class DepositController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //返回 int
+        $re = $this->repository->delete($id);
+        if ($re) {
+            //return $this->success(1);
+            return 1;
+        } else {
+            //return $this->error();
+            return 2;
+        }
     }
 }

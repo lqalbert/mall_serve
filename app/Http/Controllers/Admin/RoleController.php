@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\Role;
 
-class GoodsOutController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,23 +14,11 @@ class GoodsOutController extends Controller
      */
     public function index()
     {
-     return [
-         'items'=>[
-             [
-                    'order_sn'=>'201710281532580000',
-                    'goods_name' => '华硕笔记本电脑',
-                    'consignee'=>'张三=>18236521452',
-                    'order_all_money'=>'5999.00',
-                    'order_pay_money'=>'5999.00',
-                    'order_status'=>'待确认',
-                    'pay_name'=>'支付宝',
-                    'shipping_status'=>'待发货',
-                    'shipping_name'=>'顺丰',
-                    'order_time'=>'2017-10-28 15=>32=>24',
-             ]
-         ],
-         'total'=>400
-     ];
+        $result = Role::all();
+        return [
+            'items'=> $result,
+            'totle'=> count($result)
+        ];
     }
 
     /**
