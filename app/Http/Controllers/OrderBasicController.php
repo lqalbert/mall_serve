@@ -22,21 +22,11 @@ class OrderBasicController extends Controller
      */
     public function index(Request $request)
     {
-
-        $fields=['order_basic.id','order_basic.cus_id','order_basic.goods_name','order_basic.category_id','order_basic.goods_number','order_basic.remark'];
+        $fields=['order_basic.*','customer_basic.name'];
         $data=$this->model
-            ->where('cus_id','=',$request->cus_id)
+            ->join('customer_basic','customer_basic.id','=','order_basic.cus_id')
             ->select($fields)
             ->get();
-        foreach ($data as $k => $v){
-            $cat_ids=explode(',',$v['category_id']);
-            $category_names=DB::table('category_base')->whereIn('id',$cat_ids)->select('label')->get();
-            $dev=[];
-            foreach ($category_names as $k1 => $v1){
-               $dev[]=$v1->label;
-            }
-            $data[$k]['category_name']=implode('/',$dev);
-        }
 
         return ['items'=>$data];
     }

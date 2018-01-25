@@ -51,7 +51,7 @@ class EmployeeController extends Controller
              ->where('user_basic.group_id','=',$gid)
              ->select($fields)
              ->get();
-        return $data;
+        return ['items'=>$data];
     }
     /**
      * Show the form for creating a new resource.

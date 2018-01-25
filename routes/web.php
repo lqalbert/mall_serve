@@ -25,7 +25,7 @@ Route::resource('/categorys','CategoryController');
 Route::get('/tree','CategoryController@getCascade');
 Route::get('/deleteCategory/{id}','CategoryController@haveChildren');
 Route::resource('/customers','CustomerController');
-Route::get('/employees/{gid}','EmployeeController@getUserByGId');
+Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
 Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
 
 
