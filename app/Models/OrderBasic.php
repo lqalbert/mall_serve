@@ -21,5 +21,6 @@ class OrderBasic extends Model
         'order_goods',
         'order_all_money',
         'order_pay_money',
+        'check_status'
     ];
 }

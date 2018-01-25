@@ -108,11 +108,13 @@ class OrderBasicController extends Controller
      * @param  \App\models\OrderBasic  $orderBasic
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, OrderBasic $orderBasic,$id)
+    public function update(Request $request, $id)
     {
+        //update 返回 bool
+        //var_dump(Department::find($id));die();
         $re = $this->repository->update($request->input(), $id);
         if ($re) {
-            return $this->success(OrderBasic::find($id));
+            return $this->success($re);
             //return 1;
         } else {
             return $this->error();
