@@ -17,7 +17,7 @@ class CreateGoodsType extends Migration
         Schema::create('goods_type', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type_name', 20);
-            $table->string('type_attr', 50);
+            $table->string('type_attr', 50)->nullable();
             $table->tinyInteger('status')
                 ->default(1)
                 ->comment('状态 1 启用 0 禁用');

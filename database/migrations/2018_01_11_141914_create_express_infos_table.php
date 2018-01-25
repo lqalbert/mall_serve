@@ -28,7 +28,7 @@ class CreateExpressInfosTable extends Migration
             $table->timestamp('order_time')->nullable()->comment('订单日期');
             $table->string('express_remark',50)->nullable()->comment('物流备注');
             $table->string('creator',20)->nullable()->comment('创建者');
-            $table->unsignedInteger('creator_id')->default(0)>comment('创建者ID');
+            $table->unsignedInteger('creator_id')->default(0)->comment('创建者ID');
             $table->timestamps();
             $table->softDeletes();
         });
