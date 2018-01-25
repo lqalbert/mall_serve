@@ -26,7 +26,7 @@ class CreateOrderBasicTable extends Migration
             $table->float('order_all_money',24)->comment('总金额')->nullable();
             $table->float('order_pay_money',24)->comment('应付金额')->nullable();
             $table->enum('shipping_status', [0,1,2])->default(0)->comment('发货状态0待发货1已发货2已收货');
-            $table->enum('check_status', [0,1,2])->default(0)->comment('审核状态0未通过1通过2未审核');
+            $table->enum('check_status', [0,1,2])->default(0)->comment('审核状态0未审核1通过2未通过');
             $table->string('distribution_type', 60)->comment('配送方式')->nullable();
             $table->date('auditor_time')->comment('审核时间')->nullable();
             $table->timestamps();
