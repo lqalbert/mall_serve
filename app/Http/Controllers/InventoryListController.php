@@ -3,40 +3,56 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\DB;
 
 class InventoryListController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     * todo 写不同的逻辑 select 、 default
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return [
-            'items'=>[
-                [
-                    'name' => '老白金',
-                    'type_text' => '保健品',
-                    'phone' => '15',
-                    'qq' => '324568554',
-                    'weixin' => '012',
-                    'address' => '15645555555555',
-                    'id_card' => '李清',
-                ],
-                [
-                    'name' => '老白金',
-                    'type_text' => '保健品',
-                    'phone' => '15',
-                    'qq' => '324568554',
-                    'weixin' => '012',
-                    'address' => '15645555555555',
-                    'id_card' => '李清',
-                ],
+        
 
-            ],
-            'total'=>100
+        $query = Inventory::orderBy('id','desc');
+        
+        if ($request->has('goods_name')) {
+            $query->where('goods_name','like',$request->input('goods_name')."%");
+        }
+        
+        if ($request->has('goods_batch')) {
+            $query->where('goods_batch', 'like',$request->input('goods_batch')."%");
+        }
+        
+        if ($request->has('goods_version')) {
+            $query->where('goods_version', 'like',$request->input('goods_version')."%");
+        }
+        
+        if ($request->has('goods_version')) {
+            $query->where('goods_version', 'like',$request->input('goods_version')."%");
+        }
+        
+        if ($request->has('goods_type')) {
+            $query->where('goods_type', $request->input('goods_type'));
+        }
+        
+        if ($request->has('fields')) {
+            $query->select($request->input('fields'));
+        }
+        
+        
+        $re = $query->paginate($request->input('pageSize'));
+        $collection = $re->getCollection();
+        foreach ($collection as  &$model){
+//     		$model->type_text;
+    		$model->setAppends(['type_text']);
+    	}
+        return [
+            'items'=> $collection,
+            'total'=> $re->total()
 
         ];
     }
@@ -59,7 +75,24 @@ class InventoryListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = Inventory::make($request->all());
+        
+        if ($model->type==2) {
+        	$oldModel = Inventory::find($request->input('ventory_id'));
+        	$model->goods_name = $oldModel->goods_name;
+        	$model->goods_version = $oldModel->goods_version;
+        	$model->goods_batch = $oldModel->goods_batch;
+        }
+        
+        $model->user = DB::table('user_basic')->where('id', $model->user_id)->value('realname');
+        
+        
+        $re = $model->save();
+        if ($re) {
+        	return $this->success($model);
+        } else {
+        	return $this->error();
+        }
     }
 
     /**
