@@ -35,15 +35,16 @@ class OrderlistService
             $whereIn = $ids;
         }
         if ($this->request->has('consignee')) {
-            $where[]=['consignee','like',$this->request->consignee."%"];
-        }
-        if ($this->request->has('sale_name')) {
-            $sales = DB::table('user_basic')
-                ->where('realname', 'like', "%".$this->request->sale_name."%")
+            $sales = DB::table('customer_basic')
+                ->where('name', 'like', "%".$this->request->consignee."%")
                 ->get();
             foreach ($sales as $v){
-                $where[] = ['deal_id',$v->id];
+                $where[] = ['cus_id',$v->id];
             }
+        }
+        if ($this->request->has('sale_name')) {
+            $where[]=['deal_name','like',"%".$this->request->sale_name."%"];
+
         }
         if ($this->request->has('type')) {
             $where[]=['order_status','=', $this->request->type];
@@ -52,10 +53,10 @@ class OrderlistService
             $where[]=['shipping_status', '=', $this->request->deliver];
         }
         if ($this->request->has('start')) {
-            $where[]=['order_time','>=', $this->request->start];
+            $where[]=['created_at','>=', $this->request->start];
         }
         if ($this->request->has('end')) {
-            $where[]=['order_time','<=', $this->request->end];
+            $where[]=['created_at','<=', $this->request->end];
         }
         if(count($where)>0||count($whereIn>0))
         {

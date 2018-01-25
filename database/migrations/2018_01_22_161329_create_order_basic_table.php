@@ -28,7 +28,6 @@ class CreateOrderBasicTable extends Migration
             $table->enum('shipping_status', [0,1,2])->default(0)->comment('发货状态0待发货1已发货2已收货');
             $table->enum('check_status', [0,1,2])->default(0)->comment('审核状态0未通过1通过2未审核');
             $table->string('distribution_type', 60)->comment('配送方式')->nullable();
-            $table->date('order_time')->comment('下单时间(为付款完成时间)')->nullable();
             $table->date('auditor_time')->comment('审核时间')->nullable();
             $table->timestamps();
             $table->softDeletes();
