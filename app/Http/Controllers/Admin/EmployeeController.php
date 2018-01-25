@@ -45,12 +45,7 @@ class EmployeeController extends Controller
     }
     public function getUserByGId(Request $request,$gid )
     {
-        $fields=['user_basic.id as user_id','user_basic.realname','user_basic.qq','roles.display_name as role_name','user_basic.mobilephone as phone'];
-         $data=DB::table('user_basic')
-             ->join('roles','roles.id','=','user_basic.role_id')
-             ->where('user_basic.group_id','=',$gid)
-             ->select($fields)
-             ->get();
+         $data=DB::table('user_basic')->where('user_basic.group_id','=',$gid)->select('id','realname')->get();
         return ['items'=>$data];
     }
     /**
@@ -86,7 +81,7 @@ class EmployeeController extends Controller
 //             event(new AddEmployee($re));
             return $this->success($re);
         } else {
-            return $this->error();
+            return $this->error(0);
         }
     }
 
@@ -125,7 +120,7 @@ class EmployeeController extends Controller
         if ($re) {
             return $this->success(User::find($id));
         } else {
-            return $this->error();
+            return $this->error(0);
         }
     }
 
@@ -140,9 +135,9 @@ class EmployeeController extends Controller
         //
         $re = $this->repository->delete($id);
         if ($re) {
-            return $this->success(1);;
+            return $this->success(1);
         } else {
-            return $this->error();
+            return $this->error(0);
         }
     }
 }

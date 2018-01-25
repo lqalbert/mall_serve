@@ -103,6 +103,9 @@ class User extends Authenticatable
     }
     public function  getHeadAttribute($value) 
     {
-        return asset($value);
+        if($value){
+            $value = asset($value);
+        }
+        return $value;
     }
 }
