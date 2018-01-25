@@ -55,7 +55,12 @@ class ExpressInfoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $model = ExpressInfo::create($request->all());
+        if ($model) {
+        	return $this->success($model);
+        } else {
+        	return $this->error();
+        }
     }
 
     /**

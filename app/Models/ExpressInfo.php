@@ -9,7 +9,34 @@ class ExpressInfo extends Model
 {
     use SoftDeletes;
 
-		protected $table = 'express_info';
+	protected $table = 'express_info';
+	/**
+	 * 需要被转换成日期的属性。
+	 *
+	 * @var array
+	 */
+	protected $dates = [
+			'deleted_at',
+			'express_time'
+	];
+	
+	
+	
+	protected $fillable=[
+			'cus_id',
+			'order_sn',
+			'express_sn',
+			'express_name',
+			'express_status',
+			'express_time',
+			'consignee',
+			'express_phone',
+			'address',
+			'order_time',
+			'express_remark',
+			'creator',
+			'creator_id',
+	];
 
     private static $expressStatus = array(
         '未发货',
@@ -27,6 +54,8 @@ class ExpressInfo extends Model
         }
         return self::$expressStatus[0];
     }
+    
+    
 
     
 

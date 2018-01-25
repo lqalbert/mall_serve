@@ -25,11 +25,11 @@ class ExpressInfoService{
     {
       	$search = [];
         
-        if($this->request->has('order_number')){
+        if($this->request->has('order_sn')){
         	$search[] = ['order_number','like',$this->request->order_number.'%'];
         }
 
-        if($this->request->has('express_no')){
+        if($this->request->has('express_sn')){
         	$search[] = ['express_no','like',$this->request->express_no.'%'];
         }
 
@@ -41,7 +41,7 @@ class ExpressInfoService{
         	$search[] = ['express_time','>=',$this->request->start." 00:00:00"];
         }
 
-				if($this->request->has('end')){
+		if($this->request->has('end')){
         	$search[] = ['express_time','<',$this->setEndTime()];
         }
 
