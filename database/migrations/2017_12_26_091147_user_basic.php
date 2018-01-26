@@ -36,7 +36,7 @@ class UserBasic extends Migration
             $table->dateTime('out_time')->nullable()->comment('最后退出时间');
             $table->unsignedInteger('department_id')->default(0)->comment('员工所在部门ID');
             $table->unsignedInteger('group_id')->default(0)->comment('员工所在团队ID');
-
+            $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
         });
