@@ -12,7 +12,7 @@
 
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-    
+    <link href="/admin/static/css/app.532abdad053176de93e35981e08d5a72.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
