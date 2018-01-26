@@ -24,6 +24,8 @@ class Goods extends Model
     		'description',
     		'cover_url',
     		'status',
+    		'subtitle',
+    		'brief'
     ];
     
     //多对多

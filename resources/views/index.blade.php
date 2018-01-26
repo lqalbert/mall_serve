@@ -322,10 +322,15 @@
                             <div id="section1C" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 cont">
-                                        <img src="images/home/index/product.png" style="width: 100%" alt="">
+                                    <a href="{{ route('product/product',['id'=>1]) }}">
+                                    	<img src="images/home/index/product.png" style="width: 100%" alt="">
+                                    </a>
+                                        
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 cont">
-                                        <img src="images/home/index/word.png" style="width: 100%" alt="">
+                                    	<a href="{{ route('product/product',['id'=>1]) }}">
+                                        	<img src="images/home/index/word.png" style="width: 100%" alt="">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -338,10 +343,14 @@
                             <div id="section2C" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 cont">
-                                        <img src="images/home/index/word.png" style="width: 100%" alt="">
+                                    	<a href="{{ route('product/product',['id'=>2]) }}">
+                                        	<img src="images/home/index/word.png" style="width: 100%" alt="">
+                                        </a>
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 cont">
-                                        <img src="images/home/index/product.png" style="width: 100%" alt="">
+                                    	<a href="{{ route('product/product',['id'=>2]) }}">
+                                        	<img src="images/home/index/product.png" style="width: 100%" alt="">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -354,10 +363,14 @@
                             <div id="section3C" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-4 col-lg-offset-1 col-md-6 col-sm-6 col-xs-12 cont">
+                                    	<a href="{{ route('product/product',['id'=>3]) }}">
                                         <img src="images/home/index/product1.png" style="width: 100%" alt="">
+                                        </a>
                                     </div>
                                     <div class="col-lg-4 col-lg-offset-2 col-md-6 col-sm-6 col-xs-12 cont">
-                                        <img src="images/home/index/product1.png" style="width: 100%" alt="">
+                                    	<a href="{{ route('product/product',['id'=>4]) }}">
+                                        	<img src="images/home/index/product1.png" style="width: 100%" alt="">
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -385,87 +398,61 @@
                                             <div class="leanLine"></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                            化妆美颜
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <div class="leanLine"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                            医疗保健
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <div class="leanLine"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                            饮食男女
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <div class="leanLine"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                            生活数码
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <div class="leanLine"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars">
-                                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                                            潮流服饰
-                                        </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                                            <div class="leanLine"></div>
-                                        </div>
-                                    </div>
+<!--                                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars"> -->
+<!--                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> -->
+<!--                                             化妆美颜 -->
+<!--                                         </div> -->
+<!--                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
+<!--                                             <div class="leanLine"></div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars"> -->
+<!--                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> -->
+<!--                                             医疗保健 -->
+<!--                                         </div> -->
+<!--                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
+<!--                                             <div class="leanLine"></div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars"> -->
+<!--                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> -->
+<!--                                             饮食男女 -->
+<!--                                         </div> -->
+<!--                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
+<!--                                             <div class="leanLine"></div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars"> -->
+<!--                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> -->
+<!--                                             生活数码 -->
+<!--                                         </div> -->
+<!--                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
+<!--                                             <div class="leanLine"></div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-lg-1 col-md-2 col-sm-2 col-xs-4 bars"> -->
+<!--                                         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10"> -->
+<!--                                             潮流服饰 -->
+<!--                                         </div> -->
+<!--                                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2"> -->
+<!--                                             <div class="leanLine"></div> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productsLists">
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
+                    	@foreach($allgoods as $goods)
+                    	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
+                    		<a href="{{ route('product/product', ['id'=>$goods->id]) }}" target="_blank">
+                            	<img src="{{ asset($goods->cover_url) }}" style="width: 100%; max-width:466px; max-height:446px " alt="">
+                            </a>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productsList">
-                            <img src="images/home/index/product2.jpg" style="width: 100%" alt="">
-                        </div>
+                    	@endforeach
+                        
+                        
+                        
                     </div>
                 </div>
             </div>

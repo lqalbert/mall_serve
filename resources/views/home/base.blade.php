@@ -28,9 +28,9 @@
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-10 personBar">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-10 personBar">
                     <div class="col-lg-4 col-lg-offset-8 col-md-4 col-md-offset-8 col-sm-6 col-sm-offset-6 loginActionBars">
-                        <div id="loginBar" class="col-lg-4 col-lg-offset-8 col-md-5 col-md-offset-7 col-sm-5 col-sm-offset-7 col-xs-8 col-xs-offset-4">
+                        <!-- <div id="loginBar" class="col-lg-4 col-lg-offset-8 col-md-5 col-md-offset-7 col-sm-5 col-sm-offset-7 col-xs-8 col-xs-offset-4">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 barL">
                                 <a href="{{session('isLogin')}}">
                                     <span id="countP" class="iconfonts icon-person {{session('login')}}"></span>
@@ -175,20 +175,20 @@
 
                             </div>
                             <div class="tangle"></div>
-                        </div>
+                        </div>-->
                     </div>
-                </div> -->
+                </div> 
                 
                 <!-- search input  -->
-                <!-- <div class="col-lg-10 col-lg-offset-1 col-md-12 col-md-offset-1 col-sm-12 col-xs-12 searchBars">
+                 <div class="col-lg-10 col-lg-offset-1 col-md-12 col-md-offset-1 col-sm-12 col-xs-12 searchBars">
                     <div id="logo" class="col-lg-2 col-md-2 col-sm-3 col-xs-4">logo</div>
-                    <div class="col-lg-8 col-md-8 col-sm-7 col-xs-8">
+                    <!--<div class="col-lg-8 col-md-8 col-sm-7 col-xs-8">
                         <div id="searchBar" class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                             <input id="searchB" type="text" placeholder="输入搜索">
                             <span id="souI" class="iconfonts icon-sousuo"></span>
                         </div>
-                    </div>
-                </div> -->
+                    </div> -->
+                </div>
                 <!-- / search input  -->
 
 

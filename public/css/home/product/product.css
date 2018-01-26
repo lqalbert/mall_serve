@@ -113,12 +113,12 @@ li{
     box-shadow: 0 0 2px #5bc0de,0 0 3px #5bc0de;
 }
 
-/*去除input type为number时 箭头样式*/
-/*谷歌浏览器*/
+/*鍘婚櫎input type涓簄umber鏃� 绠ご鏍峰紡*/
+/*璋锋瓕娴忚鍣�*/
 .productInfo .proRig .rigNum .left input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{
     -webkit-appearance: none !important;
 }
-/*火狐浏览器*/
+/*鐏嫄娴忚鍣�*/
 .productInfo .proRig .rigNum .left input[type="number"]{
     -moz-appearance:textfield;
 }
@@ -201,6 +201,10 @@ li{
     padding: 30px;
 }
 
+.productContent .leftCon img{
+	max-width: 735px;
+}
+
 .productContent .leftCon div{
     padding: 0;
 }
@@ -253,9 +257,13 @@ li{
 }
 
 .productContent .rightCon .productLis .proImg{
-    height: 200px;
-    overflow: hidden;
+   // height: 200px;
+    //overflow: hidden;
     padding: 0 10px 0 10px;
+}
+
+.rightCon .productLis .proImg img{
+	max-width: 302px;
 }
 
 .productContent .rightCon .productLis .tit{
