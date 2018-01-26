@@ -43,7 +43,7 @@
 	                    	
 	                        <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 rightCon">
 	                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 left">
-	                            	<img alt="{{ $article->title }}"  src="{{ $article->image }}">
+	                            	<img alt="{{ $article->title }}" style="max-width:120px" src="{{ $article->image }}">
 	                            </div>
 	                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right">
 	                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">{{ $article->title }}</div>
