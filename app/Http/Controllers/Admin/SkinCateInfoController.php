@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\models\SkinCateInfo;
+use App\Models\SkinCateInfo;
 use Illuminate\Http\Request;
 
 class SkinCateInfoController extends Controller
