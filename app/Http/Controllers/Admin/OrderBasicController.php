@@ -117,7 +117,7 @@ class OrderBasicController extends Controller
             return $this->success($re);
             //return 1;
         } else {
-            return $this->error();
+            return $this->error($re);
             //return 2;
         }
     }
