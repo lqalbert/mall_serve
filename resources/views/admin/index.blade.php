@@ -22,7 +22,7 @@
     </div>
 
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static/js/manifest.771370061cfd2a4540ea.js"></script>
+    <script type="text/javascript" src="/admin/static/js/manifest.771370061cfd2a4540ea.js?a=b"></script>
     <script type="text/javascript" src="/admin/static/js/vendor.e71cf8bfe3a1412af3e1.js"></script>
     <script type="text/javascript" src="/admin/static/js/app.09d5500b20ad5db9dd37.js"></script>
 </body>
