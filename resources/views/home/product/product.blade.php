@@ -7,9 +7,9 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productBar">
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 lle">
             <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle">
-                <a style="color: #333" href="#">首页</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;&nbsp;
-                <a style="color: #666" href="#">全部产品</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;&nbsp;
-                <span style="color: #2F9F6D">XXXX清爽控油套装</span>
+                <a style="color: #333" href="/">首页</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;&nbsp;
+                <a style="color: #666" href="{{ url('product/index') }}">全部产品</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span style="color: #2F9F6D">{{ $goods->goods_name }}</span>
             </div>
         </div>
     </div>
@@ -19,16 +19,14 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 proLef">
                     <div class="swiper-container gallery-top">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/1)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/2)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/3)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/4)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/5)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/6)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/7)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/8)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/9)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/10)"></div>
+                        @if($goods->imgs)
+                        	@foreach($goods->imgs as $img)
+                        	<div class="swiper-slide" style="background-image:url({{ asset($img->url) }})"></div>
+                        	@endforeach
+                        @else
+                        	<div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/1)"></div>
+                        @endif
+                           
                         </div>
                         <!-- Add Arrows -->
                         <div class="swiper-button-next swiper-button-white"></div>
@@ -36,16 +34,14 @@
                     </div>
                     <div class="swiper-container gallery-thumbs">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/1)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/2)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/3)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/4)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/5)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/6)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/7)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/8)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/9)"></div>
-                            <div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/10)"></div>
+                        	@if($goods->imgs)
+	                        	@foreach($goods->imgs as $img)
+	                        	<div class="swiper-slide" style="background-image:url({{ asset($img->url) }})"></div>
+	                        	@endforeach
+	                        @else
+	                        	<div class="swiper-slide" style="background-image:url(http://lorempixel.com/1200/1200/nature/1)"></div>
+	                        @endif
+                            
                         </div>
                     </div>
                     <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 top">
@@ -71,47 +67,49 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 proRig">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigTit">
-                        XXXX清爽控油套装
+                        {{$goods->goods_name}}
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigFun">
-                        保湿&nbsp;&nbsp;&nbsp;清爽&nbsp;&nbsp;&nbsp;控油
+                        {{ $goods->subtitle }}
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigDes">
-                        这里是详细介绍！这里是详细介绍！这里是详细介绍！这里是详细介绍！这里是详细介绍！
+                        {!! nl2br($goods->brief) !!}
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis">
-                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis">
-                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis">
-                        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1
-                    </div>
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis"> -->
+<!--                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1 -->
+<!--                     </div> -->
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis"> -->
+<!--                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1 -->
+<!--                     </div> -->
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigLis"> -->
+<!--                         <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>&nbsp;洗面奶100ML*1 -->
+<!--                     </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigPri">
-                        <span style="color: red;font-size: 24px">特价：99元</span>&nbsp;&nbsp;&nbsp;
+                        <span style="color: red;font-size: 24px">特价：{{ $goods->goods_price }}元</span>&nbsp;&nbsp;&nbsp;
+                        <!--  
                         <span style="color: #333;font-size: 18px">原价：199元</span>
+                        -->
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigNum">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 left">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="font-size: 16px;color: #666">数量：</div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                                <input id="productNumber" type="number" class="productNumber" value="0">
-                                <div id="increase" class="increase">-</div>
-                                <div id="decrease" class="decrease">+</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">收藏：</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigAct">
-                        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-5 buyNow">立即购买</div>
-                        <div class="col-lg-3 col-md-4 col-sm-5 col-xs-5 addStore">加入购物车</div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigShare">
-                        分享到
-                    </div>
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigNum"> -->
+<!--                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 left"> -->
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="font-size: 16px;color: #666">数量： {{ $goods->goods_number }}</div>
+<!--                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"> -->
+<!--                                 <input id="productNumber" type="number" class="productNumber" value="0"> -->
+<!--                                 <div id="increase" class="increase">-</div> -->
+<!--                                 <div id="decrease" class="decrease">+</div> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right"> -->
+<!--                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">收藏：</div> -->
+<!--                         </div> -->
+<!--                     </div> -->
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigAct"> -->
+<!--                         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-5 buyNow">立即购买</div> -->
+<!--                         <div class="col-lg-3 col-md-4 col-sm-5 col-xs-5 addStore">加入购物车</div> -->
+<!--                     </div> -->
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigShare"> -->
+<!--                         分享到 -->
+<!--                     </div> -->
                 </div>
             </div>
         </div>
@@ -121,40 +119,26 @@
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftCon">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productTit">产品介绍</div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productImg"></div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInformation">
-                        这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！这里是产品文字介绍！
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productImgs"></div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productImgs"></div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productImgs"></div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productImgs"></div>
+                    {!! $goods->description !!}
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rightCon">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productTit">相关产品</div>
+                    
+                    
+                    @foreach($allgoods as $g)
                     <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 productLis">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proImg">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
+                            <img src="{{ asset($g->cover_url) }}"  alt="">
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">XXX套装</div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">108.00元</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">{{ $g->goods_name }}</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">{{ $g->goods_price }}元</div>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 productLis">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proImg">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">XXX套装</div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">108.00元</div>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 productLis">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proImg">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">XXX套装</div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">108.00元</div>
-                    </div>
+                    @endforeach
+                    
+
+
                 </div>
             </div>
         </div>

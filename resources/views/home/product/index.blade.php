@@ -39,168 +39,31 @@
 <!--     </div> -->
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productLists">
         <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lls">
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
+        	@foreach($goods as $g)
+        	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=1">
+                    <a href="{{ route('product/product',['id'=> $g->id  ])}}">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
+                            <img src="{{ $g->cover_url }}" style="width: 100%; max-width: 366px ; max-height:358px" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
+                                {{ $g->goods_name }}
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
+                            
+                            <!-- <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp; -->    
+                                <span style="color: red">现价：{{ $g->goods_price }}</span>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=2">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=3">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=4">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=5">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=6">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=7">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=8">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{URL('product/product')}}?id=9">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/product.jpg" style="width: 100%" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                清爽保湿套装
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                                <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp;
-                                <span style="color: red">现价：99</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+        	@endforeach
+            
+
+
+
         </div>
     </div>
 @endsection
