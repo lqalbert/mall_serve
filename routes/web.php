@@ -14,6 +14,7 @@
 
 Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	
+	Route::get('/', 'IndexController@index');
 	//登录 退出
 	Route::post('/login', 'LoginController@login');
 	Route::post('/logout', 'LoginController@out');
