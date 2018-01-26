@@ -4,24 +4,25 @@ namespace  App\Services\Employee;
 use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use APP\models\User;
 class EmployeeService
 {
     private $repository = null;
-    
+
     private $request = null;
-    
-    public function  __construct(EmployeeRepository $repositiry, Request $request) 
+    private $model = null;
+
+    public function  __construct(EmployeeRepository $repositiry, Request $request,User $user)
     {
         $this->repository = $repositiry;
         $this->request = $request;
+        $this->model = $user;
     }
-  public function getData()
-  {
-      $fields=['user_basic.id','roles.display_name as role_name','user_basic.account','user_basic.realname','user_basic.head','user_basic.qq','user_basic.qq_nickname','user_basic.sex','user_basic.telephone','user_basic.mobilephone','user_basic.id_card','user_basic.weixin','user_basic.weixin_nickname','user_basic.address','location','user_basic.ip','user_basic.create_name','department_basic.name as department_name','group_basic.name as group_name'];
-
+    public function getData()
+    {
+        $fields=['user_basic.*','roles.display_name as role_name','department_basic.name as department_name','group_basic.name as group_name'];
         $where=[];
-        $result =DB::table('user_basic')
+        $result =$this->model
             ->join('department_basic','department_basic.id','=','user_basic.department_id')
             ->join('group_basic','group_basic.id','=','user_basic.group_id')
             ->join('roles','roles.id','=','user_basic.role_id')
@@ -30,7 +31,7 @@ class EmployeeService
             ->whereNull('group_basic.deleted_at')
             ->select($fields)
             ->get();
-        $count =DB::table('user_basic')
+        $count =$this->model
             ->join('department_basic','department_basic.id','=','user_basic.department_id')
             ->join('group_basic','group_basic.id','=','user_basic.group_id')
             ->join('roles','roles.id','=','user_basic.role_id')
@@ -39,17 +40,17 @@ class EmployeeService
             ->whereNull('group_basic.deleted_at')
             ->select($fields)
             ->count();
-            $users=[];
-            foreach ($result as $v){
-                $users[$v->id]=$v;
-            }
-      return [
-          'users'=>$users,
-          'items'=>$result,
-          'total'=>$count
-      ];
-  }
-    public function  get() 
+        $users=[];
+        foreach ($result as $v){
+            $users[$v->id]=$v;
+        }
+        return [
+            'users'=>$users,
+            'items'=>$result,
+            'total'=>$count
+        ];
+    }
+    public function  get()
     {
         $re = $this->repository->with(['department_basic'])->all();
         return [

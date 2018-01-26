@@ -14,12 +14,21 @@ class DepositController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    	
+        $where=[];
+    	if($request->has('department_id')){
+        $where[]=['department_id','=',$request->input('department_id')];
+        }
+        if($request->has('group_id')){
+        $where[]=['group_id','=',$request->input('group_id')];
+        }
+        if($request->has('user_id')){
+        $where[]=['user_id','=',$request->input('user_id')];
+        }
     	return [
-    			'items'=> Deposit::orderBy('id','desc')->get(),
-    			'total'=> Deposit::count()
+    			'items'=> Deposit::orderBy('id','desc')->where($where)->get(),
+    			'total'=> Deposit::where($where)->count(),
     	];
     }
 
@@ -45,7 +54,7 @@ class DepositController extends Controller
     	if ($model) {
     		return $this->success($model);
     	} else {
-    		return $this->error();
+    		return $this->error(0);
     	}
     }
 
