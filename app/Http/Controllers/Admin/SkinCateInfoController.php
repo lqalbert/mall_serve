@@ -2,34 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\models\SkinCateInfo;
 use Illuminate\Http\Request;
-use App\Models\Deposit;
-use Monolog\Handler\IFTTTHandler;
-use PhpParser\Node\Stmt\If_;
 
-class DepositController extends Controller
+class SkinCateInfoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $where=[];
-    	if($request->has('department_id')){
-        $where[]=['department_id','=',$request->input('department_id')];
-        }
-        if($request->has('group_id')){
-        $where[]=['group_id','=',$request->input('group_id')];
-        }
-        if($request->has('user_id')){
-        $where[]=['user_id','=',$request->input('user_id')];
-        }
-    	return [
-    			'items'=> Deposit::orderBy('id','desc')->where($where)->get(),
-    			'total'=> Deposit::where($where)->count(),
-    	];
+        return ['items'=>SkinCateInfo::all()];
     }
 
     /**
@@ -50,21 +35,16 @@ class DepositController extends Controller
      */
     public function store(Request $request)
     {
-    	$model = Deposit::create($request->all());
-    	if ($model) {
-    		return $this->success($model);
-    	} else {
-    		return $this->error(0);
-    	}
+       return SkinCateInfo::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\models\SkinCateInfo  $skinCateInfo
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SkinCateInfo $skinCateInfo)
     {
         //
     }
@@ -72,10 +52,10 @@ class DepositController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\models\SkinCateInfo  $skinCateInfo
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SkinCateInfo $skinCateInfo)
     {
         //
     }
@@ -84,10 +64,10 @@ class DepositController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\models\SkinCateInfo  $skinCateInfo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SkinCateInfo $skinCateInfo)
     {
         //
     }
@@ -95,10 +75,10 @@ class DepositController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\models\SkinCateInfo  $skinCateInfo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SkinCateInfo $skinCateInfo)
     {
         //
     }
