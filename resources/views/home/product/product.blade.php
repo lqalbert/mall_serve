@@ -92,7 +92,7 @@
                     </div>
 <!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigNum"> -->
 <!--                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 left"> -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="font-size: 16px;color: #666">数量： {{ $goods->goods_number }}</div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="font-size: 16px;color: #666">型号： {{ $goods->goods_number }}</div>
 <!--                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"> -->
 <!--                                 <input id="productNumber" type="number" class="productNumber" value="0"> -->
 <!--                                 <div id="increase" class="increase">-</div> -->
