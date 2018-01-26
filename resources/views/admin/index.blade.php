@@ -16,14 +16,11 @@
 </head>
 <body>
     <div id="app">
-        
-
-        
     </div>
 
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static/js/manifest.771370061cfd2a4540ea.js?a=bc"></script>
-    <script type="text/javascript" src="/admin/static/js/vendor.e71cf8bfe3a1412af3e1.js"></script>
-    <script type="text/javascript" src="/admin/static/js/app.09d5500b20ad5db9dd37.js"></script>
+	<script type="text/javascript" src="./static1.0.0/js/manifest.ca0b930b23356007b291.js"></script>
+    <script type="text/javascript" src="./static1.0.0/js/vendor.61c117d6b52c12293f6b.js"></script>
+    <script type="text/javascript" src="./static1.0.0/js/app.b65192fe166ba51ab37d.js"></script>
 </body>
 </html>
