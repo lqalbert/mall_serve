@@ -14,7 +14,7 @@
 	                    @foreach ($articles as $article)
 	                    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftCos">
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pic">
-	                            	<img alt="" src="{{ $article->image }}">
+	                            	<img alt="" style="height: 300px;width: 100%;" src="{{ $article->image }}">
 	                            </div>
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">{{ $article->title }}</div>
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 con">{{ $article->description }}</div>

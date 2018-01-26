@@ -19,7 +19,7 @@ class CreateGoodsTable extends Migration
             $table->string('goods_price')->nullable()->comment('商品价格');
             $table->string('goods_number')->nullable()->comment('商品货号');
             $table->unsignedTinyInteger('unit_type')->default(1)->comment('商品单位1瓶');
-            $table->string('description')->nullable()->comment('商品描述');
+            $table->text('description')->nullable()->comment('商品描述');
             $table->string('cover_url')->nullable()->comment('封面图片地址');
             $table->unsignedTinyInteger('status')->default(1)->comment('是否上架1是2否');
             $table->timestamps();

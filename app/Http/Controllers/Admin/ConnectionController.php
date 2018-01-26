@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
+use App\Models\Connection;
 
-class ArticleController extends Controller
+class ConnectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-	public function index(Request $request)
+    public function index(Request $request)
     {
-        $query = Article::orderBy('id', 'desc');
+        $connection = Connection::orderBy('id', 'desc');
         
-        if ($request->has('title')){
-        	$query->where('title','like', $request->input('title')."%");
+        if ($request->has('content')){
+            $connection->where('content','like', $request->input('content')."%");
         }
         
-        $re = $query->paginate(20);
+        $re = $connection->paginate(20);
         
         return [
-        		'items' => $re->items(),
-        		'total' => $re->total()
+            'items' => $re->items(),
+            'total' => $re->total()
         ];
     }
 
@@ -47,11 +47,11 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $model = Article::create($request->all());
-        if ($model) {
-        	return $this->success($model);
-        } else {
-        	return $this->error();
+        $re = Connection::create($request->input());
+        if($re){
+            return $this->success($re);
+        }else{
+            return $this->error($re);
         }
     }
 
@@ -86,18 +86,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $article = Article::find($id);
-        $article->title = $request->input('title');
-        $article->body = $request->input('body');
-        $article->image = $request->input('image');
-
-        $re = $article->save();
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
-        }
+        //
     }
 
     /**
@@ -108,17 +97,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $re = Article::destroy($id);
+        $re = Connection::destroy($id);
         if ($re) {
-        	return $this->success($re);
+            return $this->success($re);
         } else {
-        	return $this->error($re);
+            return $this->error($re);
         }
     }
-
-
-
-
-
-
 }
