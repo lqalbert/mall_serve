@@ -99,6 +99,26 @@
     </div>
 @endsection
 @section('js')
+    <script>
+        $("#but").click(function(){
+            $.ajax({
+                url: '/admin/connection',
+                type: 'POST',
+                dataType: 'json',
+                data: $("form").serialize(),
+                success:function(response){
+                    console.log(response);
+                    $('form')[0].reset();
+                    alert("提交成功，感谢您的反馈!");
+                },
+                error:function(response){
+                    console.log(response);
+                    alert("联系我们！");
+                }
+            });
+            
+        });
+    </script>
 
 
 @endsection
