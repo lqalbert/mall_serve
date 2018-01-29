@@ -25,7 +25,7 @@ class GoodsTypeController extends Controller
 //     	'total'=> Deposit::count()
 		
     	return [
-    			'items'=> GoodsType::select('id','type_name as name')->get(),
+    			'items'=> GoodsType::select('id','name')->get(),
     			'total'=> GoodsType::count()
     	];
     }
@@ -48,7 +48,11 @@ class GoodsTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    	//事务
+    	$typeGoods = $this->repository->create($request->all());
+    	$typeGoods->specs()->attach($request->input('sepc_ids', []));
+    	// end of 事务
+    	return  $this->success($typeGoods);
     }
 
     /**

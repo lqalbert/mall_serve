@@ -21,7 +21,11 @@ class GoodsSpecsController extends Controller
      */
     public function index()
     {
-        //
+        $re = $this->repository->paginate(10);
+        return [
+        		'items' => $re->items(),
+        		'total' => $re->total()
+        ];
     }
 
     /**
@@ -42,7 +46,12 @@ class GoodsSpecsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $re = $this->repository->create($request->all());
+        if ($re) {
+        	return $this->success($re);
+        } else {
+        	return $this->error();
+        }
     }
 
     /**
@@ -64,7 +73,12 @@ class GoodsSpecsController extends Controller
      */
     public function edit($id)
     {
-        //
+    	$re = $this->repository->update($request->all(), $id);
+    	if ($re) {
+    		return $this->success($re);
+    	} else {
+    		return $this->error();
+    	}
     }
 
     /**

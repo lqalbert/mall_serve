@@ -15,11 +15,12 @@ class CreateGoodsSpecs extends Migration
     {
         Schema::create('goods_specs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('spec_name', 20);
-            $table->unsignedInteger('spec_way')->nullable();
-            $table->tinyInteger('status')
-                ->default(1)
-                ->comment('状态 1 启用 0 禁用');
+            $table->string('name', 20);
+            $table->unsignedTinyInteger('type')->nullable()->default(1);
+            $table->text('add_value')->nullable();
+//             $table->tinyInteger('status')
+//                 ->default(1)
+//                 ->comment('状态 1 启用 0 禁用');
             $table->timestamps();
             $table->softDeletes();
         });

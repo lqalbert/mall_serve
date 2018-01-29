@@ -11,14 +11,18 @@ class GoodsSpecs extends Model
     
     protected $table = 'goods_specs';
 
-
-
-
-
-
-
-
-
-
-
+    protected $dates = [
+    		'delete_at'
+    ];
+    
+    
+	protected $casts = [
+			'add_value' => 'array'
+	];
+	
+	protected $fillable = [
+			'name',
+			'type',
+			'add_value'
+	];
 }
