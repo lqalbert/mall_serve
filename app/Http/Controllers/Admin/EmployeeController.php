@@ -38,8 +38,11 @@ class EmployeeController extends Controller
                 $service = app('App\Services\Employee\PickAbleGMService');
                 $result = $service->get();
                 break;
+            case 'hyf': // for test
+            	$result = $this->service->get();
+            	break;
             default:
-                $result = $this->service->getData();
+                $result = $this->service->get();
         }
         return $result;
     }
@@ -79,7 +82,13 @@ class EmployeeController extends Controller
             $data['head'] = '/storage/head.jpg';
         }
         $data['password'] = bcrypt($data['password']);
-        $re = $this->repository->create($data);
+        $re = DB::transaction(function()use($data, $request){
+        	$re = $this->repository->create($data);
+        	event(new AddEmployee($re, $request->input('role_ids',[])));
+        	return $re;
+        });
+        
+        
         if ($re) {
 //             event(new AddEmployee($re));
             return $this->success($re);
@@ -119,7 +128,11 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $re = $this->repository->update($request->input(), $id);
+    	$re = $this->repository->update($request->except(['role_ids']), $id);
+    	$mode = User::find($id);
+//     	dd($mode);
+        event(new AddEmployee($mode, $request->input('role_ids',[])));
+        
         if ($re) {
             return $this->success(User::find($id));
         } else {

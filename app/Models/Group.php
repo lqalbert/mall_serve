@@ -43,9 +43,9 @@ class Group extends Model
     ];
     
     protected $appends = [
-        'user',
-        'phone',
-        'departmentname',
+//         'user',
+//         'phone',
+//         'departmentname',
     ];
     
     /**
