@@ -21,7 +21,7 @@ class UserBasic extends Migration
             $table->string('password')->comment('登陆密码');
             $table->unsignedInteger('qq')->nullable()->comment('员工QQ号');
             $table->string('qq_nickname', 40)->nullable()->comment('员工QQ昵称');
-            $table->unsignedInteger('role_id')->comment('员工职位ID');
+//             $table->unsignedInteger('role_id')->comment('员工职位ID');
             $table->unsignedTinyInteger('sex')->default(0)->comment('0 未定义 1 男 2 女');
             $table->string('telephone',20)->nullable()->comment('员工固话');
             $table->string('mobilephone',20)->nullable()->comment('员工手机号');
