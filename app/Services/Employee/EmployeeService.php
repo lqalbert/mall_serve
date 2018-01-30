@@ -5,6 +5,7 @@ use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use APP\models\User;
+use App\Alg\ModelCollection;
 class EmployeeService
 {
     private $repository = null;
@@ -52,41 +53,12 @@ class EmployeeService
     }
     public function  get()
     {
-        $re = $this->repository->with(['department_basic'])->all();
+        $re = $this->repository->with(['department','group','roles'])->paginate(20);
+        $collection  = $re->getCollection();
+        
         return [
-            'items'=>$re->getCollection(),
+        	'items'=>$collection,
             'total'=>$re->total()
         ];
-        //下面的参考一下。字段没加全
-//         return [
-//             'items'=>[
-//                 [
-//                     'id'=> 1,
-//                     'account'=> 'gfsdg',
-//                     'realname'=> 'gsggs',
-//                     'department_name'=>'hdfhd',
-//                     'head'=>'gdfg',
-//                     'qq'=> 'gdfh',
-//                     'role'=> 'ndfhdf',
-//                     'sex'=> '男' || '女',
-//                     'phone'=> '132465465',
-//                     'mphone'=> '23131',
-//                     'remark'=>'hdghdf',
-//                     'status'=>'hdfhd',
-//                     'id_card'=>'dfjkhg',
-//                     'qq_nickname'=>'fghdf',
-//                     'weixin'=>'jfdj',
-//                     'weixin_nikname'=>'kldfhgkdf',
-//                     'address'=>'jfgjf',
-//                     'ip'=>'192.168.0.10',
-//                     'location'=>'ohigfdgjk',
-//                     'lg_time'=>'2017-12-02',
-//                     'out_time'=>'2017-12-02',
-//                     'created_at'=>'2017-12-02',
-//                     'creator'=>'fjkgjkf',
-//                 ]
-//             ],
-//             'total'=>400
-//         ];
     }
 }

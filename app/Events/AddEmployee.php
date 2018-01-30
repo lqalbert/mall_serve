@@ -10,26 +10,36 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\User;
-
+/**
+ * 名称搞错了 应该用 SetEmployeeRole
+ * @author hyf
+ *
+ */
 class AddEmployee
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
-    private $role_id = null;
+    private $role_ids = null;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Array $roleIds)
     {
         $this->user = $user;
+        $this->role_ids = $roleIds;
     }
     
     public function getUser() 
     {
         return $this->user;
+    }
+    
+    public function getRoleIds()
+    {
+    	return $this->role_ids;	
     }
 
     /**

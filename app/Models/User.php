@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Events\AddEmployee;
 /**
- * @todo use 这里有方法同名的 冲突 Authenticatable 与  EntrustUserTrait 都有can
  * @author hyf
  *
  */
@@ -34,7 +33,7 @@ class User extends Authenticatable
      * @var string
      */
     protected $event = [
-        'created' => AddEmployee::class
+//         'created' => AddEmployee::class
     ];
     
     
@@ -54,7 +53,7 @@ class User extends Authenticatable
         'head',
         'account',
         'password',
-        'role_id',
+//         'role_ids',
         'group_id',
         'department_id',
         'sex',
@@ -69,14 +68,15 @@ class User extends Authenticatable
         'role_name',
         'id_card',
         'ip',
-        'create_name',
+        'creator',
+    	'creator_name',
         'location',
 
     ];
     protected $appends = [
-        'lg_time',
-        'out_time',
-        'role'
+//         'lg_time',
+//         'out_time',
+//         'roles'
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -108,4 +108,24 @@ class User extends Authenticatable
         }
         return $value;
     }
+    
+    
+    
+    
+    public function department(){
+    	return $this->belongsTo('App\Models\Department','department_id');
+    }
+    
+    public function group(){
+    	return $this->belongsTo('App\Models\Group', 'group_id');
+    }
+    
+    public function roles(){
+    	return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
+    }
+    
+    public function midRole(){
+    	return $this->hasMany('App\Models\RoleUser', 'user_id');
+    }
+    
 }

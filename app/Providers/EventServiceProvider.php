@@ -18,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         
         'App\Events\AddEmployee' => [
-            'App\Listeners\AttachEmployeeRoleListener',
+            'App\Listeners\SyncEmployeeRoleListener',
         ],
     ];
 

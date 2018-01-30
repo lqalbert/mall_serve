@@ -31,7 +31,8 @@ class UserBasic extends Migration
             $table->string('address',256)->nullable()->comment('员工住址');
             $table->string('location',256)->nullable()->comment('登陆地点');
             $table->ipAddress('ip')->nullable()->comment('登陆IP');
-            $table->string('create_name', 20)->nullable()->comment('创建员工');
+            $table->unsignedInteger('creator')->default(0)->comment('创建员工的id');
+            $table->string('creator_name', 20)->nullable()->comment('创建员工');
             $table->dateTime('lg_time')->nullable()->comment('最后登陆时间');
             $table->dateTime('out_time')->nullable()->comment('最后退出时间');
             $table->unsignedInteger('department_id')->default(0)->comment('员工所在部门ID');

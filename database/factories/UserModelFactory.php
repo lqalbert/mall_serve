@@ -11,19 +11,17 @@ use App\Models\Role;
 
 $factory->define(App\Models\User::class, function (Faker\Generator $faker){
    static $password = null;
-   static $roleNames = ['sale-staff', 'sale-captain', 'sale-manager'];
+   
    
    if (empty($password)) {
        $password = bcrypt('123456');
    }
-   $index = array_rand($roleNames);
-   $role = Role::where('name',  $roleNames[$index])->firstOrFail();
+   
    
    return [
        'account'=>  $faker->unique()->firstName,
        'realname'=> $faker->firstName,
        'password' => $password,
-       'role_id' => $role->id
    ];
 });
 
