@@ -18,6 +18,7 @@ class CreateDeliveryAddressesTable extends Migration
             $table->unsignedInteger('cus_id')->comment('客户ID');
             $table->string('name',20)->comment('收货人姓名');
             $table->string('phone',20)->comment('收货人手机号');
+            $table->string('zip_code',20)->comment('收货邮编');
             $table->string('address')->comment('收货人地址');
             $table->unsignedInteger('default_address')->comment('1:默认地址');
             $table->timestamps();
