@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use APP\models\User;
 use App\Alg\ModelCollection;
+use App\Repositories\Criteria\OrderByIdDesc;
+use App\Repositories\Criteria\OnlyTrashed;
 class EmployeeService
 {
     private $repository = null;
@@ -53,6 +55,14 @@ class EmployeeService
     }
     public function  get()
     {
+        
+        $this->repository->pushCriteria(new OrderByIdDesc());
+        
+        if ($this->request->has('status') && $this->request->input('status') == -1) {
+            $this->repository->pushCriteria(new OnlyTrashed());
+        }
+        
+        
         $re = $this->repository->with(['department','group','roles'])->paginate(20);
         $collection  = $re->getCollection();
         

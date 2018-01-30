@@ -156,4 +156,25 @@ class EmployeeController extends Controller
             return $this->error(0);
         }
     }
+    
+    /**
+     * 更改密码
+     * 
+     * @param \Illuminate\Http\Request $requst
+     * @param int $id
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function  changePassword(Request $request, $id)
+    {
+        $data = [];
+        $data['password'] = bcrypt($request->input('password'));
+        
+        $re = $this->repository->update($data, $id);
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error();
+        }
+    }
 }

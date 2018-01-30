@@ -12,7 +12,7 @@ class EmployeeRepository extends Repository
     {
         parent::__construct($app, $collection);
 
-        $this->model->orderBy('id','desc');
+//         $this->model->orderBy('id','desc');
         
     }
 	

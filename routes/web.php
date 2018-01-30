@@ -32,6 +32,10 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/orderlist','OrderListController');
 	Route::resource('/buyorders','BuyOrderController');
 	Route::resource('/users','EmployeeController');
+	//passowrd/2 put patch
+	Route::match(['put','patch'], '/passowrd/{id}', 'EmployeeController@changePassword');
+	
+	
 	Route::resource('/buyers','CustomerController');
 	Route::resource('/inventorylist','InventoryListController');
 	Route::resource('/departments','DepartmentController');
