@@ -15,8 +15,8 @@ class GoodsTypeTableSeeder extends Seeder
 	public function run()
 	{
 		DB::table('goods_type')->insert([
-				['type_name'=>'面膜'],
-				['type_name'=>'爽肤']
+				['name'=>'面膜'],
+				['name'=>'爽肤']
 		]);
 	}
 }
