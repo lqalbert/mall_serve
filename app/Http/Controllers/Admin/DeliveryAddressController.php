@@ -24,10 +24,13 @@ class DeliveryAddressController extends Controller
     {
         $data=$this->model->where('cus_id','=',$request->cus_id)->get();
         $address=[];
+        $full_address=[];
         foreach ($data as $k => $v){
             $address[$v->id]=$v;
+            $full_address[$k]['id']=$v->id;
+            $full_address[$k]['fullAddress']=$v->name.'-'.$v->phone.'-'.$v->zip_code.'-'.$v->address;
         }
-        return ['items'=>$data,'address'=>$address];
+        return ['items'=>$data,'address'=>$address,'fullAddress'=>$full_address];
     }
 
     /**
@@ -48,13 +51,7 @@ class DeliveryAddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $this->model->cus_id = $request->cus_id;
-        $this->model->phone = $request->phone;
-        $this->model->name = $request->name;
-        $this->model->address = $request->address;
-        $this->model->default_address = $request->default_address;
-        $this->model->save();
+        $this->model->create($request->all());
     }
 
     /**
@@ -88,15 +85,7 @@ class DeliveryAddressController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $data=[
-             'name'=>$request->name,
-             'phone'=>$request->phone,
-             'address'=>$request->address,
-             'default_address'=>$request->default_address,
-        ];
-        $this->model->where('id','=',$id)->update($data);
-
-
+        $this->model->where('id','=',$id)->update($request->all());
     }
 
     /**
@@ -105,7 +94,7 @@ class DeliveryAddressController extends Controller
      * @param  \App\models\DeliveryAddress  $deliveryAddress
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeliveryAddress $deliveryAddress,Request $request,$id)
+    public function destroy($id)
     {
 
         $this->model->destroy($id);

@@ -17,6 +17,7 @@ class DeliveryAddress extends Model
         'phone',
         'cus_id',
         'address',
+        'zip_code',
         'default_address'
     ];
 }

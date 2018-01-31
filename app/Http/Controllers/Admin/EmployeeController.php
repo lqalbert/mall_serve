@@ -75,6 +75,9 @@ class EmployeeController extends Controller
     {
         $data = $request->all();
        // DD($data);
+        if(!$data['head']){
+            $data['head'] = '/storage/head.jpg';
+        }
         $data['password'] = bcrypt($data['password']);
         $re = $this->repository->create($data);
         if ($re) {
