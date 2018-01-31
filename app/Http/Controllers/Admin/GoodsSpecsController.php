@@ -19,13 +19,20 @@ class GoodsSpecsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $re = $this->repository->paginate(10);
-        return [
-        		'items' => $re->items(),
-        		'total' => $re->total()
-        ];
+        $business = $request->query('business', 'default');
+        $result = [];
+        switch ($business) {
+            case 'business':
+                
+                break;
+            default:
+                $service = app('App\Services\GoodsSpecs\GoodsSpecsService');
+                $result = $service->get();
+                break;
+        }
+        return $result;
     }
 
     /**
@@ -73,12 +80,7 @@ class GoodsSpecsController extends Controller
      */
     public function edit($id)
     {
-    	$re = $this->repository->update($request->all(), $id);
-    	if ($re) {
-    		return $this->success($re);
-    	} else {
-    		return $this->error();
-    	}
+        //
     }
 
     /**
@@ -90,7 +92,16 @@ class GoodsSpecsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $spec = GoodsSpecs::find($id);
+        $spec->name = $request->input('name');
+        $spec->type = $request->input('type');
+        $spec->add_value = $request->input('add_value');
+        $re = $spec->save();
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error($re);
+        }
     }
 
     /**
@@ -104,11 +115,9 @@ class GoodsSpecsController extends Controller
         //返回 int
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success($re);
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error($re);
         }
     }
 }

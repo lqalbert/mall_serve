@@ -11,7 +11,7 @@ class GoodsType extends Model
     
     protected $table = 'goods_type';
     
-    protected  $dates =[
+    protected $dates =[
     		'delete_at'
     ];
     
