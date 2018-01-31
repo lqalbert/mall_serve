@@ -22,7 +22,7 @@ class CreateGroupBasic extends Migration
             $table->tinyInteger('status')
                 ->default(1)
                 ->comment('状态 1 启用 0 禁用');
-            $table->string('remarks', 200);
+            $table->string('remarks', 200)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

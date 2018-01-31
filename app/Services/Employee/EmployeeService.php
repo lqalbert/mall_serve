@@ -8,6 +8,7 @@ use APP\models\User;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\OnlyTrashed;
+use App\Repositories\Criteria\Employee\DepartCandidate;
 class EmployeeService
 {
     private $repository = null;
@@ -53,6 +54,11 @@ class EmployeeService
             'total'=>$count
         ];
     }
+    
+    /**
+     * @todo depart-candidate 替换成常量
+     * @return unknown[]|NULL[]
+     */
     public function  get()
     {
         
@@ -63,7 +69,11 @@ class EmployeeService
         }
         
         
-        $re = $this->repository->with(['department','group','roles'])->paginate(20);
+        
+        $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
+        
+        
+        $re = $this->repository->with(['department','group','roles'])->paginate(20, $selects);
         $collection  = $re->getCollection();
         
         return [

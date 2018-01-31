@@ -5,6 +5,7 @@ use App\Repositories\DepartmentRepository;
 use Illuminate\Http\Request;
 use App\Repositories\Criteria\Department\Name as SearchDepartName;
 use App\Repositories\Criteria\Department\Type;
+use App\Alg\ModelCollection;
 class DepartmentService
 {
     /**
@@ -33,9 +34,13 @@ class DepartmentService
             $this->repository->pushCriteria(new Type($this->request->input('type')));
         }
         
-        $result = $this->repository->paginate();
+        $result = $this->repository->with(['manager'])->paginate();
+        
+        $collection = $result->getCollection();
+        $collection = ModelCollection::setAppends($collection, ['type_text']);
+        
         return [
-            'items'=> $result->getCollection(),
+        	'items'=> $collection,
             'totle'=> $result->total()
         ];
     }
