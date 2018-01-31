@@ -38,5 +38,8 @@ class Deposit extends Model
     		'creator_id',
     		'creator',
     		'charge_department',
+    		'charge_type',
+    		'charge_time',
+    		'remark',
     ];
 }

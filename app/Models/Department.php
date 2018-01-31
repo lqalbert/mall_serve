@@ -40,9 +40,9 @@ class Department extends Model
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
 
     protected $appends = [
-        'type_text',
-        'user',
-        'phone'
+//         'type_text',
+//         'user',
+//         'phone'
     ];
 
     private static $types = array(
@@ -86,6 +86,11 @@ class Department extends Model
     public function getPhoneAttribute()
     {
         return '8080851';
+    }
+    
+    public function manager()
+    {
+    	return $this->belongsTo('App\Models\User', 'manager_id')->select(['id','realname', 'mobilephone']);
     }
     
 }

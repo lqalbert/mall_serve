@@ -30,13 +30,6 @@ class GoodsDetailsController extends Controller
      */
     public function index(Request $request)
     {
-
-         // $re = Goods::find(3)->imgs;
-         // foreach ($re as $url) {
-         //     echo $url->url;
-         // }
-         // die;
-
         $business = $request->query('business', 'default');
         $result = [];
         switch ($business) {
@@ -151,10 +144,12 @@ class GoodsDetailsController extends Controller
         $goodsModel = Goods::find($id);
 
         $goodsModel->update($data);
-
-        $cates = $request->input('cate_id', []);
-        $goodsModel->category()->sync($cates);
-
+        
+        if($data['cate_id']){
+            $cates = $request->input('cate_id', []);
+            $goodsModel->category()->sync($cates);
+        }
+        
         if($data['imgs']){
             $goodsModel->imgs()->delete();
 

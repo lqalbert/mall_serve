@@ -19,15 +19,25 @@ class GoodsTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-//     	'items'=> Deposit::orderBy('id','desc')->get(),
-//     	'total'=> Deposit::count()
+        $query = GoodsType::orderBy('id', 'desc');
+        
+        if ($request->has('name')){
+            $query->where('name','like', $request->input('name')."%");
+        }
 		
-    	return [
-    			'items'=> GoodsType::select('id','name')->get(),
-    			'total'=> GoodsType::count()
-    	];
+        $collection = $query->paginate(15);
+        
+        foreach ($collection as &$model) {
+            $model->specs;
+        }
+        
+        return [
+            'items'=> $collection->items(),
+            'total'=> $collection->total(),
+        ]; 
+
     }
 
     /**
@@ -86,7 +96,20 @@ class GoodsTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $goodsType = GoodsType::find($id);
+        $goodsType->name = $request->input('name');
+        $goodsType->save();
+
+        $spec_ids = $request->input('sepc_ids',[]);
+        $goodsType->specs()->sync($spec_ids);
+
+        if ($goodsType) {
+            return $this->success($goodsType);
+        } else {
+            return $this->error($goodsType);
+        }
+
+
     }
 
     /**
@@ -100,11 +123,9 @@ class GoodsTypeController extends Controller
         //返回 int
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success($re);
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error($re);
         }
     }
 }

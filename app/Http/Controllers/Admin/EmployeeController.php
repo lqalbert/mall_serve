@@ -8,6 +8,8 @@ use App\Repositories\EmployeeRepository;
 use App\Services\Employee\EmployeeService;
 use App\Events\AddEmployee;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Criteria\Employee\DepartCandidate;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeController extends Controller
 {
@@ -38,8 +40,20 @@ class EmployeeController extends Controller
                 $service = app('App\Services\Employee\PickAbleGMService');
                 $result = $service->get();
                 break;
-            case 'hyf': // for test
-            	$result = $this->service->get();
+            case 'depart-candidate':
+            	//额外的参数
+            	if ($request->has('id')) {
+            		$id = $request->input('id');
+            	} else {
+            		$id = 0;
+            	}
+            	Log::debug('[var]', [$id]);
+            	$this->repository->pushCriteria(new DepartCandidate($id));
+            	$pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields')); 
+            	$result = [
+            			'items' => $pager->getCollection(),
+            			'total' => $pager->total()
+            	];
             	break;
             default:
                 $result = $this->service->get();
@@ -78,6 +92,9 @@ class EmployeeController extends Controller
     {
         $data = $request->all();
        // DD($data);
+        if(!$data['head']){
+            $data['head'] = '/storage/head.jpg';
+        }
         $data['password'] = bcrypt($data['password']);
         $re = DB::transaction(function()use($data, $request){
         	$re = $this->repository->create($data);
@@ -151,27 +168,6 @@ class EmployeeController extends Controller
             return $this->success(1);
         } else {
             return $this->error(0);
-        }
-    }
-    
-    /**
-     * 更改密码
-     * 
-     * @param \Illuminate\Http\Request $requst
-     * @param int $id
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function  changePassword(Request $request, $id)
-    {
-        $data = [];
-        $data['password'] = bcrypt($request->input('password'));
-        
-        $re = $this->repository->update($data, $id);
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error();
         }
     }
 }

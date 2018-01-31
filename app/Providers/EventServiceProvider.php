@@ -20,6 +20,14 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\AddEmployee' => [
             'App\Listeners\SyncEmployeeRoleListener',
         ],
+    		
+    	'App\Events\AddDepartment' => [
+    		'App\Listeners\SetManagerDepartmentIdListener'	
+    	],
+    		
+    	'App\Events\ChangeDepartmentManager' => [
+    		'App\Listeners\SetManagerDepartmentIdListener'
+    	],
     ];
 
     /**

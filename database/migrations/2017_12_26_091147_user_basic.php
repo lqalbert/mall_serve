@@ -17,7 +17,7 @@ class UserBasic extends Migration
             $table->increments('id')->comment('员工ID');
             $table->string('account', 20)->unique()->comment('员工登陆账号');
             $table->string('realname', 20)->nullable()->comment('员工姓名');
-            $table->string('head', 256)->default('/storage/9P8Y8NKQfWRGt26rkTm9eO4Kv5e08LnZJSvsHbzb.jpeg')->comment('员工头像');
+            $table->string('head', 256)->default('/storage/head.jpg')->comment('员工头像');
             $table->string('password')->comment('登陆密码');
             $table->unsignedInteger('qq')->nullable()->comment('员工QQ号');
             $table->string('qq_nickname', 40)->nullable()->comment('员工QQ昵称');
@@ -35,8 +35,8 @@ class UserBasic extends Migration
             $table->string('creator_name', 20)->nullable()->comment('创建员工');
             $table->dateTime('lg_time')->nullable()->comment('最后登陆时间');
             $table->dateTime('out_time')->nullable()->comment('最后退出时间');
-            $table->unsignedInteger('department_id')->default(0)->comment('员工所在部门ID');
-            $table->unsignedInteger('group_id')->default(0)->comment('员工所在团队ID');
+            $table->unsignedInteger('department_id')->default(0)->nullable()->comment('员工所在部门ID');
+            $table->unsignedInteger('group_id')->default(0)->nullable()->comment('员工所在团队ID');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

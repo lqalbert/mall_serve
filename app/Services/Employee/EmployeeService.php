@@ -8,6 +8,7 @@ use APP\models\User;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\OnlyTrashed;
+use App\Repositories\Criteria\Employee\DepartCandidate;
 class EmployeeService
 {
     private $repository = null;
@@ -53,6 +54,11 @@ class EmployeeService
             'total'=>$count
         ];
     }
+    
+    /**
+     * @todo depart-candidate 替换成常量
+     * @return unknown[]|NULL[]
+     */
     public function  get()
     {
         
@@ -63,12 +69,47 @@ class EmployeeService
         }
         
         
-        $re = $this->repository->with(['department','group','roles'])->paginate(20);
+        
+        $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
+        
+        
+        $re = $this->repository->with(['department','group','roles'])->paginate(20, $selects);
         $collection  = $re->getCollection();
         
         return [
         	'items'=>$collection,
             'total'=>$re->total()
         ];
+        //下面的参考一下。字段没加全
+//         return [
+//             'items'=>[
+//                 [
+//                     'id'=> 1,
+//                     'account'=> 'gfsdg',
+//                     'realname'=> 'gsggs',
+//                     'department_name'=>'hdfhd',
+//                     'head'=>'gdfg',
+//                     'qq'=> 'gdfh',
+//                     'role'=> 'ndfhdf',
+//                     'sex'=> '男' || '女',
+//                     'phone'=> '132465465',
+//                     'mphone'=> '23131',
+//                     'remark'=>'hdghdf',
+//                     'status'=>'hdfhd',
+//                     'id_card'=>'dfjkhg',
+//                     'qq_nickname'=>'fghdf',
+//                     'weixin'=>'jfdj',
+//                     'weixin_nikname'=>'kldfhgkdf',
+//                     'address'=>'jfgjf',
+//                     'ip'=>'192.168.0.10',
+//                     'location'=>'ohigfdgjk',
+//                     'lg_time'=>'2017-12-02',
+//                     'out_time'=>'2017-12-02',
+//                     'created_at'=>'2017-12-02',
+//                     'creator'=>'fjkgjkf',
+//                 ]
+//             ],
+//             'total'=>400
+//         ];
     }
 }
