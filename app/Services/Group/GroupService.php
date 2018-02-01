@@ -3,7 +3,8 @@ namespace App\Services\Group;
 
 use App\Repositories\GroupRepository;
 use Illuminate\Http\Request;
-use App\Repositories\Criteria\Group\Department;
+use App\Repositories\Criteria\Department;
+use App\Repositories\Criteria\NameLike;
 
 class GroupService
 {
@@ -23,13 +24,20 @@ class GroupService
             $this->repository->pushCriteria(new Department($this->request->input('department_id')));
         }
         
-        $result = $this->repository->paginate();
+        if ($this->request->has('name')) {
+        	$this->repository->pushCriteria(new NameLike($this->request->input('name',null)));
+        }
+        
+        
+        
+        $fields = $this->request->input('fields', ['*']);
+        $result = $this->repository->with(['manager', 'department'])->paginate($this->request->input('pageSize', 20), $fields);
         $collection  = $result->getCollection();
 //         foreach ($collection as &$value) {
 //             $value->department;
 //         }
         return [
-            'items'=> $collection->makeHidden('department'),
+            'items'=> $collection,
             'total'=> $result->total()
         ];
         

@@ -78,6 +78,11 @@ class Group extends Model
     
     public function  department() 
     {
-        return $this->belongsTo('App\Models\Department', 'department_id');
+        return $this->belongsTo('App\Models\Department', 'department_id')->select(['id','name']);
+    }
+    
+    public function manager()
+    {
+    	return $this->belongsTo('App\Models\User', 'manager_id')->select(['id','realname', 'mobilephone']);
     }
 }

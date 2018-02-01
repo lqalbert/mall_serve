@@ -27,6 +27,7 @@ class UsersTableSeeder extends Seeder
         $userRow = [
             'account'=>'admin', 
             'password'=> bcrypt('123456'),
+        	'realname' => '系统管理员'
 //             'role_ids'=>[$adminRole->id]
         ];
         $user = User::create($userRow);

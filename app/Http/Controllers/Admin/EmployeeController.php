@@ -10,6 +10,10 @@ use App\Events\AddEmployee;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Criteria\Employee\DepartCandidate;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\Criteria\Department;
+use App\Repositories\Criteria\Employee\RoleCriteria;
+use App\Repositories\Criteria\Employee\Group;
+use App\Repositories\Criteria\Employee\Id;
 
 class EmployeeController extends Controller
 {
@@ -34,7 +38,24 @@ class EmployeeController extends Controller
             	if ($request->has('group_id')) {
             		$this->repository->pushCriteria(new Group($request->input('group_id')));
             	}
-            	$result = $this->repository->all($request->input('fields', ['id', 'realname']));  	
+            	
+            	if ($request->has('department_id')) {
+            		$this->repository->pushCriteria(new Department($request->input('department_id')));
+            	}
+            	
+            	if ($request->has('role')) {
+            		$this->repository->pushCriteria(new RoleCriteria($request->input('role')));
+            	}
+            	
+            	if ($request->has('id')) {
+            		$this->repository->pushCriteria(new Id($request->input('id')));
+            	} 
+            	
+            	$re = $this->repository->all($request->input('fields', ['id', 'realname']));  
+            	$result = [
+            			'items' => $re,
+            			'total' => count($re)
+            	];
                 break;
             case 'pickToGroup':
                 $service = app('App\Services\Employee\PickAbleGMService');
@@ -62,7 +83,7 @@ class EmployeeController extends Controller
     }
     public function getUserByGId(Request $request,$gid )
     {
-         $data=DB::table('user_basic')->where('user_basic.group_id','=',$gid)->select('id','realname')->get();
+         $data=DB::table('user_basic')->where('user_basic.group_id','=',$gid)->select(['id','realname'])->get();
         return ['items'=>$data];
     }
     /**

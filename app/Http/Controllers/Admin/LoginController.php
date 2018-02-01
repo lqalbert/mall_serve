@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -14,8 +15,9 @@ class LoginController extends Controller
         
         if (Auth::attempt(['account'=>$request->input('account'), 'password'=>$request->input('password')])) {
             $user = Auth::user();
-//             $user->roles()->withoutGlobalScope('hide');
-            $user->roles;
+            $user->roles = $user->roles()->withoutGlobalScope('hide')->get();
+            Log::debug('[sp]',['分隔符===================================================']);
+//             $user->roles;
             return $this->success($user, '登录成功');
         } else {
             return $this->error(null, '账号或密码错误');

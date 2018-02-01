@@ -28,6 +28,10 @@ class EventServiceProvider extends ServiceProvider
     	'App\Events\ChangeDepartmentManager' => [
     		'App\Listeners\SetManagerDepartmentIdListener'
     	],
+    		
+    	'App\Events\UpdateGroupCaptain' => [
+    		'App\Listeners\UpdateUserGroupIdListener'
+    	],
     ];
 
     /**
