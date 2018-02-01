@@ -11,7 +11,13 @@ class EmployeeService
 
     private $request = null;
     private $model = null;
-
+    private $typeArray=[
+                    ['id'=>'1',  'value'=> 'account'],
+                    ['id'=> '2', 'value'=> 'realname'],
+                    ['id'=> '3', 'value'=> 'mobilephone'],
+                    ['id'=> '4', 'value'=> 'qq'],
+                    ['id'=> '5', 'value'=> 'weixin']
+                ];
     public function  __construct(EmployeeRepository $repositiry, Request $request,User $user)
     {
         $this->repository = $repositiry;
@@ -22,6 +28,19 @@ class EmployeeService
     {
         $fields=['user_basic.*','roles.display_name as role_name','department_basic.name as department_name','group_basic.name as group_name'];
         $where=[];
+        if($this->request->has('department_id')){
+            $where[]=['user_basic.department_id','=',$this->request->department_id];
+        }
+        if($this->request->has('group_id')){
+            $where[]=['user_basic.group_id','=',$this->request->group_id];
+        }
+        if($this->request->has('typeNumber') && $this->request->has('typeValue')){
+            foreach ($this->typeArray as $k => $v){
+                if($v['id'] == $this->request->typeNumber){
+                    $where[]=[$v['value'],'=',$this->request->typeValue];
+                }
+            }
+        }
         $result =$this->model
             ->join('department_basic','department_basic.id','=','user_basic.department_id')
             ->join('group_basic','group_basic.id','=','user_basic.group_id')
@@ -29,6 +48,7 @@ class EmployeeService
             ->whereNull('user_basic.deleted_at')
             ->whereNull('department_basic.deleted_at')
             ->whereNull('group_basic.deleted_at')
+            ->where($where)
             ->select($fields)
             ->get();
         $count =$this->model
@@ -38,6 +58,7 @@ class EmployeeService
             ->whereNull('user_basic.deleted_at')
             ->whereNull('department_basic.deleted_at')
             ->whereNull('group_basic.deleted_at')
+            ->where($where)
             ->select($fields)
             ->count();
         $users=[];

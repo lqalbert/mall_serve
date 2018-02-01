@@ -12,9 +12,13 @@ class SkinCateInfoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ['items'=>SkinCateInfo::all()];
+        $where=[];
+        if($request->has('contact_phone')){
+            $where[]=['contact_phone','=',$request->contact_phone];
+        }
+        return ['items'=>SkinCateInfo::where($where)->get(), 'total'=>SkinCateInfo::where($where)->count()];
     }
 
     /**
