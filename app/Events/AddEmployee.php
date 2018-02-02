@@ -26,7 +26,7 @@ class AddEmployee
      *
      * @return void
      */
-    public function __construct(User $user, Array $roleIds)
+    public function __construct(User $user, $roleIds)
     {
         $this->user = $user;
         $this->role_ids = $roleIds;

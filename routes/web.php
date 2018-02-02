@@ -31,7 +31,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	
 	Route::resource('/orderlist','OrderListController');
 	Route::resource('/buyorders','BuyOrderController');
-	Route::resource('/users','EmployeeController');
+// 	Route::resource('/users','EmployeeController');
+	Route::resource('/employees','EmployeeController');
+	Route::match(['put','patch'], '/employeesupdate', 'EmployeeController@updates');
 	//passowrd/2 put patch
 	Route::match(['put','patch'], '/passowrd/{id}', 'EmployeeController@changePassword');
 	
@@ -51,7 +53,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/departments','DepartmentController');
 	// Route::resource('/orderlists','OrderListController');
 	Route::resource('/ordergoods','OrderGoodsController');
-	Route::resource('/employees','EmployeeController');
+	
 	Route::resource('/goodsout','GoodsOutController');
 	Route::resource('/goodsinto','GoodsIntoController');
 	Route::resource('/goodsspecs','GoodsSpecsController');

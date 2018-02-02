@@ -158,11 +158,11 @@ class DepartmentController extends Controller
         //返回 int
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success(1);
+//             return 1;
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error();
+//             return 2;
         }
     }
 }

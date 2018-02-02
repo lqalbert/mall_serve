@@ -35,6 +35,10 @@ class SyncEmployeeRoleListener
             return;
         }
         
+        if (!is_array($roleId)) {
+        	$roleId = [$roleId];
+        }
+        
         $roles = Role::find($roleId);
         
         $hideRoles = [];

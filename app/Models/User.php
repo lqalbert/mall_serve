@@ -116,7 +116,7 @@ class User extends Authenticatable
     }
     
     public function group(){
-    	return $this->belongsTo('App\Models\Group', 'group_id');
+    	return $this->belongsTo('App\Models\Group', 'group_id')->select(['id','name']);
     }
     
     public function roles(){

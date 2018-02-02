@@ -50,6 +50,9 @@ class EmployeeController extends Controller
             	if ($request->has('id')) {
             		$this->repository->pushCriteria(new Id($request->input('id')));
             	} 
+            	if ($request->has('with')) {
+            		$this->repository->with($request->input('with'));
+            	}
             	
             	$re = $this->repository->all($request->input('fields', ['id', 'realname']));  
             	$result = [
@@ -173,6 +176,25 @@ class EmployeeController extends Controller
         } else {
             return $this->error(0);
         }
+    }
+    
+    /**
+     * Updates the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  array  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updates(Request $request)
+    {
+    	$ids = $request->input('ids');
+    	$re = User::whereIn('id', $ids)->update($request->except('ids'));
+    	
+    	if ($re) {
+    		return $this->success([]);
+    	} else {
+    		return $this->error(0);
+    	}
     }
 
     /**
