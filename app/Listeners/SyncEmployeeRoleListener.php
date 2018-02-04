@@ -58,7 +58,7 @@ class SyncEmployeeRoleListener
         //以防万一
         if ($roleId) {
         	
-        	$user->roles()->sync($roleId);
+        	$user->roles()->sync(array_values($roleId));
         }
     }
 }

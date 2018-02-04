@@ -9,6 +9,8 @@ use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\OnlyTrashed;
 use App\Repositories\Criteria\Employee\DepartCandidate;
+use App\Repositories\Criteria\Department;
+
 class EmployeeService
 {
     private $repository = null;
@@ -68,6 +70,9 @@ class EmployeeService
             $this->repository->pushCriteria(new OnlyTrashed());
         }
         
+        if ($this->request->has('department_id')) {
+            $this->repository->pushCriteria(new Department($this->request->input('department_id')));
+        }
         
         
         $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
