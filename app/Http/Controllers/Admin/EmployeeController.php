@@ -45,7 +45,8 @@ class EmployeeController extends Controller
     }
     public function getUserByGId(Request $request,$gid )
     {
-         $data=DB::table('user_basic')->where('user_basic.group_id','=',$gid)->select('id','realname')->get();
+        $fields=['user_basic.*','roles.name as role_name'];
+         $data=DB::table('user_basic')->join('roles','roles.id','=','user_basic.role_id')->where('user_basic.group_id','=',$gid)->select($fields)->get();
         return ['items'=>$data];
     }
     /**
@@ -136,6 +137,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+//        $re = User::where(['id'=>$id])->update(['status'=>'-1']);
         $re = $this->repository->delete($id);
         if ($re) {
             return $this->success(1);
