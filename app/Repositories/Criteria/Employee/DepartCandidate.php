@@ -4,6 +4,7 @@ namespace App\Repositories\Criteria\Employee;
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface;
 use App\Models\Role;
+use App\Models\Department;
 
 class DepartCandidate extends Criteria
 {
@@ -29,7 +30,11 @@ class DepartCandidate extends Criteria
 			});
 		}
 		
-		$model->where('department_id',0);
+		$manager_ids = Department::where('manager_id','<>',0)->whereNotNull('manager_id')->pluck('manager_id');
+		if ($manager_ids) {
+			$model->whereNotIn('id', $manager_ids);
+		}
+// 		$model->where('department_id',0);
 		
 		if (!empty($this->id)) {
 			$id = $this->id;

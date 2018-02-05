@@ -120,8 +120,10 @@ class GroupController extends Controller
     {
         //update 返回 bool
         $re = $this->repository->update($request->input(), $id);
+        $model = Group::find($id);
+        event(new UpdateGroupCaptain($id, $model->manager_id));
         if ($re) {
-            return $this->success(Group::find($id));
+        	return $this->success($model);
         } else {
             return $this->error();
         }

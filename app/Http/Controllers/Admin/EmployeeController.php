@@ -14,6 +14,8 @@ use App\Repositories\Criteria\Department;
 use App\Repositories\Criteria\Employee\RoleCriteria;
 use App\Repositories\Criteria\Employee\Group;
 use App\Repositories\Criteria\Employee\Id;
+use App\Repositories\Criteria\Employee\GroupCandidate;
+use App\Repositories\Criteria\NotEqual;
 
 class EmployeeController extends Controller
 {
@@ -47,12 +49,26 @@ class EmployeeController extends Controller
             		$this->repository->pushCriteria(new RoleCriteria($request->input('role')));
             	}
             	
+            	if ($request->has('group_candidate')) {
+            		$this->repository->pushCriteria(new GroupCandidate());
+            	}
+            	
             	if ($request->has('id')) {
             		$this->repository->pushCriteria(new Id($request->input('id')));
             	} 
+            	
+            	if ($request->has('not')) {
+            		$not = json_decode($request->input('not'), true);
+            		foreach ($not as  $key => $value) {
+            			$this->repository->pushCriteria(new NotEqual($key, $value));
+            		}
+            	}
+            	
+            	
             	if ($request->has('with')) {
             		$this->repository->with($request->input('with'));
             	}
+            	
             	
             	$re = $this->repository->all($request->input('fields', ['id', 'realname']));  
             	$result = [
@@ -71,7 +87,9 @@ class EmployeeController extends Controller
             	} else {
             		$id = 0;
             	}
-            	Log::debug('[var]', [$id]);
+            	if ($request->has('with')) {
+            		$this->repository->with($request->input('with'));
+            	}
             	$this->repository->pushCriteria(new DepartCandidate($id));
             	$pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields')); 
             	$result = [
