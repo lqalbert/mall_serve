@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Role;
+use App\Events\AddEmployee;
 
 class UsersTableSeeder extends Seeder
 {
@@ -26,9 +27,12 @@ class UsersTableSeeder extends Seeder
         $userRow = [
             'account'=>'admin', 
             'password'=> bcrypt('123456'),
-            'role_id'=>$adminRole->id
+        	'realname' => '系统管理员'
+//             'role_ids'=>[$adminRole->id]
         ];
         $user = User::create($userRow);
+        
+        event(new AddEmployee($user, [$adminRole->id]));
         
 //         $user->attachRole($adminRole);
 //         $user->roles()->attach($adminRole->id); 

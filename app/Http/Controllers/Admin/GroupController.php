@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\GroupRepository;
 use App\Models\Group;
 use Illuminate\Support\Facades\DB;
+use App\Events\UpdateGroupCaptain;
 
 class GroupController extends Controller
 {
@@ -76,6 +77,9 @@ class GroupController extends Controller
     {
         //
         $re = $this->repository->create($request->input());
+        if (!empty($re->manager_id)) {
+        	event( new UpdateGroupCaptain($re->id, $re->manager_id));
+        }
         if ($re) {
             return $this->success($re);
         } else {
@@ -116,8 +120,10 @@ class GroupController extends Controller
     {
         //update 返回 bool
         $re = $this->repository->update($request->input(), $id);
+        $model = Group::find($id);
+        event(new UpdateGroupCaptain($id, $model->manager_id));
         if ($re) {
-            return $this->success(Group::find($id));
+        	return $this->success($model);
         } else {
             return $this->error();
         }
@@ -133,6 +139,7 @@ class GroupController extends Controller
     {
         //返回 int
         $re = $this->repository->delete($id);
+        //把所属员工group_id变成0
         if ($re) {
             return $this->success(1);;
         } else {

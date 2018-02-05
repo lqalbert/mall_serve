@@ -98,6 +98,7 @@ class Role extends EntrustRole
     {
         parent::boot();
         
+        //User::withoutGlobalScope('hide');
         static::addGlobalScope('hide', function(Builder $builder){
             $builder->where('hidden', 0);
         });

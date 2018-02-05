@@ -5,6 +5,12 @@ use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use APP\models\User;
+use App\Alg\ModelCollection;
+use App\Repositories\Criteria\OrderByIdDesc;
+use App\Repositories\Criteria\OnlyTrashed;
+use App\Repositories\Criteria\Employee\DepartCandidate;
+use App\Repositories\Criteria\Department;
+
 class EmployeeService
 {
     private $repository = null;
@@ -71,11 +77,33 @@ class EmployeeService
             'total'=>$count
         ];
     }
+    
+    /**
+     * @todo depart-candidate 替换成常量
+     * @return unknown[]|NULL[]
+     */
     public function  get()
     {
-        $re = $this->repository->with(['department_basic'])->all();
+        
+        $this->repository->pushCriteria(new OrderByIdDesc());
+        
+        if ($this->request->has('status') && $this->request->input('status') == -1) {
+            $this->repository->pushCriteria(new OnlyTrashed());
+        }
+        
+        if ($this->request->has('department_id')) {
+            $this->repository->pushCriteria(new Department($this->request->input('department_id')));
+        }
+        
+        
+        $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
+        
+        
+        $re = $this->repository->with(['department','group','roles'])->paginate(20, $selects);
+        $collection  = $re->getCollection();
+        
         return [
-            'items'=>$re->getCollection(),
+        	'items'=>$collection,
             'total'=>$re->total()
         ];
         //下面的参考一下。字段没加全

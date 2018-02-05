@@ -9,37 +9,33 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Models\User;
-/**
- * 名称搞错了 应该用 SetEmployeeRole
- * @author hyf
- *
- */
-class AddEmployee
+
+class UpdateGroupCaptain
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
-    private $role_ids = null;
+    private $user_id = 0;
+    private $group_id = 0;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, $roleIds)
+    public function __construct($group_id, $user_id)
     {
-        $this->user = $user;
-        $this->role_ids = $roleIds;
+        $this->group_id = $group_id;
+        $this->user_id = $user_id;
     }
     
-    public function getUser() 
+    public function getUserId()
     {
-        return $this->user;
+    	return $this->user_id;
     }
     
-    public function getRoleIds()
+    public function getGroupId()
     {
-    	return $this->role_ids;	
+    	return $this->group_id;
     }
 
     /**

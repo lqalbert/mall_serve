@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\Criteria\Group;
+namespace App\Repositories\Criteria;
 
 use Bosnadev\Repositories\Contracts\RepositoryInterface as Repository;
 use Bosnadev\Repositories\Criteria\Criteria;

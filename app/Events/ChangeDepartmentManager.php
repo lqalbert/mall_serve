@@ -9,37 +9,23 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\Models\User;
-/**
- * 名称搞错了 应该用 SetEmployeeRole
- * @author hyf
- *
- */
-class AddEmployee
+
+class ChangeDepartmentManager
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+	
+    private $department_id = 0;
+    private $user_id = 0;
     
-    private $role_ids = null;
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, $roleIds)
+    public function __construct($departId, $userId)
     {
-        $this->user = $user;
-        $this->role_ids = $roleIds;
-    }
-    
-    public function getUser() 
-    {
-        return $this->user;
-    }
-    
-    public function getRoleIds()
-    {
-    	return $this->role_ids;	
+    	$this->department_id = $departId;
+    	$this->user_id = $userId;
     }
 
     /**
@@ -51,4 +37,14 @@ class AddEmployee
 //     {
 //         return new PrivateChannel('channel-name');
 //     }
+
+    public function getDepartmentId()
+    {
+    	return $this->department_id;
+    }
+    
+    public function getUserId()
+    {
+    	return $this->user_id;
+    }
 }
