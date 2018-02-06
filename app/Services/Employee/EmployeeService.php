@@ -10,6 +10,7 @@ use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\OnlyTrashed;
 use App\Repositories\Criteria\Employee\DepartCandidate;
 use App\Repositories\Criteria\Department;
+use App\Repositories\Criteria\FieldLike;
 
 class EmployeeService
 {
@@ -91,15 +92,27 @@ class EmployeeService
             $this->repository->pushCriteria(new OnlyTrashed());
         }
         
+        if ($this->request->has('group_id')) {
+        	$this->repository->pushCriteria(new Group($request->input('group_id')));
+        }
+        
         if ($this->request->has('department_id')) {
             $this->repository->pushCriteria(new Department($this->request->input('department_id')));
         }
+        
+        if ($this->request->has('typeNumber') && 
+        	$this->request->has('typeValue') ){
+        	$this->repository->pushCriteria(
+        			new FieldLike($this->request->input('typeNumber'), $this->request->input('typeValue'))
+        	);
+        }
+        
         
         
         $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
         
         
-        $re = $this->repository->with(['department','group','roles'])->paginate(20, $selects);
+        $re = $this->repository->with(['department','group','roles'])->paginate($this->request->input('pageSize',20), $selects);
         $collection  = $re->getCollection();
         
         return [

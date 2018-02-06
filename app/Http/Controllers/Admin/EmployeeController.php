@@ -81,7 +81,7 @@ class EmployeeController extends Controller
                 $result = $service->get();
                 break;
             default:
-                $result = $this->service->getData();
+                $result = $this->service->get();
         }
         return $result;
     }
@@ -182,7 +182,8 @@ class EmployeeController extends Controller
     
     /**
      * Updates the specified resource in storage.
-     *
+     * @todo 将User 改造成 Criteria
+     * 
      * @param  \Illuminate\Http\Request  $request
      * @param  array  $id
      * @return \Illuminate\Http\Response
@@ -214,5 +215,22 @@ class EmployeeController extends Controller
         } else {
             return $this->error(0);
         }
+    }
+    
+    /**
+     * 改密码
+     * @todo 将User 改造成Criteria
+     */
+    public function changePassword(Request $request, $id)
+    {
+    	//password
+    	$data = [];
+    	$data['password'] = bcrypt($request->input('password'));
+    	$re = User::where('id', $id)->update($data);
+    	if ($re) {
+    		return $this->success(1);
+    	} else {
+    		return $this->error(0);
+    	}
     }
 }
