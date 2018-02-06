@@ -50,15 +50,17 @@ class CustomerBasic extends Model
         "updated_at",
         "deleted_at"
     ];
-  
-
-   
-   
-    
- 
     
     public function  contacts() 
     {
         return $this->hasMany('App\Models\CustomerContact', 'cus_id');
+    }
+    
+    public function  users(){
+    	return $this->belongsToMany('App\Models\User', 'customer_user', 'cus_id', 'user_id');
+    }
+    
+    public function midUser(){
+    	return $this->hasMany('App\Models\Customeruser', 'cus_id');
     }
 }

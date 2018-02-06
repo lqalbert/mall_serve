@@ -1,12 +1,16 @@
 <?php
 namespace App\Services\Customer;
 
-
 use App\Repositories\CustomerRepository;
 use Illuminate\Http\Request;
 use App\Alg\ModelCollection;
 use App\Models\CustomerBasic;
 use App\Models\CustomerContact;
+use App\Events\SetCustomerUser;
+use App\Models\CustomerUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 class CustomerService
 {
     private $repository = null;
@@ -26,7 +30,7 @@ class CustomerService
     {
 
 //        $selectFields = ['id','name','type','sex','recommend'];
-        $selectFields = ['id','name','age','sex',];
+        $selectFields = ['*'];
         $result = $this->repository
                         ->with(['contacts'])
                         ->paginate($this->request->input('pageSize', 20),$selectFields);
@@ -82,6 +86,9 @@ class CustomerService
         $this->customer_contact->weixin=$this->request->weixin;
         $this->customer_contact->weixin_nickname=$this->request->weixin_nickname;
         $this->customer_contact->save();
+        //0 代表添加
+        $user = Auth::user();
+        event(new SetCustomerUser($this->customer_basic->id, CustomerUser::ADD, $user->id, $user->group_id, $user->department_id));
     }
 
     public function upDate($id)

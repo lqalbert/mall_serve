@@ -3,15 +3,16 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Services\Customer\CustomerService;
+
 class CustomerController extends Controller
 {
     private $service = null;
     private $request = null;
 
-    public function  __construct(CustomerService $CustomerService, Request $request)
+    public function  __construct(CustomerService $CustomerService) //Request $request
     {
         $this->service = $CustomerService;
-        $this->request = $request;
+//         $this->request = $request;
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +22,7 @@ class CustomerController extends Controller
     public function index()
     {
 
-        return   $this->service->getData();
+        return   $this->service->get();
 
     }
 
