@@ -80,6 +80,21 @@ class EmployeeController extends Controller
                 $service = app('App\Services\Employee\PickAbleGMService');
                 $result = $service->get();
                 break;
+            case 'depart-candidate':
+            	//额外的参数
+            	if ($request->has('id')) {
+            		$id = $request->input('id');
+            	} else {
+            		$id = 0;
+            	}
+            	Log::debug('[var]', [$id]);
+            	$this->repository->pushCriteria(new DepartCandidate($id));
+            	$pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields'));
+            	$result = [
+            			'items' => $pager->getCollection(),
+            			'total' => $pager->total()
+            	];
+            	break;
             default:
                 $result = $this->service->get();
         }
