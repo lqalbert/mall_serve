@@ -30,14 +30,31 @@ class CustomerService
     {
 
 //        $selectFields = ['id','name','type','sex','recommend'];
+
+    	if ($this->request->has('with')) {
+    		$with = $this->request->input('with');
+    		$nWith = [];
+    		foreach ($with as $key => $item) {
+    			if ($item == 'midRelative') {
+    				$nWith[$item] = function($query){
+    					$query->with(['group','department']);
+    				};
+    			} else {
+    				$nWith[] = $item;
+    			}
+    		}
+    		$this->repository->with($nWith);
+    	}
+    	
+    	
         $selectFields = ['*'];
         $result = $this->repository
                         ->with(['contacts'])
                         ->paginate($this->request->input('pageSize', 20),$selectFields);
-//        $appends = ['type_text', 'sex_text'];
-//        $collection = ModelCollection::setAppends($result->getCollection(), $appends);
+       $appends = ['sex_text'];
+       $collection = ModelCollection::setAppends($result->getCollection(), $appends);
         return  [
-            'items'=> $result->getCollection(),
+        	'items'=> $collection,
             'total'=> $result->total()
         ];
     }
@@ -70,7 +87,9 @@ class CustomerService
             'total'=>$count
         ];
     }
-
+	/**
+	 * @FIXME 改造成事务
+	 */
     public function storeData()
     {
         
@@ -88,7 +107,14 @@ class CustomerService
         $this->customer_contact->save();
         //0 代表添加
         $user = Auth::user();
-        event(new SetCustomerUser($this->customer_basic->id, CustomerUser::ADD, $user->id, $user->group_id, $user->department_id));
+//         Log::debug('[dump]',[$user]);
+        event(new SetCustomerUser(
+        		$this->customer_basic->id, 
+        		CustomerUser::ADD, 
+        		$user->id, 
+        		$user->group_id, 
+        		$user->department_id,
+        		$user->realname));
     }
 
     public function upDate($id)

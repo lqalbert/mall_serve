@@ -18,16 +18,35 @@ class SetCustomerUser
     
     /**
      * Create a new event instance.
-     *
+     * @todo 把空的字段 设置一下
+     * 
      * @return void
      */
-    public function __construct($cus_id, $type, $user_id, $group_id, $department_id)
+    public function __construct($cus_id, $type, $user_id, $group_id, $department_id, $user_name, $group_name, $department_name)
     {
     	$this->data['cus_id'] = $cus_id;
     	$this->data['user_id'] = $user_id;
     	$this->data['type'] = empty($type) ? 0 : intval($type);
     	$this->data['group_id'] = $group_id;
     	$this->data['department_id'] = $department_id;
+    	
+    	if (empty($user_name)) {
+    		;
+    	} else {
+    		$this->data['user_name'] = $user_name;
+    	}
+    	
+    	if (empty($group_name)) {
+    		;
+    	} else {
+    		$this->data['group_name'] = $group_name;
+    	}
+    	
+    	if (empty($department_name)) {
+    		;
+    	} else {
+    		$this->data['department_name'] = $department_name;
+    	}
     	
     }
 

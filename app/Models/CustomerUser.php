@@ -24,7 +24,16 @@ class CustomerUser extends Model
     	'cus_id',
     	'type',
     	'group_id',
-    	'department_id'
+    	'department_id',
+    	'group_name',
+    	'department_name',
+    	'user_name'
+    ];
+    
+    protected $hidden = [
+    		"created_at",
+    		"updated_at",
+    		"deleted_at"
     ];
     
     private static $type = [
@@ -35,6 +44,16 @@ class CustomerUser extends Model
     
     public function getTypeTextAttribute(){
     	return self::$type[$this->attributes['type']];
+    }
+    
+    public function group()
+    {
+    	return $this->belongsTo('App\Models\Group', 'group_id');
+    }
+    
+    public function department()
+    {
+    	return $this->belongsTo('App\Models\Department', 'department_id');
     }
     
     

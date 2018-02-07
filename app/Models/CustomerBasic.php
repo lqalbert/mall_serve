@@ -60,7 +60,14 @@ class CustomerBasic extends Model
     	return $this->belongsToMany('App\Models\User', 'customer_user', 'cus_id', 'user_id');
     }
     
-    public function midUser(){
-    	return $this->hasMany('App\Models\Customeruser', 'cus_id');
+    public function midRelative(){
+    	return $this->hasOne('App\Models\CustomerUser', 'cus_id');
+    }
+    
+    
+    
+    public function getSexTextAttribute()
+    {
+    	return $this->attributes['sex'] == 0 ? '未定义' : $this->attributes['sex'] == 1 ? '男' : '女';
     }
 }

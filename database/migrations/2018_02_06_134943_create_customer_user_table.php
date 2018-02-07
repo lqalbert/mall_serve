@@ -21,6 +21,10 @@ class CreateCustomerUserTable extends Migration
     		//$table->xxx()->after('cus_id')->comment();
     		$table->unsignedInteger('group_id')->comment('小组ID 为方便查询功能和统计');
     		$table->unsignedInteger('department_id')->comment('部门ID 为方便查询功能和统计');
+    		$table->string('group_name', 20)->nullable()->comment('小组名称');
+    		$table->string('department_name', 20)->nullable()->comment('部门名称');
+    		$table->string('user_name', 20)->nullable()->comment('员工姓名');
+    		
     		$table->timestamps();
     		$table->softDeletes();
     	});
