@@ -30,7 +30,7 @@ class SetCustomerUserListener
         $data = $event->getData();
         if ($data['type'] != CustomerUser::ADD) {
         	//软删除以前的;
-        	CustomerUser::destroy($data['cus_id']);
+        	CustomerUser::where('cus_id',$data['cus_id'])->delete();
         	//如果以后有其它字段可以 复制给data 以达到继承的目的
         }
         

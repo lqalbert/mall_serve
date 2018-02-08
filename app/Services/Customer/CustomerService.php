@@ -10,6 +10,8 @@ use App\Events\SetCustomerUser;
 use App\Models\CustomerUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\Criteria\Customer\UserCriteria;
+use App\Repositories\Criteria\Customer\Relative;
 
 class CustomerService
 {
@@ -46,13 +48,32 @@ class CustomerService
     		$this->repository->with($nWith);
     	}
     	
+    	//relative
+    	$relatives = ['user_id', 'group_id', 'department_id'];
+    	foreach ($relatives as $value) {
+    		if ($this->request->has($value)) {
+    			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
+    		};
+    	}
+//     	if ($this->request->has('user_id')) {
+// 			$this->repository->pushCriteria(new Relative($this->request->input('user_id'), 'user_id'));
+//     	}
     	
-        $selectFields = ['*'];
+    	
+    	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];
         $result = $this->repository
-                        ->with(['contacts'])
-                        ->paginate($this->request->input('pageSize', 20),$selectFields);
-       $appends = ['sex_text'];
-       $collection = ModelCollection::setAppends($result->getCollection(), $appends);
+                       ->paginate($this->request->input('pageSize', 20),$selectFields);
+        
+        $appends = [];
+        if (in_array('type', $selectFields) or in_array('*', $selectFields)) {
+        	$appends = ['sex_text'];
+        }
+        if (!empty($appends)) {
+        	$collection = ModelCollection::setAppends($result->getCollection(), $appends);
+        } else {
+        	$collection = $result->getCollection();
+        }
+       
         return  [
         	'items'=> $collection,
             'total'=> $result->total()
