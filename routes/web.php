@@ -27,7 +27,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/customers','CustomerController');
 	Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
 	Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
-	
+	Route::get('/getDepartmentByType/{type}','DepartmentController@getDepartmentByType');
+
 	
 	Route::resource('/orderlist','OrderListController');
 	Route::resource('/buyorders','BuyOrderController');

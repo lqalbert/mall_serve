@@ -28,6 +28,9 @@ class EmployeeService
     {
         $fields=['user_basic.*','roles.display_name as role_name','department_basic.name as department_name','group_basic.name as group_name'];
         $where=[];
+        if($this->request->has('type')){
+            $where[]=['department_basic.type','=',$this->request->type];
+        }
         if($this->request->has('department_id')){
             $where[]=['user_basic.department_id','=',$this->request->department_id];
         }

@@ -61,6 +61,11 @@ class DepartmentController extends Controller
     {
         //
     }
+    public function getDepartmentByType($type)
+    {
+        $data=Department::where('type','=',$type)->get();
+        return ['items'=>$data];
+    }
 
     /**
      * Store a newly created resource in storage.
