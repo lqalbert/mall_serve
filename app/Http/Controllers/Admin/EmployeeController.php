@@ -120,7 +120,14 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $re = $this->repository->update($request->input(), $id);
+        $data = $request->all();
+        if($request->has('password')){
+            $data['password'] = bcrypt($data['password']);
+        }
+        if($request->has('checkPass')){
+            unset($data['checkPass']);
+        }
+          $re = $this->repository->update($data, $id);
         if ($re) {
             return $this->success(User::find($id));
         } else {
