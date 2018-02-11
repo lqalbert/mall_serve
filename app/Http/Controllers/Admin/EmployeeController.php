@@ -208,6 +208,7 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+//        $re = User::where(['id'=>$id])->update(['status'=>'-1']);
         $re = $this->repository->delete($id);
         if ($re) {
             return $this->success(1);
