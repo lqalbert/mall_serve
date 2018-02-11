@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Events\AddEmployee;
+use App\Models\Role;
 
 class UserTableSeeder2 extends Seeder
 {

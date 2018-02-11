@@ -32,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
     	'App\Events\UpdateGroupCaptain' => [
     		'App\Listeners\UpdateUserGroupIdListener'
     	],
+    		
+    	'App\Events\SetCustomerUser' => [
+    		'App\Listeners\SetCustomerUserListener'
+    	]
     ];
 
     /**

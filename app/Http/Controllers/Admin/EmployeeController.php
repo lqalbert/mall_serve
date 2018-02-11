@@ -80,15 +80,32 @@ class EmployeeController extends Controller
                 $service = app('App\Services\Employee\PickAbleGMService');
                 $result = $service->get();
                 break;
+            case 'depart-candidate':
+            	//额外的参数
+            	if ($request->has('id')) {
+            		$id = $request->input('id');
+            	} else {
+            		$id = 0;
+            	}
+//             	Log::debug('[var]', [$id]);
+            	$this->repository->pushCriteria(new DepartCandidate($id));
+            	$pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields'));
+            	$result = [
+            			'items' => $pager->getCollection(),
+            			'total' => $pager->total()
+            	];
+            	break;
             default:
-                $result = $this->service->getData();
+                $result = $this->service->get();
         }
         return $result;
     }
     public function getUserByGId(Request $request,$gid )
     {
-        $fields=['user_basic.*','roles.name as role_name'];
-         $data=DB::table('user_basic')->join('roles','roles.id','=','user_basic.role_id')->where('user_basic.group_id','=',$gid)->select($fields)->get();
+//         $fields=['user_basic.*','roles.name as role_name'];
+//          $data=DB::table('user_basic')->join('roles','roles.id','=','user_basic.role_id')->where('user_basic.group_id','=',$gid)->select($fields)->get();
+    	$fields=['user_basic.*'];
+    	$data=DB::table('user_basic')->where('user_basic.group_id','=',$gid)->select($fields)->get();
         return ['items'=>$data];
     }
     /**
@@ -182,7 +199,8 @@ class EmployeeController extends Controller
     
     /**
      * Updates the specified resource in storage.
-     *
+     * @todo 将User 改造成 Criteria
+     * 
      * @param  \Illuminate\Http\Request  $request
      * @param  array  $id
      * @return \Illuminate\Http\Response
@@ -215,5 +233,22 @@ class EmployeeController extends Controller
         } else {
             return $this->error(0);
         }
+    }
+    
+    /**
+     * 改密码
+     * @todo 将User 改造成Criteria
+     */
+    public function changePassword(Request $request, $id)
+    {
+    	//password
+    	$data = [];
+    	$data['password'] = bcrypt($request->input('password'));
+    	$re = User::where('id', $id)->update($data);
+    	if ($re) {
+    		return $this->success(1);
+    	} else {
+    		return $this->error(0);
+    	}
     }
 }

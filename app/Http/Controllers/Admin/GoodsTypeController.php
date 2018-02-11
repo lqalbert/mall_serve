@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Models\GoodsType;
 use App\Repositories\GoodsTypeRepository;
+
 class GoodsTypeController extends Controller
 {
 

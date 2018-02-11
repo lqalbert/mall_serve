@@ -85,4 +85,9 @@ class Group extends Model
     {
     	return $this->belongsTo('App\Models\User', 'manager_id')->select(['id','realname', 'mobilephone']);
     }
+    
+    public function users()
+    {
+    	return $this->hasMany('App\Models\User', 'group_id')->select(['id','realname','group_id']);
+    }
 }

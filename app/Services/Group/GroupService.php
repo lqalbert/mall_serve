@@ -28,10 +28,14 @@ class GroupService
         	$this->repository->pushCriteria(new NameLike($this->request->input('name',null)));
         }
         
-        
+        if ($this->request->has('with')) {
+        	$this->repository->with($this->request->input('with'));
+        } else {
+        	$this->repository->with(['manager', 'department']);
+        }
         
         $fields = $this->request->input('fields', ['*']);
-        $result = $this->repository->with(['manager', 'department'])->paginate($this->request->input('pageSize', 20), $fields);
+        $result = $this->repository->paginate($this->request->input('pageSize', 20), $fields);
         $collection  = $result->getCollection();
 //         foreach ($collection as &$value) {
 //             $value->department;

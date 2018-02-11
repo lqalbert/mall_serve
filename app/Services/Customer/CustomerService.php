@@ -1,12 +1,18 @@
 <?php
 namespace App\Services\Customer;
 
-
 use App\Repositories\CustomerRepository;
 use Illuminate\Http\Request;
 use App\Alg\ModelCollection;
 use App\Models\CustomerBasic;
 use App\Models\CustomerContact;
+use App\Events\SetCustomerUser;
+use App\Models\CustomerUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\Criteria\Customer\UserCriteria;
+use App\Repositories\Criteria\Customer\Relative;
+
 class CustomerService
 {
     private $repository = null;
@@ -26,14 +32,50 @@ class CustomerService
     {
 
 //        $selectFields = ['id','name','type','sex','recommend'];
-        $selectFields = ['id','name','age','sex',];
+
+    	if ($this->request->has('with')) {
+    		$with = $this->request->input('with');
+    		$nWith = [];
+    		foreach ($with as $key => $item) {
+    			if ($item == 'midRelative') {
+    				$nWith[$item] = function($query){
+    					$query->with(['group','department']);
+    				};
+    			} else {
+    				$nWith[] = $item;
+    			}
+    		}
+    		$this->repository->with($nWith);
+    	}
+    	
+    	//relative
+    	$relatives = ['user_id', 'group_id', 'department_id'];
+    	foreach ($relatives as $value) {
+    		if ($this->request->has($value)) {
+    			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
+    		};
+    	}
+//     	if ($this->request->has('user_id')) {
+// 			$this->repository->pushCriteria(new Relative($this->request->input('user_id'), 'user_id'));
+//     	}
+    	
+    	
+    	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];
         $result = $this->repository
-                        ->with(['contacts'])
-                        ->paginate($this->request->input('pageSize', 20),$selectFields);
-//        $appends = ['type_text', 'sex_text'];
-//        $collection = ModelCollection::setAppends($result->getCollection(), $appends);
+                       ->paginate($this->request->input('pageSize', 20),$selectFields);
+        
+        $appends = [];
+        if (in_array('type', $selectFields) or in_array('*', $selectFields)) {
+        	$appends = ['sex_text'];
+        }
+        if (!empty($appends)) {
+        	$collection = ModelCollection::setAppends($result->getCollection(), $appends);
+        } else {
+        	$collection = $result->getCollection();
+        }
+       
         return  [
-            'items'=> $result->getCollection(),
+        	'items'=> $collection,
             'total'=> $result->total()
         ];
     }
@@ -66,7 +108,9 @@ class CustomerService
             'total'=>$count
         ];
     }
-
+	/**
+	 * @FIXME 改造成事务
+	 */
     public function storeData()
     {
         
@@ -82,6 +126,16 @@ class CustomerService
         $this->customer_contact->weixin=$this->request->weixin;
         $this->customer_contact->weixin_nickname=$this->request->weixin_nickname;
         $this->customer_contact->save();
+        //0 代表添加
+        $user = Auth::user();
+//         Log::debug('[dump]',[$user]);
+        event(new SetCustomerUser(
+        		$this->customer_basic->id, 
+        		CustomerUser::ADD, 
+        		$user->id, 
+        		$user->group_id, 
+        		$user->department_id,
+        		$user->realname));
     }
 
     public function upDate($id)
