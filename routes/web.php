@@ -26,6 +26,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/deleteCategory/{id}','CategoryController@haveChildren');
 	Route::resource('/customers','CustomerController');
 	Route::match(['put','patch','post'], '/customers-transfer', 'CustomerController@transfer');
+	Route::match(['put','patch','post'], '/customers-quit-transfer', 'CustomerController@quitTransfer');
 	Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
 	Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
 	

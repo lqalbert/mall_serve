@@ -87,7 +87,7 @@ class EmployeeController extends Controller
             	} else {
             		$id = 0;
             	}
-            	Log::debug('[var]', [$id]);
+//             	Log::debug('[var]', [$id]);
             	$this->repository->pushCriteria(new DepartCandidate($id));
             	$pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields'));
             	$result = [

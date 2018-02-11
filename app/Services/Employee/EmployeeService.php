@@ -11,6 +11,7 @@ use App\Repositories\Criteria\OnlyTrashed;
 use App\Repositories\Criteria\Employee\DepartCandidate;
 use App\Repositories\Criteria\Department;
 use App\Repositories\Criteria\FieldLike;
+use App\Repositories\Criteria\Employee\RoleCriteria;
 
 class EmployeeService
 {
@@ -107,13 +108,25 @@ class EmployeeService
         	);
         }
         
+        if ($this->request->has('role')) {
+        	$this->repository->pushCriteria(new RoleCriteria($this->request->input('role')));
+        }
         
+        if ($this->request->has('with')) {
+        	$this->repository->with($this->request->input('with'));
+        } else {
+        	$this->repository->with(['department','group','roles']);
+        }
         
         $selects = $this->request->has('fields') ? $this->request->input('fields') : ['*'];
         
-        
-        $re = $this->repository->with(['department','group','roles'])->paginate($this->request->input('pageSize',20), $selects);
+        $re = $this->repository->paginate($this->request->input('pageSize',20), $selects);
         $collection  = $re->getCollection();
+        
+//         dd($collection);
+        if (in_array('deleted_at', $selects)) {
+        	ModelCollection::setVisible($collection, ['deleted_at']);
+        }
         
         return [
         	'items'=>$collection,

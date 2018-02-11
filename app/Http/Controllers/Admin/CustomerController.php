@@ -137,5 +137,55 @@ class CustomerController extends Controller
     				$userModel->department->name));
     	  
     	}
+    	
+    	return $this->success();
+    }
+    
+    /**
+     * 离职接收
+     * @todo 转移代码到 service 层 需要重构
+     */
+    public function quitTransfer(Request $request)
+    {
+
+    	$user_ids= $request->input('user_ids');
+    	if (empty($user_ids)) {
+    		return $this->error();
+    	}
+    	$user_id = $request->input('to_id');
+    	if (!$user_id) {
+    		return $this->error(0, '目标用户');
+    	}
+    	
+    	if (in_array($user_id, $user_ids)) {
+    		return $this->error();
+    	}
+    	
+    	$userModel = User::select(['id','realname','group_id','department_id'])
+			    	->with(['group','department'])
+			    	->where('id', $user_id)
+			    	->first();
+    	
+    	foreach ($user_ids as $from_id) {
+    		
+    		$cus_ids = CustomerUser::where('user_id', $from_id)->pluck('cus_id');
+    		if (empty($cus_ids)) {
+    			continue;
+    		}
+    		foreach ($cus_ids as $id) {
+    			event(new SetCustomerUser(
+    					$id,
+    					CustomerUser::QUIT,
+    					$userModel->id,
+    					$userModel->group_id,
+    					$userModel->department_id,
+    					$userModel->realname,
+    					$userModel->group->name,
+    					$userModel->department->name));
+    			
+    		}
+    	}
+    	
+    	return $this->success(1);	
     }
 }
