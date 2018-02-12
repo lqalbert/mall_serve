@@ -145,10 +145,8 @@ class GoodsDetailsController extends Controller
 
         $goodsModel->update($data);
         
-        if($data['cate_id']){
-            $cates = $request->input('cate_id', []);
-            $goodsModel->category()->sync($cates);
-        }
+        $cates = $request->input('cate_id', []);
+        $goodsModel->category()->sync($cates);
         
         if($data['imgs']){
             $goodsModel->imgs()->delete();
