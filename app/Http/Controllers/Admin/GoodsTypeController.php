@@ -74,7 +74,7 @@ class GoodsTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->repository->with(['specs'])->find($id);
     }
 
     /**
