@@ -40,23 +40,29 @@ class GoodsDetailsService{
         if ($this->request->has('goods_number')) {
             $this->repository->pushCriteria( new Number($this->request->input('goods_number')));
         }
-
+		
+        if ($this->request->has('with')) {
+        	$this->repository->with($this->request->input('with'));
+        }
     	
         $result = $this->repository->paginate();
         
         $collection = $result->getCollection();
+//         if ($this->request->has('appends')) {
+//         	$collection = ModelCollection::setAppends($collection, $this->request->input('appends'));
+//         }
         
 //         $collection = ModelCollection::setAppends($collection, ['imgs']);
-		$goodsInfo=[];
-        foreach ($collection as &$model) {
-        	$model->imgs;
-        	$model->category;
-        	$goodsInfo[$model->id]=$model;
-        }
+// 		$goodsInfo=[];
+//         foreach ($collection as &$model) {
+//         	$model->imgs;
+//         	$model->category;
+//         	$goodsInfo[$model->id]=$model;
+//         }
         
         return [
         		'items'=> $collection,
-        		'goods'=> $goodsInfo,
+//         		'goods'=> $goodsInfo,
             	'total'=> $result->total()
         ]; 
     }

@@ -8,6 +8,7 @@ use App\Repositories\GoodsDetailsRepository;
 use App\Models\GoodsCategory;
 use App\Models\GoodsImg;
 use App\Models\Goods;
+use App\Models\Sku;
 
 class GoodsDetailsController extends Controller
 {
@@ -78,6 +79,33 @@ class GoodsDetailsController extends Controller
     	
     	$cates = $request->input('cate_id', []);
     	$goodsModel->category()->attach($cates);
+    	
+    	
+    	$skus = $request->input('skus', []);
+    	//json_decode($request->input('skus'), true);
+    	if (!empty($skus)) {
+    		$skuModels = [];
+    		foreach ($skus as $sku) {
+    			$skuModels[] = Sku::make($sku);
+    		}
+    		
+    		$goodsModel->skus()->saveMany($skuModels);
+			
+    		foreach ($skuModels as $index => $skModel) {
+    			$attrs = $skus[$index]['attr'];
+    			$attachArr = [];
+    			foreach ($attrs as $key => $item) {
+    				$attachArr[$item['id']] = [
+    						'value'       => $item['value'],
+    						'addon_value' => $item['addon_value'],
+    						'goods_id'    => $goodsModel->id
+    				];
+    			}
+    			
+    			$skModel->attrs()->attach($attachArr);
+    		}
+    	}
+    	
     	// end of 事务
     	
     	return $this->success($goodsModel);
@@ -94,7 +122,8 @@ class GoodsDetailsController extends Controller
      */
     public function show($id)
     {
-        //
+    	$this->repository->with(['category', 'imgs']);
+    	return $this->repository->find($id);
     }
 
     /**
