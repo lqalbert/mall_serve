@@ -19,7 +19,7 @@ class GoodsSkuController extends Controller
                    ->with(['attr'])->get();
         return [
         		'items' => $re,
-        		'total' => count($re)
+        		'total' => $re->count()
         ];
     }
 
@@ -35,13 +35,28 @@ class GoodsSkuController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @todo 添加事务
+     * 
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $all = $request->all();
+        $attrs = $all['attr'];
+    	$attachArr = [];
+    	foreach ($attrs as $key => $item) {
+    		$attachArr[$item['id']] = [
+    				'value'       => $item['value'],
+    				'addon_value' => $item['addon_value'],
+    				'goods_id'    => $all['goods_id']
+    		];
+    	}
+    	//这里改成事务
+    	$sku = Sku::create($all);
+    	$sku->attr()->attach($attachArr);
+    	
+    	return $this->success($sku);
     }
 
     /**
@@ -68,14 +83,28 @@ class GoodsSkuController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * 
+     * @todo 改成事务
+     *  
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+    	//$user = App\User::find(1);
+    	//$user->roles()->updateExistingPivot($roleId, $attributes);
+    	$re = Sku::where('id', $id)->update($request->except(['attr','id']));
+    	
+    	$sku = Sku::find($id);
+    	$attr = $request->input('attr',[]);
+    	
+    	foreach ($attr as $a) {
+    		$sku->attr()->updateExistingPivot($a['id'], 
+    				['value'=>$a['value'],'addon_value'=>$a['addon_value']]);
+    	}
+    	
+    	return $this->success(null);
     }
 
     /**
@@ -86,6 +115,7 @@ class GoodsSkuController extends Controller
      */
     public function destroy($id)
     {
-        //
+    	Sku::destroy($id);
+    	return $this->success(null);
     }
 }

@@ -19,7 +19,8 @@ class Sku extends Model
 	protected $fillable = [
 			'name',
 			'num',
-			'price'
+			'price',
+			'goods_id'
 	];
 	
 	
@@ -30,4 +31,9 @@ class Sku extends Model
 		return $this->belongsToMany('App\Models\GoodsSpecs', 'sku_attrs', 'sku_id', 'spec_id')
 					->withPivot(['goods_id','value','addon_value']);
 	}
+	
+// 	public function getImgUrlAttribute()
+// 	{
+// 		return assert($this->attributes[''])
+// 	}
 }

@@ -102,7 +102,7 @@ class GoodsDetailsController extends Controller
     				];
     			}
     			
-    			$skModel->attrs()->attach($attachArr);
+    			$skModel->attr()->attach($attachArr);
     		}
     	}
     	
