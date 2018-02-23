@@ -45,6 +45,19 @@ class Goods extends Model
         return $this->hasMany('App\Models\GoodsImg', 'goods_id');
     }
     
+    //1对多
+    public function skus()
+    {
+    	return $this->hasMany('App\Models\Sku', 'goods_id');
+    }
+    
+    //1对多
+    public function attrs()
+    {
+    	return $this->belongsToMany('App\Models\GoodsSpecs', 'sku_attrs', 'goods_id', 'spec_id');
+    }
+    
+    
     /**
      * 获取封面图片。
      *

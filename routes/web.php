@@ -61,6 +61,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/goodsinto','GoodsIntoController');
 	Route::resource('/goodsspecs','GoodsSpecsController');
 	Route::resource('/goodstype','GoodsTypeController');
+	Route::resource('/goodssku', 'GoodsSkuController');
 	Route::resource('/deliveryaddress','DeliveryAddressController');
 	Route::resource('/orderbasic','OrderBasicController');
 	
