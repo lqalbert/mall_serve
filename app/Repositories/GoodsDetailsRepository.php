@@ -5,7 +5,8 @@ use Bosnadev\Repositories\Eloquent\Repository;
 use Illuminate\Container\Container as App;
 use Illuminate\Support\Collection;
 
-class GoodsDetailsRepository extends Repository{
+class GoodsDetailsRepository extends Repository
+{
 	
     public function  __construct(App $app, Collection $collection)
     {

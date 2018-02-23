@@ -42,10 +42,18 @@ class GoodsDetailsService{
         }
 		
         if ($this->request->has('with')) {
-        	$this->repository->with($this->request->input('with'));
+        	$with = $this->request->input('with');
+        	foreach ($with as &$value) {
+        		if ($value == "skus"){
+        			$value = 'skus.attr';
+        		}
+        	}
+        	$this->repository->with($with);
         }
-    	
-        $result = $this->repository->paginate();
+        
+        
+    	$fields = $this->request->input('fields', ["*"]);
+    	$result = $this->repository->paginate($this->request->input('pageSize'),$fields);
         
         $collection = $result->getCollection();
 //         if ($this->request->has('appends')) {
