@@ -67,6 +67,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/articles' , 'ArticleController');
 	Route::resource('/connection' , 'ConnectionController');
 	Route::resource('/skincareinfo','SkinCateInfoController');
+	
+	Route::get('/menus', 'NavController@getNav');
 });
 
 
