@@ -12,7 +12,8 @@ class Category extends Model
     protected $fillable = [
         'label',
         'pid',
-        'level'
+        'level',
+        'type_id'
     ];
     protected $hidden = [
         'created_at',

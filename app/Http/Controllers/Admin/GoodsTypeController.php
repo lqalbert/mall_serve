@@ -40,7 +40,10 @@ class GoodsTypeController extends Controller
         ]; 
 
     }
-
+    public  function goodsTypeList(){
+        $data = GoodsType::all();
+        return ['items'=>$data];
+}
     /**
      * Show the form for creating a new resource.
      *
