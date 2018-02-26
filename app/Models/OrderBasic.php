@@ -18,6 +18,7 @@ class OrderBasic extends Model
         'address_id',
         'goods_id',
         'cus_id',
+        'exchange',
         'order_goods',
         'order_all_money',
         'order_pay_money',

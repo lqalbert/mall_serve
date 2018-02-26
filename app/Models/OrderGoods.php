@@ -20,5 +20,6 @@ class OrderGoods extends Model
         'price',
         'goods_number',
         'remark',
+        'exchange_status'
     ];
 }

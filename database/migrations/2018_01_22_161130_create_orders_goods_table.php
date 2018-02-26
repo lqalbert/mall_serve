@@ -16,7 +16,8 @@ class CreateOrdersGoodsTable extends Migration {
 			$table->string ( 'goods_name' )->comment ( '商品名称' );
 			$table->decimal('price',8,2)->default('0.00');
 			$table->unsignedInteger ( 'goods_number' )->comment ( '商品数量' );
-			$table->string ( 'remark' )->comment ( '备注' );
+			$table->string ( 'remark' )->comment ( '备注' )->nullable();
+            $table->enum('exchange_status', [0,1,2])->default(0)->comment('换货状态0正常1已被替换2替换后');
 			$table->timestamps ();
 			$table->softDeletes ();
 		} );
