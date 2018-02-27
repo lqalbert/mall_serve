@@ -25,7 +25,8 @@ class Goods extends Model
     		'cover_url',
     		'status',
     		'subtitle',
-    		'brief'
+    		'brief',
+    		'goods_sn'
     ];
     
     //多对多
@@ -70,5 +71,10 @@ class Goods extends Model
             $value = asset($value);
         }
     	return $value;
+    }
+    
+    public static function getCount()
+    {
+    	return self::withTrashed()->count();
     }
 }

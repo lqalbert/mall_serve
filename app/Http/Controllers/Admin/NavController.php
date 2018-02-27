@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use phpDocumentor\Reflection\Types\Object_;
+use Illuminate\Support\Facades\Log;
 
 class NavController extends Controller
 {
@@ -15,6 +16,8 @@ class NavController extends Controller
 	{
 		$user  =   Auth::user();
 		$roles = $user->roles;
+		
+		
 		
 // 		$user = User::find(1);
 // 		$roles = $user->roles;
@@ -39,7 +42,7 @@ class NavController extends Controller
 		
 		$menu_g = config('menug');
 		
-		if (in_array('*', $sub_menus_index)) {
+		if (in_array('*', $sub_menus_index, TRUE )) {
 			return array_map(function($item){
 				$item['subNavIndex'] = $item['subIndex'];
 				unset($item['subIndex']);

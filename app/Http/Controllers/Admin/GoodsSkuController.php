@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Sku;
+use App\Alg\Sn;
 //GoodsSkuController 
 
 class GoodsSkuController extends Controller
@@ -43,6 +44,8 @@ class GoodsSkuController extends Controller
     public function store(Request $request)
     {
         $all = $request->all();
+
+        
         $attrs = $all['attr'];
     	$attachArr = [];
     	foreach ($attrs as $key => $item) {
@@ -53,6 +56,7 @@ class GoodsSkuController extends Controller
     		];
     	}
     	//这里改成事务
+    	$all['sku_sn'] = Sn::getSkuSn(Sku::getCount());
     	$sku = Sku::create($all);
     	$sku->attr()->attach($attachArr);
     	
