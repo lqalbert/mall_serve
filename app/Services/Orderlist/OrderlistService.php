@@ -87,7 +87,9 @@ class OrderlistService
     public function refund($refund_id){
         $data = array(
             'refund_status' => '1',
+            'order_status'  => '4',
             'refund_check' => '0',
+            'check_status' => '0'
         );
         if($refund_id)
         {
