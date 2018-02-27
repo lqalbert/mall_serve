@@ -97,7 +97,7 @@ class EmployeeService
         }
         
         if ($this->request->has('group_id')) {
-        	$this->repository->pushCriteria(new Group($request->input('group_id')));
+        	$this->repository->pushCriteria(new Group($this->request->input('group_id')));
         }
         
         if ($this->request->has('department_id')) {
@@ -130,9 +130,13 @@ class EmployeeService
         if (in_array('deleted_at', $selects)) {
         	ModelCollection::setVisible($collection, ['deleted_at']);
         }
-        
+        $users=[];
+        foreach ($collection as $v){
+            $users[$v->id]=$v;
+        }
         return [
         	'items'=>$collection,
+            'users'=>$users,
             'total'=>$re->total()
         ];
         //下面的参考一下。字段没加全
