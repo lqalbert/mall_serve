@@ -62,18 +62,22 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/goodsspecs','GoodsSpecsController');
 	Route::resource('/goodstype','GoodsTypeController');
 	Route::resource('/goodssku', 'GoodsSkuController');
+	Route::get('/goodstypelist','GoodsTypeController@goodsTypeList');
 	Route::resource('/deliveryaddress','DeliveryAddressController');
 	Route::resource('/orderbasic','OrderBasicController');
 	
 	Route::resource('/articles' , 'ArticleController');
 	Route::resource('/connection' , 'ConnectionController');
 	Route::resource('/skincareinfo','SkinCateInfoController');
+	Route::resource('/sysnotice','SysNoticeController');
+	Route::resource('/contacts','ContactsController');
+	Route::resource('/website','WebsiteController');
 });
 
 
 	
 // Route::get('/', function () {
-// 	return view('welcome',['name'=>'hujian']);
+// 	return view('welcome');
 // });
 
 Route::get('/', 'Home\IndexController@index');

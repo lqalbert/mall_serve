@@ -45,6 +45,7 @@ public function getTree($array){
         foreach ($array as $k => $v) {
             $child[$k]['value']=$v->id;
             $child[$k]['id']=$v->id;
+            $child[$k]['type_id']=$v->type_id;
             $child[$k]['pid']=$v->pid;
             $child[$k]['label']=$v->label;
             $child[$k]['level']=$v->level;
@@ -81,7 +82,7 @@ public function getTree($array){
         if ($re) {
             return $this->success($re);
         } else {
-            return $this->error();
+            return $this->error(0);
         }
     }
 
@@ -114,9 +115,14 @@ public function getTree($array){
      * @param  \App\models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $re=Category::where('id','=',$id)->update($request->input());
+        if ($re) {
+            return $this->success(1);
+        } else {
+            return $this->error(0);
+        }
     }
 
     /**
@@ -132,7 +138,7 @@ public function getTree($array){
         if ($re) {
             return $this->success(1);;
         } else {
-            return $this->error();
+            return $this->error(0);
         }
     }
 }
