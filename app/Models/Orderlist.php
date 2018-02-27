@@ -31,8 +31,6 @@ class Orderlist extends Model
         'goods_name',
         'cus_id',
         'cus_name',
-        'order_goods',
-        'exchange',
         'deal_id'
     ];
     protected $appends = [
