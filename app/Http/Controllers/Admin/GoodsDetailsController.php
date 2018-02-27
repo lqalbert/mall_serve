@@ -9,6 +9,7 @@ use App\Models\GoodsCategory;
 use App\Models\GoodsImg;
 use App\Models\Goods;
 use App\Models\Sku;
+use App\Alg\Sn;
 
 class GoodsDetailsController extends Controller
 {
@@ -58,7 +59,7 @@ class GoodsDetailsController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @todo 改成事务
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -70,6 +71,8 @@ class GoodsDetailsController extends Controller
             $data['cover_url'] = $data['img_path'][0];
         }
     	//事务transaction()
+    	$goods_sn = Sn::getGoodsSn(Goods::getCount());
+    	$data['goods_sn'] = $goods_sn;
     	$goodsModel = Goods::create($data);
     	
     	$imgs = $request->input('img_path', []);
@@ -85,8 +88,12 @@ class GoodsDetailsController extends Controller
     	//json_decode($request->input('skus'), true);
     	if (!empty($skus)) {
     		$skuModels = [];
+    		$skuCount = Sku::getCount();
     		foreach ($skus as $sku) {
+    			$sku['sku_sn'] = Sn::getSkuSn($skuCount);
     			$skuModels[] = Sku::make($sku);
+    			$skuCount++;
+    			
     		}
     		
     		$goodsModel->skus()->saveMany($skuModels);

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sku extends Model
 {
+    use SoftDeletes;
 	
 	protected $table = 'goods_sku';
 	
-    use SoftDeletes;
     
 	protected $dates = [
 			'deleted_at'
@@ -20,7 +20,8 @@ class Sku extends Model
 			'name',
 			'num',
 			'price',
-			'goods_id'
+			'goods_id',
+			'sku_sn'
 	];
 	
 	
@@ -30,6 +31,11 @@ class Sku extends Model
 	{
 		return $this->belongsToMany('App\Models\GoodsSpecs', 'sku_attrs', 'sku_id', 'spec_id')
 					->withPivot(['goods_id','value','addon_value']);
+	}
+	
+	public static function getCount()
+	{
+		return self::withTrashed()->count();
 	}
 	
 // 	public function getImgUrlAttribute()

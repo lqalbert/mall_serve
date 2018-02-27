@@ -16,6 +16,7 @@ class CreateGoodsTable extends Migration
         Schema::create('goods_basic', function (Blueprint $table) {
             $table->increments('id');
             $table->string('goods_name')->nullable()->comment('商品名称');
+            $table->char('goods_sn',5)->nullable()->comment('goods sn');
             $table->string('goods_price')->nullable()->comment('商品价格');
             $table->string('goods_number')->nullable()->comment('商品货号');
             $table->unsignedTinyInteger('unit_type')->default(1)->comment('商品单位1瓶');

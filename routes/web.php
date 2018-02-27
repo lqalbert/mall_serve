@@ -72,6 +72,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/sysnotice','SysNoticeController');
 	Route::resource('/contacts','ContactsController');
 	Route::resource('/website','WebsiteController');
+	Route::get('/menus', 'NavController@getNav');
 });
 
 
