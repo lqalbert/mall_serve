@@ -5,6 +5,7 @@ namespace App\models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 class Orderlist extends Model
 {
     //
@@ -39,42 +40,21 @@ class Orderlist extends Model
         'user_name',
     ];
     /**
-     * 对象 转 数组
-     *
-     * @param object $obj 对象
-     * @return array
-     */
-    function object_to_array($obj) {
-        $obj = (array)$obj;
-        foreach ($obj as $k => $v) {
-            if (gettype($v) == 'resource') {
-                return;
-            }
-            if (gettype($v) == 'object' || gettype($v) == 'array') {
-                $obj[$k] = (array)$this->object_to_array($v);
-            }
-        }
-
-        return $obj;
-    }
-    /** 索引数组转化成关联数组 */
-    function toIndexArr($arr){
-        $i=0;
-        foreach($arr as $key => $value){
-            $newArr[$i] = $value;
-            $i++;
-    }
-        return $newArr;
-    }
-    /**
      * 根据用户id获取用户姓名
      *
      */
     public function get_cusinfo(){
         $customer = DB::table('customer_basic')->select('name', 'id')->get();
         $newarray = array();
-        $customer = $this->toIndexArr($this->object_to_array($customer));
-        foreach ($customer[0] as $v)
+        $customer = collect($customer);
+        $customer = $customer->toArray();
+        $new_cus = array();
+        foreach ($customer as $v)
+        {
+            $v = collect($v);
+            $new_cus[] = $v->toArray();
+        }
+        foreach ($new_cus as $v)
         {
             $id = $v['id'];
             $name = $v['name'];
@@ -89,8 +69,15 @@ class Orderlist extends Model
     public function get_employeeinfo(){
         $employee = DB::table('user_basic')->select('realname', 'id')->get();
         $newarray = array();
-        $employee = $this->toIndexArr($this->object_to_array($employee));
-        foreach ($employee[0] as $v)
+        $employee = collect($employee);
+        $employee = $employee->toArray();
+        $new_em = array();
+        foreach ($employee as $v)
+        {
+            $v = collect($v);
+            $new_em[] = $v->toArray();
+        }
+        foreach ($new_em as $v)
         {
             $id = $v['id'];
             $name = $v['realname'];
