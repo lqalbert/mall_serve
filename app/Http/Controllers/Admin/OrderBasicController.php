@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\models\OrderBasic;
+use App\models\OrderGoods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
@@ -60,7 +61,7 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
-        $this->model->cus_id = $request->cus_id;
+        $this->model->cus_id = $request->cus_id~~~;;
         $this->model->goods_id = $request->goods_id;
         $this->model->deal_id = $request->deal_id;
         $this->model->deal_name = $request->deal_name;
@@ -76,7 +77,8 @@ class OrderBasicController extends Controller
             unset($v['moneyNotes']);
             $data[$k]=$v;
         }
-        DB::table('order_goods')->insert($data);
+        //DB::table('order_goods')->insert($data);
+        OrderGoods::insert($data);
     }
 
     /**

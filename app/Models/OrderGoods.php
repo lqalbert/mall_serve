@@ -20,5 +20,7 @@ class OrderGoods extends Model
         'price',
         'goods_number',
         'remark',
+        'sku_id',
+        'sku_name'
     ];
 }
