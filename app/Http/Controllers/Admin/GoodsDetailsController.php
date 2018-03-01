@@ -146,7 +146,9 @@ class GoodsDetailsController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * 
+     * @todo 考虑重构 把图片处理的代码移到另一个控制器里
+     * 
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -155,27 +157,29 @@ class GoodsDetailsController extends Controller
     {
         $data = [];
         $data = $request->all();
-        if($request->input('cover_url')){
+        if($request->has('cover_url')){
             $coverArr = explode('/',$request->input('cover_url'));
             $data['cover_url'] = '/'.$coverArr[count($coverArr)-2].'/'.$coverArr[count($coverArr)-1];
+            
+            if($data['cover_url'] && count($data['del_imgs']) == count($data['imgs'])){
+            	if(!empty($data['img_path'])){
+            		$data['cover_url'] = $data['img_path'][0];
+            	}else{
+            		$data['cover_url'] = '';
+            	}
+            }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && count($data['del_imgs'])>0){
+            	$imgArr = array_column($data['imgs'],'url');
+            	$diff = array_diff($imgArr,$data['del_imgs']);
+            	$data['cover_url'] = reset($diff);
+            }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && empty($data['del_imgs'])){
+            	$coverArr = explode('/',$request->input('cover_url'));
+            	$data['cover_url'] = '/'.$coverArr[count($coverArr)-2].'/'.$coverArr[count($coverArr)-1];
+            }else if(!empty($data['img_path'])){
+            	$data['cover_url'] = $data['img_path'][0];
+            }
         }
 
-        if($data['cover_url'] && count($data['del_imgs']) == count($data['imgs'])){
-            if(!empty($data['img_path'])){
-                $data['cover_url'] = $data['img_path'][0];
-            }else{
-                $data['cover_url'] = '';
-            }
-        }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && count($data['del_imgs'])>0){
-            $imgArr = array_column($data['imgs'],'url');
-            $diff = array_diff($imgArr,$data['del_imgs']);
-            $data['cover_url'] = reset($diff);
-        }else if($data['cover_url'] && count($data['del_imgs']) !=count($data['imgs']) && empty($data['del_imgs'])){
-            $coverArr = explode('/',$request->input('cover_url'));
-            $data['cover_url'] = '/'.$coverArr[count($coverArr)-2].'/'.$coverArr[count($coverArr)-1];
-        }else if(!empty($data['img_path'])){
-            $data['cover_url'] = $data['img_path'][0];
-        }
+        
 
         $goodsModel = Goods::find($id);
 
@@ -183,7 +187,7 @@ class GoodsDetailsController extends Controller
         
         $cates = $request->input('cate_id', []);
         $goodsModel->category()->sync($cates);
-        
+        if (isset($data['imgs']) || isset($data['img_path'])) 
         if($data['imgs']){
             $goodsModel->imgs()->delete();
 

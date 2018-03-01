@@ -4,9 +4,31 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class RoleController extends Controller
 {
+    /**
+     * 在添加员工的时候 允许设置的角色
+     * 
+     * @todo 做成一个管理界面
+     * 
+     * @var array
+     */
+    public static $assignableMap = [
+        'administrator' => ['*'],
+        'super-manager' => [
+            'sale-manager', 
+            'sale-captain', 
+            'sale-staff', 
+        ],
+        'sale-manager' => [
+            'sale-captain',
+            'sale-staff', 
+        ]
+    ];
+    
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +41,31 @@ class RoleController extends Controller
             'items'=> $result,
             'totle'=> count($result)
         ];
+    }
+    
+    public function assignable()
+    {
+    	$roles = Auth::user()->getRoles(false);
+//         $roles = User::find(1)->getRoles(false);
+        
+    	$names = array_column($roles->toArray(), 'name');
+    	$assignable = [];
+    	foreach ($names as $value) {
+    	    if (isset(self::$assignableMap[$value])) {
+    	        $assignable = array_merge($assignable, self::$assignableMap[$value]);
+    	    }
+    	}
+    	
+    	if (!in_array('*', $assignable)) {
+    	    $query = Role::whereIn('name', $assignable);
+    	} else {
+    	    $query = Role::query(); // Role::on();
+    	}
+    	
+    	
+    	return [
+    	    'items'=> $query->get()
+    	];
     }
 
     /**

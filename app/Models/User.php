@@ -108,6 +108,22 @@ class User extends Authenticatable
         return $value;
     }
     
+    public function getRoles($withHidden = true)
+    {
+        $roles = $this->roles;
+//         dd($roles);
+        return $roles->filter( function($role) use($withHidden){
+            if ($withHidden) {
+                return true;
+            } else {
+                if ($role['hidden'] == 1) {
+                    return false;
+                } 
+                return true;
+            }
+        });
+    }
+    
     
     
     

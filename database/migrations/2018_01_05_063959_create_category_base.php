@@ -15,7 +15,7 @@ class CreateCategoryBase extends Migration
     {
         Schema::create('category_base', function (Blueprint $table) {
             $table->increments('id')->comment('商品类型ID');
-            $table->unsignedInteger('type_id')->comment('商品分类ID');
+            $table->unsignedInteger('type_id')->comment('商品分类ID')->nullable();
             $table->string('label')->comment('商品类型名称');
             $table->unsignedInteger('pid')->defaule(0)->comment('商品类型父ID');
             $table->unsignedTinyInteger('level')->defaule(1)->comment('商品类型等级');

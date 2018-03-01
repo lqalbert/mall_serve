@@ -49,6 +49,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/expressinfo','ExpressInfoController');
 	Route::post('/upload', 'UploadController@index')->name('upload');
 	Route::resource('/roles','RoleController');
+	Route::get('/roles-assignable','RoleController@assignable');
 	
 	
 	Route::resource('/goodsdetails','GoodsDetailsController');
