@@ -61,7 +61,7 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
-        $this->model->cus_id = $request->cus_id~~~;;
+        $this->model->cus_id = $request->cus_id;
         $this->model->goods_id = $request->goods_id;
         $this->model->deal_id = $request->deal_id;
         $this->model->deal_name = $request->deal_name;
