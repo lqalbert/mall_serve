@@ -8,6 +8,7 @@ use App\Repositories\Criteria\Goods\Name;
 use App\Repositories\Criteria\Goods\Categories;
 use App\Repositories\Criteria\Goods\Number;
 use App\Models\GoodsImg;
+use App\Repositories\Criteria\Order;
 
 class GoodsDetailsService{
 
@@ -28,6 +29,10 @@ class GoodsDetailsService{
 
     public function  get() 
     {
+        if ($this->request->has('orderField')  ) {
+            $this->repository->pushCriteria( new Order($this->request->input('orderField'), 
+                $this->request->input('orderWay', 'desc')));
+        }
 
     	if ($this->request->has('goods_name')) {
     		$this->repository->pushCriteria( new Name($this->request->input('goods_name')));

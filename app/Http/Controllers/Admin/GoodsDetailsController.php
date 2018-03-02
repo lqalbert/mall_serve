@@ -10,6 +10,7 @@ use App\Models\GoodsImg;
 use App\Models\Goods;
 use App\Models\Sku;
 use App\Alg\Sn;
+use Illuminate\Support\Facades\DB;
 
 class GoodsDetailsController extends Controller
 {
@@ -71,47 +72,60 @@ class GoodsDetailsController extends Controller
             $data['cover_url'] = $data['img_path'][0];
         }
     	//事务transaction()
-    	$goods_sn = Sn::getGoodsSn(Goods::getCount());
-    	$data['goods_sn'] = $goods_sn;
-    	$goodsModel = Goods::create($data);
     	
-    	$imgs = $request->input('img_path', []);
-    	foreach ($imgs as $img){
-    		$imgModel = $goodsModel->imgs()->create(['url'=>$img]);
-    	}
-    	
-    	$cates = $request->input('cate_id', []);
-    	$goodsModel->category()->attach($cates);
-    	
-    	
-    	$skus = $request->input('skus', []);
-    	//json_decode($request->input('skus'), true);
-    	if (!empty($skus)) {
-    		$skuModels = [];
-    		$skuCount = Sku::getCount();
-    		foreach ($skus as $sku) {
-    			$sku['sku_sn'] = Sn::getSkuSn($skuCount);
-    			$skuModels[] = Sku::make($sku);
-    			$skuCount++;
-    			
-    		}
-    		
-    		$goodsModel->skus()->saveMany($skuModels);
-			
-    		foreach ($skuModels as $index => $skModel) {
-    			$attrs = $skus[$index]['attr'];
-    			$attachArr = [];
-    			foreach ($attrs as $key => $item) {
-    				$attachArr[$item['id']] = [
-    						'value'       => $item['value'],
-    						'addon_value' => $item['addon_value'],
-    						'goods_id'    => $goodsModel->id
-    				];
-    			}
-    			
-    			$skModel->attr()->attach($attachArr);
-    		}
-    	}
+        DB::beginTransaction();
+        try {
+            
+            $goods_sn = Sn::getGoodsSn(Goods::getCount());
+            $data['goods_sn'] = $goods_sn;
+            $goodsModel = Goods::create($data);
+            
+            $imgs = $request->input('img_path', []);
+            foreach ($imgs as $img){
+                $imgModel = $goodsModel->imgs()->create(['url'=>$img]);
+            }
+            
+            $cates = $request->input('cate_id', []);
+            $goodsModel->category()->attach($cates);
+            
+            
+            $skus = $request->input('skus', []);
+            //json_decode($request->input('skus'), true);
+            if (!empty($skus)) {
+                $skuModels = [];
+                $skuCount = Sku::getCount();
+                foreach ($skus as $sku) {
+                    $sku['sku_sn'] = Sn::getSkuSn($skuCount);
+                    $skuModels[] = Sku::make($sku);
+                    $skuCount++;
+                    
+                }
+                
+                $goodsModel->skus()->saveMany($skuModels);
+                
+                foreach ($skuModels as $index => $skModel) {
+                    $attrs = $skus[$index]['attr'];
+                    $attachArr = [];
+                    foreach ($attrs as $key => $item) {
+                        $attachArr[$item['id']] = [
+                            'value'       => $item['value'],
+                            'addon_value' => $item['addon_value'],
+                            'goods_id'    => $goodsModel->id
+                        ];
+                    }
+                    
+                    $skModel->attr()->attach($attachArr);
+                }
+            }
+            
+        }catch(\Error $e) {
+            DB::rollback();
+            throw $e;
+        }
+        
+        DB::commit();
+        
+ 
     	
     	// end of 事务
     	
