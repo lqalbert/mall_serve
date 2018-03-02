@@ -107,6 +107,31 @@ return [
 				'text'=>'留言详情',
 				'icon'=>null,
 				'index'=>'Connection'
-		]
+		],
+        //18
+        [
+            'text'=>'我的工作台',
+            'icon'=>null,
+            'index'=>'Workbench'
+        ],
+        //19
+        [
+            'text'=>'系统公告',
+            'icon'=>null,
+            'index'=>'SysNotice'
+        ],
+        //20
+        [
+            'text'=>'重要联系人',
+            'icon'=>null,
+            'index'=>'Contacts'
+        ],
+        //21
+        [
+            'text'=>'常用网址',
+            'icon'=>null,
+            'index'=>'Website'
+        ],
+        
 		
 ];
