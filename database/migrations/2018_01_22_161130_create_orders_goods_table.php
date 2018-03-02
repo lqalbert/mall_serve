@@ -13,7 +13,9 @@ class CreateOrdersGoodsTable extends Migration {
 			$table->increments ( 'id' );
 			$table->unsignedInteger ( 'order_id' )->comment ( '订单ID' );
 			$table->unsignedInteger ( 'goods_id' )->comment ( '商品ID' );
+			$table->unsignedInteger ( 'sku_id' )->nullable()->comment ( 'SKU_ID' );
 			$table->string ( 'goods_name' )->comment ( '商品名称' );
+			$table->string ( 'sku_name' )->nullable()->comment ( 'SKU名称');
 			$table->decimal('price',8,2)->default('0.00');
 			$table->unsignedInteger ( 'goods_number' )->comment ( '商品数量' );
 			$table->string ( 'remark' )->comment ( '备注' )->nullable();

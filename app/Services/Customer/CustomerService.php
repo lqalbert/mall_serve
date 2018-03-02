@@ -128,14 +128,16 @@ class CustomerService
         $this->customer_contact->save();
         //0 代表添加
         $user = Auth::user();
-//         Log::debug('[dump]',[$user]);
+        Log::debug('[dump]',[$user]);
         event(new SetCustomerUser(
         		$this->customer_basic->id, 
         		CustomerUser::ADD, 
         		$user->id, 
         		$user->group_id, 
         		$user->department_id,
-        		$user->realname));
+        		$user->realname,
+                $user->group ? $user->group->name :'',
+                $user->department  ? $user->department->name : ''));
     }
 
     public function upDate($id)
