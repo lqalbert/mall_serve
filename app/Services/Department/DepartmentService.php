@@ -41,7 +41,7 @@ class DepartmentService
         
         return [
         	'items'=> $collection,
-            'totle'=> $result->total()
+            'total'=> $result->total()
         ];
     }
 }
