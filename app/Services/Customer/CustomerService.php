@@ -113,7 +113,6 @@ class CustomerService
 	 */
     public function storeData()
     {
-        
         $this->customer_basic->name = $this->request->name;
         $this->customer_basic->sex = $this->request->sex;
         $this->customer_basic->age = $this->request->age;
@@ -129,15 +128,7 @@ class CustomerService
         //0 代表添加
         $user = Auth::user();
         Log::debug('[dump]',[$user]);
-        event(new SetCustomerUser(
-        		$this->customer_basic->id, 
-        		CustomerUser::ADD, 
-        		$user->id, 
-        		$user->group_id, 
-        		$user->department_id,
-        		$user->realname,
-                $user->group ? $user->group->name :'',
-                $user->department  ? $user->department->name : ''));
+        event(new SetCustomerUser( $user, $this->customer_basic->id, CustomerUser::ADD));
     }
 
     public function upDate($id)

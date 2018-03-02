@@ -126,15 +126,7 @@ class CustomerController extends Controller
     	$cus_ids = $request->input('cus_ids');
     	foreach ($cus_ids as $id) {
 //     		$model  = CustomerUser::where('cus_id', $id)->first();
-    		event(new SetCustomerUser(
-    				$id,
-    				CustomerUser::TRANSFER, 
-    				$userModel->id, 
-    				$userModel->group_id, 
-    				$userModel->department_id, 
-    				$userModel->realname, 
-    				$userModel->group->name, 
-    				$userModel->department->name));
+    		event(new SetCustomerUser( $userModel ,$id, CustomerUser::TRANSFER) );
     	  
     	}
     	
