@@ -127,7 +127,6 @@ class CustomerService
         $this->customer_contact->save();
         //0 代表添加
         $user = Auth::user();
-        Log::debug('[dump]',[$user]);
         event(new SetCustomerUser( $user, $this->customer_basic->id, CustomerUser::ADD));
     }
 

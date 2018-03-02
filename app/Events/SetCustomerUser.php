@@ -23,7 +23,7 @@ class SetCustomerUser
      * 
      * @return void
      */
-    public function __construct(App\Models\User $user, $cus_id, $type)
+    public function __construct(\App\Models\User $user, $cus_id, $type)
     {
     	$this->data['cus_id'] = $cus_id;
     	$this->data['user_id'] = $user->id;
