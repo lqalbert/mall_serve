@@ -61,7 +61,7 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
-	if($request->exchange) {
+    	if($request->exchange) {
             $order_id=$request->id;
             $orderGoods=$request->order_goods;
             $data=[];
@@ -72,24 +72,24 @@ class OrderBasicController extends Controller
             }
             DB::table('order_goods')->insert($data);
         } else {
-		$this->model->cus_id = $request->cus_id;
-		$this->model->goods_id = $request->goods_id;
-		$this->model->deal_id = $request->deal_id;
-		$this->model->deal_name = $request->deal_name;
-		$this->model->address_id = $request->address_id;
-		$this->model->order_all_money = $request->order_all_money;
-		$this->model->order_pay_money = $request->order_pay_money;
-		$this->model->save();
-		$order_id=$this->model->id;
-		$orderGoods=$request->order_goods;
-		$data=[];
-		foreach ($orderGoods as $k => $v){
-		    $v['order_id'] = $order_id;
-		    unset($v['moneyNotes']);
-		    $data[$k]=$v;
-		}
-		DB::table('order_goods')->insert($data);
-	}
+    		$this->model->cus_id = $request->cus_id;
+    		$this->model->goods_id = $request->goods_id;
+    		$this->model->deal_id = $request->deal_id;
+    		$this->model->deal_name = $request->deal_name;
+    		$this->model->address_id = $request->address_id;
+    		$this->model->order_all_money = $request->order_all_money;
+    		$this->model->order_pay_money = $request->order_pay_money;
+    		$this->model->save();
+    		$order_id=$this->model->id;
+    		$orderGoods=$request->order_goods;
+    		$data=[];
+    		foreach ($orderGoods as $k => $v){
+    		    $v['order_id'] = $order_id;
+    		    unset($v['moneyNotes']);
+    		    $data[$k]=$v;
+    		}
+    		DB::table('order_goods')->insert($data);
+    	}
 
 
 
