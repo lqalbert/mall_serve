@@ -90,10 +90,6 @@ class OrderBasicController extends Controller
     		}
     		DB::table('order_goods')->insert($data);
     	}
-
-
-
-        
     }
 
     /**

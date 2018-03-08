@@ -79,7 +79,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 
 	
 // Route::get('/', function () {
-// 	return view('welcome');
+// 	// return view('welcome');
+// 	return view('test/test');
 // });
 
 Route::get('/', 'Home\IndexController@index');
@@ -114,3 +115,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // });
 Route::resource('photo','PhotoController');
 		
+// Route::get('/', function () {
+// 	// return view('welcome');
+// 	return view('test/test');
+// });

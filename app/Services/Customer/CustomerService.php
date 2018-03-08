@@ -80,7 +80,7 @@ class CustomerService
         ];
     }
     public  function  getData(){
-
+        //echo $this->request->phone;
         $where=[];
         if($this->request->has('name')){
             $where['customer_basic.name']=$this->request->name;
