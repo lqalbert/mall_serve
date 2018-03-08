@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\Criteria\Customer\UserCriteria;
 use App\Repositories\Criteria\Customer\Relative;
+use App\Repositories\Criteria\Customer\Phone;
+use App\Repositories\Criteria\Customer\Name;
 
 class CustomerService
 {
@@ -55,15 +57,18 @@ class CustomerService
     			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
     		};
     	}
-//     	if ($this->request->has('user_id')) {
-// 			$this->repository->pushCriteria(new Relative($this->request->input('user_id'), 'user_id'));
-//     	}
-    	
-    	
+        if ($this->request->has('phone')) {
+            $this->repository->pushCriteria(new Phone($this->request->input('phone')));
+        }
+        if ($this->request->has('name')) {
+            $this->repository->pushCriteria(new Name($this->request->input('name')));
+        }
+
     	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];
+
         $result = $this->repository
-                       ->paginate($this->request->input('pageSize', 20),$selectFields);
-        
+                ->paginate($this->request->input('pageSize', 20),$selectFields);
+
         $appends = [];
         if (in_array('type', $selectFields) or in_array('*', $selectFields)) {
         	$appends = ['sex_text'];
@@ -80,7 +85,6 @@ class CustomerService
         ];
     }
     public  function  getData(){
-
         $where=[];
         if($this->request->has('name')){
             $where['customer_basic.name']=$this->request->name;
@@ -113,12 +117,13 @@ class CustomerService
 	 */
     public function storeData()
     {
+        var_dump($this->request->all());
         $this->customer_basic->name = $this->request->name;
         $this->customer_basic->sex = $this->request->sex;
         $this->customer_basic->age = $this->request->age;
         $this->customer_basic->save();
-        $cis_id=$this->customer_basic->id;
-        $this->customer_contact->cus_id=$cis_id;
+        $cus_id=$this->customer_basic->id;
+        $this->customer_contact->cus_id=$cus_id;
         $this->customer_contact->phone=$this->request->phone;
         $this->customer_contact->qq=$this->request->qq;
         $this->customer_contact->qq_nickname=$this->request->qq_nickname;
@@ -127,6 +132,7 @@ class CustomerService
         $this->customer_contact->save();
         //0 代表添加
         $user = Auth::user();
+        var_dump($user);
         event(new SetCustomerUser( $user, $this->customer_basic->id, CustomerUser::ADD));
     }
 

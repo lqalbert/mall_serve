@@ -9,6 +9,7 @@ use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\OnlyTrashed;
 use App\Repositories\Criteria\Employee\DepartCandidate;
+use App\Repositories\Criteria\Employee\Group;
 use App\Repositories\Criteria\Department;
 use App\Repositories\Criteria\FieldLike;
 use App\Repositories\Criteria\Employee\RoleCriteria;

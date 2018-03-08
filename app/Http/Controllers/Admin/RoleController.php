@@ -39,7 +39,7 @@ class RoleController extends Controller
         $result = Role::all();
         return [
             'items'=> $result,
-            'totle'=> count($result)
+            'total'=> count($result)
         ];
     }
     
