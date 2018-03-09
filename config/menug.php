@@ -1,10 +1,10 @@
 <?php
 return [
-        [
-            'text'=>'工作台管理',
-            'icon'=>null,
-            'subIndex'=>[18,19,20,21]
-        ],
+    [
+        'text'=>'工作台管理',
+        'icon'=>null,
+        'subIndex'=>[18,19,20,21]
+    ],
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
@@ -28,12 +28,12 @@ return [
 		[
 				'text' => '库存管理',
 				'icon' => null,
-				'subIndex' => [12,13]
+				'subIndex' => [12,13,22,23,24,25,26,27,28]
 		],
 		[
 				'text' => '配送管理',
 				'icon' => null,
-				'subIndex' => [14]
+				'subIndex' => [14,29,30,31]
 		],
 		[
 				'text' => '资讯管理',
@@ -49,5 +49,5 @@ return [
 				'text' => '留言管理',
 				'icon' => null,
 				'subIndex'=>[17]
-		]
+		],
 ];
