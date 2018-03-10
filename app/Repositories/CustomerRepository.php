@@ -21,11 +21,10 @@ class CustomerRepository extends Repository
     {
         return 'App\Models\CustomerBasic';
     }
-    
-    
 
-    
-    
+
+
+
     public function  join($table, $field, $foreField) 
     {
         

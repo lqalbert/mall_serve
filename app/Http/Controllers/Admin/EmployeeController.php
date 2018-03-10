@@ -52,7 +52,7 @@ class EmployeeController extends Controller
             	if ($request->has('group_candidate')) {
             		$this->repository->pushCriteria(new GroupCandidate());
             	}
-            	
+
             	if ($request->has('id')) {
             		$this->repository->pushCriteria(new Id($request->input('id')));
             	} 
