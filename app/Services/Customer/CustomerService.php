@@ -48,7 +48,8 @@ class CustomerService
     		$this->repository->with($nWith);
     	}
     	
-    	//relative
+    	//relative 
+    	//FIXME 这里逻辑好像有问题 relatives 不应该出现
     	$relatives = ['user_id', 'group_id', 'department_id'];
     	foreach ($relatives as $value) {
     		if ($this->request->has($value)) {
