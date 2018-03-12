@@ -1,10 +1,12 @@
 <?php
 return [
+
         [
             'text'=>'工作台管理',
             'icon'=>null,
             'subIndex'=>[18,19,20,21]
         ],
+
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
