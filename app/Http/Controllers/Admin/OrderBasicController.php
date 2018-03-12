@@ -89,6 +89,8 @@ class OrderBasicController extends Controller
     		    $data[$k]=$v;
     		}
     		DB::table('order_goods')->insert($data);
+    		
+//     		ev
     	}
     }
 
