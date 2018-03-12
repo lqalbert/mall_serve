@@ -132,7 +132,7 @@ return [
 		    'icon'=>null,
 		    'index'=>'Website'
 		],
-
+    
         //22
         [
         		'text'=>'库存明细',
@@ -193,6 +193,7 @@ return [
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
+
 
 		
 ];
