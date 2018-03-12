@@ -35,7 +35,11 @@ class EventServiceProvider extends ServiceProvider
     		
     	'App\Events\SetCustomerUser' => [
     		'App\Listeners\SetCustomerUserListener'
-    	]
+    	],
+        
+        'App\Events\AddOrder' => [
+            'App\Listeners\AddOrderListener'
+        ]
     ];
 
     /**

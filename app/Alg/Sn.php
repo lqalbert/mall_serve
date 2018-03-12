@@ -13,6 +13,7 @@ class Sn
     const IN_ENTREPOT= 'IN';
     const OUT_ENTREPOT = 'OU';
     const ORDER_RETURN = 'RE';
+    const ORDER_EXCHANGE = 'EX';
     
 	/**
 	 * 生成商品编号
@@ -124,5 +125,18 @@ class Sn
 	public static function getReSn($base, $c)
 	{
 	    return self::getDanSn(self::ORDER_RETURN, $base, $c);
+	}
+	
+	/**
+	 * 生成换货单号
+	 *
+	 * @param string $base
+	 * @param number $c
+	 *
+	 * @return string
+	 */
+	public static function getExSn($base, $c)
+	{
+	    return self::getDanSn(self::ORDER_EXCHANGE, $base, $c);
 	}
 }

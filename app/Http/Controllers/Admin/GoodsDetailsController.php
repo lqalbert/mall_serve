@@ -95,7 +95,7 @@ class GoodsDetailsController extends Controller
                 $skuModels = [];
                 $skuCount = Sku::getCount();
                 foreach ($skus as $sku) {
-                    $sku['sku_sn'] = Sn::getSkuSn($skuCount);
+//                     $sku['sku_sn'] = Sn::getSkuSn($skuCount);
                     $skuModels[] = Sku::make($sku);
                     $skuCount++;
                     
