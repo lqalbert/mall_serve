@@ -51,7 +51,7 @@ class InventorySystem extends Model
         return $this->where([
             ['entrepot_id', $entrepot_id],
             ['sku_sn', $sku_sn]
-        ])->first();
+        ])->exists();
     }
     
     /**
@@ -104,7 +104,7 @@ class InventorySystem extends Model
      * 
      * @return 
      */
-    public function entrysUpdate($entrepot, $products)
+    public function entrysUpdate($entrepot_id, $products)
     {
         $affectedRows = 0;
         DB::beginTransaction();

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InventorySystem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 库存
@@ -71,15 +72,13 @@ class Inventory
      *  1、生成签收记录
      *  2、库存表 更新对应的 发货在途 和  签收数量
      */
-    public function orderAssigned()
+    public function orderSignatured()
     {
         
     }
     
     /**
      * 生产入库
-     * @todo 
-     * 1、更新库存表
      * 
      * @param int $entrepot_id 仓库ID
      * @param array $products  商品数组
@@ -88,40 +87,31 @@ class Inventory
     {
 //        先判断库存有没有 
 //         把没有的 挑出来 单独处理
-//        有的就 直接调用 entrysUpdate
-        
-        $sku_sns = array_column($products, 'sku_sn');
-        
-        $checked_sku_sns = $this->model->hasSkuSns($entrepot_id, $sku_sns);
-        $not_in_entrepot_products = array_map(function($value) use($checked_sku_sns){
-            if (in_array($value['sku_sn'], $checked_sku_sns)  ) {
-                return $value;
-            }
-        }, $products);
-        
+//        有的就 直接调用 entrysUpdate ＝
+// 改
+//         效率不是最好的 但是可以避免一些 坑
+//        假如在$products里面有两个一样的商品 
+//        一个 10 个 一个 20个 如果用 entrysUpdate 这个批量插入 会有问题
         DB::beginTransaction();
         try {
-            //没有的 要insert
-            if (!empty($not_in_entrepot_products)) {
-                $inserts = [];
-                foreach ($not_in_entrepot_products as $value) {
-                    $inserts[] = [
-                        'entrepot_id'=>$entrepot_id ,
-                        'sku_sn' => $value['sku_sn'],
-                        'goods_name' => $value['goods_name'],
-                        'entrepot_count' => $value['num'],
-                        'saleable_count' => $value['num']
-                    ];
-                };
-                $this->model->insert($inserts);
+            foreach ($products as $product) {
+                if ($this->model->hasOneBySkuSn($entrepot_id, $product['sku_sn'])) {
+                    $this->model->entryUpdate($entrepot_id, $product['sku_sn'], $product['num']);
+                } else {
+                    $this->model->insert([
+                        'entrepot_id'  => $entrepot_id ,
+                        'sku_sn'       => $product['sku_sn'],
+                        'goods_name'   => $product['goods_name'],
+                        'entrepot_count' => $product['num'],
+                        'saleable_count' => $product['num']
+                    ]);
+                }
             }
-            //有的要 更新
-            $this->model->entrysUpdate($entrepot_id);
         } catch (Exception $e) {
             DB::rollback();
         }
         
-        DB::commit();  
+        DB::commit();   
     }
     
 }
