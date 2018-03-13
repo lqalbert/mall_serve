@@ -75,6 +75,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::get('/menus', 'NavController@getNav');
+	
+	Route::resource('/produce-entry', 'ProduceEntryController');
 
 });
 
