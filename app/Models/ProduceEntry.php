@@ -22,7 +22,12 @@ class ProduceEntry extends Model
     ];
     
     protected $fillable = [
-        
+        'enty_sn',
+        'user_name',
+        'user_id',
+        'entrepot_id',
+        'comment',
+        'entry_at',
     ];
     
     /**
@@ -37,6 +42,6 @@ class ProduceEntry extends Model
     
     public function products()
     {
-        return $this->hasMany('App\Models\ProduceEntryProduct', 'partent_id');
+        return $this->hasMany('App\Models\ProduceEntryProduct', 'parent_id');
     }
 }

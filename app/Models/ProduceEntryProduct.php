@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class ProduceEntryProduct extends Model
 {
     use SoftDeletes;
@@ -15,7 +15,15 @@ class ProduceEntryProduct extends Model
     protected $table = 'produce_in_product';
     
     protected $fillable = [
-        
+        'cate_type',
+        'cate_kind',
+        'cate_type_id',
+        'cate_kind_id',
+        'product_sale_type',
+        'goods_name',
+        'sku_sn',
+        'num',
+        'parent_id',
     ];
     
     public function produceEntry()
