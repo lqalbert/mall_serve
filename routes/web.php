@@ -21,6 +21,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/deposits', 'DepositController');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
+	Route::get('/getCategorys/{pid}','CategoryController@getChildrens');
 	Route::resource('/categorys','CategoryController');
 	Route::get('/tree','CategoryController@getCascade');
 	Route::get('/deleteCategory/{id}','CategoryController@haveChildren');

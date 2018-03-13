@@ -17,7 +17,7 @@ class EntrepotBasicAddField extends Migration
         Schema::table('entrepot_basic',function (Blueprint $table){
 
             if (!Schema::hasColumn('entrepot_basic','eng_name')){
-                $table->char('eng_name',3)->after('comment')->nullable()->comment('英文简称');
+                $table->char('eng_name',3)->unique()->after('comment')->nullable()->comment('英文简称');
             }
         });
     }
