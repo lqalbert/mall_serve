@@ -11,6 +11,8 @@
 |
 */
 
+require __DIR__ .'/app_const.php';
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
