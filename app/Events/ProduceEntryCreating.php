@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class ProduceEntryCreating
 {
+
     private $produceEntry = null;
     public function __construct(\App\Models\ProduceEntry $produce)
     {
@@ -23,4 +24,5 @@ class ProduceEntryCreating
     {
         return $this->produceEntry;
     }
+
 }
