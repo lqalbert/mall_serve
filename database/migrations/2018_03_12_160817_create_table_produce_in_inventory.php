@@ -20,7 +20,7 @@ class CreateTableProduceInInventory extends Migration
             $table->string('user_name',30)->comment('入库人姓名');
             $table->unsignedInteger('user_id')->comment('入库人id');
             $table->unsignedInteger('entrepot_id')->comment('配送中心(仓库)id');
-            $table->string('comment', 100)->comment('备注');
+            $table->string('comment', 100)->nullable()->comment('备注');
             $table->string('entry_at')->nullable()->comment('入库时间');
             $table->timestamps();
             $table->softDeletes();
