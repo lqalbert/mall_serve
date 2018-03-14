@@ -115,12 +115,11 @@ class InventorySystem extends Model
                     ' set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?'.
                     ' where entrepot_id=? and sku_sn = ?', [$product['num'], $product['num'], $entrepot_id, $product['sku_sn']]);
             }
-            
+            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
         }
         
-        DB::commit();
         return $affectedRows;
     }
 }

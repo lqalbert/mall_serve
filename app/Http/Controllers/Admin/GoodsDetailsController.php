@@ -117,13 +117,13 @@ class GoodsDetailsController extends Controller
                     $skModel->attr()->attach($attachArr);
                 }
             }
-            
+            DB::commit();
         }catch(\Error $e) {
             DB::rollback();
             throw $e;
         }
         
-        DB::commit();
+        
         
  
     	

@@ -22,7 +22,7 @@ class ProduceEntry extends Model
     ];
     
     protected $fillable = [
-        'enty_sn',
+        'entry_sn',
         'user_name',
         'user_id',
         'entrepot_id',
@@ -43,5 +43,15 @@ class ProduceEntry extends Model
     public function products()
     {
         return $this->hasMany('App\Models\ProduceEntryProduct', 'parent_id');
+    }
+    
+    /**
+     * 获取指定仓库的总数
+     * @param int $entrepot_id
+     * @return int
+     */
+    public static function getAllCount($entrepot_id)
+    {
+        return self::withTrashed()->where('entrepot_id', $entrepot_id)->count();
     }
 }

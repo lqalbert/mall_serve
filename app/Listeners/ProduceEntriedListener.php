@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\ProduceEntred;
+use App\Events\ProduceEntried;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Http\Controllers\Inventory;
 
-class ProduceEntredListener
+class ProduceEntriedListener
 {
     
     private $inventorySys = null;
@@ -27,7 +27,7 @@ class ProduceEntredListener
      * @param  ProduceEntred  $event
      * @return void
      */
-    public function handle(ProduceEntred $event)
+    public function handle(ProduceEntried$event)
     {
         $this->inventorySys->produceEntry($event->getEntrepot(), $event->getProducts());
     }
