@@ -57,6 +57,7 @@ class DistributionCenterController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['eng_name']=strtoupper($data['eng_name'] );
         $this->model->create($data);
     }
 
@@ -91,7 +92,9 @@ class DistributionCenterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->model->where('id',$id)->update($request->all());
+        $data = $request->all();
+        $data['eng_name']=strtoupper($data['eng_name'] );
+        $this->model->where('id',$id)->update($data);
     }
 
     /**
