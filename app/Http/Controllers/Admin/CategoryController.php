@@ -16,15 +16,36 @@ class CategoryController extends Controller {
 	public function __construct(CategoryRepository $categoryRepository) {
 		$this->repository = $categoryRepository;
 	}
+
+
 	public function index() {
 		$service = app ( 'App\Services\Category\CategoryService' );
 		$result = $service->get ();
 		return $result;
 	}
+
+	/**
+	 * 获得全部二级
+	 * @param  Category $category [description]
+	 * @param  [type]   $pid      [description]
+	 * @return [type]             [description]
+	 */
 	public function getLevels(Category $category, $pid) {
 		$data = $category->where ( 'level', '=', $pid )->get ();
 		return $data;
 	}
+
+  /**
+   * 或者特定的二级
+   * @param  Category $category [description]
+   * @param  [type]   $pid      [description]
+   * @return [type]             [description]
+   */
+	public function getChildrens(Category $category, $pid) {
+		$data = $category->where ( 'pid', '=', $pid )->get ();
+		return $data;
+	}
+
 	// 通过商品类型id判断是否有子级
 	public function haveChildren(Category $category, $id) {
 		$data = count ( $category->where ( 'pid', '=', $id )->get () ) ? 1 : 0;
@@ -32,6 +53,8 @@ class CategoryController extends Controller {
 				'items' => $data 
 		];
 	}
+
+
 	// 返回商品类别选择的级联数据
 	public function getCascade() {
 		$arr = $this->index () ['items'];
@@ -39,6 +62,8 @@ class CategoryController extends Controller {
 				'items' => $this->getTree ( $arr ) 
 		];
 	}
+
+
 	public function getTree($array) {
 		$child = [ ];
 		foreach ( $array as $k => $v ) {
@@ -54,6 +79,9 @@ class CategoryController extends Controller {
 		}
 		return $child;
 	}
+
+
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
