@@ -10,9 +10,9 @@ namespace App\Events;
 
 class ProduceEntryCreating
 {
-    public function __construct(App\Models\ProduceEntry $produce)
-    {
-        
-        
-    }
+//    public function __construct(App\Models\ProduceEntry $produce)
+//    {
+//
+//
+//    }
 }

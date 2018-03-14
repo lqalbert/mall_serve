@@ -72,19 +72,22 @@ class OrderBasicController extends Controller
             }
             DB::table('order_goods')->insert($data);
         } else {
-    		$this->model->cus_id = $request->cus_id;
-    		$this->model->goods_id = $request->goods_id;
-    		$this->model->deal_id = $request->deal_id;
-    		$this->model->deal_name = $request->deal_name;
-    		$this->model->address_id = $request->address_id;
-    		$this->model->order_all_money = $request->order_all_money;
-    		$this->model->order_pay_money = $request->order_pay_money;
-    		$this->model->save();
-    		$order_id=$this->model->id;
+            $inData['cus_id']= $request->cus_id;
+            $inData['goods_id']= $request->goods_id;
+            $inData['deal_id']= $request->deal_id;
+            $inData['deal_name']= $request->deal_name;
+            $inData['address_id'] = $request->address_id;
+            $inData['order_all_money']= $request->order_all_money;
+            $inData['order_pay_money']= $request->order_pay_money;
+    		$re = $this->model->create($inData);
+    		$order_id=$re->id;
+    		$time = $re->created_at;
     		$orderGoods=$request->order_goods;
     		$data=[];
     		foreach ($orderGoods as $k => $v){
     		    $v['order_id'] = $order_id;
+    		    $v['created_at'] = $time;
+    		    $v['updated_at'] = $time;
     		    unset($v['moneyNotes']);
     		    $data[$k]=$v;
     		}
