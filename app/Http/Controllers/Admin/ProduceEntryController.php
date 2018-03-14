@@ -5,10 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\ProduceEntry;
 use App\Models\ProduceEntryProduct;
-
-use Illuminate\Support\Facades\DB;
-
 use App\Models\OrderGoods;
+use Illuminate\Support\Facades\DB;
 
 
 class ProduceEntryController extends Controller
@@ -63,5 +61,7 @@ class ProduceEntryController extends Controller
         return ['items'=>$saleLockData,'total'=>count($saleLockData)];
 
     }
+
+
     
 }
