@@ -1,7 +1,5 @@
 <?php
 namespace App\Events;
-use Illuminate\Support\Facades\Log;
-
 /**
  * 生成Listerner 判断是否有 单号 
  * 如果 有  就不做什么

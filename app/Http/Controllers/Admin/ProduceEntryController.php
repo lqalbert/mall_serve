@@ -7,7 +7,6 @@ use App\Models\ProduceEntry;
 use App\Models\ProduceEntryProduct;
 use Illuminate\Support\Facades\DB;
 
-
 class ProduceEntryController extends Controller
 {
 
