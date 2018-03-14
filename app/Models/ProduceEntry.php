@@ -45,6 +45,11 @@ class ProduceEntry extends Model
         return $this->hasMany('App\Models\ProduceEntryProduct', 'parent_id');
     }
     
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter');
+    }
+    
     /**
      * 获取指定仓库的总数
      * @param int $entrepot_id

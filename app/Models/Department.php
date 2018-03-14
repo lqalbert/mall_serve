@@ -29,7 +29,8 @@ class Department extends Model
         'manager_id',
         'type',
         'status',
-        'remarks'
+        'remarks',
+        'entrepot_id'
     ];
     
     /**
