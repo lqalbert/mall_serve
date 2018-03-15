@@ -144,4 +144,11 @@ class User extends Authenticatable
     	return $this->hasMany('App\Models\RoleUser', 'user_id');
     }
     
+    public function getEntrepotId()
+    {
+        return  empty($this->department_id) ? 
+        0 : 
+        empty($this->department->entrepot_id) ? 0 : $this->department->entrepot_id ;
+    }
+    
 }

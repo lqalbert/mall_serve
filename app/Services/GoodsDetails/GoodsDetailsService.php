@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Goods\Categories;
 use App\Repositories\Criteria\Goods\Number;
 use App\Models\GoodsImg;
 use App\Repositories\Criteria\Order;
+use App\Repositories\Criteria\Goods\SkuSn;
 
 class GoodsDetailsService{
 
@@ -46,13 +47,18 @@ class GoodsDetailsService{
             $this->repository->pushCriteria( new Number($this->request->input('goods_number')));
         }
 		
+        if ($this->request->has('sku_sn')) {
+            $this->repository->pushCriteria( new SkuSn($this->request->input('sku_sn')));
+        }
+        
+        
         if ($this->request->has('with')) {
         	$with = $this->request->input('with');
-        	foreach ($with as &$value) {
-        		if ($value == "skus"){
-        			$value = 'skus.attr';
-        		}
-        	}
+//         	foreach ($with as &$value) {
+//         		if ($value == "skus"){
+//         			$value = 'skus.attr';
+//         		}
+//         	}
         	$this->repository->with($with);
         }
         

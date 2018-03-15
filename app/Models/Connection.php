@@ -8,13 +8,13 @@ class Connection extends Model
 {
 	    use SoftDeletes;
 	    
-			protected $table = 'connection_basic';
+		protected $table = 'connection_basic';
 
-			protected $fillable = [
-					'name',
-					'phone',
-					'content',
-			];
+		protected $fillable = [
+				'name',
+				'phone',
+				'content',
+		];
 
 
 

@@ -94,4 +94,6 @@ class Users extends Model
     {
         return '1';
     }
+    
+    
 }

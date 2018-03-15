@@ -22,6 +22,7 @@ class OrderGoods extends Model
         'remark',
         'exchange_status',
         'sku_id',
-        'sku_name'
+        'sku_name',
+        'sku_sn'
     ];
 }

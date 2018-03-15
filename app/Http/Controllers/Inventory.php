@@ -24,14 +24,31 @@ class Inventory
      * 添加订单逻辑
      * @todo 
      *  1、 生成锁定记录 表结构参考 库存明细下面的销售锁定
-     *  2、 库存表（还没建）  更新对应的 可售数量和锁定数量 注意 要用事务
+     *  2、 库存表 更新对应的 可售数量和锁定数量 注意 要用事务
      *  //
      * 
+     * @param integer $entrepot_id
+     * @param array $goods
      * 
+     * @throws \Exception
+     * @return void
      */
-    public function AddOrder()
+    public function AddOrder($entrepot_id, $goods)
     {
-        
+        logger("[debug]", $goods->toArray());
+        DB::beginTransaction();
+        try {
+            foreach ($goods as $item) {
+                DB::update('update '.
+                    $this->model->getTable().
+                    ' set saleable_count = saleable_count - ?, sale_lock = sale_lock + ? where entrepot_id = ? and sku_sn= ? ', 
+                    [$item->goods_number, $item->goods_number, $entrepot_id, $item->sku_sn]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error');
+        }    
     }
     
     /**
@@ -111,8 +128,20 @@ class Inventory
         } catch (Exception $e) {
             DB::rollback();
         }
-        
-        
+    }
+    
+    /**
+     * 查询商品的可销售库存
+     * @param integer $entrepot_id
+     * @param string $sku_sn
+     */
+    public function getProductCount($entrepot_id, $sku_sn)
+    {
+        $re = $this->model->where([
+            ['entrepot_id','=', $entrepot_id],
+            ['sku_sn', '=', $sku_sn]
+        ])->value('saleable_count');
+        return is_numeric($re) ? $re : 0 ;
     }
     
 }

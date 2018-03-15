@@ -41,6 +41,11 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\AddOrderListener'
         ],
         
+        'App\Events\OrderCreating' => [
+            'App\Listeners\OrderCreatingListener'
+        ],
+        
+        
         'App\Events\ProduceEntryCreating' => [
             'App\Listeners\ProduceEntryCreatingListener'
         ],
