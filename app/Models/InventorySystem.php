@@ -122,4 +122,6 @@ class InventorySystem extends Model
         
         return $affectedRows;
     }
+    
+    
 }

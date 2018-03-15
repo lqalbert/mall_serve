@@ -59,7 +59,7 @@ class Sn
 	 */
 	public static function getDanSn($pre, $base, $c)
 	{
-	    return $pre.Date('Ymd').$base. self::getSn($c);
+	    return $pre.Date('Ymd').$base. self::getSn($c, DAN_NUM_LENGTH);
 	}
 	
 	/**

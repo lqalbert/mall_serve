@@ -54,11 +54,11 @@ class GoodsDetailsService{
         
         if ($this->request->has('with')) {
         	$with = $this->request->input('with');
-        	foreach ($with as &$value) {
-        		if ($value == "skus"){
-        			$value = 'skus.attr';
-        		}
-        	}
+//         	foreach ($with as &$value) {
+//         		if ($value == "skus"){
+//         			$value = 'skus.attr';
+//         		}
+//         	}
         	$this->repository->with($with);
         }
         

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
+use App\Events\AddOrder;
 class OrderBasicController extends Controller
 {
 
@@ -72,28 +73,32 @@ class OrderBasicController extends Controller
             }
             DB::table('order_goods')->insert($data);
         } else {
-            $inData['cus_id']= $request->cus_id;
-            $inData['goods_id']= $request->goods_id;
-            $inData['deal_id']= $request->deal_id;
-            $inData['deal_name']= $request->deal_name;
-            $inData['address_id'] = $request->address_id;
-            $inData['order_all_money']= $request->order_all_money;
-            $inData['order_pay_money']= $request->order_pay_money;
-    		$re = $this->model->create($inData);
-    		$order_id=$re->id;
-    		$time = $re->created_at;
-    		$orderGoods=$request->order_goods;
-    		$data=[];
-    		foreach ($orderGoods as $k => $v){
-    		    $v['order_id'] = $order_id;
-    		    $v['created_at'] = $time;
-    		    $v['updated_at'] = $time;
-    		    unset($v['moneyNotes']);
-    		    $data[$k]=$v;
-    		}
-    		DB::table('order_goods')->insert($data);
-    		
-//     		ev
+            
+            DB::beginTransaction();
+            try {
+                $allData = $request->all();
+                $allData['entrepot_id'] = auth()->user()->getEntrepotId();
+                $orderModel = OrderBasic::make($allData);
+//                 dd($orderModel);
+                $orderModel->save();
+                $orderGoodsModels = [];
+                foreach ($request->order_goods as $goods) {
+                    $orderGoodsModels[] = OrderGoods::make($goods);
+                }
+//                 $orderGoodsModels = array_map(function($goods){
+//                     return OrderGoods::make($goods);
+//                 }, $request->order_goods);
+                if (!empty($orderGoodsModels)) {
+                    $orderModel->goods()->saveMany($orderGoodsModels);
+                }
+                event( new AddOrder($orderModel) );
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return  $this->error([], $e->getMessage());
+            }
+            
+            return $this->success([$orderModel->id]);
     	}
     }
 

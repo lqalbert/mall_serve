@@ -33,6 +33,8 @@ class Sku extends Model
 					->withPivot(['goods_id','value','addon_value']);
 	}
 	
+	
+	
 	public static function getCount()
 	{
 		return self::withTrashed()->count();
