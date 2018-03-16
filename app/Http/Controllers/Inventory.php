@@ -35,41 +35,35 @@ class Inventory
      */
     public function AddOrder($entrepot_id, $goods)
     {
-        logger("[debug]", $goods->toArray());
-        DB::beginTransaction();
-        try {
-            foreach ($goods as $item) {
-                DB::update('update '.
-                    $this->model->getTable().
-                    ' set saleable_count = saleable_count - ?, sale_lock = sale_lock + ? where entrepot_id = ? and sku_sn= ? ', 
-                    [$item->goods_number, $item->goods_number, $entrepot_id, $item->sku_sn]);
-            }
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            throw new Exception('inventory_system update error');
-        }    
+        $this->model->addOrder($entrepot_id, $goods);   
     }
     
     /**
      * 取消订单逻辑
-     * @todo 库存表 更新对应的 可售数量和锁定数量 注意 要用事务
+     * @todo 通知仓库 修改 配货单 
+     * @param integer $entrepot_id 仓库ID
+     * @param array   $goodsList
+     * 
+     * @throws 
+     * 
+     * @return int
      */
-    public function cancelOrder()
+    public function cancelOrder($entrepot_id, $goodsList)
     {
-        
+        return $this->model->orderCancel($entrepot_id, $goodsList);
     }
     
     /**
      * 订单发货（通知仓库配货发货）
      * @todo 
-     *  1、生成发货单
-     *  2、库存表 更新对应的 销售锁定 和 发货锁定
+     *  1、生成发货单 生成发货锁定
+     *  //done 2、库存表 更新对应的 销售锁定 和 发货锁定
      *  3、 扣保证金 （并生成记录）
      */
-    public function setOrderAssign()
+    public function setOrderAssign($entrepot_id, $goodsList)
     {
         
+        $this->model->assignOrder($entrepot_id, $goodsList);
     }
     
     /**
@@ -128,6 +122,16 @@ class Inventory
         } catch (Exception $e) {
             DB::rollback();
         }
+    }
+    
+    /**
+     * 退货入库
+     * @param integer $entepot_id
+     * @param array $goodsList //要入库的商品
+     */
+    public function returnEntry($entrepot_id, $goodsList)
+    {
+        $this->model->entrysUpdate($entrepot_id, $goodsList);
     }
     
     /**

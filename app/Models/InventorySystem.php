@@ -123,5 +123,85 @@ class InventorySystem extends Model
         return $affectedRows;
     }
     
+    /**
+     * 取消订单
+     * 
+     * @param unknown $entrepot_id
+     * @param unknown $goodsList
+     * @throws Exception
+     * @return number
+     */
+    public function orderCancel($entrepot_id, $goodsList)
+    {
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            foreach ($goodsList as $goods) {
+                $affectedRows += DB::update('update '.
+                    $this->table.
+                    ' set saleable_count = saleable_count + ?, sale_lock = sale_lock - ? where entrepot_id = ? and sku_sn= ? ',
+                    [$goods->goods_number, $goods->goods_number, $entrepot_id, $goods->sku_sn]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: order cancel');
+        }  
+        
+        return $affectedRows;
+    }
+    
+    /**
+     * 添加订单 
+     * 更新销售锁定数量、可销售数量
+     * @param unknown $entrepot_id
+     * @param unknown $goods
+     * @throws Exception
+     */
+    public function  addOrder($entrepot_id, $goods)
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($goods as $item) {
+                DB::update('update '.
+                    $this->table.
+                    ' set saleable_count = saleable_count - ?, sale_lock = sale_lock + ? where entrepot_id = ? and sku_sn= ? ',
+                    [$item->goods_number, $item->goods_number, $entrepot_id, $item->sku_sn]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error');
+        }
+    }
+    
+    /**
+     * 审核通中 配货中 
+     * 更新销售锁定、发货锁定
+     * @param unknown $entrepot_id
+     * @param unknown $goodsList
+     * @throws Exception
+     * @return number
+     */
+    public function assignOrder($entrepot_id, $goodsList)
+    {
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            foreach ($goodsList as $goods) {
+                $affectedRows += DB::update('update '.
+                    $this->table.
+                    ' set sale_lock = sale_lock - ? , assign_lock = assign_lock + ?where entrepot_id = ? and sku_sn= ? ',
+                    [$goods->goods_number, $goods->goods_number, $entrepot_id, $goods->sku_sn]);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: assign order ');
+        }
+        
+        return $affectedRows;
+    }
+    
     
 }
