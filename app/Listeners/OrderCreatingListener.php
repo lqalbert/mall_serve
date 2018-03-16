@@ -27,6 +27,9 @@ class OrderCreatingListener
     public function handle(OrderCreating $event)
     {
         $order = $event->getOrder();
+        if (empty($order->entrepot_id)) {
+            return false;
+        }
         $order->order_sn = Sn::getOrderSn($order->entrepot->eng_name, OrderBasic::getOrderCount($order->entrepot_id));
         return true;
     }

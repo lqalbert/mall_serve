@@ -80,7 +80,10 @@ class OrderBasicController extends Controller
                 $allData['entrepot_id'] = auth()->user()->getEntrepotId();
                 $orderModel = OrderBasic::make($allData);
 //                 dd($orderModel);
-                $orderModel->save();
+                $re = $orderModel->save();
+                if (!$re) {
+                    throw new  \Exception('订单创建失败');
+                }
                 $orderGoodsModels = [];
                 foreach ($request->order_goods as $goods) {
                     $orderGoodsModels[] = OrderGoods::make($goods);
