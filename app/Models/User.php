@@ -71,6 +71,7 @@ class User extends Authenticatable
         'creator',
     	'creator_name',
         'location',
+        'deposit_money',
 
     ];
     protected $appends = [

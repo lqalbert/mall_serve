@@ -16,6 +16,7 @@ class OrderBasic extends Model
     protected $fillable = [
         'deal_id',
         'deal_name',
+        'dep_group_realname',
         'address_id',
         'goods_id',
         'cus_id',
@@ -25,7 +26,7 @@ class OrderBasic extends Model
         'order_pay_money',
         'check_status',
         'order_sn',
-        'entrepot_id'
+        'entrepot_id',
     ];
     
     /**
@@ -47,6 +48,10 @@ class OrderBasic extends Model
         return $this->hasMany('App\Models\OrderGoods', 'order_id');
     }
     
+    public function address(){
+        return $this->hasOne('App\Models\OrderAddress','order_id');
+    }
+
     public function entrepot()
     {
         return $this->belongsTo('App\Models\DistributionCenter');

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\models\OrderBasic;
-use App\models\OrderGoods;
+use App\Models\OrderBasic;
+use App\Models\OrderGoods;
+use App\Models\OrderAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
@@ -77,10 +78,9 @@ class OrderBasicController extends Controller
             DB::beginTransaction();
             try {
                 $allData = $request->all();
+                //var_dump($allData);die();
                 $allData['entrepot_id'] = auth()->user()->getEntrepotId();
-                var_dump($allData['entrepot_id']);
                 $orderModel = OrderBasic::make($allData);
-//                 dd($orderModel);
                 $re = $orderModel->save();
                 if (!$re) {
                     throw new  \Exception('订单创建失败');
@@ -95,6 +95,14 @@ class OrderBasicController extends Controller
                 if (!empty($orderGoodsModels)) {
                     $orderModel->goods()->saveMany($orderGoodsModels);
                 }
+
+                foreach ($request->order_address as $address) {
+                    $orderAddressModels = OrderAddress::make($address);
+                }
+                if (!empty($orderAddressModels)) {
+                    $orderModel->address()->save($orderAddressModels);
+                }
+
                 event( new AddOrder($orderModel) );
                 DB::commit();
             } catch (Exception $e) {
