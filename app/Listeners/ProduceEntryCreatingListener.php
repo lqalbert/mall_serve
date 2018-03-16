@@ -20,11 +20,7 @@ class ProduceEntryCreatingListener
         $data = $event->getProduceEntry();
         
         if (empty($data->entry_sn)) {
-            $data->entry_sn = Sn::getInSn($data->entrepot->eng_name, ProduceEntry::getAllCount($data->entrepot_id));
-        }
-        
-        if (empty($data->entry_at)) {
-            $data->entry_at = Date('Y-m-d H:i:s');
+            $data->entry_sn = Sn::getInSn($data->entrepot_id, ProduceEntry::getAllCount($data->entrepot_id));
         }
         return true;
     }

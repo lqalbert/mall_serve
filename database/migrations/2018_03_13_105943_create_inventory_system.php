@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateInventorySystem extends Migration
 {
+    const SKU_SN_LENGTH = 50;
     /**
      * Run the migrations.
      *

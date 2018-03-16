@@ -78,6 +78,7 @@ class OrderBasicController extends Controller
             try {
                 $allData = $request->all();
                 $allData['entrepot_id'] = auth()->user()->getEntrepotId();
+                var_dump($allData['entrepot_id']);
                 $orderModel = OrderBasic::make($allData);
 //                 dd($orderModel);
                 $re = $orderModel->save();
