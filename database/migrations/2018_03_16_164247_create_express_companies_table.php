@@ -18,7 +18,7 @@ class CreateExpressCompaniesTable extends Migration
             $table->string('company_name',50)->comment('物流公司名称');
             $table->string('contact_name',20)->comment('物流公司联系人名字');
             $table->string('contact_tel',15)->comment('物流公司联系人电话');
-            $table->string('remark')->comment('备注');
+            $table->string('remark')->comment('备注')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

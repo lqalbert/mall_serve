@@ -26,7 +26,8 @@ class Goods extends Model
     		'status',
     		'subtitle',
     		'brief',
-    		'goods_sn'
+    		'goods_sn',
+            'sku_sn'
     ];
     
     //多对多

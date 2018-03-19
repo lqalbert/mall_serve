@@ -17,6 +17,7 @@ class ProduceEntryController extends Controller
         
         DB::beginTransaction();
         try {
+            $this->checkEntrepotProductCategory();
             $model = ProduceEntry::create($request->except('childrenData'));
             $products = $request->input('childrenData', []);
             $productsModels = [];
@@ -29,10 +30,19 @@ class ProduceEntryController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            return $this->error([]);
+            return $this->error([], $e->getMessage());
         }
 
         return $this->success([]);
+    }
+    
+    /**
+     * 仓库里商品分类
+     *
+     */
+    private function checkEntrepotProductCategory($goods)
+    {
+        throw  new \Exception('aa');
     }
 
 //    获取销售锁定展示数据
