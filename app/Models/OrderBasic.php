@@ -57,6 +57,23 @@ class OrderBasic extends Model
         return $this->belongsTo('App\Models\DistributionCenter');
     }
     
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'deal_id');
+    }
+    
+    /**
+     * 是否生成过配货单
+     * 这里先直接返回 false 还没有
+     * @todo 修改成正式的代码
+     * 
+     * @return bool
+     */
+    public function isAssign()
+    {
+        return false;
+    }
+    
     /**
      * 获取订单数量
      * 注意要在事务里面使用 

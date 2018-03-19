@@ -191,7 +191,7 @@ class InventorySystem extends Model
             foreach ($goodsList as $goods) {
                 $affectedRows += DB::update('update '.
                     $this->table.
-                    ' set sale_lock = sale_lock - ? , assign_lock = assign_lock + ?where entrepot_id = ? and sku_sn= ? ',
+                    ' set sale_lock = sale_lock - ? , assign_lock = assign_lock + ? where entrepot_id = ? and sku_sn= ? ',
                     [$goods->goods_number, $goods->goods_number, $entrepot_id, $goods->sku_sn]);
             }
             DB::commit();
