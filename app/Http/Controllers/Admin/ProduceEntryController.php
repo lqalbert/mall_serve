@@ -17,7 +17,7 @@ class ProduceEntryController extends Controller
         
         DB::beginTransaction();
         try {
-            $this->checkEntrepotProductCategory();
+//             $this->checkEntrepotProductCategory();
             $model = ProduceEntry::create($request->except('childrenData'));
             $products = $request->input('childrenData', []);
             $productsModels = [];
