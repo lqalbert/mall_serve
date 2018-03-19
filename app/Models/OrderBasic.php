@@ -75,6 +75,14 @@ class OrderBasic extends Model
     }
     
     /**
+     * 是否通过审核
+     */
+    public function isPass()
+    {
+        
+    }
+    
+    /**
      * 获取订单数量
      * 注意要在事务里面使用 
      * @static 
