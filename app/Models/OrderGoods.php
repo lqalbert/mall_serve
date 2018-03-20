@@ -26,4 +26,9 @@ class OrderGoods extends Model
         'sku_sn',
         'unit_type',
     ];
+    
+    public function productCategory()
+    {
+        return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
+    }
 }

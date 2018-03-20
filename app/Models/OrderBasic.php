@@ -12,7 +12,7 @@ class OrderBasic extends Model
     protected $dates = [
         'deleted_at'
     ];
-    protected $hidden = ['created_at', 'updated_at','deleted_at'];
+    protected $hidden = [ 'updated_at','deleted_at'];
     protected $fillable = [
         'deal_id',
         'deal_name',
@@ -64,6 +64,11 @@ class OrderBasic extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'deal_id');
+    }
+    
+    public function customer()
+    {
+        return $this->belongsTo('App\Models\CustomerBasic', 'cus_id');
     }
     
     /**
