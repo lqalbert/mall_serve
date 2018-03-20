@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use App\traits\EntrepotProductCategoryTrait;
 
 class InventorySystem extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, EntrepotProductCategoryTrait;
     
     protected $table = 'inventory_system';
     
@@ -37,6 +38,9 @@ class InventorySystem extends Model
         'send_ing',
         'destroy_count'
     ];
+    
+    
+ 
     
     /**
      * 仓库是否有对应的商品

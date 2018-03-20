@@ -27,7 +27,7 @@ class ProduceEntriedListener
      * @param  ProduceEntred  $event
      * @return void
      */
-    public function handle(ProduceEntried$event)
+    public function handle(ProduceEntried $event)
     {
         $this->inventorySys->produceEntry($event->getEntrepot(), $event->getProducts());
     }

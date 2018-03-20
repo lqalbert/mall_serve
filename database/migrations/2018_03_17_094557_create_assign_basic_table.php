@@ -31,7 +31,7 @@ class CreateAssignBasicTable extends Migration
             $table->string('weight',3)->nullable()->comment('重量 单位KG');
             $table->decimal('assign_fee')->nullable()->comment('配送费 0.00');
             $table->decimal('express_fee')->nullable()->comment('快递费 0.00');
-            $table->timestamp('out_entrepot-at')->nullable()->comment('发货时间 出仓库时间');
+            $table->timestamp('out_entrepot_at')->nullable()->comment('发货时间 出仓库时间');
             $table->timestamp('sign_at')->nullable()->comment('签收时间');
             $table->timestamps();
             $table->softDeletes();

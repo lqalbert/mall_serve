@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Assign;
 use App\Models\OrderGoods;
+use App\Models\OrderAddress;
 
 class CreateAssignListener
 {
@@ -23,6 +24,8 @@ class CreateAssignListener
     /**
      * Handle the event.
      *
+     * 要改成一个商品一个快递号
+     *
      * @param  OrderPass  $event
      * 
      * @throws 
@@ -32,6 +35,17 @@ class CreateAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
+        
+        $addressModel = OrderAddress::find($order->id);
+        
+        foreach ($order->goods  as $product) {
+            $re = Assign::create([
+                'entrepot_id'=>$order->entrepot_id,
+                'order_id'=>$order->id,
+                'order_goods_id'=>$product->id,
+                'order_address_id'=>$addressModel->id
+            ]);
+        }
         
         $re = Assign::create([
             'entrepot_id'=>$order->entrepot_id,

@@ -7,6 +7,8 @@ use App\Models\ProduceEntry;
 use App\Models\ProduceEntryProduct;
 use App\Models\OrderGoods;
 use Illuminate\Support\Facades\DB;
+use App\Models\EntrepotProductCategory;
+use App\Events\ProduceEntried;
 
 
 class ProduceEntryController extends Controller
@@ -17,9 +19,10 @@ class ProduceEntryController extends Controller
         
         DB::beginTransaction();
         try {
-//             $this->checkEntrepotProductCategory();
-            $model = ProduceEntry::create($request->except('childrenData'));
             $products = $request->input('childrenData', []);
+            $this->checkEntrepotProductCategory($products);
+            $model = ProduceEntry::create($request->except('childrenData'));
+            
             $productsModels = [];
             foreach ($products as $product) {
                 $productsModels[] = new ProduceEntryProduct($product);
@@ -27,6 +30,7 @@ class ProduceEntryController extends Controller
             if (!empty($productsModels)) {
                 $model->products()->saveMany($productsModels);
             }
+            event( new ProduceEntried($model->entrepot_id, $products));
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -40,9 +44,28 @@ class ProduceEntryController extends Controller
      * 仓库里商品分类
      *
      */
-    private function checkEntrepotProductCategory($goods)
+    private function checkEntrepotProductCategory($products)
     {
-        throw  new \Exception('aa');
+        foreach ($products as $key => $product) {
+            //判断是否有 sku_sn
+            $modle = EntrepotProductCategory::where('sku_sn', $product['sku_sn'])->first();
+            if ($modle) {
+                if ($modle->cate_type_id != $product['cate_type_id']) {
+                    throw  new \Exception('商品类型不正确');
+                }
+                
+                if ($modle->cate_kind_id != $product['cate_kind_id']) {
+                    throw  new \Exception('商品品种不正确');
+                }
+                
+                if ($modle->product_sale_type != $product['product_sale_type']) {
+                    throw  new \Exception('销售类型不正确');
+                }
+            } else {
+                $nModel = EntrepotProductCategory::create($product);
+            }
+        }
+        
     }
 
 //    获取销售锁定展示数据

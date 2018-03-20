@@ -22,7 +22,7 @@ class ProduceEntried
      *
      * @return void
      */
-    public function __construct(int $entrepot_id, $products)
+    public function __construct($entrepot_id, $products)
     {
         $this->entrepot_id = $entrepot_id;
         $this->products = $products;
