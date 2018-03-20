@@ -48,6 +48,10 @@ class OrderBasic extends Model
         return $this->hasMany('App\Models\OrderGoods', 'order_id');
     }
     
+    /**
+     * 关联订单地址
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function address(){
         return $this->hasOne('App\Models\OrderAddress','order_id');
     }

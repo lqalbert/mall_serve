@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\OrderBasic;
 use App\Models\OrderGoods;
 use App\Models\OrderAddress;
+use App\Models\GoodsDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
@@ -78,7 +79,6 @@ class OrderBasicController extends Controller
             DB::beginTransaction();
             try {
                 $allData = $request->all();
-                //var_dump($allData);die();
                 $allData['entrepot_id'] = auth()->user()->getEntrepotId();
                 $orderModel = OrderBasic::make($allData);
                 $re = $orderModel->save();
@@ -87,6 +87,7 @@ class OrderBasicController extends Controller
                 }
                 $orderGoodsModels = [];
                 foreach ($request->order_goods as $goods) {
+                    $goods['unit_type'] = GoodsDetails::getUnitTypes($goods['unit_type']);
                     $orderGoodsModels[] = OrderGoods::make($goods);
                 }
 //                 $orderGoodsModels = array_map(function($goods){
