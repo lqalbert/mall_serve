@@ -36,7 +36,7 @@ class CreateAssignListener
     {
         $order = $event->getOrder();
         
-        $addressModel = OrderAddress::find($order->id);
+        //$addressModel = OrderAddress::find($order->id);
         $order->goods->load('productCategory');
         
         $inserts = [];
@@ -62,7 +62,7 @@ class CreateAssignListener
         }
         
         
-        if ($affects == 0) {
+        if (count($inserts) == 0) {
             throw new \Exception('配货单创建失败');
         }
         
