@@ -69,12 +69,12 @@ class Inventory
     /**
      * 发货完成
      * @todo 
-     *  1、生成发货记录
+     *  // done 自动有了 1、生成发货记录
      *  2、库存表 更新对应的 发货锁定 和  仓库数量 、发货在途
      */
-    public function orderAssigned()
+    public function orderAssigned($entrepot_id, $goods)
     {
-        
+        return $this->model->assignedOrder($entrepot_id, $goods);
     }
     
     /**
@@ -85,7 +85,7 @@ class Inventory
      */
     public function orderSignatured()
     {
-        
+        return $this->model->
     }
     
     /**
