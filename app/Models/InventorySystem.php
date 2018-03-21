@@ -207,5 +207,59 @@ class InventorySystem extends Model
         return $affectedRows;
     }
     
+    /**
+     * 发货完成 接下来是 物流揽件（状态里没有这个）
+     * 
+     * @param integer $entrepot_id
+     * @param array|Assign $goods
+     */
+    public function assignedOrder($entrepot_id, $goods)
+    {
+        if (!is_array($goods)) {
+            $goods = $goods->toArray();
+        }
+        
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            $affectedRows = DB::update('update '.
+                $this->table.
+                ' set entrepot_count = entrepot_count-? ,  assign_lock = assign_lock - ?, send_ing = send_ing + ? where entrepot_id = ? and sku_sn= ? ',
+                [$goods['goods_num'],$goods['goods_num'], $goods['goods_num'], $entrepot_id, $goods['sku_sn']]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: assign order ');
+        }
+        return $affectedRows;
+    }
+    
+    /**
+     * 签收
+     *
+     * @param integer $entrepot_id
+     * @param array|Assign $goods
+     */
+    public function orderSignatured($entrepot_id, $goods)
+    {
+        if (!is_array($goods)) {
+            $goods = $goods->toArray();
+        }
+        
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            $affectedRows = DB::update('update '.
+                $this->table.
+                ' set  send_ing = send_ing － ? where entrepot_id = ? and sku_sn= ? ',
+                [$goods['goods_num'], $entrepot_id, $goods['sku_sn']]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: assign order ');
+        }
+        return $affectedRows;
+    }
+    
     
 }

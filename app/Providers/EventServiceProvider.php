@@ -69,6 +69,19 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\AssignCreatingListener'
         ],
         
+        //生成发货记录 不用了 配货单自动就有了
+        //库存表 更新对应的字段
+        // @todo 修改订单状态 为 已发货
+        'App\Events\DeliverGoods' => [
+            'App\Listeners\InventoryAssignedListener'
+        ],
+           
+        //签名
+        // @todo 修改订单状态为 已签收
+        'App\Events\Signatured' => [
+            'App\Listeners\InventorySignaturedListener'
+        ]
+        
         
     ];
 
