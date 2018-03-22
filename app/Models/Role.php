@@ -82,6 +82,7 @@ class Role extends EntrustRole
             'sale-department-member'
         ],
         'sale-staff' => [
+            'group-member',
             'sale-department-member'
         ]
     ];

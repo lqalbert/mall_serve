@@ -229,7 +229,7 @@ class InventorySystem extends Model
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            throw new Exception('inventory_system update error: assign order ');
+            throw new Exception('inventory_system update error: assignedOrder ');
         }
         return $affectedRows;
     }
@@ -256,7 +256,7 @@ class InventorySystem extends Model
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            throw new Exception('inventory_system update error: assign order ');
+            throw new Exception('inventory_system update error: orderSignatured ');
         }
         return $affectedRows;
     }

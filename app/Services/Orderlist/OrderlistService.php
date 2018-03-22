@@ -4,6 +4,7 @@ namespace  App\Services\Orderlist;
 use App\Repositories\OrderlistRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Alg\ModelCollection;
 class OrderlistService
 {
     private $repository = null;
@@ -67,14 +68,32 @@ class OrderlistService
         if ($this->request->has('end')) {
             $where[]=['created_at','<=', $this->request->end];
         }
+        if ($this->request->has('status')) {
+            $where[]=['status',$this->request->input('status')];
+        }
+        if ($this->request->has('product_status')) {
+            $where[]=['product_status',$this->request->input('product_status')];
+        }
+        if ($this->request->has('after_sale_status')) {
+            $where[]=['after_sale_status','<>',0];
+        }
+        
         if(count($where)>0||count($whereIn>0))
         {
             $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
             $this->repository->pushCriteria($order_status);
         }
-        $result = $this->repository->paginate();
+        $result = $this->repository->paginate($this->request->input('pageSize', 20));
+        
+        $collection = $result->getCollection();
+        if ($this->request->has('appends')) {
+            ModelCollection::setAppends($collection, $this->request->input('appends'));
+        }
+        
+        logger("[debug]", $collection->toArray());
+        
         return [
-            'items'=> $result->getCollection(),
+            'items'=> $collection,
             'total'=> $result->total()
         ];
     }
