@@ -18,15 +18,15 @@ class AssignController extends Controller
         'cate_kind_id', //小分类
         'status',//发货状态
         'assign_type', //发货类型 正常、退货、换货
-        'user_id'
     ];
     
     private $fieldLike = [
         'goods_name',
         'sale_name',
-        'cus_name',
+        'deliver_name',
         'deliver_phone',
         'express_name',
+        'user_name'
     ];
     
     public function __construct(AssignRepository $repository)

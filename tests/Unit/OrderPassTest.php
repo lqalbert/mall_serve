@@ -24,7 +24,7 @@ class OrderPassTest extends TestCase
 
     public function testPass() 
     {
-        event(new OrderPass(OrderBasic::find(7), User::find(1)));
+        event(new OrderPass(OrderBasic::find(7), User::find(13)));
         
         $this->assertDatabaseHas('user_basic', [
             ['id', '=',1],

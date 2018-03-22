@@ -85,7 +85,7 @@ class Inventory
      */
     public function orderSignatured()
     {
-        return $this->model->
+//        return $this->model->
     }
     
     /**
