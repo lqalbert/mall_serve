@@ -80,12 +80,12 @@ class Inventory
     /**
      * 签收 完成
      * @todo
-     *  1、生成签收记录
+     *  // done 暂不需要了 1、生成签收记录
      *  2、库存表 更新对应的 发货在途 和  签收数量
      */
-    public function orderSignatured()
+    public function orderSignatured($entrepot_id, $goods)
     {
-//        return $this->model->
+        return $this->model->orderSignatured($entrepot_id, $goods);
     }
     
     /**

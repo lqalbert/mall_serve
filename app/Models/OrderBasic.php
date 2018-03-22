@@ -38,6 +38,50 @@ class OrderBasic extends Model
         'creating' => OrderCreating::class
     ];
     
+    /**
+     * 订单状态
+     * 索引
+     * @var array
+     */
+    private static $status = [
+        "待审核",
+        "审核通过",
+        "待充值",
+        "订单完成",
+        "订单取消",
+        "审核未通过"
+    ];
+    
+    /**
+     * 货物状态
+     * @var array
+     */
+    private static $productStatus = [
+        "未处理",
+        "配货中",
+        "已发货",
+        "已签收"
+    ];
+    
+    
+    /**
+     * 售后状态
+     * @var array
+     */
+    private static $afterSaleStatus = [
+        "l0"=>"无",
+        "l10"=>"申请退货",
+        "l11"=>"退货审核通过",
+        "l12"=>"退货中",
+        "l13"=>"退货完成",
+        
+        
+        "l20"=>"申请换货",
+        "l21"=>"换货审核通过",
+        "l22"=>"换货中",
+        "l23"=>"换货完成"
+                       
+    ];
     
     /**
      * 关联的商品
@@ -91,6 +135,13 @@ class OrderBasic extends Model
         
     }
     
+    
+    public function updateStatusToWaitCharge()
+    {
+        $this->status = 2;
+        return $this->save();
+    }
+    
     /**
      * 获取订单数量
      * 注意要在事务里面使用 
@@ -104,5 +155,29 @@ class OrderBasic extends Model
     {
         return self::withTrashed()->where('entrepot_id', $entrepot_id)
         ->lockForUpdate()->count();
+    }
+    
+    /**
+     * 订单状态文字描述
+     * getStatusTextAttribute
+     * @return string
+     */
+    public function getStatusTextAttribute()
+    {
+        return self::$status[$this->attributes['status']];
+    }
+    
+    /**
+     * 货物状态文字描述
+     * @return string
+     */
+    public function getProductStatusTextAttribute()
+    {
+        return self::$productStatus[$this->attributes['product_status']];
+    }
+    
+    public function getAfterSaleStatusTextAttribute()
+    {
+        return self::$afterSaleStatus["l".$this->attributes['after_sale_status']];
     }
 }

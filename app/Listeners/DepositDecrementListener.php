@@ -42,6 +42,8 @@ class DepositDecrementListener
         $user->deposit_money = round($user->deposit_money - $order->order_pay_money, 2);
         //这里如果出现负数也是会 报错的 不晓得 try catch能不能处理
         if( !$user->save() ) {
+            //更新订单为待充值
+            $order->updateStatusToWaitCharge();
             throw new \Exception('扣钱失败');
         }
         
