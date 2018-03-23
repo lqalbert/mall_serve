@@ -22,9 +22,9 @@ class Inventory
     }
     /**
      * 添加订单逻辑
-     * @todo 
-     *  1、 生成锁定记录 表结构参考 库存明细下面的销售锁定
-     *  2、 库存表 更新对应的 可售数量和锁定数量 注意 要用事务
+     * @ todo 
+     *  1、 done 生成锁定记录 表结构参考 库存明细下面的销售锁定
+     *  2、 done 库存表 更新对应的 可售数量和锁定数量 注意 要用事务
      *  //
      * 
      * @param integer $entrepot_id
@@ -146,6 +146,14 @@ class Inventory
             ['sku_sn', '=', $sku_sn]
         ])->value('saleable_count');
         return is_numeric($re) ? $re : 0 ;
+    }
+    
+    /**
+     * 换货锁定
+     */
+    public function exchangeLock($entrepot_id, $goodsList)
+    {
+        $this->model->exchangeLock($entrepot_id, $goodsList);
     }
     
 }
