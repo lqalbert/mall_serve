@@ -83,6 +83,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
 	Route::resource('/order-assign', 'AssignController');
+	
+	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 
 });
 
