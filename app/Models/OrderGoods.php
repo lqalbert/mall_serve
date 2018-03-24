@@ -12,7 +12,8 @@ class OrderGoods extends Model
     protected $dates = [
         'deleted_at'
     ];
-    protected $hidden = ['created_at', 'updated_at','deleted_at'];
+    //'created_at',
+    protected $hidden = [ 'updated_at','deleted_at'];
     protected $fillable = [
         'order_id',
         'goods_id',
@@ -30,5 +31,10 @@ class OrderGoods extends Model
     public function productCategory()
     {
         return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
+    }
+    
+    public function order()
+    {
+        return $this->belongsTo('App\Models\OrderBasic', 'order_id');
     }
 }

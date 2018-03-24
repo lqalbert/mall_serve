@@ -39,6 +39,16 @@ class InventorySystem extends Model
         'destroy_count'
     ];
     
+    public function goods()
+    {
+        return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
+    }
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name');
+    }
+    
     
  
     
