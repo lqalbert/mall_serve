@@ -39,6 +39,16 @@ class InventorySystem extends Model
         'destroy_count'
     ];
     
+    public function goods()
+    {
+        return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
+    }
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name');
+    }
+    
     
  
     
@@ -257,6 +267,28 @@ class InventorySystem extends Model
         } catch (Exception $e) {
             DB::rollback();
             throw new Exception('inventory_system update error: orderSignatured ');
+        }
+        return $affectedRows;
+    }
+    
+    
+    public function exchangeLock($entrepot_id, $goods)
+    {
+        if (!is_array($goods)) {
+            $goods = $goods->toArray();
+        }
+        
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            $affectedRows = DB::update('update '.
+                $this->table.
+                ' set  saleable_count = saleable_count － ?, exchange_lock = exchange_lock+? where entrepot_id = ? and sku_sn= ? ',
+                [$goods['goods_num'], $goods['goods_num'], $entrepot_id, $goods['sku_sn']]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: exchange Lock ');
         }
         return $affectedRows;
     }

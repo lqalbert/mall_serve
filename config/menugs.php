@@ -68,7 +68,7 @@ return [
 		],
 		//11
 		[
-				'text'=>'退款审核',
+				'text'=>'退换货审核',
 				'icon'=>null,
 				'index'=>'Refund'
 		],

@@ -83,13 +83,21 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
 	Route::resource('/order-assign', 'AssignController');
+	
+	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
+    
+	
+	Route::get('/inventory-gather', 'InventoryGatherController@index');
+	//库存明细 不靠谱的
+	Route::get('/inventory-detail', 'InventoryGatherController@detail');
+	
+	Route::get('/entry-product', 'EntryProductController@index');
 	Route::resource('/expressreceive', 'ExpressReceiveController');
 	Route::get('/shelvespick', 'ShelvesPickController@index');
 	Route::resource('/shelvespick', 'ShelvesPickController');
 	Route::resource('/stockoutdetails', 'StockOutDetailsController');
 
 	Route::resource('/order-address','OrderAddressController');
-
 });
 
 
