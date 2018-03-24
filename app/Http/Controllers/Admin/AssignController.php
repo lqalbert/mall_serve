@@ -18,7 +18,8 @@ class AssignController extends Controller
         'cate_kind_id', //小分类
         'status',//发货状态
         'assign_type', //发货类型 正常、退货、换货
-        'order_id',//订单ID
+        'order_id',//订单ID,
+//         'sku_sn'
     ];
     
     private $fieldLike = [
@@ -36,7 +37,7 @@ class AssignController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
+     * @todo 后端start end 日期没加上
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)

@@ -64,11 +64,15 @@ class OrdergoodsService
         
         if ($this->request->has('load')) {
             $collection->load($this->request->input('load'));
+            if (in_array('order', $this->request->input('load'))) {
+                $collection->each(function($item){
+                    $item['order']->setAppends(['status_text']);
+                });
+            }
+            
         }
         
-        $collection->each(function($item){
-            $item['order']->setAppends(['status_text']);
-        });
+        
 
         return [
             'items'=> $collection->toArray(),
