@@ -84,6 +84,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
 	Route::resource('/order-assign', 'AssignController');
 
+	Route::resource('/order-address','OrderAddressController');
+
 });
 
 

@@ -52,9 +52,17 @@ class OrderlistService
                 $where[] = ['cus_id',$v->id];
             }
         }
-        if ($this->request->has('sale_name')) {
-            $where[]=['deal_name','like',"%".$this->request->sale_name."%"];
-
+        if ($this->request->has('deal_name')) {
+            $where[]=['deal_name','like',"%".$this->request->deal_name."%"];
+        }
+        if ($this->request->has('deal_id')) {
+            $where[]=['deal_id','=',$this->request->deal_id];
+        }
+        if ($this->request->has('department_id')) {
+            $where[]=['department_id','=',$this->request->department_id];
+        }
+        if ($this->request->has('group_id')) {
+            $where[]=['group_id','=',$this->request->group_id];
         }
         if ($this->request->has('type')) {
             $where[]=['order_status','=', $this->request->type];
@@ -78,7 +86,7 @@ class OrderlistService
             $where[]=['after_sale_status','<>',0];
         }
         
-        if(count($where)>0||count($whereIn>0))
+        if(count($where)>0 || count($whereIn>0))
         {
             $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
             $this->repository->pushCriteria($order_status);
