@@ -86,6 +86,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/expressreceive', 'ExpressReceiveController');
 	Route::get('/shelvespick', 'ShelvesPickController@index');
 	Route::resource('/shelvespick', 'ShelvesPickController');
+	Route::resource('/stockoutdetails', 'StockOutDetailsController');
 
 });
 
