@@ -88,6 +88,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/shelvespick', 'ShelvesPickController');
 	Route::resource('/stockoutdetails', 'StockOutDetailsController');
 
+	Route::resource('/order-address','OrderAddressController');
+
 });
 
 

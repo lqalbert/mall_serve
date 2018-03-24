@@ -18,6 +18,7 @@ class AssignController extends Controller
         'cate_kind_id', //小分类
         'status',//发货状态
         'assign_type', //发货类型 正常、退货、换货
+        'order_id',//订单ID
     ];
     
     private $fieldLike = [
@@ -70,7 +71,8 @@ class AssignController extends Controller
         } else {
             $collection = $pager->getCollection();
         }
-        
+
+
         if ($request->has('with')) {
             $with  = $request->input('with', []);
             foreach ($with as $model) {

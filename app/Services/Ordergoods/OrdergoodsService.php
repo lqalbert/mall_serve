@@ -30,11 +30,15 @@ class OrdergoodsService
             $where[] = ['order_id','=',$this->request->order_id];
             $whereIn[]=$goods_id;
         }
-        if(count($whereIn)>0)
-        {
+
+        if($this->request->has('order_id')){
+            $where[] = ['order_id','=',$this->request->order_id];
+        }
+
+        if(count($whereIn)>0 || count($where)>0){
             $order_status=  app()->makeWith('App\Repositories\Criteria\Ordergoods\Ordergoods', ['where'=>$where,'whereIn'=>$whereIn]);
             $this->repository->pushCriteria($order_status);
-        }
+        }        
 
         $result = $this->repository->paginate();
         return [

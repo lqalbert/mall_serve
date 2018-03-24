@@ -14,6 +14,7 @@ use App\Repositories\Criteria\Customer\UserCriteria;
 use App\Repositories\Criteria\Customer\Relative;
 use App\Repositories\Criteria\Customer\Phone;
 use App\Repositories\Criteria\Customer\Name;
+use App\Repositories\Criteria\FieldEqual;
 
 class CustomerService
 {
@@ -63,6 +64,9 @@ class CustomerService
         }
         if ($this->request->has('name')) {
             $this->repository->pushCriteria(new Name($this->request->input('name')));
+        }
+        if ($this->request->has('id')) {
+            $this->repository->pushCriteria(new FieldEqual('id', $this->request->input('id')));
         }
 
     	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];

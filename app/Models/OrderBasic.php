@@ -27,6 +27,9 @@ class OrderBasic extends Model
         'check_status',
         'order_sn',
         'entrepot_id',
+        'cus_name',
+        'group_id',
+        'department_id'
     ];
     
     /**
