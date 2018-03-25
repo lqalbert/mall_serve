@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Deposit;
 use Monolog\Handler\IFTTTHandler;
 use PhpParser\Node\Stmt\If_;
+use App\models\OrderBasic;
+use App\Events\OrderPass;
+use Illuminate\Support\Facades\DB;
 
 class DepositController extends Controller
 {
@@ -52,6 +55,7 @@ class DepositController extends Controller
     {
     	$model = Deposit::create($request->all());
     	if ($model) {
+    	    $this->checkOrder($model->user_id);
     		return $this->success($model);
     	} else {
     		return $this->error(0);
@@ -101,5 +105,20 @@ class DepositController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    private function checkOrder($user_id)
+    {
+        $re = OrderBasic::where('status', OrderBasic::WATI_TO_CHANGR)->all();
+        DB::beginTransaction();
+        try {
+            foreach ($re as $value) {
+                event(new OrderPass($value, $value->auditor));
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error([], '有部分订单扣款失败，请联系开发人员');
+        }
     }
 }

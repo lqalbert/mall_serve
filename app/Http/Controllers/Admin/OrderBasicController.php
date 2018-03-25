@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Events\AddOrder;
+use App\Events\OrderPass;
 class OrderBasicController extends Controller
 {
 
@@ -148,7 +149,7 @@ class OrderBasicController extends Controller
     {
         //update 返回 bool
         //var_dump(Department::find($id));die();
-        $res = array(
+        /* $res = array(
             'goods_id' => $request->input('goods_id'),
             'order_all_money' => $request->input('order_all_money'),
             'order_pay_money' => $request->input('order_pay_money'),
@@ -157,8 +158,8 @@ class OrderBasicController extends Controller
             'exchange_check' => $request->input('exchange_check'),
             'check_status' => $request->input('check_status'),
             'order_status' => $request->input('order_status'),
-        );
-        $re = $this->repository->update($res, $id);
+        ); */
+        $re = $this->repository->update($request->all(), $id);
         if ($re) {
             return $this->success($re);
             //return 1;
@@ -197,5 +198,27 @@ class OrderBasicController extends Controller
     public function destroy(OrderBasic $orderBasic,$id)
     {
         $this->model->destroy($id);
+        return $this->success([]);
+    }
+    
+    public function updateCheckStatus(Request $request , $id)
+    {
+        $data = $request->all();
+        $this->model = $this->model->find($id);
+        $this->model->status = $data['status'];
+        $re = $this->model->save();
+        if ($re) {
+            DB::beginTransaction();
+            try {
+                event( new OrderPass($model, auth()->user()));
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                return $this->error([], $e->getMessage());
+            }
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
 }

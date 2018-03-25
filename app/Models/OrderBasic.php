@@ -8,6 +8,10 @@ use App\Events\OrderCreating;
 class OrderBasic extends Model
 {
     use SoftDeletes;
+    
+    CONST WATI_TO_CHANGR =2;
+    
+    
     protected $table = 'order_basic';
     protected $dates = [
         'deleted_at'
@@ -113,6 +117,12 @@ class OrderBasic extends Model
         return $this->belongsTo('App\Models\User', 'deal_id');
     }
     
+    //auditor_id
+    public function auditor()
+    {
+        return $this->belongsTo('App\Models\User', 'auditor_id');
+    }
+    
     public function customer()
     {
         return $this->belongsTo('App\Models\CustomerBasic', 'cus_id');
@@ -127,7 +137,7 @@ class OrderBasic extends Model
      */
     public function isAssign()
     {
-        return false;
+        return $this->attributes['product_status'] == 1;
     }
     
     /**
@@ -135,7 +145,7 @@ class OrderBasic extends Model
      */
     public function isPass()
     {
-        
+        return $this->attributes['status'] == 1 ||  $this->attributes['status'] == 2;
     }
     
     
