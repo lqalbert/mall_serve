@@ -12,15 +12,15 @@
 
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-    <link href="/admin/static1.0.5/css/app.812f9081bc7b85596407cc4c7c594b0b.css" rel="stylesheet">
+    <link href="/admin/static1.0.6/css/app.007246170ccbb32d2ec00b68234f5057.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
     </div>
 
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.0.5/js/manifest.8f87c075c23ebfb3bdfa.js"></script>
-    <script type="text/javascript" src="/admin/static1.0.5/js/vendor.d611ecf87c51152c9c1f.js"></script>
-    <script type="text/javascript" src="/admin/static1.0.5/js/app.da470a449c254b83b167.js"></script>
+	<script type="text/javascript" src="/admin/static1.0.6/js/manifest.33fdca7b639cd8fc9a6c.js"></script>
+    <script type="text/javascript" src="/admin/static1.0.6/js/vendor.d611ecf87c51152c9c1f.js"></script>
+    <script type="text/javascript" src="/admin/static1.0.6/js/app.5fab9a3693bdfc2328a5.js"></script>
 </body>
 </html>
