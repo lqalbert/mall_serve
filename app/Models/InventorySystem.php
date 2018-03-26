@@ -9,7 +9,7 @@ use App\traits\EntrepotProductCategoryTrait;
 
 class InventorySystem extends Model
 {
-    use SoftDeletes, EntrepotProductCategoryTrait;
+    use SoftDeletes;
     
     protected $table = 'inventory_system';
     
@@ -47,6 +47,11 @@ class InventorySystem extends Model
     public function entrepot()
     {
         return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name');
+    }
+    
+    public function category()
+    {
+        return $this->belongsTo('App\Modles\EntrepotProductCategory', 'sku_sn');
     }
     
     
