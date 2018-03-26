@@ -205,17 +205,20 @@ class OrderBasicController extends Controller
     {
         $data = $request->all();
         $this->model = $this->model->find($id);
-        $this->model->status = $data['status'];
+        $this->model->status = $data['check_status'];
         $re = $this->model->save();
         if ($re) {
             DB::beginTransaction();
-            try {
-                event( new OrderPass($model, auth()->user()));
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
-                return $this->error([], $e->getMessage());
+            if ($data['check_status'] == 1) {
+                try {
+                    event( new OrderPass($this->model, auth()->user()));
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollback();
+                    return $this->error([], $e->getMessage());
+                }
             }
+            
             return $this->success([]);
         } else {
             return $this->error([]);
