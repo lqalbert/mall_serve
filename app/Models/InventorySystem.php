@@ -36,7 +36,9 @@ class InventorySystem extends Model
         'assign_lock',
         'exchange_lock',
         'send_ing',
-        'destroy_count'
+        'destroy_count',
+        'inventory_max',
+        'inventory_min',
     ];
     
     public function goods()
