@@ -67,6 +67,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/goodstypelist','GoodsTypeController@goodsTypeList');
 	Route::resource('/deliveryaddress','DeliveryAddressController');
 	Route::match(['put','post'], '/updateCheckStatus/{id}', 'OrderBasicController@updateCheckStatus');
+	Route::match(['put','post'], '/order-cancel/{id}', 'OrderBasicController@cancel');
 	Route::resource('/orderbasic','OrderBasicController');
 	
 	Route::resource('/articles' , 'ArticleController');

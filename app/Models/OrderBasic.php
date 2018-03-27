@@ -10,6 +10,7 @@ class OrderBasic extends Model
     use SoftDeletes;
     
     CONST WATI_TO_CHANGR =2;
+    CONST CANCEL = 5;
     
     
     protected $table = 'order_basic';
@@ -54,6 +55,7 @@ class OrderBasic extends Model
         "待审核",
         "审核通过",
         "待充值",
+        "配货中",
         "订单完成",
         "订单取消",
         "审核未通过"
