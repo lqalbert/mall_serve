@@ -38,7 +38,7 @@ class InventoryGatherController extends Controller
         
         if ($request->has('cate_kind_id')) {
             $cate_kind_id = $request->input('cate_kind_id');
-            $model = $model->wherehas('goods', function($query){
+            $model = $model->wherehas('goods', function($query) use($cate_kind_id){
                 $query->where('cate_kind_id', $cate_kind_id);
             });
         } else if($request->has('cate_type_id')) {

@@ -147,9 +147,10 @@ class User extends Authenticatable
     
     public function getEntrepotId()
     {
-        return  empty($this->department_id) ? 
+        
+        return  $this->department_id == 0 ? 
         0 : 
-        empty($this->department->entrepot_id) ? 0 : $this->department->entrepot_id ;
+        (empty($this->department->entrepot_id) ? 0 : $this->department->entrepot_id) ;
     }
     
 }

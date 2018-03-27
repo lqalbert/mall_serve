@@ -12,6 +12,7 @@ use App\Repositories\OrderlistRepository;
 use App\Services\Orderlist\OrderlistService;
 use App\Events\AddOrder;
 use App\Events\OrderPass;
+use App\Events\OrderCancel;
 class OrderBasicController extends Controller
 {
 
@@ -81,6 +82,9 @@ class OrderBasicController extends Controller
             try {
                 $allData = $request->all();
                 $allData['entrepot_id'] = auth()->user()->getEntrepotId();
+                if ($allData['entrepot_id'] == 0) {
+                    throw new \Exception('没有绑定配送中心');
+                }
                 $orderModel = OrderBasic::make($allData);
                 $re = $orderModel->save();
                 if (!$re) {
@@ -107,7 +111,7 @@ class OrderBasicController extends Controller
 
                 event( new AddOrder($orderModel) );
                 DB::commit();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
                 return  $this->error([], $e->getMessage());
             }
@@ -223,5 +227,12 @@ class OrderBasicController extends Controller
         } else {
             return $this->error([]);
         }
+    }
+    
+    public function cancel(Request $request , $id)
+    {
+        $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
+        event(new OrderCancel(\App\models\OrderBasic::find($id)));
+        return $this->success([]);
     }
 }

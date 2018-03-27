@@ -34,6 +34,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 
 	
 	Route::resource('/orderlist','OrderListController');
+	
+	
+	
 	Route::resource('/buyorders','BuyOrderController');
 // 	Route::resource('/users','EmployeeController');
 	Route::resource('/employees','EmployeeController');
@@ -67,6 +70,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/goodstypelist','GoodsTypeController@goodsTypeList');
 	Route::resource('/deliveryaddress','DeliveryAddressController');
 	Route::match(['put','post'], '/updateCheckStatus/{id}', 'OrderBasicController@updateCheckStatus');
+	Route::match(['put','post'], '/order-cancel/{id}', 'OrderBasicController@cancel');
 	Route::resource('/orderbasic','OrderBasicController');
 	
 	Route::resource('/articles' , 'ArticleController');
@@ -99,6 +103,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/stockoutdetails', 'StockOutDetailsController');
 
 	Route::resource('/order-address','OrderAddressController');
+	
 });
 
 
