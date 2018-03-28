@@ -53,12 +53,13 @@ class CustomerService
     	
     	//relative 
     	//FIXME 这里逻辑好像有问题 relatives 不应该出现
-    	$relatives = ['user_id', 'group_id', 'department_id'];
+    	$relatives = ['department_id','group_id','user_id'];
     	foreach ($relatives as $value) {
     		if ($this->request->has($value)) {
     			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
-    		};
+    		}
     	}
+        
         if ($this->request->has('phone')) {
             $this->repository->pushCriteria(new Phone($this->request->input('phone')));
         }

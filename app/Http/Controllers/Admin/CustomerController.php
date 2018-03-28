@@ -107,15 +107,15 @@ class CustomerController extends Controller
     	//cus_ids
     	$from_id = $request->input('from_id');
     	if (!$from_id) {
-    		return $this->error();
+    		return $this->error(0);
     	}
     	$user_id = $request->input('user_id');
     	if (!$user_id) {
-    		return $this->error();
+    		return $this->error(0);
     	}
     	
     	if ($from_id == $user_id) {
-    		return $this->error();
+    		return $this->error(0);
     	}
     	
     	
@@ -130,7 +130,7 @@ class CustomerController extends Controller
     	  
     	}
     	
-    	return $this->success();
+    	return $this->success(1);
     }
     
     /**
@@ -165,6 +165,7 @@ class CustomerController extends Controller
     			continue;
     		}
     		foreach ($cus_ids as $id) {
+                var_dump($id);die();
     			event(new SetCustomerUser(
     					$id,
     					CustomerUser::QUIT,
