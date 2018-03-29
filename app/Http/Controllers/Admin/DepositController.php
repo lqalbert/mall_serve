@@ -109,7 +109,7 @@ class DepositController extends Controller
     
     private function checkOrder($user_id)
     {
-        $re = OrderBasic::where('status', OrderBasic::WATI_TO_CHANGR)->all();
+        $re = OrderBasic::where('status', OrderBasic::WATI_TO_CHANGR)->get();
         DB::beginTransaction();
         try {
             foreach ($re as $value) {

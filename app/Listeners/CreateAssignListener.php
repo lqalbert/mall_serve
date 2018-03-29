@@ -41,6 +41,7 @@ class CreateAssignListener
         
         $inserts = [];
         foreach ($order->goods  as $product) {
+            var_dump($product->productCategory->cate_type);
             $inserts[] =Assign::create([
                 'entrepot_id'=> $order->entrepot_id,
                 'order_id'   => $order->id,
