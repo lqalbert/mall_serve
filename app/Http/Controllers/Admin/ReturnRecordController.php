@@ -79,6 +79,9 @@ class ReturnRecordController extends Controller
                        'return_at'   => Date('Y-m-d H:i:s')
                    ]);
                }
+               
+//                $order->after_sale_statu
+               $order->updateAfterSaleDone($model->type);
                DB::commit();
            } catch (Exception $e) {
                DB::rollback();

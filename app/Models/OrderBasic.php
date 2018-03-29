@@ -12,6 +12,12 @@ class OrderBasic extends Model
     CONST WATI_TO_CHANGR =2;
     CONST CANCEL = 5;
     
+    CONST AFTER_SALE_TYPE_RETURN = 0;
+    CONST AFTER_SALE_TYPE_EXCHANGE = 1;
+    
+    CONST AFTER_SALE_RETURN_DONE = 13;
+    CONST AFTER_SALE_EXCHANGE_DONE = 23;
+    
     
     protected $table = 'order_basic';
     protected $dates = [
@@ -158,6 +164,17 @@ class OrderBasic extends Model
         $this->status = 2;
         return $this->save();
     }
+    
+    public function updateAfterSaleDone($type) 
+    {
+        if ($type == self::AFTER_SALE_TYPE_RETURN) {
+            $this->after_sale_status = self::AFTER_SALE_RETURN_DONE;
+        } else if($type == self::AFTER_SALE_TYPE_EXCHANGE) {
+            $this->after_sale_status = self::AFTER_SALE_EXCHANGE_DONE;
+        }
+    }
+    
+    
     
     /**
      * 获取订单数量
