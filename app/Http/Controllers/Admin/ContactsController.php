@@ -22,6 +22,7 @@ class ContactsController extends Controller
     public function index(Request $request)
     {
         $where = [];
+        $where['user_id'] = $request->input('id');
         if ($request->has('name')) {
             $where['contacts.name'] = $request->input('name');
         }
