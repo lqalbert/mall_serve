@@ -42,7 +42,7 @@ class AfterSaleController extends Controller
         }
         
         return [
-            'items' => $result->getCollection(),
+            'items' => $collection,
             'total' => $result->total()
         ];
     }
@@ -136,7 +136,9 @@ class AfterSaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $re = AfterSale::where('id', $id)->update($request->all());
+        event( new AddAfterSale(AfterSale::find($id)));
+        return $this->success([]);
     }
 
     /**
