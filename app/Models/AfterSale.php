@@ -46,12 +46,18 @@ class AfterSale extends Model
     
     public function order()
     {
-        return $this->belongsTo('App\Modles\OrderBasic', 'order_id');
+        return $this->belongsTo('App\Models\OrderBasic', 'order_id');
     }
     
     public function getCheckStatusTextAttribute()
     {
         $map = ['待审核', '通过', '不通过'];
         return $map[$this->attributes['check_status']];
+    }
+    
+    public function getTypeTextAttribute()
+    {
+        $map = ['退货', '换货'];
+        return $map[$this->attributes['type']];
     }
 }

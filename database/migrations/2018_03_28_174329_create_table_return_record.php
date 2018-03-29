@@ -26,6 +26,7 @@ class CreateTableReturnRecord extends Migration
             $table->string('cus_weixin', 20)->nullable()->comment("客户 weixin");
             $table->string('reason', 100)->nullable()->comment('原因');
             $table->string('sale_name',20)->nullable()->comment("销售人员");
+            $table->unsignedInteger('user_id')->comment('入库人ID');
             $table->string('user_name', 20)->nullable()->comment('入库人');
             $table->timestamp('return_at')->nullable()->comment('入库时间');
             $table->string('remark', 100)->nullable()->comment('备注');
