@@ -80,6 +80,11 @@ class EventServiceProvider extends ServiceProvider
         // @todo 修改订单状态为 已签收
         'App\Events\Signatured' => [
             'App\Listeners\InventorySignaturedListener'
+        ],
+        
+        //售后
+        'App\Events\AddAfterSale' => [
+            'App\Listeners\ChangeOrderAfterSaleListener'
         ]
         
         

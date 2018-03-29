@@ -27,6 +27,7 @@ class LoginController extends Controller
     public function out(Request $request) 
     {
         Auth::logout();
+        $request->session()->invalidate();
         return $this->success(null, '退出成功');
     }
 }

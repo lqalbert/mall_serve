@@ -102,6 +102,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 
 	Route::resource('/order-address','OrderAddressController');
 	Route::resource('/stock-warning','StockWarningController');
+	
+	Route::resource('/order-after-sale', 'AfterSaleController');
 
 });
 

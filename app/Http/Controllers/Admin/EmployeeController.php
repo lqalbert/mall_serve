@@ -185,7 +185,7 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	$re = $this->repository->update($request->except(['role_ids']), $id);
+    	$re = $this->repository->update($request->except(['role_ids','roles']), $id);
     	$mode = User::find($id);
 //     	dd($mode);
         event(new AddEmployee($mode, $request->input('role_ids',[])));
