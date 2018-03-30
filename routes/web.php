@@ -87,6 +87,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/order-assign', 'AssignController');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
+	Route::resource('/inventory-exchange', 'InventoryExchangeController');
     
 	
 	Route::get('/inventory-gather', 'InventoryGatherController@index');
