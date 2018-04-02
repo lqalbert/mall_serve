@@ -12,14 +12,14 @@
 
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
-    <link href="/admin/static1.0.8/css/app.3fda1877eb866c6e655077ddbd914857.css" rel="stylesheet">
+    <link href="/admin/static1.0.8/css/app.67ea6678302334be2ab947aa2fca5ba4.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
     </div>
 
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.0.8/js/manifest.83c399fe92c8ca4d2e4b.js"></script>
+	<script type="text/javascript" src="/admin/static1.0.8/js/manifest.047db0a0e1b31c49cf35.js"></script>
     <script type="text/javascript" src="/admin/static1.0.8/js/vendor.d611ecf87c51152c9c1f.js"></script>
     <script type="text/javascript" src="/admin/static1.0.8/js/app.8e35caf0c3ccf30c8d40.js"></script>
 </body>
