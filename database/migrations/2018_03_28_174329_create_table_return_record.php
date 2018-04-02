@@ -16,9 +16,10 @@ class CreateTableReturnRecord extends Migration
         Schema::create('return_record', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('entrepot_id');
+            $table->unsignedTinyInteger('goods_status')->comment('完好　损坏');
             $table->string('goods_name', 20);
             $table->char('sku_sn', SKU_SN_LENGTH);
-            $table->unsignedTinyInteger('goods_num')->default(0);
+            $table->unsignedInteger('goods_num')->default(0);
             $table->string('express_sn', 50)->comment("快递号");
             $table->string('cus_name', 20)->nullable()->comment('客户');
             $table->string('cus_qq', 20)->nullable()->comment("客户qq");

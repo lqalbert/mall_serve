@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AfterSale;
 use Illuminate\Support\Facades\DB;
 use App\Models\ReturnRecord;
+use App\Http\Controllers\Inventory;
 
 class ReturnRecordController extends Controller
 {
@@ -61,14 +62,17 @@ class ReturnRecordController extends Controller
            $model = AfterSale::find($request->input('after_sale_id'));
            $goods = $request->input('goods');
            $order = $model->order;
+           $inventory = new Inventory();
            
            DB::beginTransaction();
+           $goodsList = [];
            try {
                foreach ($goods as  $product) {
                    ReturnRecord::create([
                        'entrepot_id' => $order->entrepot_id,
                        'goods_name'  => $product['goods_name'],
                        'goods_num'   => $product['goods_num'],
+                       'goods_status' => $product['goods_status'],
                        'sku_sn'      => $product['sku_sn'],
                        'express_sn'  => $request->input('express_sn'),
                        'cus_nanme'   => $order->cus_name,
@@ -78,9 +82,18 @@ class ReturnRecordController extends Controller
                        'user_name'   => $request->input('user_name'),
                        'return_at'   => Date('Y-m-d H:i:s')
                    ]);
+                   
+                   if ($product['goods_status'] == 0) { //0 完好　１损坏
+                       $goodsList[] =　[
+                           'num'    => $product['goods_num'],
+                           'sku_sn' => $product['sku_sn']
+                       ];
+                   }
+                   
                }
                
 //                $order->after_sale_statu
+               $inventory->returnEntry($order->entrepot_id, $goodsList);
                $order->updateAfterSaleDone($model->type);
                DB::commit();
            } catch (Exception $e) {

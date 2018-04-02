@@ -19,6 +19,7 @@ class ReturnRecord extends Model
     protected $fillable = [
         'entrepot_id',
         'goods_name',
+        'goods_status',
         'sku_sn',
         'goods_num',
         'express_sn',

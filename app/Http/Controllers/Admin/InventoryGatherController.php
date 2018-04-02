@@ -9,6 +9,7 @@ use App\Models\BadGoods;
 use Illuminate\Http\Request;
 use App\Models\InventorySystem;
 use App\Models\OrderGoods;
+use App\Models\ReturnRecord;
 
 class InventoryGatherController extends Controller
 {
@@ -207,17 +208,18 @@ class InventoryGatherController extends Controller
             $entrepot_id = $goods['entrepot_id'];
             $goods['entrepot_in'] = $model->whereHas('produceEntry', function($query) use($entrepot_id) {
                 $query->where('entrepot_id', $entrepot_id);
-            })->count();
+            })->sum('num');
             
             //退货入库数量
             $returnWhere = [
                 ['entrepot_id', $goods['entrepot_id']],
                 ['sku_sn', $goods['sku_sn']],
+                ['goods_status', 0]
             ];
             if (!empty($range)) {
                 $returnWhere= array_merge($returnWhere, $this->setRange($re, 'created_at'));
             }
-            $goods['return_num'] = BadGoods::where($returnWhere)->count();
+            $goods['return_num'] = ReturnRecord::where($returnWhere)->sum('goods_num');
             
             //销售锁定数
             $orderWhere =[
@@ -230,7 +232,7 @@ class InventoryGatherController extends Controller
             $model = OrderGoods::where($orderWhere);
             $goods['order_lock'] = $model->whereHas('order', function($query) use($entrepot_id) {
                 $query->where('entrepot_id', $entrepot_id);
-            })->count();
+            })->sum('goods_number');
             
             //发货锁定数
             $Assignwhere =[
