@@ -168,7 +168,8 @@ class CustomerController extends Controller
                 
     			event(new SetCustomerUser(
     			        $userModel,
-    					CustomerUser::QUIT, 2));
+    			        $id,
+    					CustomerUser::QUIT ));
     			
     		}
     	}
