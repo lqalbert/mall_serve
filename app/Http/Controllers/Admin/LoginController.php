@@ -16,6 +16,8 @@ class LoginController extends Controller
         if (Auth::attempt(['account'=>$request->input('account'), 'password'=>$request->input('password')])) {
             $user = Auth::user();
             $user->roles = $user->roles()->withoutGlobalScope('hide')->get();
+            $user->department = $user->department()->get();
+            $user->group = $user->group()->get();
 //             Log::debug('[sp]',['分隔符===================================================']);
 //             $user->roles;
             return $this->success($user, '登录成功');

@@ -191,10 +191,10 @@ class GoodsDetailsController extends Controller
             }else if(!empty($data['img_path'])){
             	$data['cover_url'] = $data['img_path'][0];
             }
+        }else{
+            $data['cover_url'] = $data['img_path'][0];
         }
-
         
-
         $goodsModel = Goods::find($id);
 
         $goodsModel->update($data);

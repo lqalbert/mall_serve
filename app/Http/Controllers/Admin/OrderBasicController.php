@@ -209,11 +209,11 @@ class OrderBasicController extends Controller
     {
         $data = $request->all();
         $this->model = $this->model->find($id);
-        $this->model->status = $data['check_status'];
+        $this->model->status = $data['status'];
         $re = $this->model->save();
         if ($re) {
             DB::beginTransaction();
-            if ($data['check_status'] == 1) {
+            if ($data['status'] == 1) {
                 try {
                     event( new OrderPass($this->model, auth()->user()));
                     DB::commit();
