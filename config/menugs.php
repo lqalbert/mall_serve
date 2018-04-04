@@ -20,7 +20,7 @@ return [
 		],
 		//3
 		[
-				'text'=>'商品类型',
+				'text'=>'商品种类',
 				'icon'=>null,
 				'index'=>'GoodsType'
 		],
