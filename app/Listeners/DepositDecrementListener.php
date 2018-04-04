@@ -31,17 +31,20 @@ class DepositDecrementListener
     {
         $order = $event->getOrder();
         $operator = $event->getUser();
-        //员工保证金
-        $user   =  $order->user()->select('deposit_money','id')->first();
+        //部门
+        $department   =  $order->department()->select('deposit','id')->first();
         
-        if ($order->order_pay_money > $user->deposit_money) {
+        if ($order->order_pay_money > $user->deposit) {
             return false; //停止事件传播
         }
         
         //扣钱
-        $user->deposit_money = round($user->deposit_money - $order->order_pay_money, 2);
+//         $department->deposit_money = round($department->deposit- $order->order_pay_money, 2);
+        $department->subDeposit($order->order_pay_money);
+        
+        
         //这里如果出现负数也是会 报错的 不晓得 try catch能不能处理
-        if( !$user->save() ) {
+        if( !$department->save() ) {
             //更新订单为待充值
             $order->updateStatusToWaitCharge();
             throw new \Exception('扣钱失败');
