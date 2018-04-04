@@ -138,6 +138,11 @@ class OrderBasic extends Model
         return $this->belongsTo('App\Models\CustomerBasic', 'cus_id');
     }
     
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department', 'department_id');
+    }
+    
     /**
      * 是否生成过配货单
      * 这里先直接返回 false 还没有

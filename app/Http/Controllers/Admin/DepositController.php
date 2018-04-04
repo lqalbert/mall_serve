@@ -9,6 +9,7 @@ use PhpParser\Node\Stmt\If_;
 use App\models\OrderBasic;
 use App\Events\OrderPass;
 use Illuminate\Support\Facades\DB;
+use Psy\Exception\ThrowUpException;
 
 class DepositController extends Controller
 {
@@ -23,15 +24,17 @@ class DepositController extends Controller
     	if($request->has('department_id')){
         $where[]=['department_id','=',$request->input('department_id')];
         }
-        if($request->has('group_id')){
-        $where[]=['group_id','=',$request->input('group_id')];
-        }
-        if($request->has('user_id')){
-        $where[]=['user_id','=',$request->input('user_id')];
-        }
+//         if($request->has('group_id')){
+//         $where[]=['group_id','=',$request->input('group_id')];
+//         }
+//         if($request->has('user_id')){
+//         $where[]=['user_id','=',$request->input('user_id')];
+//         }
+        
+        $page = Deposit::where($where)->orderBy('id', 'desc')->paginate($request->input('pageSize', 20));
     	return [
-    			'items'=> Deposit::orderBy('id','desc')->where($where)->get(),
-    			'total'=> Deposit::where($where)->count(),
+    	    'items'=> $page->items(),
+			'total'=> $page->total(),
     	];
     }
 
@@ -53,13 +56,32 @@ class DepositController extends Controller
      */
     public function store(Request $request)
     {
-    	$model = Deposit::create($request->all());
-    	if ($model) {
-    	    $this->checkOrder($model->user_id);
-    		return $this->success($model);
-    	} else {
-    		return $this->error(0);
-    	}
+        
+        DB::beginTransaction();
+        
+        
+        
+        try {
+            $model = Deposit::create($request->all());
+            
+            if (!$model) {
+               throw new \Exception('充值失败');
+            }
+            
+            $department = $model->department;
+            $department->addDeposit($model->money);
+            $re = $department->save();
+            if (!$re) {
+                throw new \Exception('更新部门保证金失败');
+            }
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+    	
+        return $this->success($model);
     }
 
     /**
