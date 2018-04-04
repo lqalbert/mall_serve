@@ -31,8 +31,8 @@ class ContactsController extends Controller
         }
         $data = $this->model->where($where)
             ->orderBy('contacts.created_at', 'desc')
-            ->get();
-        return ['items' => $data, 'total' => count($data)];
+            ->paginate($request->input('pageSize'));
+        return ['items' => $data->items(), 'total' => $data->total()];
     }
 
     /**
