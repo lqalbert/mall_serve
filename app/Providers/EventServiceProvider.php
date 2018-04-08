@@ -64,6 +64,8 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\CreateAssignListener',//生成配货单 生成发货锁定
         ],
         
+        'App\Events\OrderUnPass' => [],
+        
         'App\Events\AssignCreating' => [
             //生成assign_sn
             'App\Listeners\AssignCreatingListener'
