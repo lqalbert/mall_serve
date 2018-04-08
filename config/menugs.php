@@ -56,7 +56,7 @@ return [
 		],
 		//9
 		[
-				'text'=>'订单详情',
+				'text'=>'订单管理',
 				'icon'=>null,
 				'index'=>'OrderList'
 		],
