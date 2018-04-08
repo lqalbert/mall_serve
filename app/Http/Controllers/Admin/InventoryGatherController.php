@@ -106,7 +106,7 @@ class InventoryGatherController extends Controller
             if (!empty($range)) {
                 $Assignwhere = array_merge($Assignwhere, $this->setRange($re, 'out_entrepot_at'));
             }
-            $goods['entrepot_out'] = Assign::where($Assignwhere)->count();
+            $goods['entrepot_out'] = Assign::where($Assignwhere)->sum('goods_num');
             
             //累记入库数量
             $proWhere = [
@@ -119,7 +119,7 @@ class InventoryGatherController extends Controller
             $entrepot_id = $goods['entrepot_id'];
             $goods['entrepot_id'] = $model->whereHas('produceEntry', function($query) use($entrepot_id) {
                 $query->where('entrepot_id', $entrepot_id);
-            })->count();
+            })->sum('num');
             
             //累记损坏数量
             $badWhere = [
@@ -129,7 +129,7 @@ class InventoryGatherController extends Controller
             if (!empty($range)) {
                 $badWhere= array_merge($badWhere, $this->setRange($re, 'created_at'));
             }
-            $goods['bad_num'] = BadGoods::where($badWhere)->count();
+            $goods['bad_num'] = BadGoods::where($badWhere)->sum('num');
             
         }
     }

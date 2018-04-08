@@ -31,8 +31,8 @@ class ShelvesManagementController extends Controller
         if($request->has('shelves_manager_id')){
             $where['shelves_manager_id']=$request->input('shelves_manager_id');
         }
-       $data =  ShelvesManagement::where($where)->get();
-       return ['items'=>$data,'total'=>count($data)];
+       $data =  ShelvesManagement::where($where) ->paginate($request->input('pageSize'));
+        return ['items' => $data->items(), 'total' => $data->total()];
     }
 
     /**

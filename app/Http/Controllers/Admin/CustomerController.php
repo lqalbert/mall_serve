@@ -165,16 +165,11 @@ class CustomerController extends Controller
     			continue;
     		}
     		foreach ($cus_ids as $id) {
-                var_dump($id);die();
+                
     			event(new SetCustomerUser(
-    					$id,
-    					CustomerUser::QUIT,
-    					$userModel->id,
-    					$userModel->group_id,
-    					$userModel->department_id,
-    					$userModel->realname,
-    					$userModel->group->name,
-    					$userModel->department->name));
+    			        $userModel,
+    			        $id,
+    					CustomerUser::QUIT ));
     			
     		}
     	}
