@@ -34,7 +34,7 @@ class DepositDecrementListener
         //部门
         $department   =  $order->department()->select('deposit','id')->first();
         
-        if ($order->order_pay_money > $user->deposit) {
+        if ($order->order_pay_money > $department->deposit) {
             return false; //停止事件传播
         }
         
