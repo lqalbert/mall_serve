@@ -107,6 +107,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/order-after-sale', 'AfterSaleController');
 	
 	Route::resource('/return-record', 'ReturnRecordController');
+	
+	Route::get('/order-operate-records', 'OrderOperateController@index');
 
 });
 

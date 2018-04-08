@@ -74,7 +74,7 @@ class DepositController extends Controller
             if (!$re) {
                 throw new \Exception('更新部门保证金失败');
             }
-            
+            $this->checkOrder();
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -129,9 +129,12 @@ class DepositController extends Controller
         //
     }
     
-    private function checkOrder($user_id)
+    private function checkOrder($department_id)
     {
-        $re = OrderBasic::where('status', OrderBasic::WATI_TO_CHANGR)->get();
+        $re = OrderBasic::where([
+            ['status', OrderBasic::WATI_TO_CHANGR],
+            ['department_id', $department_id]
+        ])->get();
         DB::beginTransaction();
         try {
             foreach ($re as $value) {
