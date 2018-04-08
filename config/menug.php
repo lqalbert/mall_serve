@@ -18,15 +18,15 @@ return [
 				'icon'=>null,
 				'subIndex'=>[4,5,6,7]
 		],
+// 		[
+// 				'text'=>'客户管理',
+// 				'icon'=>null,
+// 				'subIndex'=>[]
+// 		],
 		[
-				'text'=>'客户管理',
+				'text' => '客户订单',
 				'icon'=>null,
-				'subIndex'=>[8]
-		],
-		[
-				'text' => '订单管理',
-				'icon'=>null,
-				'subIndex'=>[9,10,11]
+				'subIndex'=>[8,9,10,11]
 		],
 		[
 				'text' => '库存管理',
