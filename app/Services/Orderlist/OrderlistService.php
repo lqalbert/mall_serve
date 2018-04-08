@@ -77,7 +77,7 @@ class OrderlistService
             $where[]=['created_at','<=', $this->request->end];
         }
         if ($this->request->has('status')) {
-            $where[]=['status','<>',$this->request->input('status')];
+            $where[]=['status',$this->request->input('status')];
         }
         if ($this->request->has('product_status')) {
             $where[]=['product_status',$this->request->input('product_status')];
