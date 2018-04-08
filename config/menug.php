@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-				'subIndex'=>[8,9,10,11]
+		        'subIndex'=>[8,9] // 11
 		],
 		[
 				'text' => '库存管理',

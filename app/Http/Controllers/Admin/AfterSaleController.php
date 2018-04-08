@@ -29,6 +29,14 @@ class AfterSaleController extends Controller
             });
         }
         
+        if ($request->has('order_id')) {
+            $builder = $builder->where('order_id', $request->input('order_id'));
+        }
+        
+        if ($request->has('type')) {
+            $builder = $builder->where('type', $request->input('type'));
+        }
+        
         $result = $builder->paginate($request->input('pageSize', 20));
         
         $collection = $result->getCollection();
