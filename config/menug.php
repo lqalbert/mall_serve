@@ -1,13 +1,11 @@
 <?php
 return [
 
-        [
-            'text'=>'工作台管理',
-            'icon'=>null,
-            'subIndex'=>[18,19,20,21]
-        ],
-
-
+    [
+        'text'=>'工作台管理',
+        'icon'=>null,
+        'subIndex'=>[18,19,20,21]
+    ],
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
@@ -26,7 +24,8 @@ return [
 		[
 				'text' => '订单管理',
 				'icon'=>null,
-				'subIndex'=>[9,10,11]
+				'subIndex'=>[9,11]
+				//10
 		],
 		[
 				'text' => '库存管理',
