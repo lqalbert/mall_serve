@@ -53,7 +53,7 @@ class DepositDecrementListener
         //扣钱成功 记录一下
         DepositRecord::create([
             'user_id' => $operator->id, //操作员工
-            'target_id' => $user->id,
+            'target_id' => $order->user->id,
             'event_type' => DepositRecord::APP_EVENT_ORDER_PASS,
             'money' => -$order->order_pay_money,
             'brief' => '订单号：'.$order->order_sn
