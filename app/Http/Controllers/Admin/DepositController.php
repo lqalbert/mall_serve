@@ -58,9 +58,6 @@ class DepositController extends Controller
     {
         
         DB::beginTransaction();
-        
-        
-        
         try {
             $model = Deposit::create($request->all());
             
@@ -74,7 +71,7 @@ class DepositController extends Controller
             if (!$re) {
                 throw new \Exception('更新部门保证金失败');
             }
-            $this->checkOrder();
+            $this->checkOrder($model->department_id);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
