@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Services\Customer\CustomerService;
 use App\Models\CustomerUser;
+use App\Models\CustomerApp;
 use App\Models\User;
 use App\Events\SetCustomerUser;
 
@@ -22,10 +23,22 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        return   $this->service->get();
+        $business = $request->query('business', 'default');
+        $result = [];
+        switch ($business) {
+            case 'customerType':
+                $result = CustomerApp::getType();
+                break;
+            case 'customerSource':
+                $result = CustomerApp::getSource();
+                break;
+            default:
+                $result = $this->service->get();
+                break;
+        }
+        return $result; 
 
     }
 

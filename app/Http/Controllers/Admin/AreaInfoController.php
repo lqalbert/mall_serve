@@ -4,29 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Article;
+use App\Models\AreaInfo;
 
-class ArticleController extends Controller
+class AreaInfoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-	public function index(Request $request)
+    public function index(Request $request)
     {
-        $query = Article::orderBy('id', 'desc');
-        
-        if ($request->has('title')){
-        	$query->where('title','like', $request->input('title')."%");
+        $business = $request->query('business', 'default');
+        $result = [];
+        switch ($business) {
+            case 'city':
+                $pid = $request->input('pid');
+                $result = AreaInfo::where('p_id','=',$pid)->get();
+                break;
+            default:
+                $pid = $request->input('pid',1);
+                $result = AreaInfo::where('p_id','=',$pid)->get();
+                break;
         }
-        
-        $re = $query->paginate(20);
-        
-        return [
-    		'items' => $re->items(),
-    		'total' => $re->total()
-        ];
+        return $result; 
     }
 
     /**
@@ -47,12 +48,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $model = Article::create($request->all());
-        if ($model) {
-        	return $this->success($model);
-        } else {
-        	return $this->error();
-        }
+        //
     }
 
     /**
@@ -86,18 +82,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $article = Article::find($id);
-        $article->title = $request->input('title');
-        $article->body = $request->input('body');
-        $article->image = $request->input('image');
-
-        $re = $article->save();
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
-        }
+        //
     }
 
     /**
@@ -108,17 +93,6 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        $re = Article::destroy($id);
-        if ($re) {
-        	return $this->success($re);
-        } else {
-        	return $this->error($re);
-        }
+        //
     }
-
-
-
-
-
-
 }

@@ -54,7 +54,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	
 	
 	Route::resource('/goodsdetails','GoodsDetailsController');
-	Route::resource('/customerinformation','CustomerInformationController');
+	Route::resource('/customer-contact','CustomerContactController');
 	Route::resource('/departments','DepartmentController');
 	// Route::resource('/orderlists','OrderListController');
 	Route::resource('/ordergoods','OrderGoodsController');
@@ -109,6 +109,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/return-record', 'ReturnRecordController');
 	
 	Route::get('/order-operate-records', 'OrderOperateController@index');
+
+	Route::resource('/area','AreaInfoController');
+	Route::resource('/track-log','CustomerTrackLogController');
 
 });
 
