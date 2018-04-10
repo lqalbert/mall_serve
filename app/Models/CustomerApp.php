@@ -59,6 +59,7 @@ class CustomerApp extends Model
      */
     public $incrementing = false;
 
+    //客户类型
     private static $type = [
         "A" => "A.准客户",
         "B" => "B.意向客户",
@@ -71,15 +72,42 @@ class CustomerApp extends Model
         // "VX"=>"审核未通过", 这个考虑添加 审核 字段
         // "VT"=>"有意见并投诉" 这个考虑添加 投诉 字段
     ];
+    //客户来源
+    private static $source = [
+        '1'=>"东方财富",
+        '2'=>"今日头条",
+        '3'=>"新浪财经",
+        '4'=>"企鹅 QQ公众平台",
+        '5'=>"一点资讯",
+        '6'=>"搜狐",
+        '7'=>"微博",
+        '8'=>"百度",
+        '9'=>"同花顺",
+        '10'=>"和讯",
+        '11'=>"其他",
+    ];
 
+    //获取客户类型
     public static function getType($index = null)
     {
         if ($index === null) {
             return self::$type;
-        } else 
-            if (in_array($index, array_keys(self::$type))) {
-                return self::$type[$index];
-            }
+        } else if (in_array($index, array_keys(self::$type))) {
+            return self::$type[$index];
+        }
         return self::$type['C'];
     }
+
+    //获取客户来源
+    public static function getSource($index = null){
+        if(is_numeric($index)){
+            return isset(self::$source[$index]) ? self::$source[$index] : '未定义';
+        }else{
+            return self::$source;
+        }
+    }
+
+
+
+
 }

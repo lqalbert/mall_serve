@@ -123,21 +123,15 @@ class CustomerService
 	 */
     public function storeData()
     {
-        $this->customer_basic->name = $this->request->name;
-        $this->customer_basic->sex = $this->request->sex;
-        $this->customer_basic->age = $this->request->age;
-        $this->customer_basic->save();
-        $cus_id=$this->customer_basic->id;
-        $this->customer_contact->cus_id=$cus_id;
-        $this->customer_contact->phone=$this->request->phone;
-        $this->customer_contact->qq=$this->request->qq;
-        $this->customer_contact->qq_nickname=$this->request->qq_nickname;
-        $this->customer_contact->weixin=$this->request->weixin;
-        $this->customer_contact->weixin_nickname=$this->request->weixin_nickname;
-        $this->customer_contact->save();
+        $model = $this->customer_basic->create($this->request->all());
+
+        $data = $this->request->all();
+        $data['cus_id'] = $model->id;
+        $modelc = $this->customer_contact->create($data);
+
         //0 代表添加
         $user = Auth::user();
-        event(new SetCustomerUser( $user, $this->customer_basic->id, CustomerUser::ADD));
+        event(new SetCustomerUser( $user, $modelc->id, CustomerUser::ADD));
     }
 
     public function upDate($id)
