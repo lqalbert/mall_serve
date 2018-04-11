@@ -87,6 +87,15 @@ class CustomerApp extends Model
         '11'=>"其他",
     ];
 
+    //投诉类型
+    private static $complainType = [
+        '1'=>"一般投诉",
+        '2'=>"工单投诉",
+        '3'=>"外诉倾向",
+        '4'=>"其他投诉",
+
+    ];
+
     //获取客户类型
     public static function getType($index = null)
     {
@@ -104,6 +113,15 @@ class CustomerApp extends Model
             return isset(self::$source[$index]) ? self::$source[$index] : '未定义';
         }else{
             return self::$source;
+        }
+    }
+
+    //获取投诉类型
+    public static function getComplainType($index = null){
+        if(is_numeric($index)){
+            return isset(self::$complainType[$index]) ? self::$complainType[$index] : '未定义';
+        }else{
+            return self::$complainType;
         }
     }
 

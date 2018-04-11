@@ -34,6 +34,9 @@ class CustomerController extends Controller
             case 'customerSource':
                 $result = CustomerApp::getSource();
                 break;
+            case 'complainType':
+                $result = CustomerApp::getComplainType();
+                break;
             default:
                 $result = $this->service->get();
                 break;
