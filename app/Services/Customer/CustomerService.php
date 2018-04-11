@@ -53,12 +53,15 @@ class CustomerService
     	
     	//relative 
     	//FIXME 这里逻辑好像有问题 relatives 不应该出现
-    	$relatives = ['department_id','group_id','user_id'];
-    	foreach ($relatives as $value) {
-    		if ($this->request->has($value)) {
-    			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
-    		}
-    	}
+//     	$relatives = ['department_id','group_id','user_id'];
+//     	foreach ($relatives as $value) {
+//     		if ($this->request->has($value)) {
+//     			$this->repository->pushCriteria(new Relative($this->request->input($value), $value));
+//     		}
+//     	}
+        
+    	$this->repository->pushCriteria(new Relative($this->request));
+    	
         
         if ($this->request->has('phone')) {
             $this->repository->pushCriteria(new Phone($this->request->input('phone')));
@@ -68,6 +71,10 @@ class CustomerService
         }
         if ($this->request->has('id')) {
             $this->repository->pushCriteria(new FieldEqual('id', $this->request->input('id')));
+        }
+        
+        if ($this->request->has('type')) {
+            $this->repository->pushCriteria(new FieldEqual('type', $this->request->input('type')));
         }
 
     	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];
