@@ -85,7 +85,6 @@ class CustomerContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // var_dump($request->all());
         $model = CustomerContact::where('id','=',$id)->update($request->all());
         if($model){
             return $this->success($model);
