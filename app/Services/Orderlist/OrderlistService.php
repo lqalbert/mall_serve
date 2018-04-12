@@ -5,6 +5,7 @@ use App\Repositories\OrderlistRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Alg\ModelCollection;
+use App\Repositories\Criteria\OrderByIdDesc;
 class OrderlistService
 {
     private $repository = null;
@@ -84,6 +85,10 @@ class OrderlistService
         }
         if ($this->request->has('after_sale_status')) {
             $where[]=['after_sale_status','<>',0];
+        }
+        
+        if (!$this->request->has('orderField')) {
+            $this->repository->pushCriteria(new OrderByIdDesc());
         }
         
         if(count($where)>0 || count($whereIn>0))
