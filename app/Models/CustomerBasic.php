@@ -80,4 +80,9 @@ class CustomerBasic extends Model
     {
     	return $this->attributes['sex'] == 0 ? '未定义' : $this->attributes['sex'] == 1 ? '男' : '女';
     }
+    
+    public function setV()
+    {
+        $this->type = 'V';
+    }
 }

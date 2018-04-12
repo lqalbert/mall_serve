@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Contacts;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use App\Models\CustomerUser;
 
 class ContactsController extends Controller
 {
@@ -53,6 +55,9 @@ class ContactsController extends Controller
      */
     public function store(Request $request)
     {
+        
+        
+        
         $re=$this->model->create($request->all());
         if ($re) {
             return $this->success($re);
@@ -92,6 +97,7 @@ class ContactsController extends Controller
      */
     public function update(Request $request, $id)
     {
+       
         $re=$this->model->where('id',$id)->update($request->all());
         if ($re) {
             return $this->success($re);
