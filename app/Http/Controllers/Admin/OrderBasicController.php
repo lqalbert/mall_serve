@@ -66,58 +66,45 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
-    	if($request->exchange) {
-            $order_id=$request->id;
-            $orderGoods=$request->order_goods;
-            $data=[];
-            foreach ($orderGoods as $k => $v){
-                $v['order_id'] = $order_id;
-                unset($v['moneyNotes']);
-                $data[$k]=$v;
+        DB::beginTransaction();
+        try {
+            $allData = $request->all();
+            $allData['entrepot_id'] = auth()->user()->getEntrepotId();
+            if ($allData['entrepot_id'] == 0) {
+                throw new \Exception('没有绑定配送中心');
             }
-            DB::table('order_goods')->insert($data);
-        } else {
-            
-            DB::beginTransaction();
-            try {
-                $allData = $request->all();
-                $allData['entrepot_id'] = auth()->user()->getEntrepotId();
-                if ($allData['entrepot_id'] == 0) {
-                    throw new \Exception('没有绑定配送中心');
-                }
-                $orderModel = OrderBasic::make($allData);
-                $re = $orderModel->save();
-                if (!$re) {
-                    throw new  \Exception('订单创建失败');
-                }
-                $orderGoodsModels = [];
-                foreach ($request->order_goods as $goods) {
-                    $goods['unit_type'] = GoodsDetails::getUnitTypes($goods['unit_type']);
-                    $orderGoodsModels[] = OrderGoods::make($goods);
-                }
-//                 $orderGoodsModels = array_map(function($goods){
-//                     return OrderGoods::make($goods);
-//                 }, $request->order_goods);
-                if (!empty($orderGoodsModels)) {
-                    $orderModel->goods()->saveMany($orderGoodsModels);
-                }
-
-                foreach ($request->order_address as $address) {
-                    $orderAddressModels = OrderAddress::make($address);
-                }
-                if (!empty($orderAddressModels)) {
-                    $orderModel->address()->save($orderAddressModels);
-                }
-
-                event( new AddOrder($orderModel) );
-                DB::commit();
-            } catch (\Exception $e) {
-                DB::rollback();
-                return  $this->error([], $e->getMessage());
+            $orderModel = OrderBasic::make($allData);
+            $re = $orderModel->save();
+            if (!$re) {
+                throw new  \Exception('订单创建失败');
+            }
+            $orderGoodsModels = [];
+            foreach ($request->order_goods as $goods) {
+                $goods['unit_type'] = GoodsDetails::getUnitTypes($goods['unit_type']);
+                $orderGoodsModels[] = OrderGoods::make($goods);
+            }
+            //                 $orderGoodsModels = array_map(function($goods){
+            //                     return OrderGoods::make($goods);
+            //                 }, $request->order_goods);
+            if (!empty($orderGoodsModels)) {
+                $orderModel->goods()->saveMany($orderGoodsModels);
             }
             
-            return $this->success([$orderModel->id]);
-    	}
+            foreach ($request->order_address as $address) {
+                $orderAddressModels = OrderAddress::make($address);
+            }
+            if (!empty($orderAddressModels)) {
+                $orderModel->address()->save($orderAddressModels);
+            }
+            
+            event( new AddOrder($orderModel) );
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+        
+        return $this->success([$orderModel->id]);
     }
 
     /**
