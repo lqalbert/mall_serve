@@ -112,7 +112,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 
 	Route::resource('/area','AreaInfoController');
 	Route::resource('/track-log','CustomerTrackLogController');
-	Route::resource('/complain','CustomerComplainController');
+	Route::resource('/plan','PlanController');
+        Route::resource('/complain','CustomerComplainController');
 
 });
 

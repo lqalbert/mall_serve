@@ -23,6 +23,7 @@ class CustomerUser extends Model
     	'user_id',
     	'cus_id',
     	'type',
+    	'plan',
     	'group_id',
     	'department_id',
     	'group_name',
