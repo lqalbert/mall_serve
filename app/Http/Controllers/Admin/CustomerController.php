@@ -7,6 +7,8 @@ use App\Models\CustomerUser;
 use App\Models\CustomerApp;
 use App\Models\User;
 use App\Events\SetCustomerUser;
+use Illuminate\Validation\ValidationException;
+use App\Events\ContactConflict;
 
 class CustomerController extends Controller
 {
@@ -61,8 +63,21 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
+        try {
+            $this->validate($request, [
+                'phone' => ['nullable','unique:customer_contact'],
+                'qq' => ['nullable','unique:customer_contact'],
+                'weixin' => ['nullable','unique:customer_contact'],
+            ]);
+        } catch (ValidationException $e) {
+            event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
+            throw $e;
+        }
+        
+        
+        
         $this->service->storeData();
     }
 

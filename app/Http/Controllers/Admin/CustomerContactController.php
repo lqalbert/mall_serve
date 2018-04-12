@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\CustomerContact;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rule;
+use App\Events\ContactConflict;
 
 class CustomerContactController extends Controller
 {
@@ -46,6 +49,21 @@ class CustomerContactController extends Controller
      */
     public function store(Request $request)
     {
+        try {
+            $this->validate($request, [
+                'phone' => ['nullable','unique:customer_contact'],
+                'qq' => ['nullable','unique:customer_contact'],
+                'weixin' => ['nullable','unique:customer_contact'],
+            ]);
+        } catch (ValidationException $e) {
+//             logger('[message]', $e->toArray());
+            event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
+            throw $e;
+        }
+        
+        
+       
+        
         $model = CustomerContact::create($request->all());
         if($model){
             return $this->success($model);
@@ -85,6 +103,17 @@ class CustomerContactController extends Controller
      */
     public function update(Request $request, $id)
     {
+        try {
+            $this->validate($request, [
+                'phone' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
+                'qq' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
+                'weixin' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
+            ]);
+        } catch (ValidationException $e) {
+            event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
+            throw $e;
+        }
+        // var_dump($request->all());
         $model = CustomerContact::where('id','=',$id)->update($request->all());
         if($model){
             return $this->success($model);

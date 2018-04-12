@@ -38,7 +38,8 @@ class EventServiceProvider extends ServiceProvider
     	],
         
         'App\Events\AddOrder' => [
-            'App\Listeners\AddOrderListener'
+            'App\Listeners\AddOrderListener',
+            'App\Listeners\ChangeCustomerToVListener'
         ],
         
         'App\Events\OrderCreating' => [
@@ -87,6 +88,10 @@ class EventServiceProvider extends ServiceProvider
         //售后
         'App\Events\AddAfterSale' => [
             'App\Listeners\ChangeOrderAfterSaleListener'
+        ],
+        
+        'App\Events\ContactConflict' => [
+            'App\Listeners\ContactconflictListener'
         ]
         
         
