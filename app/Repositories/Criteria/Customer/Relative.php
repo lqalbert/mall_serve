@@ -4,6 +4,7 @@ namespace App\Repositories\Criteria\Customer;
 use Bosnadev\Repositories\Criteria\Criteria;
 use Bosnadev\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class Relative extends Criteria
 {
@@ -38,7 +39,7 @@ class Relative extends Criteria
 	        	            $query->whereNull('last_track');
 	        	            break;
 	        	        case 'plan':
-	        	            $query->whereDate('plan', Date('Y-m-d'));
+	        	            $query->whereDate('plan', (new Carbon)->toDateString());
 	        	            break;
 	        	        case 'conflict':
 	        	            $query->whereNotNull('last_conflict');

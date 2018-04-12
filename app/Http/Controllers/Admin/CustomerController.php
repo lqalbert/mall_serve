@@ -77,8 +77,13 @@ class CustomerController extends Controller
         }
         
         
+        try {
+            $this->service->storeData();
+        } catch (Exception $e) {
+            return $this->error(null, $e->getMessage());
+        }
         
-        $this->service->storeData();
+        return $this->success([]);
     }
 
     /**

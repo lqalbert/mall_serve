@@ -17,6 +17,7 @@ use App\Repositories\Criteria\Customer\Name;
 use App\Repositories\Criteria\Customer\Qq;
 use App\Repositories\Criteria\Customer\Weixin;
 use App\Repositories\Criteria\FieldEqual;
+use App\Repositories\Criteria\Customer\Contact;
 
 class CustomerService
 {
@@ -65,15 +66,23 @@ class CustomerService
     	$this->repository->pushCriteria(new Relative($this->request));
     	
         
-        if ($this->request->has('phone')) {
-            $this->repository->pushCriteria(new Phone($this->request->input('phone')));
+//         if ($this->request->has('phone')) {
+//             $this->repository->pushCriteria(new Phone($this->request->input('phone')));
+//         }
+//         if ($this->request->has('qq')) {
+//             $this->repository->pushCriteria(new Qq($this->request->input('qq')));
+//         }
+//         if ($this->request->has('weixin')) {
+//             $this->repository->pushCriteria(new Weixin($this->request->input('weixin')));
+//         }
+
+    	if ($this->request->has('phone') || $this->request->has('qq') || $this->request->has('weixin')) {
+    	    $this->repository->pushCriteria(new Contact($this->request));
         }
-        if ($this->request->has('qq')) {
-            $this->repository->pushCriteria(new Qq($this->request->input('qq')));
-        }
-        if ($this->request->has('weixin')) {
-            $this->repository->pushCriteria(new Weixin($this->request->input('weixin')));
-        }
+    	        
+
+    	
+    	
         if ($this->request->has('name')) {
             $this->repository->pushCriteria(new Name($this->request->input('name')));
         }
@@ -147,6 +156,7 @@ class CustomerService
         //0 代表添加
         $user = Auth::user();
         event(new SetCustomerUser( $user, $modelc->id, CustomerUser::ADD));
+        return $model;
     }
 
     public function upDate($id)

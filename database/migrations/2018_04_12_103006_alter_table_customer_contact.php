@@ -17,6 +17,8 @@ class AlterTableCustomerContact extends Migration
             $table->string('phone', 20)->nullable()->change();
             $table->string('qq', 20)->nullable()->change();
             $table->string('weixin', 20)->nullable()->change();
+            $table->string('qq_nickname', 20)->nullable()->change();
+            $table->string('weixin_nickname', 20)->nullable()->change();
         });
     }
 
