@@ -151,21 +151,7 @@ class CustomerService
 
     public function upDate($id)
     {
-
-        $updata1=[
-            'name'=>$this->request->name,
-            'age'=>$this->request->age,
-            'sex'=>$this->request->sex,
-        ];
-        $updata2=[
-            'phone'=>$this->request->phone,
-            'weixin'=>$this->request->weixin,
-            'weixin_nickname'=>$this->request->weixin_nickname,
-            'qq'=>$this->request->qq,
-            'qq_nickname'=>$this->request->qq_nickname,
-        ];
-        $this->customer_basic->where('id','=',$id)->update($updata1);
-        $this->customer_contact->where('cus_id','=',$id)->update($updata2);
+        $this->customer_basic->where('id','=',$id)->update($this->request->all());
     }
 
     public function destroyData($id)

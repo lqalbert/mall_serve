@@ -99,7 +99,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::get('/shelvespick', 'ShelvesPickController@index');
 	Route::resource('/shelvespick', 'ShelvesPickController');
 	Route::resource('/stockoutdetails', 'StockOutDetailsController');
-	Route::get('/distributiondeliverytabpane', 'DistributionDeliveryTabPaneController@index');
+	Route::get('/distribution-delivery', 'DistributionDeliveryController@index');
 
 	Route::resource('/order-address','OrderAddressController');
 	Route::resource('/stock-warning','StockWarningController');
@@ -113,7 +113,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/area','AreaInfoController');
 	Route::resource('/track-log','CustomerTrackLogController');
 	Route::resource('/plan','PlanController');
-        Route::resource('/complain','CustomerComplainController');
+  Route::resource('/complain','CustomerComplainController');
 
 });
 
