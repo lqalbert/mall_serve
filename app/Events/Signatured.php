@@ -41,7 +41,7 @@ class Signatured
 //         return new PrivateChannel('channel-name');
 //     }
 
-    private function getAssign()
+    public function getAssign()
     {
         return $this->assign;
     }

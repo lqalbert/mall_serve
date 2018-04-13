@@ -17,6 +17,7 @@ use App\Repositories\Criteria\Customer\Name;
 use App\Repositories\Criteria\Customer\Qq;
 use App\Repositories\Criteria\Customer\Weixin;
 use App\Repositories\Criteria\FieldEqual;
+use App\Repositories\Criteria\OrderByIdDesc;
 
 class CustomerService
 {
@@ -37,6 +38,11 @@ class CustomerService
     {
 
 //        $selectFields = ['id','name','type','sex','recommend'];
+
+        
+        if (!$this->request->has('orderField')) {
+            $this->repository->pushCriteria(new OrderByIdDesc());
+        }
 
     	if ($this->request->has('with')) {
     		$with = $this->request->input('with');
