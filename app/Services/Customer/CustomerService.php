@@ -18,6 +18,7 @@ use App\Repositories\Criteria\Customer\Qq;
 use App\Repositories\Criteria\Customer\Weixin;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\Customer\Contact;
+use App\Repositories\Criteria\OrderByIdDesc;
 
 class CustomerService
 {
@@ -38,6 +39,11 @@ class CustomerService
     {
 
 //        $selectFields = ['id','name','type','sex','recommend'];
+
+        
+        if (!$this->request->has('orderField')) {
+            $this->repository->pushCriteria(new OrderByIdDesc());
+        }
 
     	if ($this->request->has('with')) {
     		$with = $this->request->input('with');
@@ -152,7 +158,7 @@ class CustomerService
 
         //0 代表添加
         $user = Auth::user();
-        event(new SetCustomerUser( $user, $modelc->id, CustomerUser::ADD));
+        event(new SetCustomerUser( $user, $model->id, CustomerUser::ADD));
         return $model;
     }
 
