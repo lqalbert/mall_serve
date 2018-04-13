@@ -11,13 +11,16 @@
 |
 */
 
-
 Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
+    Route::get('/', 'IndexController@index');
+    //登录 退出
+    Route::post('/login', 'LoginController@login');
+    Route::post('/logout', 'LoginController@out');
+});
+
+Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.basic'], function(){
 	
-	Route::get('/', 'IndexController@index');
-	//登录 退出
-	Route::post('/login', 'LoginController@login');
-	Route::post('/logout', 'LoginController@out');
+	
 	Route::resource('/deposits', 'DepositController');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
@@ -113,7 +116,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
 	Route::resource('/area','AreaInfoController');
 	Route::resource('/track-log','CustomerTrackLogController');
 	Route::resource('/plan','PlanController');
-  Route::resource('/complain','CustomerComplainController');
+        Route::resource('/complain','CustomerComplainController');
 
 });
 

@@ -79,10 +79,7 @@ class CustomerService
     	if ($this->request->has('phone') || $this->request->has('qq') || $this->request->has('weixin')) {
     	    $this->repository->pushCriteria(new Contact($this->request));
         }
-    	        
-
-    	
-    	
+        
         if ($this->request->has('name')) {
             $this->repository->pushCriteria(new Name($this->request->input('name')));
         }
