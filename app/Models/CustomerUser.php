@@ -63,5 +63,10 @@ class CustomerUser extends Model
         $this->last_conflict = Carbon::now();
     }
     
+    public function setTracked()
+    {
+        $this->last_track = Carbon::now();
+    }
+    
     
 }

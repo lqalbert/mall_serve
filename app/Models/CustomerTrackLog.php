@@ -22,4 +22,8 @@ class CustomerTrackLog extends Model
         'user_name',
         'cus_name',
     ];
+    
+    
+    
+    
 }

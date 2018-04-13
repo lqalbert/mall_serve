@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\CustomerTrackLog;
+use App\Models\CustomerUser;
 
 class CustomerTrackLogController extends Controller
 {
@@ -41,6 +42,7 @@ class CustomerTrackLogController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @todo 改造成事件
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,6 +51,10 @@ class CustomerTrackLogController extends Controller
     {
         $model = CustomerTrackLog::create($request->all());
         if($model){
+            $cus_id = $model->cus_id;
+            $customerUser = CustomerUser::where('cus_id', $model->cus_id)->first();
+            $customerUser->setTracked();
+            $customerUser->save();
             return $this->success($model);
         }else{
             return $this->error($model);
