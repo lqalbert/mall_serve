@@ -70,6 +70,7 @@ class CustomerController extends Controller
                 'phone' => ['nullable','unique:customer_contact'],
                 'qq' => ['nullable','unique:customer_contact'],
                 'weixin' => ['nullable','unique:customer_contact'],
+                'department_id' =>'required'
             ]);
         } catch (ValidationException $e) {
             event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));

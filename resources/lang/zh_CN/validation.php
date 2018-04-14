@@ -11,5 +11,8 @@ return [
         'weixin' => [
             'unique' => '微信号已使用',
         ],
+        'department_id' => [
+            'required' => '暂不能添加，你还没被分配部门'
+        ]
     ],
 ];
