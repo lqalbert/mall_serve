@@ -75,7 +75,7 @@ class ProduceEntryController extends Controller
             ->join('order_basic','order_goods.order_id','=','order_basic.id')
             ->join('delivery_addresses','order_basic.address_id','=','delivery_addresses.id')
             ->join('user_basic','order_basic.deal_id','=','user_basic.id')
-            ->select('department_id','group_id',"order_basic.deal_name as sale_name","order_goods.goods_name","order_goods.goods_number as sale_number","delivery_addresses.name as customer_name",'order_basic.check_status as examine_status','order_goods.created_at as sale_lock_time')
+            ->select('order_basic.department_id','group_id',"order_basic.deal_name as sale_name","order_goods.goods_name","order_goods.goods_number as sale_number","delivery_addresses.name as customer_name",'order_basic.check_status as examine_status','order_goods.created_at as sale_lock_time')
             ->get();
         $saleLockData=[];
         foreach ($saleLockData2 as $k => $v){
