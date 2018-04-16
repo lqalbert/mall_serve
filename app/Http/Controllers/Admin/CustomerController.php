@@ -65,12 +65,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        
+        if (!$request->has('department_id')) {
+            return $this->error([], '未分配部门，你还不能添加');
+        }
+        
         try {
             $this->validate($request, [
                 'phone' => ['nullable','unique:customer_contact'],
                 'qq' => ['nullable','unique:customer_contact'],
                 'weixin' => ['nullable','unique:customer_contact'],
-                'department_id' =>'required'
+//                 'department_id' =>'required'
             ]);
         } catch (ValidationException $e) {
             event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
@@ -79,6 +84,7 @@ class CustomerController extends Controller
         
         
         try {
+           
             $this->service->storeData();
         } catch (Exception $e) {
             return $this->error(null, $e->getMessage());
