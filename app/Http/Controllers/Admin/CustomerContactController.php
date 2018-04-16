@@ -104,11 +104,13 @@ class CustomerContactController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            logger('[me]', ['a', $id]);
             $this->validate($request, [
-                'phone' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
-                'qq' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
-                'weixin' => ['nullable','unique:customer_contact', Rule::unique('customer_contact')->ignore($id)],
+                'phone' =>  ['bail','nullable',  Rule::unique('customer_contact')->ignore($id)],
+                'qq'    =>  ['bail','nullable',  Rule::unique('customer_contact')->ignore($id)],
+                'weixin' => ['bail','nullable',  Rule::unique('customer_contact')->ignore($id)],
             ]);
+            logger('[me]', ['b']);
         } catch (ValidationException $e) {
             event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
             throw $e;
