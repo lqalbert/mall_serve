@@ -19,6 +19,7 @@ use App\Repositories\Criteria\Customer\Weixin;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\Customer\Contact;
 use App\Repositories\Criteria\OrderByIdDesc;
+use Illuminate\Support\Facades\DB;
 
 class CustomerService
 {
@@ -146,19 +147,21 @@ class CustomerService
         ];
     }
 	/**
-	 * @FIXME 改造成事务
 	 */
     public function storeData()
     {
+       
         $model = $this->customer_basic->create($this->request->all());
-
+        
         $data = $this->request->all();
         $data['cus_id'] = $model->id;
         $modelc = $this->customer_contact->create($data);
-
+        
         //0 代表添加
         $user = Auth::user();
         event(new SetCustomerUser( $user, $model->id, CustomerUser::ADD));
+        
+        
         return $model;
     }
 
