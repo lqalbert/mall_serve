@@ -66,9 +66,9 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         
-        if (!$request->has('department_id')) {
-            return $this->error([], '未分配部门，你还不能添加');
-        }
+//         if (!$request->has('department_id')) {
+//             return $this->error([], '未分配部门，你还不能添加');
+//         }
         
         try {
             $this->validate($request, [

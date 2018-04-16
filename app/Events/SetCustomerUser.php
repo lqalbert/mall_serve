@@ -28,6 +28,13 @@ class SetCustomerUser
     	$this->data['cus_id'] = $cus_id;
     	$this->data['user_id'] = $user->id;
     	$this->data['type'] = empty($type) ? 0 : intval($type);
+    	
+    	
+    	if ($user->department_id== null ) {
+    	    throw new \Exception('未分配部门，还不能添加');
+    	}
+    	
+    	
     	$this->data['group_id'] = $user->group_id;
     	$this->data['department_id'] = $user->department_id;
     	
