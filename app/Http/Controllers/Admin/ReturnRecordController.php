@@ -84,8 +84,8 @@ class ReturnRecordController extends Controller
                    ]);
                    
                    if ($product['goods_status'] == 0) { //0 完好　１损坏
-                       $goodsList[] =　[
-                           'num'    => $product['goods_num'],
+                       $goodsList[] = [
+                           'num' => $product['goods_num'],
                            'sku_sn' => $product['sku_sn']
                        ];
                    }
