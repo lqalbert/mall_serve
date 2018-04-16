@@ -150,13 +150,12 @@ class CustomerService
 	 */
     public function storeData()
     {
-       
         $model = $this->customer_basic->create($this->request->all());
-        
+
         $data = $this->request->all();
         $data['cus_id'] = $model->id;
         $modelc = $this->customer_contact->create($data);
-        
+
         //0 代表添加
         $user = Auth::user();
         event(new SetCustomerUser( $user, $model->id, CustomerUser::ADD));

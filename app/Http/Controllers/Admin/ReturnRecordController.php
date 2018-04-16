@@ -53,11 +53,6 @@ class ReturnRecordController extends Controller
      */
     public function store(Request $request)
     {
-//         order_id:"",
-//         goods:[],
-//         user_id:"",
-//         user_name:""
-//          after_sale_id
 
            $model = AfterSale::find($request->input('after_sale_id'));
            $goods = $request->input('goods');
@@ -92,8 +87,7 @@ class ReturnRecordController extends Controller
                    }
                    
                }
-               
-//                $order->after_sale_statu
+
                $inventory->returnEntry($order->entrepot_id, $goodsList);
                $order->updateAfterSaleDone($model->type);
                DB::commit();
