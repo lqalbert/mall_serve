@@ -53,12 +53,6 @@ class ReturnRecordController extends Controller
      */
     public function store(Request $request)
     {
-//         order_id:"",
-//         goods:[],
-//         user_id:"",
-//         user_name:""
-//          after_sale_id
-
            $model = AfterSale::find($request->input('after_sale_id'));
            $goods = $request->input('goods');
            $order = $model->order;
@@ -84,15 +78,14 @@ class ReturnRecordController extends Controller
                    ]);
                    
                    if ($product['goods_status'] == 0) { //0 完好　１损坏
-                       $goodsList[] =　[
+                       $goodsList[] = [
                            'num'    => $product['goods_num'],
                            'sku_sn' => $product['sku_sn']
                        ];
                    }
                    
                }
-               
-//                $order->after_sale_statu
+
                $inventory->returnEntry($order->entrepot_id, $goodsList);
                $order->updateAfterSaleDone($model->type);
                DB::commit();
@@ -102,11 +95,6 @@ class ReturnRecordController extends Controller
            }
            
            return $this->success([]);
-       
-//         $table->string('cus_qq', 20)->nullable()->comment("客户qq");
-//         $table->string('cus_phone', 20)->nullable()->comment('客户 phone');
-//         $table->string('cus_weixin', 20)->nullable()->comment("客户 weixin");
-//        
     }
 
     /**

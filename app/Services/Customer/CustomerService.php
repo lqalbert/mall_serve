@@ -146,7 +146,7 @@ class CustomerService
 
         //0 代表添加
         $user = Auth::user();
-        event(new SetCustomerUser( $user, $modelc->id, CustomerUser::ADD));
+        event(new SetCustomerUser( $user, $model->id, CustomerUser::ADD));
     }
 
     public function upDate($id)
