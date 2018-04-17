@@ -5,79 +5,286 @@
 @endsection
 
 @section('content')
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productBanner">
-        <img src="/images/home/product/banner.jpg" style="width: 100%;" alt="">
-    </div>
-<!--     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchBar"> -->
-<!--         <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle"> -->
-<!--             <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 llf"> -->
-<!--                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
-<!--                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 search"> -->
-<!--                         <input id="search" type="text" class="input"> -->
-<!--                         <span id="searchs"  class="glyphicon glyphicon-search" aria-hidden="true"></span> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--                 <div id="searchLists" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchLists"> -->
-<!--                     <div class="col-lg-2 col-lg-offset-1 col-md-3 col-sm-4 col-xs-6 searchList"> -->
-<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchListBar sta">全部</div> -->
-<!--                     </div> -->
-<!--                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 searchList"> -->
-<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchListBar">保湿柔肤系列</div> -->
-<!--                     </div> -->
-<!--                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 searchList"> -->
-<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchListBar">清爽控油系列</div> -->
-<!--                     </div> -->
-<!--                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 searchList"> -->
-<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchListBar">抗皱舒缓系列</div> -->
-<!--                     </div> -->
-<!--                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 searchList"> -->
-<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 searchListBar">超值套装系列</div> -->
-<!--                     </div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </div> -->
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productLists">
-        <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lls">
-        	@foreach($goods as $g)
-        	<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 productList">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <a href="{{ route('product/product',['id'=> $g->id  ])}}">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="{{ $g->cover_url }}" style="width: 100%; max-width: 366px ; max-height:358px" alt="">
+    <div id="product" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 productContent">
+        <div class="productTitle col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+            <a href="{{URL('/')}}">首页</a> >
+            <a href="{{URL('product/index')}}">全部产品</a> >
+            <a href="#">{{$name}}</a>
+        </div>
+        <div class="productBar col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 pls">
+                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{URL('product/index?type=all')}}">
+                        <div class="{{$type['all']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            全部
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                                {{ $g->goods_name }}
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">
-                            
-                            <!-- <span style="color: #333">原价：198</span>&nbsp;&nbsp;&nbsp; -->    
-                                <span style="color: red">现价：{{ $g->goods_price }}</span>
-                            </div>
+                    </a>
+                </div>
+                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{URL('product/index?type=new')}}">
+                        <div class="{{$type['new']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            新品首发
+                        </div>
+                    </a>
+                </div>
+                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{URL('product/index?type=sale')}}">
+                        <div class="{{$type['sale']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            畅销产品
+                        </div>
+                    </a>
+                </div>
+                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{URL('product/index?type=wakeup')}}">
+                        <div class="{{$type['wakeup']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            焕肤紧致系列
+                        </div>
+                    </a>
+                </div>
+                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                    <a href="{{URL('product/index?type=youth')}}">
+                        <div class="{{$type['youth']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            青春凝时冻龄系列
                         </div>
                     </a>
                 </div>
             </div>
-        	@endforeach
-            
-
-
-
+        </div>
+        <div class="productLists col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/pro1.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/pro2.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                爆奶霜滋润补水锁水保湿面霜秋冬牛奶护肤擦脸润肤霜
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/pro3.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                爆奶霜滋润补水锁水保湿面霜秋冬牛奶护肤擦脸润肤霜
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/pro4.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                爆奶霜滋润补水锁水保湿面霜秋冬牛奶护肤擦脸润肤霜
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/pro5.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="enjoyProduct col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+            <div class="enjoyTitle col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="left col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <span class="line"></span>
+                    <span>猜你喜欢</span>
+                </div>
+            </div>
+        </div>
+        <div class="productLists col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy1.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy2.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy3.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy4.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy5.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy6.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy7.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="{{URL('product/product')}}">
+                <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <img src="/images/home/product/enjoy8.png" alt="">
+                        <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
+                            <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                清透盈润面膜贴21片玻尿酸补水...
+                            </div>
+                            <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span>￥69.9</span>
+                                <span class="high">￥297</span>
+                                <span class="hot">热卖</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#searchLists .searchListBar').on('click',function () {
-                $('#searchLists .searchListBar').removeClass('sta')
-                $(this).addClass('sta')
-            })
-            $('#searchs').on('click',function () {
-                var con=$('#search').val()
-                console.log(con)
-            })
         })
     </script>
 @endsection

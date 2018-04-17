@@ -3,9 +3,6 @@
     <link rel="stylesheet" href="/css/home/connection/index.css"/>
 @endsection
 @section('content')
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 connectBanner">
-        <img src="/images/home/product/banner.jpg" style="width: 100%;" alt="">
-    </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 connectContent">
         <div class="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 lle">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 connectList">

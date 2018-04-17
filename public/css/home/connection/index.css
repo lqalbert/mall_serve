@@ -1,8 +1,4 @@
 
-.connectBanner{
-    padding:0;
-}
-
 .connectContent{
     background: #F2F6F5;
     padding-top: 40px;
@@ -115,8 +111,8 @@
 
 .messageBox .formName .int input:focus{
     outline: none;
-    border:1px solid #45A87A;
-    box-shadow: 0 0 5px #45A87A;
+    border:1px solid #bf9d63;
+    box-shadow: 0 0 5px #bf9d63;
 }
 
 .messageBox .formContent{
@@ -140,15 +136,15 @@
     min-height: 200px;
     line-height: 30px;
     padding: 10px;
-    border:1px solid #ccc;
-    color: #4cae4c;
+    border:1px solid #bf9d63;
+    color: #666;
     border-radius: 5px;
 }
 
 .messageBox .formContent .int textarea:focus{
     outline: none;
-    border:1px solid #45A87A;
-    box-shadow: 0 0 5px #45A87A;
+    border:1px solid #bf9d63;
+    box-shadow: 0 0 5px #bf9d63;
 }
 
 .messageBox .butBoxss{
@@ -164,8 +160,8 @@
     line-height: 40px;
     font-size: 16px;
     color: #Fff;
-    background: linear-gradient(#fff,#45A87A,#45A87A,#fff);
-    box-shadow: 0 0 5px #45A87A;
+    background: #bf9d63;
+    box-shadow: 0 0 5px #bf9d63;
     margin: 0 auto;
     cursor: pointer;
 }
