@@ -122,16 +122,12 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 
 
 	
-// Route::get('/', function () {
-// 	// return view('welcome');
-// 	return view('test/test');
-// });
-
 Route::get('/', 'Home\IndexController@index');
 
 
 Route::get('/product/index', 'Home\ProductController@index')->name('product/index');
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
+Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
@@ -158,8 +154,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 // 	Route::resource('pages','PagesController');
 // });
 Route::resource('photo','PhotoController');
-		
-// Route::get('/', function () {
-// 	// return view('welcome');
-// 	return view('test/test');
-// });
+    
