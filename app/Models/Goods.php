@@ -17,17 +17,19 @@ class Goods extends Model
     
     
     protected $fillable= [
-    		'goods_name',
-    		'goods_price',
-    		'goods_number',
-    		'unit_type',
-    		'description',
-    		'cover_url',
-    		'status',
-    		'subtitle',
-    		'brief',
-    		'goods_sn',
-            'sku_sn'
+		'goods_name',
+		'goods_price',
+		'goods_number',
+		'unit_type',
+		'description',
+		'cover_url',
+		'status',
+		'subtitle',
+		'brief',
+		'goods_sn',
+        'sku_sn',
+        'new_goods',
+        'hot_goods'
     ];
     
     //多对多
