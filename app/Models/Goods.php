@@ -29,7 +29,11 @@ class Goods extends Model
 		'goods_sn',
         'sku_sn',
         'new_goods',
-        'hot_goods'
+        'hot_goods',
+        'del_price',
+        'comments',
+        'sale_count',
+        'sale_able_count'
     ];
     
     //多对多
@@ -59,6 +63,11 @@ class Goods extends Model
     public function attrs()
     {
     	return $this->belongsToMany('App\Models\GoodsSpecs', 'sku_attrs', 'goods_id', 'spec_id');
+    }
+    
+    public function derectAttr()
+    {
+        return $this->hasMany("App\Models\SkuAttr", 'goods_id');
     }
     
     

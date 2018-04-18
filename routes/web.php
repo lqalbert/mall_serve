@@ -127,10 +127,11 @@ Route::get('/', 'Home\IndexController@index');
 
 Route::get('/product/index', 'Home\ProductController@index')->name('product/index');
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
+Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product');
 Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
-Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
-Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
-Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
+// Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
+// Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
+// Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
 Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');

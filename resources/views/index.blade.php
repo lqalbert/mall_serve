@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商城</title>
+    <title>商城aaa</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -324,60 +324,17 @@
                         <img src="images/home/index/new/leftnew.jpg" alt="">
                     </div>
                     <div class="right col-lg-7 col-md-7 col-sm-6 col-xs-12">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product0.jpg" alt="">
+                    	@foreach($newGoods as $goods)
+                    	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
+                            <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
+                                <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白抗皱精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product1.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白补水精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product2.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白柔肤水</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product3.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">紧致肌肤精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product4.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">淡斑晚霜套装</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product5.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白补水洗面奶</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
+                    	@endforeach
                     </div>
                 </div>
             </div>
@@ -398,60 +355,17 @@
                         <img src="images/home/index/product/selling.jpg" alt="">
                     </div>
                     <div class="right col-lg-7 col-md-7 col-sm-6 col-xs-12">
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product0.jpg" alt="">
+                    	@foreach($hotGoods as $goods)
+                    	<div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
+                            <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
+                                <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白抗皱精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
                                 </div>
                             </a>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product1.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白补水精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product2.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白柔肤水</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product3.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">紧致肌肤精华液</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product4.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">淡斑晚霜套装</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 imgBox">
-                            <a href="{{URL('product/product')}}">
-                                <img src="/images/home/index/new/product5.jpg" alt="">
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美白补水洗面奶</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥119</div>
-                                </div>
-                            </a>
-                        </div>
+                    	@endforeach
                     </div>
                 </div>
             </div>

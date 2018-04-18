@@ -265,7 +265,7 @@ li{
     padding-left: 15px;
 }
 
-.productInfo .proRig .colorBoxs{
+.productInfo  .attr-box{
     margin-top: 20px;
 }
 
@@ -280,7 +280,7 @@ li{
     float: left;
 }
 
-.productInfo .proRig .colorBoxs .colorBox{
+.productInfo .proRig  .colorBox{
     width: 80px;
     height: 80px;
     border: 2px solid #ECC27A;
