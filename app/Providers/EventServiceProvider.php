@@ -56,7 +56,7 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ProduceEntried' => [
             'App\Listeners\ProduceEntriedListener'
         ],
-        //订单通过审核 第一个事件可能会返回false（钱不够了） 来阻止后面的执行
+        //订单通过审核  
         //所以在处理这个事件时需要另外的 事务处理 
         'App\Events\OrderPass' => [
             'App\Listeners\OrderPassCheckedListener',

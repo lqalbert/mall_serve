@@ -41,7 +41,7 @@ class DepositDecrementListener
         //扣钱 保证金可以为负
 //         $department->deposit_money = round($department->deposit- $order->order_pay_money, 2);
         $department->subDeposit($order->order_pay_money);
-        
+        $department->save();
         
         //这里如果出现负数也是会 报错的 不晓得 try catch能不能处理
 //         if( !$department->save() ) {
