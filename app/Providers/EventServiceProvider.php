@@ -46,7 +46,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\OrderCreatingListener'
         ],
         'App\Events\OrderCancel' => [
+            //库存
             'App\Listeners\OrderCancelListener',
+            //退保证金
+            'App\Listeners\DepositRefundListener'
         ],
         
         'App\Events\ProduceEntryCreating' => [

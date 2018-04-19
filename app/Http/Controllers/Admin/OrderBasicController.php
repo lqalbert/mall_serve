@@ -220,8 +220,16 @@ class OrderBasicController extends Controller
     
     public function cancel(Request $request , $id)
     {
-        $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
-        event(new OrderCancel(\App\models\OrderBasic::find($id)));
+        DB::beginTransaction();
+        try {
+            $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
+            event(new OrderCancel(\App\models\OrderBasic::find($id)));
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        
         return $this->success([]);
     }
 }
