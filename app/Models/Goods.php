@@ -89,4 +89,14 @@ class Goods extends Model
     {
     	return self::withTrashed()->count();
     }
+    
+    /**
+     * 限制查询只包括上架。
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 }

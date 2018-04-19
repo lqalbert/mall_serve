@@ -16,8 +16,8 @@ class ProductController extends CommonController
         $type=array('sale'=>'','youth'=>'','all'=>'','wakeup'=>'','new'=>'');
         $type[$request->input('type','all')]='actionBar';
         $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肤紧致系列','new'=>'新品首发');
-        $goods = Goods::select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->get();
-        $gust = Goods::select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->inRandomOrder()->limit(8)->get();
+        $goods = Goods::select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->get();
+        $gust = Goods::select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
 
         return view('home/product/index',['bar'=>static::$bar, 'goods'=>$goods, 'gust'=>$gust,'type'=>$type,'name'=>$name[$request->input('type','all')]]);
     }
@@ -25,7 +25,7 @@ class ProductController extends CommonController
         static::$bar['bar2']='sta';
         static::$bar['line2']='line';
         
-        $goods = Goods::with(['category','imgs','derectAttr'])->findOrFail($id);
+        $goods = Goods::with(['category','imgs','derectAttr'])->active()->findOrFail($id);
         $goods->derectAttr->load('spec');
         $this->setAttrGroup($goods);
         

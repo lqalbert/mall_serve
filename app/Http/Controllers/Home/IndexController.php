@@ -21,8 +21,8 @@ class IndexController extends CommonController
         
         $allgoods = Goods::all(['id','cover_url']);
         
-        $newGoods = $this->goodsBuilder->where([['new_goods',1]])->orderBy('id','desc')->limit(6)->select($indexModelFields)->get();
-        $hotGoods = $this->goodsBuilder->where([['hot_goods',1]])->orderBy('id','desc')->limit(6)->select($indexModelFields)->get();
+        $newGoods = $this->goodsBuilder->active()->where([['new_goods',1]])->orderBy('id','desc')->limit(6)->select($indexModelFields)->get();
+        $hotGoods = $this->goodsBuilder->active()->where([['hot_goods',1]])->orderBy('id','desc')->limit(6)->select($indexModelFields)->get();
         
         return view('index',['bar'=>static::$bar, 'newGoods'=>$newGoods, 'hotGoods'=>$hotGoods]);
     }
