@@ -11,9 +11,11 @@
 	                    @foreach ($articles as $article)
 	                    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftCos">
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pic">
+	                            	<a href="{{url("information", ['id'=>$article->id])}}" target="_blank">
 	                            	<img alt="" style="height: 300px;width: 100%;" src="{{ $article->image }}">
+	                            	</a>
 	                            </div>
-	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit">{{ $article->title }}</div>
+	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 tit"><a href="{{url("information", ['id'=>$article->id])}}" target="_blank">{{ $article->title }}</a></div>
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 con">{{ $article->description }}</div>
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 dat">{{ $article->created_at }}   
 <!-- 	                            	李老师   浏览：1854 -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use Illuminate\Http\Request;
 use App\Models\Article;
 
+
 class InformationController extends CommonController
 {
     //
@@ -14,10 +15,20 @@ class InformationController extends CommonController
 
         return view('home/information/index',['bar'=>static::$bar]);
     }
+    
     public function news(){
         static::$bar['bar6']='sta';
         static::$bar['line6']='line';
         $articles = Article::orderBy('id', 'desc')->paginate(15);
         return view('home/information/news',['bar'=>static::$bar, 'articles'=>$articles]);
+    }
+    
+    public function detail($id)
+    {
+        static::$bar['bar6']='sta';
+        static::$bar['line6']='line';
+        $article = Article::findOrFail($id);
+        $articles = Article::orderBy('id', 'desc')->paginate(15);
+        return view('home/information/detail', ['article'=>$article, 'articles'=>$articles,'bar'=>static::$bar,]);
     }
 }
