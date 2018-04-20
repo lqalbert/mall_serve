@@ -43,9 +43,9 @@ class OrdergoodsService
             $this->repository->pushCriteria($order_status);
         }
         
-//         if ($this->request->has('sku_sn')) {
-//             $this->repository->pushCriteria(new FieldEqual('sku_sn', $this->request->input('sku_sn')));
-//         }
+        if ($this->request->has('sku_sn')) {
+            $this->repository->pushCriteria(new FieldEqual('sku_sn', $this->request->input('sku_sn')));
+        }
         
         if ($this->request->has('entrepot_id')) {
             $this->repository->pushCriteria(new Enterpot($this->request->input('entrepot_id')));
