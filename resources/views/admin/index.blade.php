@@ -13,15 +13,15 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!--[if IE]><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script><![endif]-->
-    <link href="/admin/static1.0.17/css/app.f919c8ef6d9c3fea5476a1b79ce80c52.css" rel="stylesheet">
+    <link href="/admin/static1.0.18/css/app.0a7321188ea1ef10ad4f2083df79d72f.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
     </div>
 
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.0.17/js/manifest.dbc19c902a1a9d81adec.js"></script>
-    <script type="text/javascript" src="/admin/static1.0.17/js/vendor.18c8cadfa9001265e9df.js"></script>
-    <script type="text/javascript" src="/admin/static1.0.17/js/app.f28297558969ef8a57d7.js"></script>
+	<script type="text/javascript" src="/admin/static1.0.18/js/manifest.10d80546f7457613ed79.js"></script>
+    <script type="text/javascript" src="/admin/static1.0.18/js/vendor.18c8cadfa9001265e9df.js"></script>
+    <script type="text/javascript" src="/admin/static1.0.18/js/app.a0a274f1087ffa78cf10.js"></script>
 </body>
 </html>
