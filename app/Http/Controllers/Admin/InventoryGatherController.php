@@ -66,13 +66,6 @@ class InventoryGatherController extends Controller
         }
         
         
-       /*  //出库数量
-        Assign;
-        //累记入库数量
-        ProduceEntryProduct;
-        //累记损坏数量
-        BadGoods; */
-        
         $this->getAssign($re, $range);
         
         return [
@@ -85,8 +78,8 @@ class InventoryGatherController extends Controller
     private function setRange($rang, $field) 
     {
         return [
-            [$field, '>=', $range[0]],
-            [$field, '<=', $range[1]]
+            [$field, '>=', $rang[0]],
+            [$field, '<=', $rang[1]]
         ];
     }
     

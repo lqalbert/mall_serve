@@ -13,10 +13,34 @@ class InventoryExchangeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $model  = new InventoryExchange();
+        
+        if ($request->has('entrepot_id')) {
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
+        }
+        
+        if ($request->has('sku_sn')) {
+            $model = $model->where('sku_sn', $request->input('sku_sn'));
+        }
+        
+        if ($request->has('sku_sn')) {
+            $model = $model->where('sku_sn', $request->input('sku_sn'));
+        }
+        
+        if ($request->has('start') && $request->has('end')) {
+            $range= [];
+            $range[] = $request->input('start');
+            $range[] = $request->input('end');
+            $model = $model->where([
+                ['exchange_at', '>=', $range[0]],
+                ['exchange_at', '<=', $range[1]] 
+            ]);
+        } 
+        
         return [
-            'items' => InventoryExchange::get(),
+            'items' => $model->get(),
             'total' => 0
         ];
     }

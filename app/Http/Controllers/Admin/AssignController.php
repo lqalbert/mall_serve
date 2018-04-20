@@ -10,6 +10,7 @@ use App\Alg\ModelCollection;
 use App\Events\Signatured;
 use App\Models\Assign;
 use App\Models\Communicate;
+use App\Repositories\Criteria\Ordergoods\DateRange;
 
 class AssignController extends Controller
 {
@@ -22,7 +23,7 @@ class AssignController extends Controller
         'status',//发货状态
         'assign_type', //发货类型 正常、退货、换货
         'order_id',//订单ID,
-//         'sku_sn'
+        'sku_sn'
     ];
     
     private $fieldLike = [
@@ -56,6 +57,13 @@ class AssignController extends Controller
                 $this->repository->pushCriteria(new FieldLike($value, $request->input($value)));
             }
         }
+        
+        if ($this->request->has('start') && $this->request->has('end')) {
+            $range= [];
+            $range[] = $this->request->input('start');
+            $range[] = $this->request->input('end');
+            $this->repository->pushCriteria(new DateRange($range));
+        } 
         
 //         if ($request->has('with')) {
 //             $with  = $request->input('with', []);

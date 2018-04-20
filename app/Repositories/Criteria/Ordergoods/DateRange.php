@@ -25,7 +25,7 @@ class DateRange extends Criteria
      */
     public function  apply($model, Repository $repository)
     {
-        $entrepot_id = $this->entrepot_id;
+        
         $range = $this->range;
         $model->where([
             ['created_at', '>=', $range[0]],
