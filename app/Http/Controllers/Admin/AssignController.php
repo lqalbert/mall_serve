@@ -9,6 +9,7 @@ use App\Repositories\Criteria\FieldLike;
 use App\Alg\ModelCollection;
 use App\Events\Signatured;
 use App\Models\Assign;
+use App\Models\Communicate;
 
 class AssignController extends Controller
 {
@@ -147,12 +148,18 @@ class AssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $re = $this->repository->update($request->all(), $id);
+        $model = new Communicate();
+       $re =  $model->create($request->all());
+//        $re = $this->repository->update($request->all(), $id);
         if ($request->has('sign_at')) {
             event(new Signatured(Assign::find($id)));
         }
-        return $this->success($re);
+        if($re){
+            return $this->success($re);
+        }else{
+            return $this->error($re);
+        }
+
     }
 
     /**

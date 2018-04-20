@@ -116,7 +116,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/area','AreaInfoController');
 	Route::resource('/track-log','CustomerTrackLogController');
 	Route::resource('/plan','PlanController');
-        Route::resource('/complain','CustomerComplainController');
+	Route::resource('/complain','CustomerComplainController');
+	Route::resource('/communicate','CommunicateController');
 
 });
 
