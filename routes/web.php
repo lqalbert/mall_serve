@@ -123,6 +123,11 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 
 
 	
+// Route::get('/', function () {
+// 	// return view('welcome');
+// 	return view('test/test');
+// });
+
 Route::get('/', 'Home\IndexController@index');
 
 
@@ -157,4 +162,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 // 	Route::resource('pages','PagesController');
 // });
 Route::resource('photo','PhotoController');
-    
+		
+// Route::get('/', function () {
+// 	// return view('welcome');
+// 	return view('test/test');
+// });

@@ -16,14 +16,14 @@ class StockWarningController extends Controller
     public function index(Request $request)
     {
         
-        $model = new InventorySystem();
-        
+        $model = new InventorySystem;
+
         if ($request->has('entrepot_id')) {
-            $model->where('entrepot_id', $request->input('entrepot_id'));
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
         }
         
         if ($request->has('goods_name')) {
-            $model->where('goods_name', 'like', '%'.$request->input('goods_name').'%');
+            $model = $model->where('goods_name', 'like', '%'.$request->input('goods_name').'%');
         }
         
         if ($request->has('cate_kind_id')) {
