@@ -14,7 +14,7 @@ class AlterTableExpressCompanies extends Migration
     public function up()
     {
         Schema::table('express_companies', function (Blueprint $table) {
-            $table->char('eng',2)->unique()->comment('两个英文字母 大写的');
+            $table->char('eng',2)->nullable()->unique()->comment('两个英文字母 大写的');
             
             
         });
