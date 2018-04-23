@@ -23,7 +23,8 @@ class AssignController extends Controller
         'status',//发货状态
         'assign_type', //发货类型 正常、退货、换货
         'order_id',//订单ID,
-        'sku_sn'
+        'sku_sn',
+        'express_sn'
     ];
     
     private $fieldLike = [
@@ -58,10 +59,10 @@ class AssignController extends Controller
             }
         }
         
-        if ($this->request->has('start') && $this->request->has('end')) {
+        if ($request->has('start') && $request->has('end')) {
             $range= [];
-            $range[] = $this->request->input('start');
-            $range[] = $this->request->input('end');
+            $range[] = $request->input('start');
+            $range[] = $request->input('end');
             $this->repository->pushCriteria(new DateRange($range));
         } 
         

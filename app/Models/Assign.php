@@ -10,7 +10,7 @@ use App\Events\AssignCreating;
 class Assign extends Model
 {
     use SoftDeletes;
-    
+    const STATUS_DONE = 1;
     protected $table = 'assign_basic';
     
     /**

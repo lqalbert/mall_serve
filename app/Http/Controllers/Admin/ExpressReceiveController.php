@@ -64,7 +64,8 @@ class ExpressReceiveController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $this->model->create($data);
+        $model = $this->model->create($data);
+        return $this->success([]);
     }
 
     /**

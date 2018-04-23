@@ -118,6 +118,12 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/plan','PlanController');
 	Route::resource('/complain','CustomerComplainController');
 	Route::resource('/communicate','CommunicateController');
+	
+	Route::get('/print/{id}', 'PrintController@index');
+	Route::get('/print/assign/{id}', 'PrintController@printAssign');
+	
+	Route::resource('/express-invoices', 'ExpressInvoicesController');
+	Route::resource('/assign-invoices',  'AssignInvoicesController');
 
 });
 
