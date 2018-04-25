@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\InventorySystem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 /**
  * 库存
@@ -106,15 +107,17 @@ class Inventory
         DB::beginTransaction();
         try {
             foreach ($products as $product) {
+                $entry_at = Carbon::parse($product['entry_at'])->setTimezone('Asia/Shanghai')->toDateTimeString();
                 if ($this->model->hasOneBySkuSn($entrepot_id, $product['sku_sn'])) {
-                    $this->model->entryUpdate($entrepot_id, $product['sku_sn'], $product['num']);
+                    $this->model->entryUpdate($entrepot_id, $product['sku_sn'], $product['num'],$entry_at);
                 } else {
                     $this->model->insert([
                         'entrepot_id'  => $entrepot_id ,
                         'sku_sn'       => $product['sku_sn'],
                         'goods_name'   => $product['goods_name'],
                         'entrepot_count' => $product['num'],
-                        'saleable_count' => $product['num']
+                        'saleable_count' => $product['num'],
+                        'entry_at'     => $entry_at,
                     ]);
                 }
             }

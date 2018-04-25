@@ -39,6 +39,7 @@ class InventorySystem extends Model
         'destroy_count',
         'inventory_max',
         'inventory_min',
+        'entry_at'
     ];
     
     public function goods()
@@ -97,7 +98,7 @@ class InventorySystem extends Model
      * 
      * @return int
      */
-    public function entryUpdate($entrepot_id, $sku_sn, $num)
+    public function entryUpdate($entrepot_id, $sku_sn, $num,$entry_at)
     {
         
         $affectedRows = 0;
@@ -106,7 +107,7 @@ class InventorySystem extends Model
             //返回影响的行数
            $affectedRows =  DB::update('update '. $this->table.
                 ' set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?'.
-                ' where entrepot_id=? and sku_sn = ?', [$num, $num, $entrepot_id, $sku_sn]);
+                ' , entry_at=? where entrepot_id=? and sku_sn = ?', [$num, $num,$entry_at,$entrepot_id, $sku_sn]);
         } catch (Exception $e) {
             DB::rollBack();
         }
