@@ -9,7 +9,7 @@ use App\Models\OrderGoods;
 use Illuminate\Support\Facades\DB;
 use App\Models\EntrepotProductCategory;
 use App\Events\ProduceEntried;
-
+use Carbon\Carbon;
 
 class ProduceEntryController extends Controller
 {
@@ -21,7 +21,9 @@ class ProduceEntryController extends Controller
         try {
             $products = $request->input('childrenData', []);
             $this->checkEntrepotProductCategory($products);
-            $model = ProduceEntry::create($request->except('childrenData'));
+            $data = $request->except('childrenData');
+            $data['entry_at'] = Carbon::parse($data['entry_at'])->setTimezone('Asia/Shanghai')->toDateTimeString();
+            $model = ProduceEntry::create($data);
             
             $productsModels = [];
             foreach ($products as $product) {
