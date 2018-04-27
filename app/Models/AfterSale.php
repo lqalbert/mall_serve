@@ -29,7 +29,8 @@ class AfterSale extends Model
         'check_status',
         'check_remark',
         'remark',
-        'refund'
+        'refund',
+        'entrepot_id'
     ];
     
     

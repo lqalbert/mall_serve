@@ -91,7 +91,9 @@ class EventServiceProvider extends ServiceProvider
         
         //售后
         'App\Events\AddAfterSale' => [
-            'App\Listeners\ChangeOrderAfterSaleListener'
+            'App\Listeners\ChangeOrderAfterSaleListener', //改售后状态
+            'App\Listeners\ChangeExchangeAfterSaleListener' //如果是换货则需要 换货锁定
+                
         ],
         
         'App\Events\ContactConflict' => [

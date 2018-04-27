@@ -70,5 +70,8 @@ class ChangeOrderAfterSaleListener
         $afterSale = $event->getAfterSale();
         OrderBasic::where('id', $afterSale->order_id)
         ->update(['after_sale_status'=>$this->statusMap[$afterSale->type][$afterSale->check_status]]);
+        if ($afterSale->type == 0) {
+            return false;
+        }
     }
 }

@@ -32,4 +32,9 @@ class AfterSaleGoods extends Model
         $map = ['完好','坏损'];
         return $map[$this->attributes['goods_status']];
     }
+    
+    public function isSetExchangeLock()
+    {
+        return $this->type == 2 ;
+    }
 }
