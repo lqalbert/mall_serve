@@ -424,7 +424,7 @@
         </div>
         <div id="scrollBox">
             <div class="customerService sbox">
-                <img src="/images/home/index/customerService.png" alt="">
+                <img src="/images/home/index/customerservice.png" alt="">
                 <div class="content">客服服务</div>
             </div>
             <div class="options sbox">

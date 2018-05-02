@@ -113,26 +113,26 @@
                                 	@endif
                                 </div>
                                 @endforeach
-                        </div>
+                        
                         </div>
                        	@endforeach
                        	</div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 attr-box">
-                            <span>颜色：</span>
-                            <div class="colorBox"></div>
-                            <div class="colorBox"></div>
-                            <div class="colorBox"></div>
-                            <div class="colorBox"></div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spec">
-                            <div>规格：</div>
-                            <div class="specNum">
-                                5件套
-                                <div class="cls">
-                                    <span class="glyphicon glyphicon-ok " aria-hidden="true"></span>
-                                </div>
-                            </div>
-                        </div>
+<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 attr-box"> -->
+<!--                             <span>颜色：</span> -->
+<!--                             <div class="colorBox"></div> -->
+<!--                             <div class="colorBox"></div> -->
+<!--                             <div class="colorBox"></div> -->
+<!--                             <div class="colorBox"></div> -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spec"> -->
+<!--                             <div>规格：</div> -->
+<!--                             <div class="specNum"> -->
+<!--                                 5件套 -->
+<!--                                 <div class="cls"> -->
+<!--                                     <span class="glyphicon glyphicon-ok " aria-hidden="true"></span> -->
+<!--                                 </div> -->
+<!--                             </div> -->
+<!--                         </div> -->
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigNum">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 left">
                                 <div class="lefN">
