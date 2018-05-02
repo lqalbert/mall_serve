@@ -13,7 +13,7 @@ class SaleController extends CommonController
         static::$bar['bar4']='sta';
         static::$bar['line4']='line';
         
-        $allgoods = Goods::all(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
+        $allgoods = Goods::active()->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
         return view('home/sale/index',['bar'=>static::$bar, 'allGoods'=>$allgoods]);
     }
     public  function stars(Request$request){
@@ -22,7 +22,7 @@ class SaleController extends CommonController
         $yt=$request->input('type','wakeup');
         static::$bar['bar6']='sta';
         static::$bar['line6']='line';
-        $allgoods = Goods::all(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
+        $allgoods = Goods::active()->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
         return view('home/sale/stars',['bar'=>static::$bar,'type'=>$type,'yt'=>$yt, 'allGoods'=>$allgoods]);
     }
 }
