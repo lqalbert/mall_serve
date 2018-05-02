@@ -585,6 +585,7 @@
     line-height: 30px;
     float: left;
     width: 100%;
+    text-align:center;
 }
 
 .newProduct .newC .right .imgBox .msg div{
