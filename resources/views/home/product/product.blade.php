@@ -7,9 +7,16 @@
         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 lle">
             <div class=" col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle">
                 <a style="color: #333" href="/">首页</a>&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                <a style="color: #666" href="{{ url('product/index') }}">全部产品</a>&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                    <a style="color: #666" href="{{ url('product/index') }}">青春系列</a>&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                <span style="color: #C3A46F">护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆品套装</span>
+                <a style="color: #666" href="{{ url('product/index') }}">全部产品</a>&nbsp;
+                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                @foreach($goods->category as $cat)
+                	@if($loop->last)
+                	<span style="color: #C3A46F">{{$cat->label}}</span>
+                	@else
+                	<a style="color: #666" href="{{ url('product/index') }}">{{$cat->label}}</a>&nbsp;
+                	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+                	@endif
+                @endforeach
             </div>
         </div>
     </div>
@@ -22,18 +29,11 @@
                             <a href="#" class="arrow-left"></a>
                             <a href="#" class="arrow-right"></a>
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/1.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/2.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/3.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/4.png" alt="">
-                                </div>
+                                 @foreach($goods->imgs as $img)
+                                    <div class="swiper-slide">
+                                        <img src="{{$img->url}}" alt="">
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -42,18 +42,14 @@
                         <a href="#" class="arrow-right"></a>
                         <div class="swiper-container second">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide active-nav">
-                                    <img src="/storage/goods/1.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/2.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/3.png" alt="">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="/storage/goods/4.png" alt="">
-                                </div>
+                                @foreach($goods->imgs as $img)
+                                    <div class="swiper-slide @if ($loop->first)
+                                    							active-nav
+                                							@endif">
+                                        <img src="{{$img->url}}" alt="">
+                                    </div>
+                                @endforeach
+                                
                             </div>
                         </div>
                     </div>
@@ -81,25 +77,47 @@
                 <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 proRig">
                     <div class="proRigBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆品套装
+                            {{$goods->goods_name}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigPrice">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="left col-lg-6 col-md-6 col-sm-4 col-xs-4">
-                                    原价： <span class="llPrice">￥399.00</span>
+                                    原价： <span class="llPrice">￥{{$goods->del_price}}</span>
                                 </div>
                                 <div class="right col-lg-6 col-md-6 col-sm-8 col-xs-8">
-                                    评价：5655 累积销量：1254
+                                    评价：{{$goods->comments}} 累积销量：{{$goods->sale_count}}
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                促销价： <span class="nowPrice">￥99.00</span><span class="nowMsg">新品限时促销</span>
+                                促销价： <span class="nowPrice">￥{{$goods->goods_price}}</span>
+                                @if($goods->new_goods == 1)
+                                <span class="nowMsg">新品限时促销</span>
+                                @endif()
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 优惠券： <span class="lowTickets">新人立减10元</span>
                             </div>
                         </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 colorBoxs">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 attr-box">
+                        @foreach($goods->groupAttr as $attr)
+                       	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 spec">
+                            <div>{{$attr->name}}：</div>
+                                @foreach($attr->attr as $item)
+                                
+                                	@if($item['addon_value'])
+                                	<div class="colorBox">
+									<img src="{{$item['addon_value']}}" width="76" height="76"/>
+                                	@else
+                                	<div class="specNum">
+                                	{{$item['value']}}
+                                	@endif
+                                </div>
+                                @endforeach
+                        </div>
+                        </div>
+                       	@endforeach
+                       	</div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 attr-box">
                             <span>颜色：</span>
                             <div class="colorBox"></div>
                             <div class="colorBox"></div>
@@ -125,7 +143,7 @@
                                     <div id="increase" class="increase">-</div>
                                     <div id="decrease" class="decrease">+</div>
                                 </div>
-                                <div class="repertory">库存：5562件</div>
+                                <div class="repertory">库存：{{$goods->sale_able_count}}件</div>
                             </div>
                         </div>
                         <div class="shareBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -160,132 +178,29 @@
             <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lls">
                 <div class="contentLeft col-lg-3 col-md-4 col-sm-5 col-xs-12">
                     <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">相关推荐</div>
-                    <a href="{{URL('product/product')}}">
+                    @foreach($recoms as $reItem)
+                    <a href="{{URL('product', ['id'=>$reItem->id])}}">
                         <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend1.png" alt="">
+                                    <img src="{{$reItem->cover_url}}" alt="">
                                 </div>
                                 <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
+                                    {{$reItem->goods_name}}
                                 </div>
                                 <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
+                                        <span class="price">￥{{$reItem->goods_price}}</span>
                                     </div>
                                     <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
+                                        {{$reItem->sale_count}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a href="{{URL('product/product')}}">
-                        <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend2.png" alt="">
-                                </div>
-                                <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
-                                </div>
-                                <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
-                                    </div>
-                                    <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{URL('product/product')}}">
-                        <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend3.png" alt="">
-                                </div>
-                                <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
-                                </div>
-                                <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
-                                    </div>
-                                    <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{URL('product/product')}}">
-                        <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend4.png" alt="">
-                                </div>
-                                <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
-                                </div>
-                                <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
-                                    </div>
-                                    <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{URL('product/product')}}">
-                        <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend5.png" alt="">
-                                </div>
-                                <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
-                                </div>
-                                <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
-                                    </div>
-                                    <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="{{URL('product/product')}}">
-                        <div class="lists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="listBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="imgs col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <img src="/images/home/product/recommend6.png" alt="">
-                                </div>
-                                <div class="listName col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    巨补水明星豪华6件大餐！收缩毛孔婴儿肌
-                                </div>
-                                <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥99.00</span>
-                                    </div>
-                                    <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-                                        36
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
                 <div class="contentRight col-lg-9 col-md-8 col-sm-7 col-xs-12">
                     <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -295,34 +210,12 @@
                         </div>
                         <div class="tabs">
                             累积评价
-                            <span class="num">1825</span>
+                            <span class="num">{{$goods->comments}}</span>
                         </div>
                     </div>
                     <div class="contentDetail col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail1.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail2.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail3.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail4.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail5.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail6.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail7.png" alt="">
-                        </div>
-                        <div class="imgBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/product/detail8.png" alt="">
-                        </div>
+                    {!! $goods->description !!}
+                        
                     </div>
                 </div>
             </div>

@@ -160,7 +160,7 @@ Route::post('/person/password_do', 'Home\PersonController@password_do')->name('p
 Route::post('/person/personChange', 'Home\PersonController@personChange')->name('person/personChange');
 Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
-
+Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
 
 // Auth::routes();
 

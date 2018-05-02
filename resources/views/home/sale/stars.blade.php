@@ -91,146 +91,56 @@
                     </a>
                 </div>
             </div>
+            
+            @foreach($allGoods as $goods)
             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
+                    <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                         <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
+                            <img src="{{$goods->cover_url}}" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
+                            {{$goods->goods_name}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
+                            <span class="price">￥{{$goods->goods_price}}</span>
+                             @if(!empty($goods->new_goods))
                             <span class="saleN">新品</span>
+                            @endif
+                            @if(!empty($goods->hot_goods))
                             <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
+                        	@endif
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
-                    <a href="{{URL('product/product')}}">
-                        <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="/images/home/sale/mxcp.jpg" alt="">
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥119</span>
-                            <span class="saleN">新品</span>
-                            <span class="saleN saleB">畅销</span>
-                            <span class="shop">
-                            <img src="/images/home/sale/shopping.jpg" alt="">
-                        </span>
-                        </div>
-                    </a>
-                </div>
-            </div>
+        	@endforeach
+           
+           
+            
+            
+<!--             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 proLists"> -->
+<!--                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList"> -->
+<!--                     <a href="{{URL('product/product')}}"> -->
+<!--                         <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+<!--                             <img src="/images/home/sale/mxcp.jpg" alt=""> -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit"> -->
+<!--                             护肤品套装面部护理保湿锁水爽肤水保湿霜乳液化妆水 -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox"> -->
+<!--                             <span class="price">￥119</span> -->
+<!--                             <span class="saleN">新品</span> -->
+<!--                             <span class="saleN saleB">畅销</span> -->
+<!--                             <span class="shop"> -->
+<!--                             <img src="/images/home/sale/shopping.jpg" alt=""> -->
+<!--                         </span> -->
+<!--                         </div> -->
+<!--                     </a> -->
+<!--                 </div> -->
+<!--             </div> -->
+            
+            
         </div>
     </div>
 @endsection

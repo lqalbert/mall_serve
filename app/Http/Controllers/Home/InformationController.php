@@ -20,7 +20,8 @@ class InformationController extends CommonController
         static::$bar['bar6']='sta';
         static::$bar['line6']='line';
         $articles = Article::orderBy('id', 'desc')->paginate(15);
-        return view('home/information/news',['bar'=>static::$bar, 'articles'=>$articles]);
+        $articles2 = Article::orderBy('id', 'desc')->limit(10)->get();
+        return view('home/information/news',['bar'=>static::$bar, 'articles'=>$articles, 'articles2'=>$articles2]);
     }
     
     public function detail($id)
