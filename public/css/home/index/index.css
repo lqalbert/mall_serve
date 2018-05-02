@@ -577,23 +577,18 @@
 
 .newProduct .newC .right .imgBox img{
     display: block;
-    width: auto;
-    max-height: 140px;
+    max-width: 100%;
 }
 
 .newProduct .newC .right .imgBox .msg{
     line-height: 30px;
     float: left;
     width: 100%;
-    text-align:center;
 }
 
 .newProduct .newC .right .imgBox .msg div{
     width: 100%;
     text-align: center;
-    height:30px;
-    overflow:hidden;
-    text-overflow:eclipse;
 }
 
 .newProduct .newC .right .imgBox .msg .price{
