@@ -158,6 +158,9 @@ Route::get('/person/orderManage', 'Home\PersonController@orderManage')->name('pe
 Route::get('/person/password', 'Home\PersonController@password')->name('person/password');
 Route::post('/person/password_do', 'Home\PersonController@password_do')->name('person/password_do');
 Route::post('/person/personChange', 'Home\PersonController@personChange')->name('person/personChange');
+Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
+Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
+
 
 // Auth::routes();
 
