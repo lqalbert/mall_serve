@@ -577,7 +577,8 @@
 
 .newProduct .newC .right .imgBox img{
     display: block;
-    max-width: 100%;
+    width: auto;
+    max-height: 140px;
 }
 
 .newProduct .newC .right .imgBox .msg{
