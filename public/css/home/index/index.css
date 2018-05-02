@@ -592,6 +592,7 @@
     text-align: center;
     height: 30px;
     text-overflow:ellipsis;
+    overflow:hidden;
 }
 
 .newProduct .newC .right .imgBox .msg .price{
