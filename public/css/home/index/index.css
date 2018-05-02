@@ -590,6 +590,8 @@
 .newProduct .newC .right .imgBox .msg div{
     width: 100%;
     text-align: center;
+    height: 30px;
+    text-overflow:ellipsis;
 }
 
 .newProduct .newC .right .imgBox .msg .price{
