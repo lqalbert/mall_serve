@@ -97,7 +97,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proList">
                     <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                         <div class="imgB col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <img src="{{$goods->cover_url or ''}}" alt="">
+                            <img src="{{$goods->cover_url or ''}}" height="244" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
                             {{$goods->goods_name}}
