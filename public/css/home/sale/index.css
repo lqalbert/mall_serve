@@ -39,7 +39,10 @@
 }
 
 #saleBest .saleLists .saleList .mainImg{
-    width: 100%;
+    1width: 100%;
+    width: 240px;
+    height: 260px;
+    
 }
 
 #saleBest .saleLists .saleList .listTitle{
