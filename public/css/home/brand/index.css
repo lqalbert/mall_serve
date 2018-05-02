@@ -38,13 +38,14 @@
 }
 
 #brand .left #leftNav ul li.active a .icons{
-    color: #bf9d63;
+    color: #DF385F;
 }
 
 #brand .left #leftNav ul li.active a{
-    box-shadow: 0 0 3px #bf9d63;
+    box-shadow: 0 0 3px #DF385F;
     background: #fff;
     border-radius: 0;
+    color: #DF385F;
 }
 
 #brand .right{

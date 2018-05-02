@@ -1,13 +1,13 @@
 *{
     padding: 0;
     margin: 0;
-    font-family: 寰蒋闆呴粦;
+    font-family: 微软雅黑;
 }
 
 .headBar{
     max-height: 123px;
     padding: 0;
-    background: #45794B;
+    background: #DF385F;
 }
 
 .headBar div{
@@ -28,7 +28,7 @@
     background-size: 100% 100%;*/
 }
 
-/*---------------------瀵艰埅鏍�---------------------*/
+/*---------------------导航栏---------------------*/
 #navbar{
     color: #777;
     background: rgba(255,255,255,0.9);
@@ -45,11 +45,11 @@
     font-size: 16px;
 }
 
-#ul .m-drop{
+/*#ul .m-drop{
     border:none;
     box-shadow: none;
     background: rgba(255,255,255,1);
-}
+}*/
 
 #ul{
 }
@@ -60,13 +60,13 @@
 }
 
 #ul li a:hover{
-    color: #C3A46F;
+    color: #fff;
     border-radius: 5px;
     background: none;
 }
 
 #ul li a.sta{
-    color: #C3A46F;
+    color: #fff;
     border-radius: 5px;
 }
 
@@ -76,7 +76,7 @@
 }
 
 #ul a.navC:hover{
-    color: #C3A46F;
+    color: #fff;
     border-radius: 5px;
 }
 
@@ -86,7 +86,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: #999;
+    background: #fff;
 }
 
 #ul li a:hover div.line{
@@ -103,7 +103,6 @@
 
 
 #navBut {
-    background: #fff;
     margin-top: 13px;
     margin-right: 15px;
 }
@@ -140,13 +139,13 @@
 #searchB{
     width: 100%;
     height: 40px;/*2F9F6D*/
-    border:1px solid #bf9d63;
+    border: none;
+    border-bottom: 2px solid #666;
     outline: none;
     padding: 0 50px 0 15px;
-    border-radius: 5px;
 }
 #searchB:focus{
-    border:1px solid #666;
+    border-bottom:2px solid #DF385F;
 }
 
 #souI{
@@ -166,7 +165,7 @@
     color: #2F9F6D;
 }
 
-/*--------------------------------鐧诲綍璐墿杞�--------------------*/
+/*--------------------------------登录购物车--------------------*/
 
 .personBar{
     height: 68px;
@@ -193,19 +192,26 @@
 }
 #loginBar a{
     text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 #loginBar .barL{
     height: 40px;
 }
-#loginBar .barL span{
-    display: block;
-    line-height: 40px;
-    font-size: 20px;
-    text-align: center;
-    color: #666;
+#loginBar div {
+    position: relative;
 }
-#loginBar .barL span:hover{
-    box-shadow: 0 0 3px #666;
+#loginBar div img{
+    cursor: pointer;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin: 0 0 0 -20px;
+}
+#loginBar div img:hover{
+    box-shadow: 0 0 3px #DF385F;
 }
 
 #loginBar #buyNumber{
@@ -226,7 +232,7 @@
     right: 100px;
 }
 
-/*-----------------------------璐墿杞�------------------*/
+/*-----------------------------购物车------------------*/
 
 #buyCar{
     display: none;
@@ -353,7 +359,7 @@
     color: #fff;
 }
 
-/*--------------------------涓汉涓績-------------------------*/
+/*--------------------------个人中心-------------------------*/
 
 #loginBar #myCenter{
     display: none;
@@ -486,13 +492,13 @@
 }
 
 /*-------------------------------------------*/
-/*-------------------------鍐呭鍖哄煙---------------------*/
+/*-------------------------内容区域---------------------*/
 
 #content{
     padding: 0;
 }
 
-/*------------------鏂板搧棣栧彂------------------*/
+/*------------------新品首发------------------*/
 
 .newProduct{
     margin-top: 40px;
@@ -571,10 +577,7 @@
 
 .newProduct .newC .right .imgBox img{
     display: block;
-    margin: auto;
-    width: auto;
     max-width: 100%;
-    height: 140px;
 }
 
 .newProduct .newC .right .imgBox .msg{
@@ -586,11 +589,6 @@
 .newProduct .newC .right .imgBox .msg div{
     width: 100%;
     text-align: center;
-    height: 30px;
-    line-height: 30px;
-    text-overflow:ellipsis;
-    /*white-space: nowrap;*/
-    overflow:hidden;
 }
 
 .newProduct .newC .right .imgBox .msg .price{
@@ -630,9 +628,10 @@
 }
 
 .navBottom .title{
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .navBottom .introduction{
@@ -642,8 +641,13 @@
 
 .navBottom .navBot {
     margin-top: 50px;
-    border-top: 4px solid #666;
+    border-top: 2px solid #DF385F;
     padding: 0 15px 0 15px;
+}
+
+.navBottom .navBot div div a{
+    text-decoration: none;
+    color: #333;
 }
 
 
@@ -655,7 +659,7 @@
     color: #fff;
     line-height: 50px;
     text-align: center;
-    background: #333;
+    background: #F5C3CF;
 }
 
 .productBanner{
@@ -663,24 +667,63 @@
     margin-top: -40px;
 }
 
-#scrollTop{
-    position: fixed;
-    line-height: 60px;
-    text-align: center;
-    bottom: 10%;
-    right: 5%;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    color: #fff;
-    background: #bf9d63;
-    cursor: pointer;
-    font-size: 16px;
-    display: none;
-    z-index: 99999;
+#scrollBox{
+    position:fixed;
+    width: 50px;
+    height: auto;
+    top: 45%;
+    right: 6%;
+    background: #DF385F;
+    border-radius: 5px;
 }
 
-/*-----------------------鎵嬫満鏍峰紡璋冩暣----------------------*/
+#scrollBox .sbox{
+    width: 40px;
+    height: auto;
+    margin: 5px 5px;
+    border-bottom: 1px solid #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+#scrollBox .sbox .content{
+    width: 80px;
+    position: absolute;
+    left: -80px;
+    top: 0;
+    height: 40px;
+    background: #DF385F;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    display: none;
+}
+
+#scrollBox .sbox:hover > .content{
+    display: block;
+}
+
+#scrollBox div:last-child{
+    border-bottom: none;
+}
+
+#scrollBox div img{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+#qrcode{
+    position: absolute;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    top: -10px;
+    background: #fff;
+    box-shadow: 0 0 3px #666;
+}
+
+/*-----------------------手机样式调整----------------------*/
 
 @media (max-width: 767px) {
     .headBar{

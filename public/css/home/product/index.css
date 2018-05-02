@@ -26,7 +26,7 @@
 }
 
 #product .productTitle a:nth-child(3){
-    color: #bf9d63;
+    color: #DF385F;
 }
 /*----------------------productBar----------------*/
 
@@ -57,12 +57,13 @@
 }
 
 #product .productBar .btnBox div:hover{
-    box-shadow: 0 0 3px #bf9d63;
+    box-shadow: 0 0 3px #DF385F;
+    border: none;
 }
 
 #product .productBar .btnBox div.actionBar{
-    background: #ECC27A;
-    color: #999;
+    background: #DF385F;
+    color: #fff;
 }
 
 /*----------------productList----------------------*/
@@ -80,6 +81,10 @@
     background: #fff;
     margin-bottom: 15px;
     cursor: pointer;
+}
+
+#product .productLists .productList:hover{
+    box-shadow: 0 0 3px #DF385F;
 }
 
 #product .productLists .productList img{
@@ -112,6 +117,7 @@
 
 #product .productLists .productList .msgPro .price span{
     margin-right: 5px;
+    color: #DF385F;
 }
 
 #product .productLists .productList .msgPro .price .high{
