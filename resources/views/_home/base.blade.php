@@ -28,22 +28,16 @@
                         <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 loginActionBars">
                             <div role="presentation" class="col-lg-6 col-md-6 col-sm-6 searchBar">
                                 <div id="searchBar">
-                                    <input id="searchB" type="text" placeholder="新品限时特卖">
+                                    <input id="searchB" type="text" placeholder="输入搜索">
                                     <span id="souI" class="iconfonts icon-sousuo"></span>
                                 </div>
                             </div>
                             <!-- 登录 -->
                             <div id="loginBar" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 barL">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 barL">
                                     <a href="{{session('isLogin')}}">
-                                        <img id="countP" class="{{session('login')}}" src="/images/home/index/login.jpg" alt="">
+                                        <span id="countP" class="iconfonts icon-person {{session('login')}}"></span>
                                     </a>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 collection">
-                                    <img src="/images/home/index/collect.jpg" alt="">
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 buyCar">
-                                    <img src="/images/home/index/shopping.jpg" alt="">
                                 </div>
 
                                 {{--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 barL">
@@ -52,6 +46,7 @@
                                     </a>
                                     <div id="buyNumber" class="buyNumber">0</div>
                                 </div>--}}
+
                                 <div id="myCenter" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userImg">
                                         <img src="{{session('head_img')}}" alt="">
@@ -101,6 +96,7 @@
                                     </a>
                                     <div class="tangle"></div>
                                 </div>
+
                             </div>
                             <!-- / 登录  -->
                             <!-- 购物车 -->
@@ -213,7 +209,7 @@
                                         <div class="{{$bar['line1']}}"></div>
                                     </a>
                                 </li>
-                                {{--<li role="presentation">
+                                <li role="presentation">
                                     <a class="dropdown-toggle {{$bar['bar3']}}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                         产品系列
                                         <span class="caret"></span>
@@ -223,7 +219,7 @@
                                         <li><a href="{{URL('product/index?type=wakeup')}}">焕肤紧致系列</a></li>
                                         <li><a href="{{URL('product/index?type=youth')}}">青春凝时冻龄系列</a></li>
                                     </ul>
-                                </li>--}}
+                                </li>
                                 <li role="presentation">
                                     <a href="{{URL('product/index')}}" class="{{$bar['bar2']}}">
                                         全部产品
@@ -231,17 +227,17 @@
                                     </a>
                                 </li>
                                 <li role="presentation">
-                                    <a href="{{URL('sale/index')}}" class="{{$bar['bar4']}}">
-                                        畅销榜单
+                                    <a href="{{URL('brand/index')}}" class="{{$bar['bar4']}}">
+                                        关于品牌
                                         <div class="{{$bar['line4']}}"></div>
                                     </a>
                                 </li>
-                                {{--<li role="presentation"><a href="{{URL('information/index')}}" class="{{$bar['bar5']}}">
+                                <li role="presentation"><a href="{{URL('information/index')}}" class="{{$bar['bar5']}}">
                                         肌肤诊断
                                         <div class="{{$bar['line5']}}"></div>
-                                    </a></li>--}}
-                                <li role="presentation"><a href="{{URL('sale/stars')}}" class="{{$bar['bar6']}}">
-                                        明星产品
+                                    </a></li>
+                                <li role="presentation"><a href="{{URL('information/news')}}" class="{{$bar['bar6']}}">
+                                        最新资讯
                                         <div class="{{$bar['line6']}}"></div>
                                     </a></li>
                                 <li role="presentation"><a href="{{URL('connection/index')}}" class="{{$bar['bar7']}}">
@@ -267,36 +263,23 @@
             <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 navBot">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">关于普拉她</div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{URL('brand/index')}}">
-                            品牌故事
-                        </a>
-                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">品牌故事</div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">公司信息</div>
                 </div>
-
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">美丽帮助</div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{URL('information/news')}}">
-                            美丽资讯
-                        </a>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{URL('connection/technology')}}">
-                            技术咨询
-                        </a>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">0371-888888</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">美丽资讯</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">技术资讯</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">客服电话：888-888888</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">QQ：123456</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">微信：</div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">客户服务</div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <a href="{{URL('question/index')}}">
-                            常见问题
-                        </a>
-                    </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">退换货问题</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">购买问题</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">我的订单</div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">我的美丽顾问</div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">联系我们</div>
@@ -306,26 +289,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：京P1235645465</div>
         </div>
-        <div id="scrollBox">
-            <div class="customerService sbox">
-                <img src="/images/home/index/customerService.png" alt="">
-                <div class="content">客服服务</div>
-            </div>
-            <div class="options sbox">
-                <img src="/images/home/index/option.png" alt="">
-                <div class="content">意见反馈</div>
-            </div>
-            <div class="qrcode sbox">
-                <img src="/images/home/index/qrcode.png" alt="">
-                <div class="content">
-                    <div id="qrcode"></div>
-                </div>
-            </div>
-            <div id="scrollTop" class="scrollTop sbox">
-                <img src="/images/home/index/top.png" alt="">
-                <div class="content">返回顶部</div>
-            </div>
-        </div>
+        <div id="scrollTop">顶部</div>
     </div>
 </div>
 
@@ -357,13 +321,13 @@
         }
         /*---------------*/
         var flg=true
-        /*$('#navBut').on('touchend',function () {
+        $('#navBut').on('touchend',function () {
             $('#ul li a').addClass('navC')
         })
         $('#ul li a').on('click',function () {
             $('#ul li a').removeClass('sta')
             $(this).addClass('sta')
-        })*/
+        })
         /*---------------菜单鼠标事件*/
         $('#ul li a').hover(function () {
             $('#ul li a div').removeClass('line')
@@ -421,6 +385,11 @@
                 $('.personBar').fadeOut('slow');
             }else{
                 $('.personBar').fadeIn('fast')
+            }
+            if(top>=500){
+                $('#scrollTop').fadeIn('fast')
+            }else{
+                $('#scrollTop').fadeOut('slow')
             }
         });
         $('#scrollTop').on('click',function () {

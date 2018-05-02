@@ -50,20 +50,18 @@
 }
 
 #product .productBar .btnBox div{
-    border: 1px solid #ccc;
-    border-radius: 5px;
     cursor: pointer;
     padding: 0;
 }
 
 #product .productBar .btnBox div:hover{
-    box-shadow: 0 0 3px #DF385F;
-    border: none;
+    color: #DF385F;
+    border-bottom: 2px solid #DF385F;
 }
 
 #product .productBar .btnBox div.actionBar{
-    background: #DF385F;
-    color: #fff;
+    color: #DF385F;
+    border-bottom: 2px solid #DF385F;
 }
 
 /*----------------productList----------------------*/
@@ -74,6 +72,7 @@
 
 #product .productLists .productBox{
     padding: 0 10px 0 10px;
+
 }
 
 #product .productLists .productList{
@@ -81,10 +80,13 @@
     background: #fff;
     margin-bottom: 15px;
     cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+
 }
 
 #product .productLists .productList:hover{
-    box-shadow: 0 0 3px #DF385F;
+    border: 1px solid #FF0EA7;
 }
 
 #product .productLists .productList img{
@@ -117,7 +119,7 @@
 
 #product .productLists .productList .msgPro .price span{
     margin-right: 5px;
-    color: #DF385F;
+    color: #FF0EA7;
 }
 
 #product .productLists .productList .msgPro .price .high{

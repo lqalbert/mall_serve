@@ -206,17 +206,17 @@
                             <input type="number" name="contact_phone" class="form-control" id="inputSuccess2" placeholder="手机号">
                         </div>
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userPhone">
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                            <label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12">验证码：</label>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 codeBox">
-                            <input type="text" name="code" class="form-control" placeholder="验证码">
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 imgBox">
-                            <!--                         <img src="" alt=""> -->
-                        </div>
-                    </div>
+<!--                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userPhone"> -->
+<!--                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"> -->
+<!--                             <label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12">验证码：</label> -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 codeBox"> -->
+<!--                             <input type="text" name="code" class="form-control" placeholder="验证码"> -->
+<!--                         </div> -->
+<!--                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 imgBox"> -->
+                           
+<!--                         </div> -->
+<!--                     </div> -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 butBox">
                         <div class="but" id="but">提交</div>
                     </div>
