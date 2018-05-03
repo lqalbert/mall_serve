@@ -29,7 +29,9 @@ class InformationController extends CommonController
         static::$bar['bar6']='sta';
         static::$bar['line6']='line';
         $article = Article::findOrFail($id);
-        $articles = Article::orderBy('id', 'desc')->paginate(15);
-        return view('home/information/newshow', ['article'=>$article, 'articles'=>$articles,'bar'=>static::$bar,]);
+        $articles2 = Article::orderBy('id', 'desc')->limit(10)->get();
+        $prev = Article::where('id','<',$id)->select(['id','title'])->first();
+        $next = Article::where('id','>',$id)->select(['id','title'])->first();
+        return view('home/information/newshow', ['article'=>$article, 'articles'=>$articles2, 'bar'=>static::$bar, 'prev'=>$prev, 'next'=>$next]);
     }
 }
