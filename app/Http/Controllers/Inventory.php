@@ -156,4 +156,9 @@ class Inventory
         $this->model->exchangeLock($entrepot_id, $goodsList);
     }
     
+    public function exchangeUnLock($entrepot_id, $goodsList)
+    {
+        $this->model->exchangeUnLock($entrepot_id, $goodsList);
+    }
+    
 }

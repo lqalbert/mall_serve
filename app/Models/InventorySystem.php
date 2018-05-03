@@ -300,5 +300,26 @@ class InventorySystem extends Model
         return $affectedRows;
     }
     
+    public function exchangeUnLock($entrepot_id, $goods)
+    {
+        if (!is_array($goods)) {
+            $goods = $goods->toArray();
+        }
+        
+        $affectedRows = 0;
+        DB::beginTransaction();
+        try {
+            $affectedRows = DB::update('update '.
+                $this->table.
+                ' set    exchange_lock = exchange_lock-? where entrepot_id = ? and sku_sn= ? ',
+                [$goods['goods_num'], $entrepot_id, $goods['sku_sn']]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new Exception('inventory_system update error: exchange unLock ');
+        }
+        return $affectedRows;
+    }
+    
     
 }
