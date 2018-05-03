@@ -44,7 +44,7 @@ return [
 		],
 		//7
 		[
-				'text'=>'保证金',
+				'text'=>'充值管理',
 				'icon'=>null,
 				'index'=>'Deposit'
 		],

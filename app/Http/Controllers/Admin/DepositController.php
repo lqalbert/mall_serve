@@ -22,8 +22,14 @@ class DepositController extends Controller
     {
         $where=[];
     	if($request->has('department_id')){
-        $where[]=['department_id','=',$request->input('department_id')];
+            $where[]=['department_id','=',$request->input('department_id')];
         }
+        
+        if ($request->has('start') && $request->has('end')) {
+            $where[]=['charge_time','>=',$request->input('start')];
+            $where[]=['charge_time','<=',$request->input('end')];
+        }
+        
 //         if($request->has('group_id')){
 //         $where[]=['group_id','=',$request->input('group_id')];
 //         }
@@ -112,7 +118,13 @@ class DepositController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $re = Deposit::where('id', $id)->update($request->all());
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
 
     /**

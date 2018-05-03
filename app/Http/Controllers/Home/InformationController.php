@@ -30,6 +30,6 @@ class InformationController extends CommonController
         static::$bar['line6']='line';
         $article = Article::findOrFail($id);
         $articles = Article::orderBy('id', 'desc')->paginate(15);
-        return view('home/information/detail', ['article'=>$article, 'articles'=>$articles,'bar'=>static::$bar,]);
+        return view('home/information/newshow', ['article'=>$article, 'articles'=>$articles,'bar'=>static::$bar,]);
     }
 }
