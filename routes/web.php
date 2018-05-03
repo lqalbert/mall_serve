@@ -148,6 +148,7 @@ Route::get('/information/index', 'Home\InformationController@index')->name('info
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
+Route::get('/connection/technology', 'Home\ConnectionController@technology')->name('connection/technology');
 Route::get('/car/index', 'Home\CarController@index')->name('car/index');
 Route::post('/login/loginIn','Home\LoginController@loginIn')->name('login/loginIn');
 Route::get('/person/index', 'Home\PersonController@index')->name('person/index');
