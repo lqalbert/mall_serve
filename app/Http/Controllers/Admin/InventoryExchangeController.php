@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\InventoryExchange;
+use App\Events\ProductExchange;
 
 class InventoryExchangeController extends Controller
 {
@@ -63,8 +64,13 @@ class InventoryExchangeController extends Controller
      */
     public function store(Request $request)
     {
-        $result = InventoryExchange::create($request->all());
+        $data = $request->all();
+        $result = InventoryExchange::create($data);
         if ($result) {
+            //after_goods_num
+            //sku_sn
+            //entrepot_id
+            event(new ProductExchange($data['sku_sn'], $data['after_goods_num'], $data['entrepot_id']));
             $this->success($result);
         }else{
             $this->error($result);
