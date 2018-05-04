@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>商城</title>
+    <title>{{ config('app.name', '商城') }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="/32.ico" />
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/swiper.min.css"/>
     <link rel="stylesheet" href="/css/home/index/index.css"/>
@@ -34,11 +35,11 @@
                             </div>
                             <!-- 登录 -->
                             <div id="loginBar" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 barL">
-                                    <a href="{{session('isLogin')}}">
-                                        <img id="countP" class="{{session('login')}}" src="/images/home/index/login.jpg" alt="">
-                                    </a>
-                                </div>
+<!--                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 barL"> -->
+<!--                                     <a href="{{session('isLogin')}}"> -->
+<!--                                         <img id="countP" class="{{session('login')}}" src="/images/home/index/login.jpg" alt=""> -->
+<!--                                     </a> -->
+<!--                                 </div> -->
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 collection">
                                     <img src="/images/home/index/collect.jpg" alt="">
                                 </div>
