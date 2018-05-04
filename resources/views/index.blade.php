@@ -420,7 +420,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：<a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备18050024</a></div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：粤ICP备18050024</div>
         </div>
         <div id="scrollBox">
             <div class="customerService sbox">
