@@ -32,11 +32,11 @@
                             </div>
                             <!-- 登录 -->
                             <div id="loginBar" class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 barL">
-                                    <a href="{{session('isLogin')}}">
-                                        <img id="countP" class="{{session('login')}}" src="/images/home/index/login.jpg" alt="">
-                                    </a>
-                                </div>
+<!--                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 barL"> -->
+<!--                                     <a href="{{session('isLogin')}}"> -->
+<!--                                         <img id="countP" class="{{session('login')}}" src="/images/home/index/login.jpg" alt=""> -->
+<!--                                     </a> -->
+<!--                                 </div> -->
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 collection">
                                     <img src="/images/home/index/collect.jpg" alt="">
                                 </div>
