@@ -57,6 +57,9 @@
     line-height: 50px;
     font-size: 20px;
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 #stars .productBanners .left .lefBox .minTit{
@@ -89,6 +92,7 @@
 
 #stars .productBanners .right img{
     width: 100%;
+    height: 100%;
 }
 
 #stars .proLists:nth-child(3n-2){
@@ -167,4 +171,41 @@
 #stars .proLists .proList .priceBox .shop{
     float: right;
     cursor: pointer;
+}
+
+@media (min-width: 1200px) {
+    #stars .productBanners .left .lefBox{
+        height: 350px;
+    }
+    #stars .productBanners .right .imgBox{
+        height: 350px;
+    }
+    #stars .productBanners .left .lefBox .lefCon{
+        max-height: 225px;
+        overflow: hidden;
+    }
+}
+@media (min-width: 992px)and (max-width: 1199px) {
+    #stars .productBanners .left .lefBox{
+        height: 300px;
+    }
+    #stars .productBanners .right .imgBox{
+        height: 300px;
+    }
+    #stars .productBanners .left .lefBox .lefCon{
+        max-height: 175px;
+        overflow: hidden;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+    #stars .productBanners .left .lefBox{
+        height: 250px;
+    }
+    #stars .productBanners .right .imgBox{
+        height: 250px;
+    }
+    #stars .productBanners .left .lefBox .lefCon{
+        max-height: 125px;
+        overflow: hidden;
+    }
 }

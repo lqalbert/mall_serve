@@ -563,6 +563,8 @@
 
 .newProduct .newC .right .imgBox a{
     color: #333;
+    display: block;
+    width: 100%;
 }
 
 .newProduct .newC .right .imgBox {
@@ -577,9 +579,10 @@
 }
 
 .newProduct .newC .right .imgBox img{
-    1display: block;
+    display: block;
     max-width: 100%;
     max-height: 140px;
+    margin: 0 auto;
 }
 
 .newProduct .newC .right .imgBox .msg{
@@ -592,8 +595,13 @@
     width: 100%;
     text-align: center;
     height: 30px;
-    text-overflow:ellipsis;
-    overflow:hidden;
+}
+
+.newProduct .newC .right .imgBox .msg .goodsName{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px 0 10px;
 }
 
 .newProduct .newC .right .imgBox .msg .price{

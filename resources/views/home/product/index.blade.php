@@ -5,14 +5,14 @@
 @endsection
 
 @section('content')
-    <div id="product" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 productContent">
-        <div class="productTitle col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+    <div id="product" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productContent">
+        <div class="productTitle col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <a href="{{URL('/')}}">首页</a> >
             <a href="{{URL('product/index')}}">全部产品</a> >
             <a href="#">{{$name}}</a>
         </div>
-        <div class="productBar col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 pls">
+        <div class="productBar col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 pls">
                 {{--<div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
                     <a href="{{URL('product/index?type=all')}}">
                         <div class="{{$type['all']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="productLists col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+        <div class="productLists col-lg-12 col-md-12 col-sm-12 col-xs-12">
            @foreach($goods as $item)
            <a href="{{URL('product', ['id'=>$item->id])}}">
                 <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">

@@ -257,14 +257,14 @@
     </div>
 </nav>
 
-<div class="container-fluid indexContent">
+<div class="container container-fluid indexContent">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productBanner">
             <img src="/images/home/product/banner.png" style="width: 100%;" alt="">
         </div>
         @yield('content')
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navBottom">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 navBot">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navBot">
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">关于普拉她</div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -304,7 +304,6 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">公众号：</div>
                 </div>
             </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：京P1235645465</div>
         </div>
         <div id="scrollBox">
             <div class="customerService sbox">
@@ -325,6 +324,13 @@
                 <img src="/images/home/index/top.png" alt="">
                 <div class="content">返回顶部</div>
             </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navBottom">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：京P1235645465</div>
         </div>
     </div>
 </div>
