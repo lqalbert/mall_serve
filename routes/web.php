@@ -11,14 +11,14 @@
 |
 */
 
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
+Route::group([ 'namespace' => 'Admin','domain' => 'www.pulata.com.cn'], function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
     Route::post('/login', 'LoginController@login');
     Route::post('/logout', 'LoginController@out');
 });
 
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.basic'], function(){
+    Route::group(['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => 'www.pulata.com.cn'], function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
