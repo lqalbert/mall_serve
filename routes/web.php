@@ -11,14 +11,14 @@
 |
 */
 
-Route::group([ 'namespace' => 'Admin','domain' => env('admin_domain', 'admin.mall')], function(){
+Route::group([ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')], function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
     Route::post('/login', 'LoginController@login');
     Route::post('/logout', 'LoginController@out');
 });
 
-    Route::group(['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('admin_domain', 'admin.mall') ], function(){
+    Route::group(['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ], function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
