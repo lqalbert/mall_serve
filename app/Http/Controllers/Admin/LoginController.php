@@ -15,6 +15,9 @@ class LoginController extends Controller
         
         if (Auth::attempt(['account'=>$request->input('account'), 'password'=>$request->input('password')])) {
             $user = Auth::user();
+            if($user->status == '-1'){
+                return $this->error(null, '此账号已被禁用');
+            }
             $user->roles = $user->roles()->withoutGlobalScope('hide')->get();
             $user->department = $user->department()->get();
             $user->group = $user->group()->get();

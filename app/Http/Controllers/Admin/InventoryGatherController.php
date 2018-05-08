@@ -24,7 +24,8 @@ class InventoryGatherController extends Controller
             'sku_sn',
            
             'entrepot_count',
-            'saleable_count'
+            'saleable_count',
+            'entry_at',
         ];
         
         $model = new InventorySystem();
@@ -135,16 +136,17 @@ class InventoryGatherController extends Controller
             'goods_name',
             'sku_sn',
             'entrepot_count',
+            'entry_at',
         ];
         
         $model = new InventorySystem();
         
         if ($request->has('entrepot_id')) {
-            $model->where('entrepot_id', $request->input('entrepot_id'));
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
         }
         
         if ($request->has('goods_name')) {
-            $model->where('goods_name', 'like', $request->input('goods_name'));
+            $model = $model->where('goods_name', 'like', $request->input('goods_name')."%");
         }
         
         if ($request->has('cate_kind_id')) {
@@ -202,7 +204,7 @@ class InventoryGatherController extends Controller
             $goods['entrepot_in'] = $model->whereHas('produceEntry', function($query) use($entrepot_id) {
                 $query->where('entrepot_id', $entrepot_id);
             })->sum('num');
-            
+
             //退货入库数量
             $returnWhere = [
                 ['entrepot_id', $goods['entrepot_id']],

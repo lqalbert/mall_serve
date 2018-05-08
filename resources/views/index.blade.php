@@ -423,26 +423,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navNum">备案号：粤ICP备18050024</div>
         </div>
-        <div id="scrollBox">
-            <div class="customerService sbox">
-                <img src="/images/home/index/customerservice.png" alt="">
-                <div class="content">客服服务</div>
-            </div>
-            <div class="options sbox">
-                <img src="/images/home/index/option.png" alt="">
-                <div class="content">意见反馈</div>
-            </div>
-            <div class="qrcode sbox">
-                <img src="/images/home/index/qrcode.png" alt="">
-                <div class="content">
-                    <div id="qrcode"></div>
-                </div>
-            </div>
-            <div id="scrollTop" class="scrollTop sbox">
-                <img src="/images/home/index/top.png" alt="">
-                <div class="content">返回顶部</div>
-            </div>
-        </div>
+        @include("home.sidetool")
     </div>
 </div>
 <script src="js/jquery-3.2.1.min.js"></script>
