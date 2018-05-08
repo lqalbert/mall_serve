@@ -255,7 +255,7 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid indexContent">
+<div class="container container-fluid indexContent">
     <div class="row">
         <div id="banner" class="col-lg-12 col-md-12col-xs-12 col-sm-12">
             <img src="/images/home/index/banner.jpg">
@@ -277,8 +277,8 @@
                 {{--</div>--}}
             {{--</div>--}}
         </div>
-        <div id="minBanner" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-sm-12">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+        <div id="minBanner" class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <a href="{{URL('product/index?type=new')}}">
                         <img width="100%" src="images/home/index/minBanner/1.png" alt="">
@@ -301,8 +301,8 @@
                 </div>
             </div>
         </div>
-        <div id="productList" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
+        <div id="productList" class="col-lg-12 col-md-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
                     <a href="{{URL('sale/stars')}}">
                         <img src="/images/home/index/leftsidebar.jpg" alt="">
@@ -315,8 +315,8 @@
                 </div>
             </div>
         </div>
-        <div id="content" class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 newProduct">
+        <div id="content" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 newProduct">
                 <div class="newT col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="left col-lg-4 col-md-4 col-sm-6 col-xs-6">
                         <span class="line"></span>
@@ -338,7 +338,7 @@
                             <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
                                 </div>
                             </a>
@@ -347,7 +347,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 newProduct">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 newProduct">
                 <div class="newT col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="left col-lg-4 col-md-4 col-sm-6 col-xs-6">
                         <span class="line"></span>
@@ -369,7 +369,7 @@
                             <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
                                 </div>
                             </a>
@@ -379,9 +379,10 @@
                 </div>
             </div>
         </div>
+
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navBottom">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
-                <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 navBot">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navBot">
                     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">关于普拉她</div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -1,11 +1,12 @@
 
 .connectContent{
     background: #fff;
-    padding-top: 10px;
-    padding-bottom: 40px;
+    padding: 10px 0 40px 0;
 }
 
-.connectContent .lle{}
+.connectContent div{
+    padding: 0;
+}
 
 .connectContent .connectList{
     background: #fff;

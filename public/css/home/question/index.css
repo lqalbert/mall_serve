@@ -48,8 +48,7 @@
 
 #question .rightContent{
     box-shadow: 0 0 3px #ccc;
-    padding-left: 40px;
-    padding-right: 20px;
+    padding: 10px 20px 20px 40px;
 }
 
 #question .rightContent .title{

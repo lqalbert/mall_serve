@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 connectContent">
-        <div class="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 lle">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lle">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 messageBox">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
                     技术资讯

@@ -1,10 +1,14 @@
 
-.saleCon{
+body{
     background: #F2F2F2;
 }
 
-#saleBest{
+.saleCon{
     padding: 0;
+}
+
+#saleBest{
+
 }
 
 #saleBest div{
@@ -39,8 +43,8 @@
 }
 
 #saleBest .saleLists .saleList .mainImg{
-    1width: 100%;
-    width: 240px;
+    width: 100%;
+    min-width: 200px;
     height: 260px;
     
 }
