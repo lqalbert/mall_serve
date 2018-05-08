@@ -27,7 +27,7 @@
                         <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 loginActionBars">
                             <div role="presentation" class="col-lg-6 col-md-6 col-sm-6 searchBar">
                                 <div id="searchBar">
-                                    <input id="searchB" type="text" placeholder="新品限时特卖">
+                                    <input id="searchB" type="text" maxlength="10" placeholder="新品限时特卖"/>
                                     <span id="souI" class="iconfonts icon-sousuo"></span>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                     <img src="/images/home/index/collect.jpg" alt="">
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 buyCar">
-                                    <img src="/images/home/index/shopping.jpg" alt="">
+                                    {{-- <img src="/images/home/index/shopping.jpg" alt=""> --}}
                                 </div>
 
                             {{--<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 barL">
@@ -555,6 +555,13 @@
         $('#scrollTop').on('click',function () {
             $(document).scrollTop(0);
         })
+        //搜索点击事件
+        $('#souI').click(function(event) {
+            var seachText = $('#searchB').val();
+            if(seachText){
+                window.location.href="{{URL('product/index?seachText=')}}"+seachText;
+            }
+        });
     })
 </script>
 </body>

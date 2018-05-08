@@ -51,8 +51,8 @@
             </div>
         </div>
         <div class="productLists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-           @foreach($goods as $item)
-           <a href="{{URL('product', ['id'=>$item->id])}}">
+            @foreach($goods as $item)
+            <a href="{{URL('product', ['id'=>$item->id])}}">
                 <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
                     <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <img src="{{$item->cover_url}}" alt="">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </a>
-           @endforeach
+            @endforeach
         </div>
         
     </div>
