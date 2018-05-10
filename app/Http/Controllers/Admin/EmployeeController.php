@@ -247,9 +247,9 @@ class EmployeeController extends Controller
     	$data['password'] = bcrypt($request->input('password'));
     	$re = User::where('id', $id)->update($data);
     	if ($re) {
-    		return $this->success(1);
+    		return $this->success($re,'修改成功');
     	} else {
-    		return $this->error(0);
+    		return $this->error($re,'修改失败');
     	}
     }
 }
