@@ -125,6 +125,18 @@ class User extends Authenticatable
         });
     }
     
+    public function isSuperAdmin()
+    {
+        $roles  = $this->roles;
+        return $roles->contains(['name','super-manager']);
+    }
+    
+    public function isAdministrator()
+    {
+        $roles  = $this->roles;
+        return $roles->contains(['name','administrator']);
+    }
+    
     
     
     

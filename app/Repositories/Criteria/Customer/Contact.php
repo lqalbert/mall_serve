@@ -22,13 +22,13 @@ class Contact extends Criteria
         $request = $this->request;
         return $model->whereHas('contacts', function($query) use($request){
             if ($request->has('phone')) {
-                $query->where('phone', $request->input('phone'));
+                $query->where('phone', 'like',$request->input('phone').'%');
             }
             if ($request->has('qq')) {
-                $query->where('qq', $request->input('qq'));
+                $query->where('qq', 'like',$request->input('qq').'%');
             }
             if ($request->has('weixin')) {
-                $query->where('weixin', $request->input('weixin'));
+                $query->where('weixin', 'like',$request->input('weixin').'%');
             }
         });
     }

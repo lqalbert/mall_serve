@@ -84,15 +84,14 @@ class EventServiceProvider extends ServiceProvider
         ],
            
         //签名
-        // @todo 修改订单状态为 已签收
         'App\Events\Signatured' => [
             'App\Listeners\InventorySignaturedListener'
         ],
         
-        //售后
+        //售后　@todo 没有生成对应的配货单
         'App\Events\AddAfterSale' => [
             'App\Listeners\ChangeOrderAfterSaleListener', //改售后状态
-            'App\Listeners\ChangeExchangeAfterSaleListener' //如果是换货则需要 换货锁定
+            'App\Listeners\ChangeExchangeAfterSaleListener' //如果是换货则需要 换货锁定 
                 
         ],
         

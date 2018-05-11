@@ -20,6 +20,7 @@ use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\Customer\Contact;
 use App\Repositories\Criteria\OrderByIdDesc;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\Criteria\FieldLike;
 
 class CustomerService
 {
@@ -94,6 +95,14 @@ class CustomerService
             $this->repository->pushCriteria(new FieldEqual('id', $this->request->input('id')));
         }
         
+        if ($this->request->has('id_card')) {
+            $this->repository->pushCriteria(new FieldEqual('id_card', $this->request->input('id_card')));
+        }
+        
+        if ($this->request->has('cus_address')) {
+            $this->repository->pushCriteria(new FieldLike('cus_address', $this->request->input('cus_address')));
+        }
+        
         if ($this->request->has('type')) {
             $this->repository->pushCriteria(new FieldEqual('type', $this->request->input('type')));
         }
@@ -103,8 +112,11 @@ class CustomerService
                        ->paginate($this->request->input('pageSize', 20),$selectFields);
         
         $appends = [];
+        if ($this->request->has('appends')) {
+            $appends = $this->request->input('appends');
+        }
         if (in_array('type', $selectFields) or in_array('*', $selectFields)) {
-        	$appends = ['sex_text'];
+        	$appends[] = 'sex_text';
         }
         if (!empty($appends)) {
         	$collection = ModelCollection::setAppends($result->getCollection(), $appends);
