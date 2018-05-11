@@ -37,4 +37,10 @@ class AfterSaleGoods extends Model
     {
         return $this->type == 2 ;
     }
+    
+    public function getTypeTextAttribute()
+    {
+        $map = ["退货", "换货退回",  "换货发货"];
+        return $map[$this->attributes['type']];
+    }
 }

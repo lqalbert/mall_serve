@@ -81,6 +81,14 @@ class CustomerBasic extends Model
     	return $this->attributes['sex'] == 0 ? '未定义' : $this->attributes['sex'] == 1 ? '男' : '女';
     }
     
+    /**
+     * 生成类型对应的汉字文本
+     */
+    public function getTypeTextAttribute()
+    {
+        return CustomerApp::getType($this->attributes['type']);
+    }
+    
     public function setV()
     {
         $this->type = 'V';

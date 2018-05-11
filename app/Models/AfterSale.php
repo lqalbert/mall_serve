@@ -20,6 +20,7 @@ class AfterSale extends Model
     ];
     
     protected $fillable = [
+        'cus_id',
         'order_id',
         'user_id',
         'user_name',

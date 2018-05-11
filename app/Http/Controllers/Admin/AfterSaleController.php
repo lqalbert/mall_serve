@@ -104,13 +104,6 @@ class AfterSaleController extends Controller
         }
         
         return $this->success([]);
-        
-        
-//         if ($model->type == AfterSale::RETURN_BACK) {
-            
-//         } else if($model->type == AfterSale::EXCHANGE_GOODS) {
-            
-//         }
     }
 
     /**

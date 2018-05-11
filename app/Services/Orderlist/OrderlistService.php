@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
+use App\Repositories\Criteria\WhereIn;
 class OrderlistService
 {
     private $repository = null;
@@ -36,7 +37,7 @@ class OrderlistService
         }
         if ($this->request->has('goods_name')) {
             $goods = DB::table('goods_basic')
-                ->where('goods_name', 'like', "%".$this->request->goods_name."%")
+                ->where('goods_name', 'like', $this->request->goods_name."%")
                 ->get();
             $ids = array();
             foreach($goods as $v)
@@ -46,13 +47,28 @@ class OrderlistService
             $whereIn = $ids;
         }
         if ($this->request->has('consignee')) {
-            $sales = DB::table('customer_basic')
-                ->where('name', 'like', "%".$this->request->consignee."%")
+            $sales = DB::table('order_address')
+                ->where('name', 'like', $this->request->consignee."%")
                 ->get();
             foreach ($sales as $v){
                 $where[] = ['cus_id',$v->id];
             }
         }
+        
+        if ($this->request->has('phone')) {
+            $sales = DB::table('order_address')
+            ->where('phone', 'like', $this->request->phone."%")
+            ->get();
+            $ids = [];
+            foreach ($sales as $v){
+                $ids[] = $v->order_id;
+            }
+            if ($ids) {
+                $this->repository->pushCriteria(new WhereIn('id', $ids));
+            }
+        }
+        
+        
         if ($this->request->has('deal_name')) {
             $where[]=['deal_name','like',"%".$this->request->deal_name."%"];
         }

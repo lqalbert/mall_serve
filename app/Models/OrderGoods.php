@@ -37,4 +37,9 @@ class OrderGoods extends Model
     {
         return $this->belongsTo('App\Models\OrderBasic', 'order_id');
     }
+    
+    public function assign()
+    {
+        return $this->hasOne('App\Models\Assign', 'order_goods_id')->select(['id','order_goods_id','out_entrepot_at','sign_at']);
+    }
 }
