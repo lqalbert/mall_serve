@@ -11,7 +11,7 @@
         <img src="/images/home/index/qrcode.png" alt=""/>
         <div class="content">
             <div id="qrcode">
-            	<img src="/images/fcode.png"/>
+            	<img src="/images/fcode.png" id="fcode"/>
             </div>
         </div>
     </div>

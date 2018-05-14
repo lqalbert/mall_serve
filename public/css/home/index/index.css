@@ -15,7 +15,7 @@
 }
 
 .indexContent{
-    padding-top: 120px;
+    padding-top: 109px;
     background: #fff ;
 
 }
@@ -169,7 +169,6 @@
 
 .personBar{
     height: 68px;
-    padding: 0;
     background: #ffffff;
 }
 
@@ -423,7 +422,7 @@
 
 /*-------------------banner-----------------*/
 #banner{
-    padding: 0;
+    /*padding: 0;*/
     height: auto;
 }
 #banner img{
@@ -441,7 +440,8 @@
 /*----------minBanner-------------------*/
 #minBanner{
     margin-top: 10px;
-    padding: 0;
+    margin-left:-9px;
+    margin-right: -9px;
 }
 
 #minBanner div{
@@ -449,7 +449,7 @@
 }
 
 #minBanner .imgBox{
-    padding: 0 7px 0 7px;
+    padding: 0 10px 0 10px;
     margin-bottom: 15px;
 }
 
@@ -458,33 +458,20 @@
     0 0 5px #bf9d63;
 }
 
-#minBanner .imgBox:first-child{
-    padding: 0 14px 0 0;
-}
-
-#minBanner .imgBox:last-child{
-    padding: 0 0 0 14px;
-}
 
 /*----------------productList----------------------*/
 #productList{
     padding: 0;
+    margin: 0px -10px;
 }
 
-#productList div{
-    padding: 0;
-}
 
 #productList .list{
     margin-top: 10px;
 }
 
-#productList .list:first-child{
-    padding-right: 10px;
-}
-
-#productList .list:last-child{
-    padding-left: 10px;
+#productList .list{
+    padding: 0px 10px 0px 10px;
 }
 
 #productList .list img{
@@ -636,9 +623,7 @@
     padding: 0;
 }
 
-.navBottom div{
-    padding: 0;
-}
+
 
 .navBottom .title{
     font-size: 20px;
@@ -655,7 +640,6 @@
 .navBottom .navBot {
     margin-top: 50px;
     border-top: 2px solid #DF385F;
-    padding: 0 15px 0 15px;
 }
 
 .navBottom .navBot div div a{
@@ -664,8 +648,11 @@
 }
 
 
-.navBottom .navBot div{
-    padding: 0;
+.navBottom .navBot div.box{
+    padding-left: 44px;
+}
+.navNum a{
+	color: #fff;
 }
 
 .navBottom .navNum{
@@ -726,12 +713,17 @@
     margin-bottom: 5px;
 }
 
+#scrollBox #fcode {
+	width: 100px;
+	height:100px;
+}
+
 #qrcode{
     position: absolute;
-    left: 0;
+    left: -40px;
     width: 60px;
     height: 60px;
-    top: -10px;
+    top: -29px;
     background: #fff;
     box-shadow: 0 0 3px #666;
 }
@@ -746,10 +738,10 @@
         top: -20px;
     }
     .headBar{
-        height: 102px;
+        /*height: 102px;*/
     }
     #ul{
-        background: #999;
+        /*background: #999;*/
     }
     #ul a.navC{
         color: #fff;
@@ -781,7 +773,6 @@
         top: -34px;
     }
     #banner{
-        height: 200px;
         margin-top: 0;
     }
 

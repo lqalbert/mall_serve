@@ -104,13 +104,13 @@ class User extends Authenticatable
     {
         return '普通';
     }
-    public function  getHeadAttribute($value) 
-    {
-        if($value){
-            $value = asset($value);
-        }
-        return $value;
-    }
+//     public function  getHeadAttribute($value) 
+//     {
+//         if($value){
+//             $value = asset($value);
+//         }
+//         return $value;
+//     }
     
     public function getRoles($withHidden = true)
     {
