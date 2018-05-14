@@ -96,6 +96,7 @@
 .newsContent  .rightContent .rightList{
     padding: 15px;
     border-bottom: 1px solid #ccc;
+    overflow:hidden;
 }
 
 .newsContent   .rightContent .rightList .imgBox img{
