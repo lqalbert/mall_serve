@@ -5,21 +5,13 @@
     padding: 0;
 }
 
-.newsContent .lle{
-    padding: 0;
-}
-
-.newsContent .lle div{
-    padding: 0;
-}
-
-.newsContent .lle .leftContent{
+.newsContent   .leftContent{
     margin-top: 20px;
     background: #fff;
-    padding-right: 20px;
+    /*padding-right: 20px;*/
 }
 
-.newsContent .lle .leftContent .contentShow{
+.newsContent   .leftContent .contentShow{
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
@@ -27,65 +19,66 @@
     padding: 15px;
 }
 
-.newsContent .lle .leftContent .contentShow .bigTitle{
+.newsContent   .leftContent .contentShow .bigTitle{
     line-height: 50px;
     font-weight: bold;
     font-size: 24px;
     text-align: center;
 }
 
-.newsContent .lle .leftContent .contentShow .timeZone{
+.newsContent   .leftContent .contentShow .timeZone{
     color: #999;
     font-size: 12px;
     text-align: center;
     line-height: 25px;
 }
 
-.newsContent .lle .leftContent .contentShow .timeZone span{
+.newsContent   .leftContent .contentShow .timeZone span{
     margin-right: 10px;
 }
 
-.newsContent .lle .leftContent .contentShow .content{
+.newsContent   .leftContent .contentShow .content{
     margin-top: 10px;
     line-height: 25px;
 }
 
-.newsContent .lle .leftContent .contentShow .content .daodu{
+.newsContent   .leftContent .contentShow .content .daodu{
     font-weight: bold;
 }
 
-.newsContent .lle .leftContent .contentShow .content .con{
+.newsContent .  .leftContent .contentShow .content .con{
     text-indent: 2em;
 }
 
-.newsContent .lle .leftContent .contentShow .content img{
+.newsContent   .leftContent .contentShow .content img{
     width: 100%;
     margin: 15px auto;
 }
 
-.newsContent .lle .leftContent .proNext{
+.newsContent   .leftContent .proNext{
     line-height: 40px;
     margin-top: 10px;
 }
 
-.newsContent .lle .leftContent .proNext .next{
+.newsContent   .leftContent .proNext .next{
     text-align: right;
 }
 
-.newsContent .lle .leftContent .proNext a{
+.newsContent   .leftContent .proNext a{
     color: #999;
 }
 
 .newsContent .rightContent{
     margin-top: 20px;
-    background: #fafafa;
+    
 }
 
-.newsContent .rightContent div{
-    padding: 0;
+.rightBackgroun {
+	padding-top: 1px;
+	background: #fafafa;
 }
 
-.newsContent .lle .rightContent .rightTit{
+.newsContent   .rightContent .rightTit{
     margin-top: 20px;
     line-height: 30px;
     padding-left: 15px;
@@ -93,22 +86,22 @@
 
 .newsContent .rightContent .rightTit .line{
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
+    left: 15px;
+    top: 21px;
+    height: 30px;
     width: 4px;
     background: #F5C3CF;
 }
 
-.newsContent .lle .rightContent .rightList{
+.newsContent  .rightContent .rightList{
     padding: 15px;
     border-bottom: 1px solid #ccc;
 }
 
-.newsContent .lle .rightContent .rightList .imgBox img{
+.newsContent   .rightContent .rightList .imgBox img{
     width: 100%;
 }
 
-.newsContent .lle .rightContent .rightList .msgBox{
+.newsContent   .rightContent .rightList .msgBox{
     padding-left: 10px;
 }
