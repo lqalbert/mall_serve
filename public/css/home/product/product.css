@@ -2,7 +2,7 @@ li{
     list-style: none;
 }
 .productBar{
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     line-height: 30px;
     padding: 10px 0 10px 0;
 }
@@ -14,7 +14,7 @@ li{
 }
 
 .productInfo{
-    padding: 15px 0 20px 0;
+    /*padding: 15px 0 20px 0;*/
 }
 
 .productInfo .lle{

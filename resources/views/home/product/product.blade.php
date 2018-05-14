@@ -4,26 +4,22 @@
 @endsection
 @section('content')
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productBar">
-        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 lle">
-            <div class=" col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle">
-                <a style="color: #333" href="/">首页</a>&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                <a style="color: #666" href="{{ url('product/index') }}">全部产品</a>&nbsp;
-                <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                @foreach($goods->category as $cat)
-                	@if($loop->last)
-                	<span style="color: #C3A46F">{{$cat->label}}</span>
-                	@else
-                	<a style="color: #666" href="{{ url('product/index') }}">{{$cat->label}}</a>&nbsp;
-                	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
-                	@endif
-                @endforeach
-            </div>
+        <div class="lle">
+            <a style="color: #333" href="/">首页</a>&nbsp;<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+            <a style="color: #666" href="{{ url('product/index') }}">全部产品</a>&nbsp;
+            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+            @foreach($goods->category as $cat)
+            	@if($loop->last)
+            	<span style="color: #C3A46F">{{$cat->label}}</span>
+            	@else
+            	<a style="color: #666" href="{{ url('product/index') }}">{{$cat->label}}</a>&nbsp;
+            	<span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>&nbsp;
+            	@endif
+            @endforeach
         </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productInfo">
-        <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle lel">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lle">
-                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 proLef">
+          <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12 proLef">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 view">
                         <div class="swiper-container first">
                             <a href="#" class="arrow-left"></a>
@@ -74,7 +70,7 @@
                         </div>
                     </div>-->
                 </div>
-                <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 proRig">
+          <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 proRig">
                     <div class="proRigBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigTit">
                             {{$goods->goods_name}}
@@ -171,11 +167,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productContent">
-        <div class="lle col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 lls">
+       
+           
                 <div class="contentLeft col-lg-3 col-md-4 col-sm-5 col-xs-12">
                     <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">相关推荐</div>
                     @foreach($recoms as $reItem)
@@ -202,6 +198,7 @@
                     </a>
                     @endforeach
                 </div>
+                
                 <div class="contentRight col-lg-9 col-md-8 col-sm-7 col-xs-12">
                     <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="tabs actives">
@@ -218,8 +215,7 @@
                         
                     </div>
                 </div>
-            </div>
-        </div>
+            
     </div>
 @endsection
 @section('js')
