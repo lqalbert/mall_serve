@@ -45,18 +45,17 @@
                         一周热点资讯
                         <div class="line"></div>
                     </div>
-    				<div class="rightList">
                			 @foreach ($articles as $article)
-    					<div class="row">
+    						<div class="rightList">
+    					
         					<div class="imgBox col-lg-3 col-md-4 col-sm-4 col-xs-4">
         						<img src="{{ $article->image }}" alt="">
         					</div>
         					<div class="msgBox col-lg-9 col-md-8 col-sm-8 col-xs-8">
         						{{ $article->title }}
         					</div>
-    					</div>
+    						</div>
     		   			 @endforeach
-    				</div>
             	</div>
             </div>
     	</div>
