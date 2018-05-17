@@ -96,7 +96,7 @@ class CustomerService
         }
         
         if ($this->request->has('id_card')) {
-            $this->repository->pushCriteria(new FieldEqual('id_card', $this->request->input('id_card')));
+            $this->repository->pushCriteria(new FieldLike('id_card', $this->request->input('id_card')));//FieldEqual
         }
         
         if ($this->request->has('cus_address')) {

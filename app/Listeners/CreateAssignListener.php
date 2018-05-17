@@ -45,7 +45,7 @@ class CreateAssignListener
             $inserts[] =Assign::create([
                 'entrepot_id'=> $order->entrepot_id,
                 'order_id'   => $order->id,
-                'after_goods_id'   => $product->id,
+                'order_goods_id'   => $product->id,
                 'cus_name'   => $order->customer->name,
                 'goods_name' => $product->goods_name,
                 'goods_num'  => $product->goods_number,
