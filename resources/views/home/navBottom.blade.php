@@ -9,7 +9,7 @@
                             品牌故事
                         </a>
                     </div>
-                    <div class="">公司信息</div>
+                    <div class="/brand/index#mission">公司信息</div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">美丽帮助</div>
