@@ -193,7 +193,12 @@ return [
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
-
+        //32
+        [
+            'text'=>'纸箱管理',
+            'icon'=>null,
+            'index'=>'CartonManagement',
+        ],
 
 		
 ];
