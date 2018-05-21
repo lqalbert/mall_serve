@@ -13,6 +13,8 @@ use App\Services\Orderlist\OrderlistService;
 use App\Events\AddOrder;
 use App\Events\OrderPass;
 use App\Events\OrderCancel;
+use App\Repositories\Criteria\FieldEqual;
+use App\Repositories\Criteria\FieldLike;
 class OrderBasicController extends Controller
 {
 

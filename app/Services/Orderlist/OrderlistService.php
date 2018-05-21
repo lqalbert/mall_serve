@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 use App\Alg\ModelCollection;
 use App\Repositories\Criteria\OrderByIdDesc;
 use App\Repositories\Criteria\WhereIn;
+use App\Repositories\Criteria\FieldEqual;
+use App\Repositories\Criteria\FieldLike;
+use App\Repositories\Criteria\NotEqual;
+use App\Repositories\Criteria\FieldEqualGreaterThan;
+use App\Repositories\Criteria\FieldEqualLessThan;
 class OrderlistService
 {
     private $repository = null;
@@ -27,13 +32,16 @@ class OrderlistService
             $this->refund($this->request->refund_id);
         }
 	    if ($this->request->has('id')) {
-            $where[]=['id','=',$this->request->id];
+            // $where[]=['id','=',$this->request->id];
+            $this->repository->pushCriteria(new FieldEqual('id', $this->request->id));
         }
         if ($this->request->has('sn')) {
-        	$where[]=['order_sn','like',$this->request->sn."%"];
+        	// $where[]=['order_sn','like',$this->request->sn."%"];
+            $this->repository->pushCriteria(new FieldLike('order_sn', $this->request->sn));
         }
         if ($this->request->has('order_sn')) {
-            $where[]=['order_sn','=',$this->request->order_sn];
+            // $where[]=['order_sn','=',$this->request->order_sn];
+            $this->repository->pushCriteria(new FieldEqual('order_sn', $this->request->order_sn));
         }
         if ($this->request->has('goods_name')) {
             $goods = DB::table('goods_basic')
@@ -44,14 +52,18 @@ class OrderlistService
             {
                 $ids[] = $v->id;
             }
-            $whereIn = $ids;
+            // $whereIn = $ids;
+            if ($ids) {
+                $this->repository->pushCriteria(new WhereIn('goods_id', $ids));
+            }
         }
         if ($this->request->has('consignee')) {
             $sales = DB::table('order_address')
-                ->where('name', 'like', $this->request->consignee."%")
+                ->where('name', 'like', $this->request->input('consignee')."%")
                 ->get();
+            $cusIds1 = [];
             foreach ($sales as $v){
-                $where[] = ['cus_id',$v->id];
+                $cusIds1[] = $v->cus_id;
             }
         }
         
@@ -59,59 +71,93 @@ class OrderlistService
             $sales = DB::table('order_address')
             ->where('phone', 'like', $this->request->phone."%")
             ->get();
-            $ids = [];
+            $cusIds2 = [];
             foreach ($sales as $v){
-                $ids[] = $v->order_id;
-            }
-            if ($ids) {
-                $this->repository->pushCriteria(new WhereIn('id', $ids));
+                $cusIds2[] = $v->cus_id;//order_id
             }
         }
         
+        if($this->request->has('consignee') && !$this->request->has('phone')){
+            if (!empty($cusIds1)) {
+                $this->repository->pushCriteria(new WhereIn('cus_id', $cusIds1));
+            }else{
+                $this->repository->pushCriteria(new FieldEqual('cus_id', '0'));
+            }
+        }
+
+        if(!$this->request->has('consignee') && $this->request->has('phone')){
+            if (!empty($cusIds2)) {
+                $this->repository->pushCriteria(new WhereIn('cus_id', $cusIds2));
+            }else{
+                $this->repository->pushCriteria(new FieldEqual('cus_id', '0'));
+            }
+        }
+
+        if($this->request->has('consignee') && $this->request->has('phone')){
+            $cusIds3 = array_intersect($cusIds1,$cusIds2);
+            if (!empty($cusIds3)) {
+                // echo 1;
+                $this->repository->pushCriteria(new WhereIn('cus_id', $cusIds3));
+            }else{
+                // echo 2;
+                $this->repository->pushCriteria(new FieldEqual('cus_id', '0'));
+            }
+        }
         
         if ($this->request->has('deal_name')) {
-            $where[]=['deal_name','like',"%".$this->request->deal_name."%"];
+            // $where[]=['deal_name','like',"%".$this->request->deal_name."%"];
+            $this->repository->pushCriteria(new FieldLike('deal_name', $this->request->deal_name));
         }
         if ($this->request->has('deal_id')) {
-            $where[]=['deal_id','=',$this->request->deal_id];
+            // $where[]=['deal_id','=',$this->request->deal_id];
+            $this->repository->pushCriteria(new FieldEqual('deal_id', $this->request->deal_id));
         }
         if ($this->request->has('department_id')) {
-            $where[]=['department_id','=',$this->request->department_id];
+            // $where[]=['department_id','=',$this->request->department_id];
+            $this->repository->pushCriteria(new FieldEqual('department_id', $this->request->department_id));
         }
         if ($this->request->has('group_id')) {
-            $where[]=['group_id','=',$this->request->group_id];
+            // $where[]=['group_id','=',$this->request->group_id];
+            $this->repository->pushCriteria(new FieldEqual('group_id', $this->request->group_id));
         }
         if ($this->request->has('type')) {
-            $where[]=['order_status','=', $this->request->type];
+            // $where[]=['order_status','=', $this->request->type];
+            $this->repository->pushCriteria(new FieldEqual('order_status', $this->request->type));
         }
         if ($this->request->has('deliver')) {
-            $where[]=['shipping_status', '=', $this->request->deliver];
+            // $where[]=['shipping_status', '=', $this->request->deliver];
+            $this->repository->pushCriteria(new FieldEqual('shipping_status', $this->request->deliver));
         }
         if ($this->request->has('start')) {
-            $where[]=['created_at','>=', $this->request->start];
+            // $where[]=['created_at','>=', $this->request->start];
+            $this->repository->pushCriteria(new FieldEqualGreaterThan('created_at', $this->request->start));
         }
         if ($this->request->has('end')) {
-            $where[]=['created_at','<=', $this->request->end];
+            // $where[]=['created_at','<=', $this->request->end];
+            $this->repository->pushCriteria(new FieldEqualLessThan('created_at', $this->request->end));
         }
         if ($this->request->has('status')) {
-            $where[]=['status',$this->request->input('status')];
+            // $where[]=['status',$this->request->input('status')];
+            $this->repository->pushCriteria(new FieldEqual('status', $this->request->status));
         }
         if ($this->request->has('product_status')) {
-            $where[]=['product_status',$this->request->input('product_status')];
+            // $where[]=['product_status',$this->request->input('product_status')];
+            $this->repository->pushCriteria(new FieldEqual('product_status', $this->request->product_status));
         }
         if ($this->request->has('after_sale_status')) {
-            $where[]=['after_sale_status','<>',0];
+            // $where[]=['after_sale_status','<>',0];
+            $this->repository->pushCriteria(new NotEqual('after_sale_status', $this->request->after_sale_status));
         }
         
         if (!$this->request->has('orderField')) {
             $this->repository->pushCriteria(new OrderByIdDesc());
         }
         
-        if(count($where)>0 || count($whereIn>0))
-        {
-            $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
-            $this->repository->pushCriteria($order_status);
-        }
+        // if(count($where)>0 || count($whereIn>0))
+        // {
+        //     $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
+        //     $this->repository->pushCriteria($order_status);
+        // }
         $result = $this->repository->paginate($this->request->input('pageSize', 20));
         
         $collection = $result->getCollection();
