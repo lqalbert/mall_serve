@@ -49,8 +49,9 @@ class Department extends Model
 
     private static $types = array(
         '销售部',
-        '推广部',
-        '客服部',
+        '配送部'
+//         '推广部',
+//         '客服部',
 //         '投顾部',
 //         '风控部'
     );

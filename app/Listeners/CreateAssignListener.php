@@ -45,21 +45,22 @@ class CreateAssignListener
             $inserts[] =Assign::create([
                 'entrepot_id'=> $order->entrepot_id,
                 'order_id'   => $order->id,
-                'order_goods_id'   => $product->id,
-                'cus_name'   => $order->customer->name,
-                'goods_name' => $product->goods_name,
-                'goods_num'  => $product->goods_number,
-                'unit_type'  => $product->unit_type,
-                'cate_type'  => $product->productCategory->cate_type,
-                'cate_type_id' => $product->productCategory->cate_type_id,
-                'cate_kind'  => $product->productCategory->cate_kind,
-                'cate_kind_id' => $product->productCategory->cate_kind_id,
-                'deliver_name' => $order->address->name,
-                'deliver_phone' => $order->address->phone,
-                'deliver_zip_code' => $order->address->zip_code,
-                'deliver_address' => $order->address->address,
-                'sale_name' => $order->deal_name,
-                'pass_check' => $order->auditor_time
+                'address_id' => $order->address->id,
+//                 'order_goods_id'   => $product->id,
+//                 'cus_name'   => $order->customer->name,
+//                 'goods_name' => $product->goods_name,
+//                 'goods_num'  => $product->goods_number,
+//                 'unit_type'  => $product->unit_type,
+//                 'cate_type'  => $product->productCategory->cate_type,
+//                 'cate_type_id' => $product->productCategory->cate_type_id,
+//                 'cate_kind'  => $product->productCategory->cate_kind,
+//                 'cate_kind_id' => $product->productCategory->cate_kind_id,
+//                 'deliver_name' => $order->address->name,
+//                 'deliver_phone' => $order->address->phone,
+//                 'deliver_zip_code' => $order->address->zip_code,
+//                 'deliver_address' => $order->address->address,
+//                 'sale_name' => $order->deal_name,
+//                 'pass_check' => $order->auditor_time
             ]);
         }
         

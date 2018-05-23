@@ -104,13 +104,7 @@ class User extends Authenticatable
     {
         return '普通';
     }
-//     public function  getHeadAttribute($value) 
-//     {
-//         if($value){
-//             $value = asset($value);
-//         }
-//         return $value;
-//     }
+
     
     public function getRoles($withHidden = true)
     {
@@ -131,13 +125,13 @@ class User extends Authenticatable
     public function isSuperAdmin()
     {
         $roles  = $this->roles;
-        return $roles->contains(['name','super-manager']);
+        return $roles->contains('name','super-manager');
     }
     
     public function isAdministrator()
     {
         $roles  = $this->roles;
-        return $roles->contains(['name','administrator']);
+        return $roles->contains('name','administrator');
     }
     
     

@@ -75,6 +75,11 @@ class Assign extends Model
         return self::$statusMap[$this->attributes['status']];
     }
     
+    public function address()
+    {
+        return $this->hasOne('App\Models\OrderAddress', 'address_id');
+    }
+    
     /**
      * 获取配货单数量
      * 注意要在事务里面使用

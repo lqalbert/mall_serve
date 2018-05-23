@@ -84,6 +84,19 @@ class Role extends EntrustRole
         'sale-staff' => [
             'group-member',
             'sale-department-member'
+        ],
+        'assign-manager' => [
+            'group-member',
+            'department-manager',
+            'assign-department-member'
+        ],
+        'assign-captain' => [
+            'group-captain',
+            'assign-department-member'
+        ],
+        'assign-staff' => [
+            'group-member',
+            'assign-department-member'
         ]
     ];
     
