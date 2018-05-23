@@ -177,7 +177,7 @@ return [
         ],  
         //29
         [
-        		'text'=>'配送发货',
+        		'text'=>'发货单',
         		'icon'=>null,
         		'index'=>'DistributionDelivery',
         ],  
@@ -193,6 +193,12 @@ return [
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
+        //32
+        [
+                'text' => '验货',
+                'icon' => null,
+                'index' => 'GoodsInspect'
+        ]
 
 
 		
