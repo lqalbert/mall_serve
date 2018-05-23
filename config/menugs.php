@@ -195,11 +195,16 @@ return [
         ],
         //32
         [
+            'text'=>'纸箱管理',
+            'icon'=>null,
+            'index'=>'CartonManagement',
+        ],
+	//33
+	[
                 'text' => '验货',
                 'icon' => null,
                 'index' => 'GoodsInspect'
         ]
-
 
 		
 ];
