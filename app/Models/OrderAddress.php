@@ -21,6 +21,12 @@ class OrderAddress extends Model
         'zip_code',
         'address',
         'default_address',
+        'area_province_name',
+        'area_city_name',
+        'area_district_name',
+        'area_province_id',
+        'area_city_id',
+        'area_district_id',
     ];
 
 

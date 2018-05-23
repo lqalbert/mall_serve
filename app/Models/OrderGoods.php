@@ -26,6 +26,12 @@ class OrderGoods extends Model
         'sku_name',
         'sku_sn',
         'unit_type',
+        'length',
+        'width',
+        'height',
+        'barcode',
+        'weight',
+        'bubble_bag',
     ];
     
     public function productCategory()

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddColumnToDeliveryAddresses extends Migration
+class AddColumnToOrderAddress extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddColumnToDeliveryAddresses extends Migration
      */
     public function up()
     {
-        Schema::table('delivery_addresses', function (Blueprint $table) {
+        Schema::table('order_address', function (Blueprint $table) {
             $table->unsignedInteger('area_province_id')->nullable()->comment('省id')->after('default_address');
             $table->unsignedInteger('area_city_id')->nullable()->comment('市id')->after('area_province_id');
             $table->unsignedInteger('area_district_id')->nullable()->comment('区/县id')->after('area_city_id');
@@ -30,7 +30,7 @@ class AddColumnToDeliveryAddresses extends Migration
      */
     public function down()
     {
-        Schema::table('delivery_addresses', function (Blueprint $table) {
+        Schema::table('order_address', function (Blueprint $table) {
             $table->dropColumn([
                 'area_province_id',
                 'area_city_id',
