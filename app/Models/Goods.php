@@ -33,7 +33,13 @@ class Goods extends Model
         'del_price',
         'comments',
         'sale_count',
-        'sale_able_count'
+        'sale_able_count',
+        'length',
+        'width',
+        'height',
+        'barcode',
+        'weight',
+        'bubble_bag',
     ];
     
     //多对多
