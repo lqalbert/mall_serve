@@ -193,7 +193,12 @@ return [
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
-
+        //32  -->合并时候改成36就不会与yrg冲突
+        [
+        		'text'=>'盘存盘点',
+        		'icon'=>null,
+        		'index'=>'StockCheck',
+        ]
 
 		
 ];
