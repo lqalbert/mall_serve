@@ -200,10 +200,22 @@ return [
             'index'=>'CartonManagement',
         ],
 	//33
-	[
+	    [
                 'text' => '验货',
                 'icon' => null,
                 'index' => 'GoodsInspect'
+        ],
+//        34
+        [
+                'text' => '同步发货',
+                'icon' => null,
+                'index' => 'DeliverGoods'
+        ],
+ //        35
+        [
+                'text' => '采购管理',
+                'icon' => null,
+                'index' => 'WarehousingProcess'
         ]
 
 		
