@@ -40,7 +40,12 @@ class OrderBasic extends Model
         'entrepot_id',
         'cus_name',
         'group_id',
-        'department_id'
+        'department_id',
+        'express_delivery',
+        'express_id',
+        'order_remark',
+        'express_remark',
+        'express_name',
     ];
     
     /**
