@@ -81,7 +81,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::resource('/shelvesmanagement','ShelvesManagementController');
-	Route::resource('/expresscompany','ExpressCompanyControllerentrepot-product-count');
+	Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
 	Route::get('/menus', 'NavController@getNav');
 	
 	Route::resource('/produce-entry', 'ProduceEntryController');

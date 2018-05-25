@@ -58,6 +58,9 @@ class DeliveryAddressController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->default_address == 1){
+            $this->model->where('cus_id',$request->cus_id)->update(['default_address' => 0]);
+        }
         $this->model->create($request->all());
     }
 
@@ -91,7 +94,10 @@ class DeliveryAddressController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
-    {
+    {   
+        if($request->default_address == 1){
+            $this->model->where('cus_id',$request->cus_id)->update(['default_address' => 0]);
+        }
         $this->model->where('id','=',$id)->update($request->all());
     }
 
