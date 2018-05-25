@@ -81,7 +81,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::resource('/shelvesmanagement','ShelvesManagementController');
-	Route::resource('/expresscompany','ExpressCompanyController');
+	Route::resource('/expresscompany','ExpressCompanyControllerentrepot-product-count');
 	Route::get('/menus', 'NavController@getNav');
 	
 	Route::resource('/produce-entry', 'ProduceEntryController');
@@ -128,6 +128,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/cartonmanagement',  'CartonManagementController');
 	Route::resource('/volumeratio',  'VolumeRatioController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
+
+	Route::resource('/stock-check',  'StockCheckController');
 
 });
 

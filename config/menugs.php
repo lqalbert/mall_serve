@@ -216,6 +216,12 @@ return [
                 'text' => '采购管理',
                 'icon' => null,
                 'index' => 'WarehousingProcess'
+        ],
+    //36
+	    [
+        		'text'=>'盘存盘点',
+        		'icon'=>null,
+        		'index'=>'StockCheck',
         ]
 
 		

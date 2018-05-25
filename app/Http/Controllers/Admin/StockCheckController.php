@@ -4,34 +4,49 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\AreaInfo;
 
-class AreaInfoController extends Controller
+class StockCheckController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $business = $request->query('business', 'default');
-        $result = [];
-        switch ($business) {
-            case 'city':
-                $pid = $request->input('pid');
-                $result = AreaInfo::where('p_id','=',$pid)->get();
-                break;
-            case 'district':
-                $pid = $request->input('pid');
-                $result = AreaInfo::where('p_id','=',$pid)->get();
-                break;
-            default:
-                $pid = $request->input('pid',1);
-                $result = AreaInfo::where('p_id','=',$pid)->get();
-                break;
-        }
-        return $result; 
+        return [
+            'items'=>[
+                [
+                    'check_num'=>1314520,
+                    'goods_name'=>'长久丸子',
+                    'cate_type_id'=>'大保健',
+                    'entrepot_count'=>'100',
+                    'release_money'=>'50000.01',
+                    'resp_money'=>'40000.02',
+                    'created_at'=>'2018-05-15 11:13:09',
+                ],
+                [
+                    'check_num'=>1314520,
+                    'goods_name'=>'长久丸子',
+                    'cate_type_id'=>'大保健',
+                    'entrepot_count'=>'100',
+                    'release_money'=>'50000.01',
+                    'resp_money'=>'40000.02',
+                    'created_at'=>'2018-05-15 11:13:09',
+                ],
+                [
+                    'check_num'=>1314520,
+                    'goods_name'=>'长久丸子',
+                    'cate_type_id'=>'大保健',
+                    'entrepot_count'=>'100',
+                    'release_money'=>'50000.01',
+                    'resp_money'=>'40000.02',
+                    'created_at'=>'2018-05-15 11:13:09',
+                ],
+
+            ],
+            'total'=>3
+        ];
     }
 
     /**
