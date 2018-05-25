@@ -49,7 +49,8 @@ class MenuService
     
     private function setGsMenus($gMenus)
     {
-        $smenus = $this->smenus;
+        $smenus = collect($this->smenus);
+        $smenus = $smenus->keyBy('index')->all();
         foreach ($gMenus as &$value) {
             $value['subNav'] = array_map(function($item)use($smenus){
                 return isset($smenus[$item]) ? $smenus[$item] : new Object();
