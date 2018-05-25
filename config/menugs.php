@@ -222,6 +222,11 @@ return [
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
+        ],
+ 	[
+            'text' => '快递赔偿',
+            'icon' => null,
+            'index' => 'ExpressCompensation'
         ]
 
 		
