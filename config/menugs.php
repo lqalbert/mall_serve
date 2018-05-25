@@ -216,7 +216,12 @@ return [
                 'text' => '采购管理',
                 'icon' => null,
                 'index' => 'WarehousingProcess'
+        ],
+//        36
+        [
+            'text' => '快递赔偿',
+            'icon' => null,
+            'index' => 'ExpressCompensation'
         ]
-
 		
 ];

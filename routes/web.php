@@ -127,6 +127,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/assign-invoices',  'AssignInvoicesController');
 	Route::resource('/cartonmanagement',  'CartonManagementController');
 	Route::resource('/volumeratio',  'VolumeRatioController');
+	Route::resource('/expresscompensation',  'ExpressCompensationController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
 });
