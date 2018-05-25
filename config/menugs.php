@@ -68,7 +68,7 @@ return [
 		],
 		//11
 		[
-				'text'=>'退换货审核',
+				'text'=>'退换货单',
 				'icon'=>null,
 				'index'=>'Refund'
 		],
@@ -177,7 +177,7 @@ return [
         ],  
         //29
         [
-        		'text'=>'发货单',
+        		'text'=>'配送发货',
         		'icon'=>null,
         		'index'=>'DistributionDelivery',
         ],  
