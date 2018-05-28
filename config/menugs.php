@@ -201,7 +201,7 @@ return [
         ],
 	//33
 	    [
-                'text' => '验货',
+                'text' => '验货管理',
                 'icon' => null,
                 'index' => 'GoodsInspect'
         ],
@@ -218,7 +218,7 @@ return [
                 'index' => 'WarehousingProcess'
         ],
     //36
-	    [
+	    	[
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
