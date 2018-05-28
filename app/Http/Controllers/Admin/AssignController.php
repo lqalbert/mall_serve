@@ -88,13 +88,16 @@ class AssignController extends Controller
 
         if ($request->has('with')) {
             $with  = $request->input('with', []);
-            foreach ($with as $model) {
-                if ($model == 'order') {
-                    $collection->load([$model=> function($query){
-                        $query->select('created_at');
-                    }]);
-                }
+            if (!empty($with)) {
+                $collection->load($with);
             }
+//             foreach ($with as $model) {
+//                 if ($model == 'order') {
+//                     $collection->load([$model=> function($query){
+//                         $query->select('created_at');
+//                     }]);
+//                 }
+//             }
         }
         
         $result = [

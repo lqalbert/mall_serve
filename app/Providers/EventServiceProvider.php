@@ -67,7 +67,7 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\OrderPassCheckedListener',
             'App\Listeners\DepositDecrementListener', //扣保证金
             'App\Listeners\InventorySetAssignListener', //通知库存 进行对应的更新
-            //'App\Listeners\CreateAssignListener',//生成配货单 生成发货锁定
+            'App\Listeners\CreateAssignListener',//生成配货单 生成发货锁定
         ],
         
         'App\Events\OrderUnPass' => [],

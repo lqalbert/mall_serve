@@ -65,8 +65,10 @@ class OrderBasic extends Model
     private static $status = [
         "待审核",
         "审核通过",
-        "待充值",
-        "配货中",
+        "发货中",
+        "已发货",
+        "已揽件",
+        "运输中",
         "订单完成",
         "订单取消",
         "审核未通过"

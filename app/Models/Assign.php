@@ -23,9 +23,13 @@ class Assign extends Model
     ];
     
     private static $statusMap = [
-        '待发',
-        '已发',
-        '废单'
+        '未审核',
+        '已审核',
+        '审核未通过',
+        '已拦截',
+        '已发货',
+        '已打印',
+        '已验货'
     ];
     
     
@@ -77,7 +81,7 @@ class Assign extends Model
     
     public function address()
     {
-        return $this->hasOne('App\Models\OrderAddress', 'address_id');
+        return $this->belongsTo('App\Models\OrderAddress', 'address_id');
     }
     
     /**
