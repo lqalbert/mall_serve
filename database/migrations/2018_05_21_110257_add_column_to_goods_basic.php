@@ -16,7 +16,7 @@ class AddColumnToGoodsBasic extends Migration
         Schema::table('goods_basic', function (Blueprint $table) {
             $table->string('width',6)->nullable()->comment('包装规格宽mm');
             $table->string('height',6)->nullable()->comment('包装规格高mm');
-            $table->string('length',6)->nullable()->comment('包装规格长mm');
+            $table->string('len',6)->nullable()->comment('包装规格长mm');
             $table->string('barcode')->nullable()->comment('条码');
             $table->string('weight',20)->nullable()->comment('重量(g)');
             $table->string('bubble_bag',20)->nullable()->comment('气泡垫(g)');

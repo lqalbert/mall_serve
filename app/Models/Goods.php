@@ -34,7 +34,7 @@ class Goods extends Model
         'comments',
         'sale_count',
         'sale_able_count',
-        'length',
+        'len',
         'width',
         'height',
         'barcode',

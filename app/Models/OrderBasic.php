@@ -167,7 +167,12 @@ class OrderBasic extends Model
      */
     public function isPass()
     {
-        return $this->attributes['status'] == 1 ||  $this->attributes['status'] == 2;
+        return $this->attributes['status'] >= 1 ;
+    }
+    
+    public function isSetExpress()
+    {
+        return $this->express_delivery == 1 && is_numeric($this->express_id);
     }
     
     

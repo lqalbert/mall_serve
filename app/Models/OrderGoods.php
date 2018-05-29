@@ -26,7 +26,7 @@ class OrderGoods extends Model
         'sku_name',
         'sku_sn',
         'unit_type',
-        'length',
+        'len',
         'width',
         'height',
         'barcode',
