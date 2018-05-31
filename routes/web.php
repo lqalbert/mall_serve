@@ -87,6 +87,10 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+	
+	Route::put('/order-assign-check/{id}', 'AssignController@check');
+	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
+	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::resource('/order-assign', 'AssignController');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');

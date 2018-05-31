@@ -1,6 +1,7 @@
 <?php
 /**
 * 生成商品编号 （goods_sn、sku_sn）
+* 订单号或发货单号要重新生成　不要用count
 * 订单号
 */
 namespace App\Alg;

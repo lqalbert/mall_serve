@@ -20,7 +20,7 @@ class Assign extends Model
     protected $dates = [
         'deleted_at'
     ];
-    
+    //前端　查询那里是写死了的　这里修改了　前端还要再改一下
     private static $statusMap = [
         '未审核',
         '已审核',
@@ -81,6 +81,11 @@ class Assign extends Model
     public function address()
     {
         return $this->belongsTo('App\Models\OrderAddress', 'address_id');
+    }
+    
+    public function goods()
+    {
+        return $this->hasMany('App\Models\OrderGoods', 'order_id', 'order_id');
     }
     
     /**
