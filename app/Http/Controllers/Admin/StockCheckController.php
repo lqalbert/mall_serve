@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\InventorySystem;
+use App\Models\EntrepotProductCategory;
 
 class StockCheckController extends Controller
 {
@@ -12,40 +14,63 @@ class StockCheckController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return [
-            'items'=>[
-                [
-                    'check_num'=>1314520,
-                    'goods_name'=>'长久丸子',
-                    'cate_type_id'=>'大保健',
-                    'entrepot_count'=>'100',
-                    'release_money'=>'50000.01',
-                    'resp_money'=>'40000.02',
-                    'created_at'=>'2018-05-15 11:13:09',
-                ],
-                [
-                    'check_num'=>1314520,
-                    'goods_name'=>'长久丸子',
-                    'cate_type_id'=>'大保健',
-                    'entrepot_count'=>'100',
-                    'release_money'=>'50000.01',
-                    'resp_money'=>'40000.02',
-                    'created_at'=>'2018-05-15 11:13:09',
-                ],
-                [
-                    'check_num'=>1314520,
-                    'goods_name'=>'长久丸子',
-                    'cate_type_id'=>'大保健',
-                    'entrepot_count'=>'100',
-                    'release_money'=>'50000.01',
-                    'resp_money'=>'40000.02',
-                    'created_at'=>'2018-05-15 11:13:09',
-                ],
+        $fields = [
+            'id',
+            'entrepot_id',
+            'goods_name',
+            'sku_sn',
+            'entrepot_count',
+            'entry_at',
+        ];
+        
+        $model = new InventorySystem();
+        
+        if ($request->has('entrepot_id')) {
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
+        }
+        
+        if ($request->has('goods_name')) {
+            $model = $model->where('goods_name', 'like', $request->input('goods_name')."%");
+        }
+        
+        if ($request->has('sku_sn')) {
+            $model = $model->where('sku_sn', 'like', $request->input('sku_sn')."%");
+        }
 
-            ],
-            'total'=>3
+        if($request->has('cate_type_id')) {
+            $cate_type_id = $request->input('cate_type_id');
+            $model = $model->wherehas('goods', function($query) use($cate_type_id) {
+                $query->where('cate_type_id', $cate_type_id);
+            });
+        }
+        
+        $result = $model->paginate($request->input('pageSize', 20), $fields);
+        
+        $collection = $result->getCollection();
+        $collection->load('entrepot','goods','profitLoss');
+        
+        $re = $collection->toArray();
+        
+        $range = [];
+        if($request->has('start') && $request->has('end')) {
+            $range[] = $request->input('start');
+            $range[] = $request->input('end');
+        }
+        
+        
+        ///生产入库数量   
+        //退货入库数量     
+        //销售锁定数 order_goods  created_at
+        //发货锁定数 assign_basic created_at
+        //换货锁定数  还没有
+        
+        // $this->getSte($re, $range);
+        // logger($re);
+        return [
+            'items'=> $re,
+            'total'=> $result->total()
         ];
     }
 

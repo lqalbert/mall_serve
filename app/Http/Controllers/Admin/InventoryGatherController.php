@@ -164,7 +164,7 @@ class InventoryGatherController extends Controller
         $result = $model->paginate($request->input('pageSize', 20), $fields);
         
         $collection = $result->getCollection();
-        $collection->load('entrepot');
+        $collection->load('entrepot','category');
         
         $re = $collection->toArray();
         

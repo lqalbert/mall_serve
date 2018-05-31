@@ -54,7 +54,12 @@ class InventorySystem extends Model
     
     public function category()
     {
-        return $this->belongsTo('App\Modles\EntrepotProductCategory', 'sku_sn');
+        return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn');
+    }
+
+    public function profitLoss()
+    {
+        return $this->belongsTo('App\Models\StockCheck', 'sku_sn','sku_sn');
     }
     
     
