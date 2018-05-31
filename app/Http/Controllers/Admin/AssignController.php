@@ -275,11 +275,35 @@ class AssignController extends Controller
 //         {label:"审核状态", value:"2", sub:""},　分配了快递公司　纸箱　快递号　
 //         {label:"录入状态", value:"3", sub:"删除发货单"},　//需要重新生成　发货单　原来的　快递号　要怎么处理　查看电子面单接口
 //         注意这三个状态　需要改对应的字段　第三个暂时不需要改其它字段
-        
-        $is_repeat  = $request->input('is_repeat');
-//         if ($) {
-//             ;
-//         }
+        $assign = Assign::find($id);
+        $is_repeat = $request->input('is_repeat');
+        $assign->is_repeat = $is_repeat;
+        $assign->repeat_mark = $request->input('repeat_mark');
+        switch ($is_repeat) {
+            case 1:
+                $re = $assign->save();
+                break;
+            case 2:
+                $re = $assign->save();
+                break;
+            case 3:
+                $assign->express_id = 0;
+                $assign->express_name = '';
+                $assign->corrugated_case = '';
+                $assign->corrugated_id = 0;
+                $assign->express_sn = '';
+                $re = $assign->save();
+                break;
+            default:
+                throw new \Exception('错误');
+                break;
+        }
+
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
     
     
@@ -290,8 +314,17 @@ class AssignController extends Controller
      * @param unknown $id
      */
     public function stopOrder(Request $request, $id)
-    {
+    {   
+        $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
+        $assign->is_stop = $is_stop==0?1:0;
+        $assign->stop_mark = $request->input('stop_mark');
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
     
     
