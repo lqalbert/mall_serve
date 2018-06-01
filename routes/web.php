@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')]
 Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
