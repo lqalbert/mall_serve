@@ -15,6 +15,9 @@ class ExpressCompanyController extends Controller
     public function index(Request $request)
     {
         $where=[];
+        if($request->has('entrepot_id')){
+            $where['entrepot_id']=$request->input('entrepot_id');
+        }
         if($request->has('company_name')){
             $where['company_name']=$request->input('company_name');
         }

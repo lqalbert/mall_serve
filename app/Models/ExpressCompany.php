@@ -11,6 +11,8 @@ class ExpressCompany extends Model
     use SoftDeletes;
     protected $table ='express_companies';
     protected $fillable=[
+      'entrepot_id',
+      'entrepot_name',
       'company_name',
       'contact_name',
       'contact_tel',

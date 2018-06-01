@@ -189,7 +189,7 @@ return [
         ],  
         //31
         [
-        		'text'=>'物流公司',
+        		'text'=>'快递公司',
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
