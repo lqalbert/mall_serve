@@ -136,6 +136,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
 	Route::resource('/stock-check',  'StockCheckController');
+	//电子面单
+	Route::get('/getOne/{assign_id}/{express_id}/{order_id}', 'WayBillController@getOne')
+	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);;
 
 });
 
