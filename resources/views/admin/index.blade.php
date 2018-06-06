@@ -13,7 +13,7 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.1.8/css/app.efa48ea4380def9f09bfe60e91a17777.css" rel="stylesheet">
+    <link href="/admin/static1.1.9/css/app.b50f68fd9e9e34a81d2368e31cb38092.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,8 +28,8 @@
     } 
    </script>
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.8/js/manifest.95e2e9c9ef877b38245c.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.8/js/vendor.ccdcfaa1dbbd8cf997ab.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.8/js/app.27941bf89f64a915a654.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.9/js/manifest.d3e1c77aaacfb4cda517.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.9/js/vendor.3546dd0b0b7e95e6116a.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.9/js/app.f1c7aea4305307652712.js"></script>
 </body>
 </html>
