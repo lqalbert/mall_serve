@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\AssignCreating;
+use Carbon\Carbon;
 
 class Assign extends Model
 {
@@ -87,6 +88,45 @@ class Assign extends Model
     {
         return $this->hasMany('App\Models\OrderGoods', 'order_id', 'order_id');
     }
+    
+    
+    /**
+     * 返回菜鸟接口要求的结构化的数据
+     * @return unknown
+     */
+    public function getPackageInfo()
+    {
+        $goods = $order->goods;
+        $items = [];
+        foreach ($goods  as $item ){
+            $items[] = ['counte'=> $item->goods_number, 'name'=>$item->goods_name];
+        }
+        return [
+            'id'=>$this->attributes['id'],
+            "items"=>$items,
+            "volume"=>"", //体积　非必填
+            "weight"=>"", //重量　非必填
+        ];
+    }
+    
+    public function isSetExpress()
+    {
+        return $this->attributes['set_express'] == null ? false : true;
+    }
+    
+    public function updateWaybillPrintStatus()
+    {
+        $this->express_print_status = 1;
+        $this->express_print_at = Carbon::now();
+    }
+    
+    public function updateAssignPrintStatus()
+    {
+        $this->assign_print_status= 1;
+        $this->assign_print_at= Carbon::now();
+    }
+    
+    
     
     /**
      * 获取配货单数量

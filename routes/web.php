@@ -16,9 +16,11 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
     //登录 退出
     Route::post('/login', 'LoginController@login');
     Route::post('/logout', 'LoginController@out');
+    Route::get('/set-sender', 'WayBillController@setSender');
 });
 
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.basic'], function(){
+
+Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
@@ -92,6 +94,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::resource('/order-assign', 'AssignController');
+	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
+	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
@@ -124,7 +129,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/complain','CustomerComplainController');
 	Route::resource('/communicate','CommunicateController');
 	
-	Route::get('/print/{id}', 'PrintController@index');
+// 	Route::get('/print/{id}', 'PrintController@index');
 	Route::get('/print/assign/{id}', 'PrintController@printAssign');
 	
 	Route::resource('/express-invoices', 'ExpressInvoicesController');
@@ -137,8 +142,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 
 	Route::resource('/stock-check',  'StockCheckController');
 	//电子面单
-	Route::get('/getOne/{assign_id}/{express_id}/{order_id}', 'WayBillController@getOne')
-	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);;
+	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
+	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
+	
 
 });
 

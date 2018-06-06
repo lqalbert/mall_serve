@@ -23,4 +23,44 @@ class ExpressCompany extends Model
     protected $dates = [
         'deleted_at'
     ];
+    
+    
+    /**
+     * 获取菜鸟接口规定的发货地址结构数据
+     */
+    public function getSend()
+    {
+//         'sender'=>[
+//             'address'=>[
+//                 'province'=>"",
+//                 'city'    =>"",
+//                 'district'=>"",
+//                 'town'    =>"",
+//                 'detail'  =>""
+//             ],
+//             "phone"=>"",
+//             "mobile"=>"",
+//             "name"=>""
+//         ]
+        return [
+            'address'=>[
+                'province'=>"",
+                'city'    =>"",
+                'district'=>"",
+                'town'    =>"",
+                'detail'  =>""
+            ],
+            "phone"=>"",
+            "mobile"=>"",
+            "name"=>""
+        ];
+    }
+    
+    /**
+     * 获取菜鸟的模板url
+     */
+    public function getTemplateUrl()
+    {
+       return config('cainiao.'.$this->attributes['eng']);
+    }
 }

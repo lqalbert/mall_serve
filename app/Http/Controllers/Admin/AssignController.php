@@ -154,13 +154,6 @@ class AssignController extends Controller
             if (!empty($with)) {
                 $collection->load($with);
             }
-//             foreach ($with as $model) {
-//                 if ($model == 'order') {
-//                     $collection->load([$model=> function($query){
-//                         $query->select('created_at');
-//                     }]);
-//                 }
-//             }
         }
         
         $result = [
@@ -201,6 +194,21 @@ class AssignController extends Controller
     public function show($id)
     {
         //
+    }
+    
+    public function showbyExpressSn(Request $request, $express_sn)
+    {
+        $model = Assign::where('express_sn', $express_sn)->first();
+        if (!$model) {
+            return $this->error([]);
+        }
+        if ($request->has('with')) {
+            $with = $request->input('with');
+            foreach ($with as $item) {
+                $model->{$item};
+            }
+        }
+        return $this->success($model);
     }
 
     /**
@@ -281,17 +289,23 @@ class AssignController extends Controller
         $assign->repeat_mark = $request->input('repeat_mark');
         switch ($is_repeat) {
             case 1:
+                if (!$assign->isSetExpress()) {
+                    $assign->express_id = 0;
+                    $assign->express_name = '';
+                    $assign->express_sn = '';
+                }
+                $assign->corrugated_case = '';
+                $assign->corrugated_id = 0;
                 $re = $assign->save();
                 break;
             case 2:
                 $re = $assign->save();
                 break;
             case 3:
-                $assign->express_id = 0;
-                $assign->express_name = '';
-                $assign->corrugated_case = '';
-                $assign->corrugated_id = 0;
-                $assign->express_sn = '';
+                
+//                 $assign->corrugated_case = '';
+//                 $assign->corrugated_id = 0;
+//                 $assign->express_sn = '';
                 $re = $assign->save();
                 break;
             default:
@@ -327,6 +341,34 @@ class AssignController extends Controller
         }
     }
     
+    
+    /**
+     * 面单
+     * 打印
+     */
+    public function waybillPrint(Request $request, $id)
+    {
+        $assign = Assign::find($id);
+        $assign->updateWaybillPrintStatus();
+        $re = $assign->save();
+        if ($re) {
+            return $this->success(['waybillcode'=>$assign->express_sn, 'print_data'=>$assign->print_data]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    public function goodsPrint(Request $request)
+    {
+        $assign = Assign::find($id);
+        $assign->updateAssignPrintStatus();
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([ ]);
+        } else {
+            return $this->error([]);
+        }
+    }
     
     
     

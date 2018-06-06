@@ -191,6 +191,16 @@ class OrderBasic extends Model
         }
     }
     
+    /**
+     * 返回菜鸟接口要求的结构化的数据
+     * @return unknown
+     */
+    public function getRecipient()
+    {
+        return $this->address->getRecipient();
+    }
+    
+    
     
     
     /**

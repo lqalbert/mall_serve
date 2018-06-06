@@ -29,7 +29,38 @@ class OrderAddress extends Model
         'area_district_id',
     ];
 
-
+    
+    
+    /**
+     * 获取菜鸟接口规定的收货地址结构数据
+     */
+    public function getRecipient()
+    {
+        //         'recipient'=>[
+        //             'address'=>[
+        //                 'province'=>"",
+        //                 'city'    =>"",
+        //                 'district'=>"",
+        //                 'town'    =>"",
+        //                 'detail'  =>""
+        //             ],
+        //             "phone"=>"",
+        //             "mobile"=>"",
+        //             "name"=>""
+        //         ]
+        return [
+            'address'=>[
+                'province'=>"",
+                'city'    =>"",
+                'district'=>"",
+                'town'    =>"",
+                'detail'  =>""
+            ],
+            "phone"=>"",
+            "mobile"=>"",
+            "name"=>""
+        ];
+    }
 
     
 }
