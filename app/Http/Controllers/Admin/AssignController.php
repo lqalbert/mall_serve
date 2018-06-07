@@ -344,6 +344,7 @@ class AssignController extends Controller
     
     /**
      * 面单
+     * @todo 事件处理　操作记录
      * 打印
      */
     public function waybillPrint(Request $request, $id)
@@ -358,6 +359,11 @@ class AssignController extends Controller
         }
     }
     
+    /**
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @return number[]|string[]|NULL[]
+     */
     public function goodsPrint(Request $request)
     {
         $assign = Assign::find($id);
@@ -365,6 +371,38 @@ class AssignController extends Controller
         $re = $assign->save();
         if ($re) {
             return $this->success([ ]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * 验货
+     * @todo 事件处理　操作记录
+     */
+    public function checkGoods(Request $request, $id)
+    {
+        $assign = Assign::find($id);
+        $assign->checkedGoods(auth()->user());
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * 称重发货
+     * @todo 事件处理　操作记录
+     */
+    public function weightGoods(Request $request, $id)
+    {
+        $assign = Assign::find($id);
+        $assign->weightGoods($request->input('real_weigth'), auth()->user());
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
         } else {
             return $this->error([]);
         }

@@ -97,6 +97,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
+	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
+	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');

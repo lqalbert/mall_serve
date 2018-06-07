@@ -11,7 +11,10 @@ class Assign extends Model
 {
     use SoftDeletes;
     const STATUS_DONE = 1;
+    const STATUS_CHECKEDGOODS = 6;
+    const STATUS_WEIGHTGOODS = 4;
     protected $table = 'assign_basic';
+    
     
     /**
      * 需要被转换成日期的属性。 softdelete 需要
@@ -124,6 +127,21 @@ class Assign extends Model
     {
         $this->assign_print_status= 1;
         $this->assign_print_at= Carbon::now();
+    }
+    
+    public function checkedGoods(User $user)
+    {
+        $this->status = self::STATUS_CHECKEDGOODS;
+        $this->user_id = $user->id;
+        $this->user_name = $user->realname;    
+    }
+    
+    public function weightGoods($weight ,User $user)
+    {
+        $this->status = self::STATUS_WEIGHTGOODS;
+        $this->real_weigth = $weight;
+//         $this->user_id = $user->id;
+//         $this->user_name = $user->realname;
     }
     
     

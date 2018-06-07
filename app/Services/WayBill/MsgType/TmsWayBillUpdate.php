@@ -3,6 +3,7 @@ namespace App\Services\WayBill\MsgType;
 
 /**
  * 生成如下连接结构的数据
+ * 有误　应该是更新哪些数据就传哪些数据
  * http://pac.i56.taobao.com/apiinfo/showDetail.htm?spm=0.0.0.0.9fnYWG&apiId=TMS_WAYBILL_UPDATE&type=merchant_electronic_sheet
  * @author hyf
  *

@@ -82,14 +82,14 @@ class Goods extends Model
      *
      * @param  string  $value
      * @return string
-     */
+     
     public function getCoverUrlAttribute($value)
     {
         if($value){
             $value = asset($value);
         }
     	return $value;
-    }
+    }*/
     
     public static function getCount()
     {
