@@ -59,7 +59,7 @@ class InventorySystem extends Model
 
     public function profitLoss()
     {
-        return $this->belongsTo('App\Models\StockCheck', 'sku_sn','sku_sn');
+        return $this->belongsTo('App\Models\StockCheckGoods', 'sku_sn','sku_sn');
     }
     
     

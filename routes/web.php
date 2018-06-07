@@ -130,6 +130,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
 	Route::resource('/stock-check',  'StockCheckController');
+	Route::get('/inventory-goods',  'StockCheckController@getInventoryGoods');
 
 });
 

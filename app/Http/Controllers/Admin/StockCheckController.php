@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\InventorySystem;
-use App\Models\EntrepotProductCategory;
+use App\Models\StockCheckGoods;
+use App\Models\StockCheck;
+use Illuminate\Support\Facades\DB;
 
 class StockCheckController extends Controller
 {
@@ -15,22 +17,17 @@ class StockCheckController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
-        $fields = [
-            'id',
-            'entrepot_id',
-            'goods_name',
-            'sku_sn',
-            'entrepot_count',
-            'entry_at',
-        ];
-        
-        $model = new InventorySystem();
+    { 
+        $model = new StockCheckGoods();
         
         if ($request->has('entrepot_id')) {
             $model = $model->where('entrepot_id', $request->input('entrepot_id'));
         }
         
+        if ($request->has('check_num')) {
+            $model = $model->where('check_num', $request->input('check_num'));
+        }
+
         if ($request->has('goods_name')) {
             $model = $model->where('goods_name', 'like', $request->input('goods_name')."%");
         }
@@ -39,37 +36,19 @@ class StockCheckController extends Controller
             $model = $model->where('sku_sn', 'like', $request->input('sku_sn')."%");
         }
 
-        if($request->has('cate_type_id')) {
-            $cate_type_id = $request->input('cate_type_id');
-            $model = $model->wherehas('goods', function($query) use($cate_type_id) {
-                $query->where('cate_type_id', $cate_type_id);
-            });
+        if ($request->has('start')) {
+            $model = $model->where('created_at', '>=', $request->input('start')." 00:00:00");
+        }
+
+        if ($request->has('end')) {
+            $end = Date('Y-m-d H:i:s', strtotime($request->input('end')." 00:00:00")+86400) ;
+            $model = $model->where('created_at', '<=', $end);
         }
         
-        $result = $model->paginate($request->input('pageSize', 20), $fields);
-        
-        $collection = $result->getCollection();
-        $collection->load('entrepot','goods','profitLoss');
-        
-        $re = $collection->toArray();
-        
-        $range = [];
-        if($request->has('start') && $request->has('end')) {
-            $range[] = $request->input('start');
-            $range[] = $request->input('end');
-        }
-        
-        
-        ///生产入库数量   
-        //退货入库数量     
-        //销售锁定数 order_goods  created_at
-        //发货锁定数 assign_basic created_at
-        //换货锁定数  还没有
-        
-        // $this->getSte($re, $range);
-        // logger($re);
+        $result = $model->orderBy('id', 'desc')->paginate($request->input('pageSize', 15));
+ 
         return [
-            'items'=> $re,
+            'items'=> $result->items(),
             'total'=> $result->total()
         ];
     }
@@ -92,7 +71,31 @@ class StockCheckController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // var_dump($request->input('check_data'));
+        DB::beginTransaction();
+        try {
+            $checkNum = "PD".time();
+            $allData = $request->all();
+            $allData['check_num'] = $checkNum;
+            $stockCheck = StockCheck::make($allData);
+            $re = $stockCheck->save();
+            if (!$re) {
+                throw new  \Exception('创建盘点单子失败');
+            }
+            $stockCheckGoodsModels = [];
+            foreach ($request->input('check_data') as $checkGoods) {
+                $checkGoods['check_num'] = $checkNum;
+                $stockCheckGoodsModels[] = StockCheckGoods::make($checkGoods);
+            }
+            if (!empty($stockCheckGoodsModels)) {
+                $stockCheck->goods()->saveMany($stockCheckGoodsModels);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+        return $this->success([$stockCheck->id]);
     }
 
     /**
@@ -126,7 +129,12 @@ class StockCheckController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $re = StockCheckGoods::where('id',$id)->update($request->all());
+        if($re){
+            $this->success($re);
+        }else{
+            $this->error($re);
+        }
     }
 
     /**
@@ -139,4 +147,56 @@ class StockCheckController extends Controller
     {
         //
     }
+
+    /**
+     * [getInventoryGoods 原理的获取 先不删]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getInventoryGoods(Request $request){
+        $fields = [
+            'id',
+            'entrepot_id',
+            'goods_name',
+            'sku_sn',
+            'entrepot_count',
+            'entry_at',
+        ];
+        
+        $model = new InventorySystem();
+        
+        if ($request->has('entrepot_id')) {
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
+        }
+        
+        if ($request->has('sku_sn')) {
+            $model = $model->whereIn('sku_sn', $request->input('sku_sn'));
+        }
+
+        if($request->has('cate_type_id')) {
+            $cate_type_id = $request->input('cate_type_id');
+            $model = $model->wherehas('goods', function($query) use($cate_type_id) {
+                $query->where('cate_type_id', $cate_type_id);
+            });
+        }
+
+        if($request->has('cate_kind_id')) {
+            $cate_kind_id = $request->input('cate_kind_id');
+            $model = $model->wherehas('goods', function($query) use($cate_kind_id) {
+                $query->where('cate_kind_id', $cate_kind_id);
+            });
+        }
+        
+        $result = $model->select($fields)->get();
+        
+        $result->load('entrepot','goods');
+        
+        $re = $result->toArray();
+        
+        return [
+            'items'=> $re,
+            'total'=> $result->count()
+        ];
+    }
+
 }
