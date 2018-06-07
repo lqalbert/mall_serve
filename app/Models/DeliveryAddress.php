@@ -25,5 +25,7 @@ class DeliveryAddress extends Model
         'area_province_id',
         'area_city_id',
         'area_district_id',
+        'delivery_addresses',
+        'fixed_telephone',
     ];
 }

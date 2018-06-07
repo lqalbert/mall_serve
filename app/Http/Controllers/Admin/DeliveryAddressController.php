@@ -34,7 +34,7 @@ class DeliveryAddressController extends Controller
             $address[$v->id]=$v;
             $full_address[$k]['id']=$v->id;
             // $full_address[$k]['fullAddress']=$v->name.'-'.$v->phone.'-'.$v->zip_code.'-'.$v->address;
-            $fullAddress=$v->area_province_name.$v->area_city_name.$v->area_district_name.'-'.$v->name.'-'.$v->phone;
+            $fullAddress=$v->area_province_name.$v->area_city_name.$v->area_district_name.'-'.$v->name.'-'.$v->fixed_telephone;
             $full_address[$k]['fullAddress']=$fullAddress;
         }
         return ['items'=>$data,'address'=>$address,'fullAddress'=>$full_address];
