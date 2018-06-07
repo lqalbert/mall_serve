@@ -27,6 +27,7 @@ class OrderAddress extends Model
         'area_province_id',
         'area_city_id',
         'area_district_id',
+        'fixed_telephone',
     ];
 
     
