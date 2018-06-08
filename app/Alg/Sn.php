@@ -41,6 +41,8 @@ class Sn
 	
 	/**
 	 * 生成 sn
+	 * 平时一天二三百单  双十一  一天两千单 
+	 * 所以4位16进制完全够了　16^4 = 65536  要6万多单后才会再次回到0000
 	 * @param unknown $c 当前总数
 	 * @param number $len
 	 * @return string

@@ -398,6 +398,7 @@ class AssignController extends Controller
      */
     public function weightGoods(Request $request, $id)
     {
+        //减库存
         $assign = Assign::find($id);
         $assign->weightGoods($request->input('real_weigth'), auth()->user());
         $re = $assign->save();
