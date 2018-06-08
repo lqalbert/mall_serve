@@ -43,7 +43,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\ChangeCustomerToVListener'
         ],
         
-        'App\Events\OrderCreating' => [
+//         'App\Events\OrderCreating' => [
+//             'App\Listeners\OrderCreatingListener'
+//         ],
+        'App\Events\OrderCreated' => [
             'App\Listeners\OrderCreatingListener'
         ],
         
@@ -72,7 +75,12 @@ class EventServiceProvider extends ServiceProvider
         
         'App\Events\OrderUnPass' => [],
         
-        'App\Events\AssignCreating' => [
+//         'App\Events\AssignCreating' => [
+//             //生成assign_sn
+//             'App\Listeners\AssignCreatingListener'
+//         ],
+        
+        'App\Events\AssignCreated' => [
             //生成assign_sn
             'App\Listeners\AssignCreatingListener'
         ],

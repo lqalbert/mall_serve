@@ -64,7 +64,8 @@ class Assign extends Model
     protected $guarded = [];
     
     protected $events = [
-      'creating'=> AssignCreating::class  
+      'creating'=> AssignCreating::class  ,
+      'created'=> AssignCreated::class  
     ];
     
     public function entrepot()

@@ -54,7 +54,8 @@ class OrderBasic extends Model
      * @var array
      */
     protected $events = [
-        'creating' => OrderCreating::class
+//         'creating' => OrderCreating::class,
+        'created'  => OrderCreated::class
     ];
     
     /**

@@ -30,7 +30,8 @@ class OrderCreatingListener
         if (empty($order->entrepot_id)) {
             return false;
         }
-        $order->order_sn = Sn::getOrderSn($order->entrepot->eng_name, OrderBasic::getOrderCount($order->entrepot_id));
+        $order->order_sn = Sn::getOrderSn($order->entrepot->eng_name, $order->id);
+        $order->save();
         return true;
     }
 }

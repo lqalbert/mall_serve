@@ -47,7 +47,7 @@ class Sn
 	 */
 	public static function getSn($c, $len = 4)
 	{
-		return sprintf("%04X", ++$c);
+		return sprintf("%04X", $c);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class Sn
 	 */
 	public static function getDanSn($pre, $base, $c)
 	{
-	    return $pre.Date('Ymd').$base. self::getSn($c, DAN_NUM_LENGTH);
+	    return $pre.Date('Ymd').$base. self::getSn($c % DAN_MAX, DAN_NUM_LENGTH);
 	}
 	
 	/**
