@@ -28,7 +28,7 @@
     } 
    </script>
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.10/js/manifest.8e74c76e99b56420a4db.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.10/js/manifest.291ee7792e1ad8f8e881.js"></script>
     <script type="text/javascript" src="/admin/static1.1.10/js/vendor.3546dd0b0b7e95e6116a.js"></script>
     <script type="text/javascript" src="/admin/static1.1.10/js/app.9705f14495ea56d10632.js"></script>
 </body>
