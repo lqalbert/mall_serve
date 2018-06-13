@@ -48,11 +48,16 @@ class CreateAssignListener
             $data['express_name'] = $order->express_name;
         }
         logger("[debug]", ['not here2']);
-        
-        if (Assign::create($data) == false) {
+        $model = Assign::create($data);
+        if ($model== false) {
             throw new \Exception('发货单创建失败');
         }
         logger("[debug]", ['not here3']);
+        $goods = $order->getGoods();
+        $goods->each(function ($item, $key) use($model){
+               $item->assign_id = $model->id;
+               $item->save();
+        });
         
         //更新 order_goods 表 assign_lock_at 字段为当前时间
 //         $affectRows = OrderGoods::where('order_id', $order->id)->update(['assign_lock_at'=> Date('Y-m-d H:i:s')]);

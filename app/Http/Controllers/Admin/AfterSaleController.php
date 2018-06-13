@@ -10,6 +10,7 @@ use App\Models\AfterSaleExpress;
 use Illuminate\Support\Facades\DB;
 use App\Events\AddAfterSale;
 use App\Alg\ModelCollection;
+use App\Models\OrderGoods;
 
 class AfterSaleController extends Controller
 {
@@ -82,21 +83,16 @@ class AfterSaleController extends Controller
             
             $goods =  [];
             foreach ($request->input('goods', []) as $product) {
-                $goods[] = AfterSaleGoods::make($product);
-            }
-            if (!empty($goods)) {
-                $model->goods()->saveMany($goods);
+//                 $goods[] = AfterSaleGoods::make($product);
+                    $id = $product['id'];
+                    unset($product['id']);
+                    unset($product['goods_num']);
+                    OrderGoods::where('id', $id)
+                                ->update($product);
+                    
             }
             
-            $express = [];
-            foreach ($request->input('express', []) as $exp) {
-                $express[] = AfterSaleExpress::make($exp);
-            }
-            if (!empty($express)) {
-                $model->express()->saveMany($express);
-            }
-            $model->check_status = 0;
-            event( new AddAfterSale($model));
+       
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

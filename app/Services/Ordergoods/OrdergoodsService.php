@@ -37,6 +37,10 @@ class OrdergoodsService
         if($this->request->has('order_id')){
             $where[] = ['order_id','=',$this->request->order_id];
         }
+        
+        if($this->request->has('assign_id')){
+            $where[] = ['assign_id','=',$this->request->assign_id];
+        }
 
         if(count($whereIn)>0 || count($where)>0){
             $order_status=  app()->makeWith('App\Repositories\Criteria\Ordergoods\Ordergoods', ['where'=>$where,'whereIn'=>$whereIn]);

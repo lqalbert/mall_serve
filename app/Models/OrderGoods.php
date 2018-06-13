@@ -32,6 +32,11 @@ class OrderGoods extends Model
         'barcode',
         'weight',
         'bubble_bag',
+        
+        'reason',
+        'status',
+        'inventory',
+        'return_num'
     ];
     
     public function productCategory()
