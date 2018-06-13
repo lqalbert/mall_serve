@@ -129,8 +129,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/volumeratio',  'VolumeRatioController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
+	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
-	Route::get('/inventory-goods',  'StockCheckController@getInventoryGoods');
+	Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');
 
 });
 

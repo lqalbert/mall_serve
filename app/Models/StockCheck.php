@@ -12,6 +12,8 @@ class StockCheck extends Model
         'check_num',
 		'check_name',
 		'check_user_id',
+        'remark',
+        'check_status'
     ];
 
 

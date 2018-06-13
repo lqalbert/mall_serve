@@ -217,12 +217,17 @@ return [
                 'icon' => null,
                 'index' => 'WarehousingProcess'
         ],
-    //36
+        [
+        		'text'=>'盘点开单',
+        		'icon'=>null,
+        		'index'=>'StockCheckGoods',
+        ],
 	    	[
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
-        ]
+        ],
+        
 
 		
 ];

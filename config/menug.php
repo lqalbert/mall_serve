@@ -31,7 +31,7 @@ return [
 		[
 				'text' => '库存管理',
 				'icon' => null,
-				'subIndex' => ['StockDetails','StockSum','StockOutDetails','StockWarning','ShelvesManagement','WarehousingProcess','StockCheck']
+				'subIndex' => ['StockDetails','StockSum','StockOutDetails','StockWarning','ShelvesManagement','WarehousingProcess']
 		    //'InventoryList',13
 		],
 		[
@@ -54,5 +54,10 @@ return [
 				'text' => '留言管理',
 				'icon' => null,
 				'subIndex'=>['Connection']
+		],
+		[
+				'text' => '盘点管理',
+				'icon' => null,
+				'subIndex'=>['StockCheckGoods','StockCheck']
 		],
 ];
