@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Events\AfterCreated;
 
 class AfterSale extends Model
 {
@@ -45,13 +46,20 @@ class AfterSale extends Model
         'remark'
     ];
     
+    protected $events = [
+      'created' => AfterCreated::class  
+    ];
     
     
     public function goods()
     {
         return $this->hasMany('App\Models\OrderGoods', 'order_id');
     }
-
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter');
+    }
     
     
     public function order()

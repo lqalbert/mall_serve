@@ -36,6 +36,11 @@ class CreateOrderAfter extends Migration
             $table->unsignedTinyInteger('status')->default(0)->comment('0 未处理　1已审核　2已确认');
             $table->timestamp('sure_at')->nullable()->comment('确认时间');
             $table->timestamp('check_at')->nullable()->comment('审核时间');
+            $table->unsignedTinyInteger('refund_status')->nullable()->comment('退款状态 0未退款　1已退款');
+            $table->decimal('resend_fee',8,2)->nullable()->comment('重发运费');
+            $table->decimal('reservice_fee',8,2)->nullable()->comment('重发服务费');
+            $table->timestamp('refund_at')->nullable()->comment('退款时间');
+            
             $table->timestamps();
             $table->softDeletes();
         });

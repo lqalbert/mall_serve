@@ -23,15 +23,19 @@ class AfterSaleController extends Controller
     {
         $builder = new AfterSale();
         
-        if ($request->has('express_sn')) {
-            $express_sn = $request->input('express_sn');
-            $builder = $builder->whereHas('express', function($query) use($express_sn) {
-                $query->where('express_sn', $express_sn);
-            });
+//         if ($request->has('express_sn')) {
+//             $express_sn = $request->input('express_sn');
+//             $builder = $builder->whereHas('express', function($query) use($express_sn) {
+//                 $query->where('express_sn', $express_sn);
+//             });
+//         }
+        
+        if ($request->has('order_sn')) {
+            $builder = $builder->where('order_sn', $request->input('order_sn'));
         }
         
-        if ($request->has('order_id')) {
-            $builder = $builder->where('order_id', $request->input('order_id'));
+        if ($request->has('return_sn')) {
+            $builder = $builder->where('return_sn', $request->input('return_sn'));
         }
         
         if ($request->has('type')) {
