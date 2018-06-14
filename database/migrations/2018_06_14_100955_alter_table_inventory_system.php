@@ -18,7 +18,7 @@ class AlterTableInventorySystem extends Migration
             $table->unsignedInteger('produce_out')->default(0)->comment('累计生产出库');
             $table->unsignedInteger('check_in')->default(0)->comment('累计盘点入库');
             $table->unsignedInteger('check_out')->default(0)->comment('累计盘点出库');
-            $table->unsignedInteger('return_in')->default(0)->comment('退货入库');
+//             $table->unsignedInteger('return_in')->default(0)->comment('退货入库');
             $table->unsignedInteger('return_out')->default(0)->comment('退货出库');
         });
     }
@@ -31,7 +31,7 @@ class AlterTableInventorySystem extends Migration
     public function down()
     {
         Schema::table('inventory_system', function (Blueprint $table) {
-            $table->dropColumn(['sale_count', 'produce_out', 'check_in', 'check_out', 'return_in', 'return_out']);
+            $table->dropColumn(['sale_count', 'produce_out', 'check_in', 'check_out', 'return_out']);
         });
     }
 }
