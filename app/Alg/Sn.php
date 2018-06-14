@@ -13,7 +13,7 @@ class Sn
     const ASSIGN = 'AS';
     const IN_ENTREPOT= 'IN';
     const OUT_ENTREPOT = 'OU';
-    const ORDER_RETURN = 'RE';
+    const ORDER_RETURN = 'RX';
     const ORDER_EXCHANGE = 'EX';
     
 	/**
@@ -43,7 +43,7 @@ class Sn
 	 * 生成 sn
 	 * 平时一天二三百单  双十一  一天两千单 
 	 * 所以4位16进制完全够了　16^4 = 65536  要6万多单后才会再次回到0000
-	 * @param unknown $c 当前总数
+	 * @param unknown $c id对65536求余
 	 * @param number $len
 	 * @return string
 	 */
@@ -118,20 +118,20 @@ class Sn
 	}
 	
 	/**
-	 * 生成退货单号
+	 * 生成退/换货单号
 	 *
 	 * @param string $base
 	 * @param number $c
 	 *
 	 * @return string
 	 */
-	public static function getReSn($base, $c)
+	public static function getRXSn($base, $c)
 	{
 	    return self::getDanSn(self::ORDER_RETURN, $base, $c);
 	}
 	
 	/**
-	 * 生成换货单号
+	 * 生成换货单号　估计不用了
 	 *
 	 * @param string $base
 	 * @param number $c

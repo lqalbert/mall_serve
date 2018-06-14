@@ -11,8 +11,8 @@ class Assign extends Model
 {
     use SoftDeletes;
     const STATUS_DONE = 1;
-    const STATUS_CHECKEDGOODS = 6;
-    const STATUS_WEIGHTGOODS = 4;
+    const STATUS_CHECKEDGOODS = 4;
+    const STATUS_WEIGHTGOODS = 3;
     protected $table = 'assign_basic';
     
     
@@ -29,9 +29,9 @@ class Assign extends Model
         '未审核',
         '已审核',
         '审核未通过',
-        '已拦截',
+       // '已拦截',
         '已发货',
-        '已打印',
+        //'已打印',
         '已验货'
     ];
     
@@ -64,7 +64,7 @@ class Assign extends Model
     protected $guarded = [];
     
     protected $events = [
-      'creating'=> AssignCreating::class  ,
+//       'creating'=> AssignCreating::class  ,
       'created'=> AssignCreated::class  
     ];
     
@@ -90,7 +90,7 @@ class Assign extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods', 'order_id', 'order_id');
+        return $this->hasMany('App\Models\OrderGoods');
     }
     
     
@@ -100,7 +100,7 @@ class Assign extends Model
      */
     public function getPackageInfo()
     {
-        $goods = $order->goods;
+        $goods = $this->goods;
         $items = [];
         foreach ($goods  as $item ){
             $items[] = ['counte'=> $item->goods_number, 'name'=>$item->goods_name];

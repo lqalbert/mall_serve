@@ -110,7 +110,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	Route::resource('/stock-warning','StockWarningController');
 	
 	Route::resource('/order-after-sale', 'AfterSaleController');
-	Route::resource('/after-goods', 'AfterGoodsController');
+// 	Route::resource('/after-goods', 'AfterGoodsController');
 	
 	Route::resource('/return-record', 'ReturnRecordController');
 	

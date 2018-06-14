@@ -368,6 +368,7 @@ class AssignController extends Controller
     {
         $assign = Assign::find($id);
         $assign->updateAssignPrintStatus();
+        $goods  = $assign->goods;
         $re = $assign->save();
         if ($re) {
             return $this->success([ ]);

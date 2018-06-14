@@ -30,6 +30,6 @@ class InventorySetAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
-        $this->inventorySys->setOrderAssign($order->entrepot_id, $order->goods);
+        $this->inventorySys->setOrderAssign($order->entrepot_id, $order->getGoods());
     }
 }

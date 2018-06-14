@@ -82,7 +82,7 @@ class EventServiceProvider extends ServiceProvider
         
         'App\Events\AssignCreated' => [
             //生成assign_sn
-            'App\Listeners\AssignCreatingListener'
+            'App\Listeners\AssignCreatedListener'
         ],
         
         //生成发货记录 不用了 配货单自动就有了
@@ -112,6 +112,9 @@ class EventServiceProvider extends ServiceProvider
 //         'App\Events\ProductExchange' => [
 //             'App\Listeners\ChangeExchangeAfterSaleUnLockListener' //解锁
 //         ]
+        'App\Events\AfterCreated' => [
+            'App\Listeners\AfterCreatedListener'
+        ]
         
         
     ];
