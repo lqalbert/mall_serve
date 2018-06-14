@@ -194,6 +194,12 @@ return [
         		'index'=>'ExpressCompany',
         ],
         //32
+				[
+            'text' => '快递赔偿',
+            'icon' => null,
+            'index' => 'ExpressCompensation'
+        ],
+
         [
             'text'=>'纸箱管理',
             'icon'=>null,
@@ -218,11 +224,17 @@ return [
                 'index' => 'WarehousingProcess'
         ],
     //36
+				[
+        		'text'=>'盘点开单',
+        		'icon'=>null,
+        		'index'=>'StockCheckGoods',
+        ],
+
 	    	[
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
-        ]
+        ],
 
 		
 ];
