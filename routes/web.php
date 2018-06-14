@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')]
+
 Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
@@ -89,16 +89,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
-	
-	Route::put('/order-assign-check/{id}', 'AssignController@check');
-	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
-	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::resource('/order-assign', 'AssignController');
-	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
-	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
-	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
-	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
-	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
@@ -142,6 +133,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	Route::resource('/expressprice',  'ExpressPriceController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
+	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
 	//电子面单
 	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')

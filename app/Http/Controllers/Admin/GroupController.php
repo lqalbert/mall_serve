@@ -30,19 +30,19 @@ class GroupController extends Controller
         switch ($business) {
             case 'select':
                 $result =  [
-                'items'=>[
-                'id'=>1,
-                'name'=>'asdfasf'
-                    ],
-                    [
-                    'id'=>1,
-                    'name'=>'asdfasf'
+                    'items'=>[
+                            'id'=>1,
+                            'name'=>'asdfasf'
                         ],
                         [
-                        'id'=>1,
-                        'name'=>'asdfasf'
-                            ]
-                            ];
+                            'id'=>1,
+                            'name'=>'asdfasf'
+                        ],
+                        [
+                            'id'=>1,
+                            'name'=>'asdfasf'
+                        ]
+                ];
             default:
                 $service = app('App\Services\Group\GroupService');
                 $result = $service->get();

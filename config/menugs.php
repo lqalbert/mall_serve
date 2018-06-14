@@ -177,7 +177,7 @@ return [
         ],  
         //29
         [
-        		'text'=>'配送发货',
+        		'text'=>'发货单',
         		'icon'=>null,
         		'index'=>'DistributionDelivery',
         ],  
@@ -189,7 +189,7 @@ return [
         ],  
         //31
         [
-        		'text'=>'快递公司',
+        		'text'=>'物流公司',
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
@@ -201,7 +201,7 @@ return [
         ],
 	//33
 	    [
-                'text' => '验货',
+                'text' => '验货管理',
                 'icon' => null,
                 'index' => 'GoodsInspect'
         ],
@@ -218,15 +218,10 @@ return [
                 'index' => 'WarehousingProcess'
         ],
     //36
-	    [
+	    	[
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
-        ],
- 	[
-            'text' => '快递赔偿',
-            'icon' => null,
-            'index' => 'ExpressCompensation'
         ]
 
 		
