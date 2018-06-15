@@ -98,7 +98,7 @@ class InventoryGatherController extends Controller
             ];
             
             if (!empty($range)) {
-                $Assignwhere = array_merge($Assignwhere, $this->setRange($re, 'out_entrepot_at'));
+                $Assignwhere = array_merge($Assignwhere, $this->setRange($range, 'out_entrepot_at'));
             }
             $goods['entrepot_out'] = Assign::where($Assignwhere)->sum('goods_num');
             
@@ -107,7 +107,7 @@ class InventoryGatherController extends Controller
                 ['sku_sn', $goods['sku_sn']],
             ];
             if (!empty($range)) {
-                $proWhere= array_merge($proWhere, $this->setRange($re, 'created_at'));
+                $proWhere= array_merge($proWhere, $this->setRange($range, 'created_at'));
             }
             $model = ProduceEntryProduct::where($proWhere);
             $entrepot_id = $goods['entrepot_id'];
@@ -121,7 +121,7 @@ class InventoryGatherController extends Controller
                 ['sku_sn', $goods['sku_sn']],
             ];
             if (!empty($range)) {
-                $badWhere= array_merge($badWhere, $this->setRange($re, 'created_at'));
+                $badWhere= array_merge($badWhere, $this->setRange($range, 'created_at'));
             }
             $goods['bad_num'] = BadGoods::where($badWhere)->sum('num');
             
@@ -151,7 +151,7 @@ class InventoryGatherController extends Controller
         
         if ($request->has('cate_kind_id')) {
             $cate_kind_id = $request->input('cate_kind_id');
-            $model = $model->wherehas('goods', function($query){
+            $model = $model->wherehas('goods', function($query) use($cate_kind_id){
                 $query->where('cate_kind_id', $cate_kind_id);
             });
         } else if($request->has('cate_type_id')) {
@@ -164,7 +164,7 @@ class InventoryGatherController extends Controller
         $result = $model->paginate($request->input('pageSize', 20), $fields);
         
         $collection = $result->getCollection();
-        $collection->load('entrepot');
+        $collection->load('entrepot','category');
         
         $re = $collection->toArray();
         
@@ -197,7 +197,7 @@ class InventoryGatherController extends Controller
                 ['sku_sn', $goods['sku_sn']],
             ];
             if (!empty($range)) {
-                $proWhere= array_merge($proWhere, $this->setRange($re, 'created_at'));
+                $proWhere= array_merge($proWhere, $this->setRange($range, 'created_at'));
             }
             $model = ProduceEntryProduct::where($proWhere);
             $entrepot_id = $goods['entrepot_id'];
@@ -212,7 +212,7 @@ class InventoryGatherController extends Controller
                 ['goods_status', 0]
             ];
             if (!empty($range)) {
-                $returnWhere= array_merge($returnWhere, $this->setRange($re, 'created_at'));
+                $returnWhere= array_merge($returnWhere, $this->setRange($range, 'created_at'));
             }
             $goods['return_num'] = ReturnRecord::where($returnWhere)->sum('goods_num');
             
@@ -222,7 +222,7 @@ class InventoryGatherController extends Controller
             ];
             
             if (!empty($range)) {
-                $orderWhere = array_merge($orderWhere, $this->setRange($re, 'created_at'));
+                $orderWhere = array_merge($orderWhere, $this->setRange($range, 'created_at'));
             }
             $model = OrderGoods::where($orderWhere);
             $goods['order_lock'] = $model->whereHas('order', function($query) use($entrepot_id) {
@@ -237,7 +237,7 @@ class InventoryGatherController extends Controller
             ];
             
             if (!empty($range)) {
-                $Assignwhere = array_merge($Assignwhere, $this->setRange($re, 'created_at'));
+                $Assignwhere = array_merge($Assignwhere, $this->setRange($range, 'created_at'));
             }
             $goods['assign_lock'] = Assign::where($Assignwhere)->count();
             

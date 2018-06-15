@@ -3,6 +3,7 @@ namespace App\Services\Employee;
 
 use Illuminate\Http\Request;
 use App\Models\RoleUser;
+use App\Models\Role;
 
 class PickAbleGMService
 {
@@ -16,9 +17,11 @@ class PickAbleGMService
 
     public function get()
     {
-        // TODO 6 需要改成 $role->id
+        // TODO 6 需要改成 $role->id => test
         $request = $this->request;
-        $re = RoleUser::select('*')->where('role_id', 6)
+        $role = Role::where('name','group-member')->first();
+        
+        $re = RoleUser::select('*')->where('role_id', $role->id)
             ->with([
             'user' => function ($query) use ($request) {
                 $query->select('id', 'realname', 'group_name');

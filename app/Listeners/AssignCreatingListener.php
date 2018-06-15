@@ -31,8 +31,9 @@ class AssignCreatingListener
             return false;
         }
         if (empty($assign->assign_sn)){
-            $assign->assign_sn = Sn::getAssignSn($assign->entrepot->eng_name, Assign::getAssignCount($assign->entrepot_id));
+            $assign->assign_sn = Sn::getAssignSn($assign->entrepot->eng_name, $assign->id);
         }
+        $assign->save();
         return true;
     }
 }

@@ -11,9 +11,10 @@ class DateRange extends Criteria
      */
     private $range = null;
     
-    public function  __construct($range)
+    public function  __construct($range, $field="created_at")
     {
         $this->range= $entrepot_id;
+        $this->field = $field;
     }
     
     /**
@@ -28,8 +29,8 @@ class DateRange extends Criteria
         
         $range = $this->range;
         $model->where([
-            ['created_at', '>=', $range[0]],
-            ['created_at', '<=', $range[1]],
+            [$this->field, '>=', $range[0]],
+            [$this->field, '<=', $range[1]],
         ]);
         return $model;
     }

@@ -77,7 +77,14 @@ class OrderAddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        unset($data['id']);
+        $re = OrderAddress::where('id', $id)->update($data);
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
 
     /**

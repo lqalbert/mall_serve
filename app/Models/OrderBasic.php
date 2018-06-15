@@ -40,7 +40,12 @@ class OrderBasic extends Model
         'entrepot_id',
         'cus_name',
         'group_id',
-        'department_id'
+        'department_id',
+        'express_delivery',
+        'express_id',
+        'order_remark',
+        'express_remark',
+        'express_name',
     ];
     
     /**
@@ -49,7 +54,8 @@ class OrderBasic extends Model
      * @var array
      */
     protected $events = [
-        'creating' => OrderCreating::class
+//         'creating' => OrderCreating::class,
+        'created'  => OrderCreated::class
     ];
     
     /**
@@ -60,8 +66,10 @@ class OrderBasic extends Model
     private static $status = [
         "待审核",
         "审核通过",
-        "待充值",
-        "配货中",
+        "发货中",
+        "已发货",
+        "已揽件",
+        "运输中",
         "订单完成",
         "订单取消",
         "审核未通过"
@@ -160,7 +168,12 @@ class OrderBasic extends Model
      */
     public function isPass()
     {
-        return $this->attributes['status'] == 1 ||  $this->attributes['status'] == 2;
+        return $this->attributes['status'] >= 1 ;
+    }
+    
+    public function isSetExpress()
+    {
+        return $this->express_delivery == 1 && is_numeric($this->express_id);
     }
     
     
@@ -178,6 +191,16 @@ class OrderBasic extends Model
             $this->after_sale_status = self::AFTER_SALE_EXCHANGE_DONE;
         }
     }
+    
+    /**
+     * 返回菜鸟接口要求的结构化的数据
+     * @return unknown
+     */
+    public function getRecipient()
+    {
+        return $this->address->getRecipient();
+    }
+    
     
     
     

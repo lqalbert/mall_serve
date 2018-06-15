@@ -11,8 +11,9 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\OrderBasic;
 use App\Models\User;
+use App\Contracts\OrderGoodsContract;
 
-class OrderPass
+class OrderPass implements OrderGoodsContract
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
@@ -22,16 +23,24 @@ class OrderPass
      * @var unknown
      */
     private $user = null;
+    
+    
+    private $goods= null;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(OrderBasic $order, User $user)
+    public function __construct(OrderBasic $order, User $user, $goods=null)
     {
         $this->order = $order;
         $this->user  = $user; 
+        if ($goods) {
+            $this->goods = $goods;
+        } else {
+            $this->goods = $order->goods;
+        }
     }
 
     /**
@@ -52,5 +61,9 @@ class OrderPass
     public function getUser()
     {
         return $this->user;
+    }
+    
+    public function getGoods(){
+        return $this->goods;
     }
 }

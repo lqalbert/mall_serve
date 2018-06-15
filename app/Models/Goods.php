@@ -33,7 +33,14 @@ class Goods extends Model
         'del_price',
         'comments',
         'sale_count',
-        'sale_able_count'
+        'sale_able_count',
+        'len',
+        'width',
+        'height',
+        'barcode',
+        'weight',
+        'bubble_bag',
+        'specifications',
     ];
     
     //多对多
@@ -76,14 +83,14 @@ class Goods extends Model
      *
      * @param  string  $value
      * @return string
-     */
+     
     public function getCoverUrlAttribute($value)
     {
         if($value){
             $value = asset($value);
         }
     	return $value;
-    }
+    }*/
     
     public static function getCount()
     {

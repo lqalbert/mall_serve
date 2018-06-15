@@ -15,6 +15,9 @@ class ExpressCompanyController extends Controller
     public function index(Request $request)
     {
         $where=[];
+        if($request->has('entrepot_id')){
+            $where['entrepot_id']=$request->input('entrepot_id');
+        }
         if($request->has('company_name')){
             $where['company_name']=$request->input('company_name');
         }
@@ -46,7 +49,7 @@ class ExpressCompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['eng'=>['required|unique:express_companies|max:2']],['eng.unique'=>'编号前缀已使用']);
+        $this->validate($request, ['eng'=>'required|unique:express_companies|max:2'],['eng.unique'=>'编号前缀已使用']);
         $model = ExpressCompany::create($request->all());
         return $this->success($model);
     }

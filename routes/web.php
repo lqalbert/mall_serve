@@ -11,14 +11,25 @@
 |
 */
 
-Route::group([ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')], function(){
+if (env('APP_ENV') != "production") {
+    $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
+    $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
+} else {
+    $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
+    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
+}
+
+
+Route::group($logGroup, function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
     Route::post('/login', 'LoginController@login');
     Route::post('/logout', 'LoginController@out');
+    Route::get('/set-sender', 'WayBillController@setSender');
 });
 
-    Route::group(['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ], function(){
+    //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
+Route::group($adminGroup, function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
@@ -108,6 +119,7 @@ Route::group([ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mal
 	Route::resource('/stock-warning','StockWarningController');
 	
 	Route::resource('/order-after-sale', 'AfterSaleController');
+// 	Route::resource('/after-goods', 'AfterGoodsController');
 	
 	Route::resource('/return-record', 'ReturnRecordController');
 	
@@ -119,11 +131,27 @@ Route::group([ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mal
 	Route::resource('/complain','CustomerComplainController');
 	Route::resource('/communicate','CommunicateController');
 	
-	Route::get('/print/{id}', 'PrintController@index');
+// 	Route::get('/print/{id}', 'PrintController@index');
 	Route::get('/print/assign/{id}', 'PrintController@printAssign');
 	
 	Route::resource('/express-invoices', 'ExpressInvoicesController');
 	Route::resource('/assign-invoices',  'AssignInvoicesController');
+	Route::resource('/cartonmanagement',  'CartonManagementController');
+	Route::resource('/volumeratio',  'VolumeRatioController');
+	Route::resource('/expresscompensation',  'ExpressCompensationController');
+	Route::resource('/expressprice',  'ExpressPriceController');
+	Route::get('/aaa',  'CartonManagementController@goods_carton');
+
+	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
+	Route::resource('/stock-check',  'StockCheckController');
+	//电子面单
+	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
+	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
+
+	Route::resource('/purchaseorder',  'PurchaseOrderController');
+	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
+	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
+	Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
 
 });
 

@@ -35,42 +35,34 @@ class CreateAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
+        logger("[debug]", ['not here']);
+        $data = [
+            'entrepot_id'=> $order->entrepot_id,
+            'order_id'   => $order->id,
+            'address_id' => $order->address->id,
+        ];
         
-        //$addressModel = OrderAddress::find($order->id);
-        $order->goods->load('productCategory');
-        
-        $inserts = [];
-        foreach ($order->goods  as $product) {
-//             var_dump($product);
-            $inserts[] =Assign::create([
-                'entrepot_id'=> $order->entrepot_id,
-                'order_id'   => $order->id,
-                'cus_name'   => $order->customer->name,
-                'goods_name' => $product->goods_name,
-                'goods_num'  => $product->goods_number,
-                'unit_type'  => $product->unit_type,
-                'cate_type'  => $product->productCategory->cate_type,
-                'cate_type_id' => $product->productCategory->cate_type_id,
-                'cate_kind'  => $product->productCategory->cate_kind,
-                'cate_kind_id' => $product->productCategory->cate_kind_id,
-                'deliver_name' => $order->address->name,
-                'deliver_phone' => $order->address->phone,
-                'deliver_zip_code' => $order->address->zip_code,
-                'deliver_address' => $order->address->address,
-                'sale_name' => $order->deal_name,
-                'pass_check' => $order->auditor_time
-            ]);
+        if ($order->isSetExpress()) {
+            $data['set_express'] = 1;
+            $data['express_id'] = $order->express_id;
+            $data['express_name'] = $order->express_name;
         }
-        
-        
-        if (count($inserts) == 0) {
-            throw new \Exception('配货单创建失败');
+        logger("[debug]", ['not here2']);
+        $model = Assign::create($data);
+        if ($model== false) {
+            throw new \Exception('发货单创建失败');
         }
+        logger("[debug]", ['not here3']);
+        $goods = $order->getGoods();
+        $goods->each(function ($item, $key) use($model){
+               $item->assign_id = $model->id;
+               $item->save();
+        });
         
         //更新 order_goods 表 assign_lock_at 字段为当前时间
-        $affectRows = OrderGoods::where('order_id', $order->id)->update(['assign_lock_at'=> Date('Y-m-d H:i:s')]);
-        if ($affectRows == 0 ) {
-            throw new \Exception('更新 assign_lock_at 失败');
-        }
+//         $affectRows = OrderGoods::where('order_id', $order->id)->update(['assign_lock_at'=> Date('Y-m-d H:i:s')]);
+//         if ($affectRows == 0 ) {
+//             throw new \Exception('更新 assign_lock_at 失败');
+//         }
     }
 }

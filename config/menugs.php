@@ -68,7 +68,7 @@ return [
 		],
 		//11
 		[
-				'text'=>'退换货审核',
+				'text'=>'新退货单',
 				'icon'=>null,
 				'index'=>'Refund'
 		],
@@ -177,7 +177,7 @@ return [
         ],  
         //29
         [
-        		'text'=>'配送发货',
+        		'text'=>'发货单',
         		'icon'=>null,
         		'index'=>'DistributionDelivery',
         ],  
@@ -189,11 +189,57 @@ return [
         ],  
         //31
         [
-        		'text'=>'物流公司',
+        		'text'=>'快递公司',
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
+        //32
+				[
+            'text' => '快递赔偿',
+            'icon' => null,
+            'index' => 'ExpressCompensation'
+        ],
 
+        [
+            'text'=>'纸箱管理',
+            'icon'=>null,
+            'index'=>'CartonManagement',
+        ],
+	//33
+	    [
+                'text' => '验货',
+                'icon' => null,
+                'index' => 'GoodsInspect'
+        ],
+//        34
+        [
+                'text' => '同步发货',
+                'icon' => null,
+                'index' => 'DeliverGoods'
+        ],
+ //        35
+        [
+                'text' => '采购开单',
+                'icon' => null,
+                'index' => 'WarehousingProcess'
+        ],
+    //36
+				[
+        		'text'=>'盘点开单',
+        		'icon'=>null,
+        		'index'=>'StockCheckGoods',
+        ],
+
+	    	[
+        		'text'=>'盘存盘点',
+        		'icon'=>null,
+        		'index'=>'StockCheck',
+        ],
+ 	[
+            'text' => '采购单列表',
+            'icon' => null,
+            'index' => 'PurchaseList'
+        ]
 
 		
 ];

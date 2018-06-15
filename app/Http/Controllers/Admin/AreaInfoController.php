@@ -22,6 +22,10 @@ class AreaInfoController extends Controller
                 $pid = $request->input('pid');
                 $result = AreaInfo::where('p_id','=',$pid)->get();
                 break;
+            case 'district':
+                $pid = $request->input('pid');
+                $result = AreaInfo::where('p_id','=',$pid)->get();
+                break;
             default:
                 $pid = $request->input('pid',1);
                 $result = AreaInfo::where('p_id','=',$pid)->get();

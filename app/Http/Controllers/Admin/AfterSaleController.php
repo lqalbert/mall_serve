@@ -10,6 +10,7 @@ use App\Models\AfterSaleExpress;
 use Illuminate\Support\Facades\DB;
 use App\Events\AddAfterSale;
 use App\Alg\ModelCollection;
+use App\Models\OrderGoods;
 
 class AfterSaleController extends Controller
 {
@@ -22,15 +23,19 @@ class AfterSaleController extends Controller
     {
         $builder = new AfterSale();
         
-        if ($request->has('express_sn')) {
-            $express_sn = $request->input('express_sn');
-            $builder = $builder->whereHas('express', function($query) use($express_sn) {
-                $query->where('express_sn', $express_sn);
-            });
+//         if ($request->has('express_sn')) {
+//             $express_sn = $request->input('express_sn');
+//             $builder = $builder->whereHas('express', function($query) use($express_sn) {
+//                 $query->where('express_sn', $express_sn);
+//             });
+//         }
+        
+        if ($request->has('order_sn')) {
+            $builder = $builder->where('order_sn', $request->input('order_sn'));
         }
         
-        if ($request->has('order_id')) {
-            $builder = $builder->where('order_id', $request->input('order_id'));
+        if ($request->has('return_sn')) {
+            $builder = $builder->where('return_sn', $request->input('return_sn'));
         }
         
         if ($request->has('type')) {
@@ -82,21 +87,16 @@ class AfterSaleController extends Controller
             
             $goods =  [];
             foreach ($request->input('goods', []) as $product) {
-                $goods[] = AfterSaleGoods::make($product);
-            }
-            if (!empty($goods)) {
-                $model->goods()->saveMany($goods);
+//                 $goods[] = AfterSaleGoods::make($product);
+                    $id = $product['id'];
+                    unset($product['id']);
+                    unset($product['goods_num']);
+                    OrderGoods::where('id', $id)
+                                ->update($product);
+                    
             }
             
-            $express = [];
-            foreach ($request->input('express', []) as $exp) {
-                $express[] = AfterSaleExpress::make($exp);
-            }
-            if (!empty($express)) {
-                $model->express()->saveMany($express);
-            }
-            $model->check_status = 0;
-            event( new AddAfterSale($model));
+       
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -104,13 +104,6 @@ class AfterSaleController extends Controller
         }
         
         return $this->success([]);
-        
-        
-//         if ($model->type == AfterSale::RETURN_BACK) {
-            
-//         } else if($model->type == AfterSale::EXCHANGE_GOODS) {
-            
-//         }
     }
 
     /**

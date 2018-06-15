@@ -1,6 +1,7 @@
 <?php
 /**
 * 生成商品编号 （goods_sn、sku_sn）
+* 订单号或发货单号要重新生成　不要用count
 * 订单号
 */
 namespace App\Alg;
@@ -12,8 +13,9 @@ class Sn
     const ASSIGN = 'AS';
     const IN_ENTREPOT= 'IN';
     const OUT_ENTREPOT = 'OU';
-    const ORDER_RETURN = 'RE';
+    const ORDER_RETURN = 'RX';
     const ORDER_EXCHANGE = 'EX';
+    const CHECK = 'CH';
     
 	/**
 	 * 生成商品编号
@@ -40,13 +42,15 @@ class Sn
 	
 	/**
 	 * 生成 sn
-	 * @param unknown $c 当前总数
+	 * 平时一天二三百单  双十一  一天两千单 
+	 * 所以4位16进制完全够了　16^4 = 65536  要6万多单后才会再次回到0000
+	 * @param unknown $c id对65536求余
 	 * @param number $len
 	 * @return string
 	 */
 	public static function getSn($c, $len = 4)
 	{
-		return sprintf("%04X", ++$c);
+		return sprintf("%04X", $c);
 	}
 	
 	/**
@@ -59,7 +63,7 @@ class Sn
 	 */
 	public static function getDanSn($pre, $base, $c)
 	{
-	    return $pre.Date('Ymd').$base. self::getSn($c, DAN_NUM_LENGTH);
+	    return $pre.Date('Ymd').$base. self::getSn($c % DAN_MAX, DAN_NUM_LENGTH);
 	}
 	
 	/**
@@ -115,20 +119,20 @@ class Sn
 	}
 	
 	/**
-	 * 生成退货单号
+	 * 生成退/换货单号
 	 *
 	 * @param string $base
 	 * @param number $c
 	 *
 	 * @return string
 	 */
-	public static function getReSn($base, $c)
+	public static function getRXSn($base, $c)
 	{
 	    return self::getDanSn(self::ORDER_RETURN, $base, $c);
 	}
 	
 	/**
-	 * 生成换货单号
+	 * 生成换货单号　估计不用了
 	 *
 	 * @param string $base
 	 * @param number $c
@@ -138,5 +142,16 @@ class Sn
 	public static function getExSn($base, $c)
 	{
 	    return self::getDanSn(self::ORDER_EXCHANGE, $base, $c);
+	}
+	
+	/**
+	 * 生成盘点单
+	 * @param unknown $base
+	 * @param unknown $c
+	 * @return string
+	 */
+	public static function getCheckSn($base, $c)
+	{
+	    return self::getDanSn(self::CHECK, $base ,$c);
 	}
 }

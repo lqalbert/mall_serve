@@ -8,12 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}商城后台管理系统</title>
 
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.1.2/css/app.67a23ac3a94730e92437142da22c4484.css" rel="stylesheet">
+    <link href="/admin/static1.1.10/css/app.23ec5bc333ea7406a9dc755789a9d8ce.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,8 +28,8 @@
     } 
    </script>
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.2/js/manifest.176992e06c7e9544a7c5.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.2/js/vendor.18c8cadfa9001265e9df.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.2/js/app.6496f9d3a72a15f6dbf7.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.10/js/manifest.291ee7792e1ad8f8e881.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.10/js/vendor.3546dd0b0b7e95e6116a.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.10/js/app.9705f14495ea56d10632.js"></script>
 </body>
 </html>

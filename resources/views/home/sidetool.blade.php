@@ -5,13 +5,13 @@
     </div>
     <div class="options sbox">
         <img src="/images/home/index/option.png" alt=""/>
-        <div class="content">意见反馈</div>
+        <div class="content"><a href="/connection/index">意见反馈</a></div>
     </div>
     <div class="qrcode sbox">
         <img src="/images/home/index/qrcode.png" alt=""/>
         <div class="content">
             <div id="qrcode">
-            	<img src="/images/fcode.png"/>
+            	<img src="/images/fcode.png" id="fcode"/>
             </div>
         </div>
     </div>

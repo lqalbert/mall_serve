@@ -131,10 +131,13 @@ class GoodsDetailsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-    	$this->repository->with(['category', 'imgs']);
-    	return $this->repository->find($id);
+        if ($request->has('with')) {
+            $this->repository->with($request->input('with'));
+        }
+    	
+    	return $this->repository->find($id, $request->input('fields',["*"]));
     }
 
     /**

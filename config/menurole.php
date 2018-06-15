@@ -10,36 +10,46 @@ return [
         '*'
     ],
     'sale-manager' => [
-        0,
-        5,
-        6,
-        8,
-        9,
-        10,
-        11,
-        18,
-        19,
-        20,
-        21
+        'GoodsDetails',
+        'Group',
+        'Employee',
+        'Customer',
+        'OrderList',
+        'BuyOrders',
+        'Refund',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website'
+    ],
+    'human-resources' => [
+      
+        'Employee',
+       
+        
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website'
     ],
     'sale-captain' => [
-        0,
-        6,
-        8,
-        9,
-        18,
-        19,
-        20,
-        21
+        'GoodsDetails',
+        'Employee',
+        'Customer',
+        'OrderList',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website'
     ],
     'sale-staff' => [
-        0,
-        8,
-        9,
-        18,
-        19,
-        20,
-        21
+        'GoodsDetails',
+        'Customer',
+        'OrderList',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website'
     ],
     // 隐藏的角色
     'group-member' => [],

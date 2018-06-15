@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Contracts\Goods as GoodsContracts;
 
-class OrderGoods extends Model
+class OrderGoods extends Model implements GoodsContracts
 {
     use SoftDeletes;
     protected $table = 'order_goods';
@@ -26,6 +27,17 @@ class OrderGoods extends Model
         'sku_name',
         'sku_sn',
         'unit_type',
+        'len',
+        'width',
+        'height',
+        'barcode',
+        'weight',
+        'bubble_bag',
+        
+        'reason',
+        'status',
+        'inventory',
+        'return_num'
     ];
     
     public function productCategory()
@@ -36,5 +48,23 @@ class OrderGoods extends Model
     public function order()
     {
         return $this->belongsTo('App\Models\OrderBasic', 'order_id');
+    }
+    
+    public function assign()
+    {
+        return $this->hasOne('App\Models\Assign', 'order_goods_id')->select(['id','order_goods_id','out_entrepot_at','sign_at']);
+    }
+    
+    public function getNum()
+    {
+        return $this->attributes['goods_number'];
+    }
+    
+    public function getSkuSn()
+    {
+        return $this->attributes['sku_sn'] ;    
+    }
+    public function getName(){
+        return $this->attributes['goods_name'];
     }
 }

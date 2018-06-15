@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\AddAssign;
 use App\Events\AssignCreating;
+use Carbon\Carbon;
 
 class Assign extends Model
 {
     use SoftDeletes;
     const STATUS_DONE = 1;
+    const STATUS_CHECKEDGOODS = 4;
+    const STATUS_WEIGHTGOODS = 3;
     protected $table = 'assign_basic';
+    
     
     /**
      * 需要被转换成日期的属性。 softdelete 需要
@@ -21,11 +24,15 @@ class Assign extends Model
     protected $dates = [
         'deleted_at'
     ];
-    
+    //前端　查询那里是写死了的　这里修改了　前端还要再改一下
     private static $statusMap = [
-        '待发',
-        '已发',
-        '废单'
+        '未审核',
+        '已审核',
+        '审核未通过',
+       // '已拦截',
+        '已发货',
+        //'已打印',
+        '已验货'
     ];
     
     
@@ -57,7 +64,8 @@ class Assign extends Model
     protected $guarded = [];
     
     protected $events = [
-      'creating'=> AssignCreating::class  
+//       'creating'=> AssignCreating::class  ,
+      'created'=> AssignCreated::class  
     ];
     
     public function entrepot()
@@ -74,6 +82,70 @@ class Assign extends Model
     {
         return self::$statusMap[$this->attributes['status']];
     }
+    
+    public function address()
+    {
+        return $this->belongsTo('App\Models\OrderAddress', 'address_id');
+    }
+    
+    public function goods()
+    {
+        return $this->hasMany('App\Models\OrderGoods');
+    }
+    
+    
+    /**
+     * 返回菜鸟接口要求的结构化的数据
+     * @return unknown
+     */
+    public function getPackageInfo()
+    {
+        $goods = $this->goods;
+        $items = [];
+        foreach ($goods  as $item ){
+            $items[] = ['counte'=> $item->goods_number, 'name'=>$item->goods_name];
+        }
+        return [
+            'id'=>$this->attributes['id'],
+            "items"=>$items,
+            "volume"=>"", //体积　非必填
+            "weight"=>"", //重量　非必填
+        ];
+    }
+    
+    public function isSetExpress()
+    {
+        return $this->attributes['set_express'] == null ? false : true;
+    }
+    
+    public function updateWaybillPrintStatus()
+    {
+        $this->express_print_status = 1;
+        $this->express_print_at = Carbon::now();
+    }
+    
+    public function updateAssignPrintStatus()
+    {
+        $this->assign_print_status= 1;
+        $this->assign_print_at= Carbon::now();
+    }
+    
+    public function checkedGoods(User $user)
+    {
+        $this->status = self::STATUS_CHECKEDGOODS;
+        $this->user_id = $user->id;
+        $this->user_name = $user->realname;    
+    }
+    
+    public function weightGoods($weight ,User $user)
+    {
+        $this->status = self::STATUS_WEIGHTGOODS;
+        $this->real_weigth = $weight;
+//         $this->user_id = $user->id;
+//         $this->user_name = $user->realname;
+    }
+    
+    
     
     /**
      * 获取配货单数量

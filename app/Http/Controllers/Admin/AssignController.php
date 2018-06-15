@@ -11,6 +11,10 @@ use App\Events\Signatured;
 use App\Models\Assign;
 use App\Models\Communicate;
 use App\Repositories\Criteria\Ordergoods\DateRange;
+use Carbon\Carbon;
+use App\Repositories\Criteria\Assign\Order;
+use App\Repositories\Criteria\Assign\Address;
+use App\Repositories\Criteria\FieldEqualLessThan;
 
 class AssignController extends Controller
 {
@@ -18,23 +22,21 @@ class AssignController extends Controller
     
     private $fieldEqual = [
         'entrepot_id',
-        'cate_type_id', //大分类,
-        'cate_kind_id', //小分类
+        'assign_sn',
         'status',//发货状态
-        'assign_type', //发货类型 正常、退货、换货
-        'order_id',//订单ID,
-        'sku_sn',
-        'express_sn'
+        'corrugated_id',
+        
+
     ];
     
-    private $fieldLike = [
-        'goods_name',
-        'sale_name',
-        'deliver_name',
-        'deliver_phone',
-        'express_name',
-        'user_name'
-    ];
+//     private $fieldLike = [
+//         'goods_name',
+//         'sale_name',
+//         'deliver_name',
+//         'deliver_phone',
+//         'express_name',
+//         'user_name'
+//     ];
     
     public function __construct(AssignRepository $repository)
     {
@@ -47,24 +49,85 @@ class AssignController extends Controller
      */
     public function index(Request $request)
     {
-        foreach ($this->fieldEqual as  $value) {
-            if ($request->has($value)) {
-                $this->repository->pushCriteria(new FieldEqual($value, $request->input($value)));
+        
+        //分成几类
+        
+        //assign 本表的　发货单　箱类型　查询日期　range
+        //order 表的　订单编号　订单金额　订单备注
+        //order_address表的　收货人　收货手机　收货省份　收货城市
+        //order_goods表　商品类型　
+        
+        $assign = [
+            'assign_sn',
+            'corrugated_id',
+            'auto_field',
+            'range',
+            'status',
+            'entrepot_id',
+        ];
+        
+        $order = [
+            'order_sn',
+            'price_range', // 0 1 2 3 
+            'express_remark'
+        ];
+        $address = [
+            'name',
+            'phone',
+            'area_province_id',
+            'area_city_id'
+        ];
+        $goods = [
+          'cate_ids'  
+        ];
+        
+        $requestParams= $request->all();
+        
+        if (array_merge($assign, $requestParams)) {
+            foreach ($this->fieldEqual as  $value) {
+                if ($request->has($value)) {
+                    $this->repository->pushCriteria(new FieldEqual($value, $request->input($value)));
+                }
             }
         }
         
-        foreach ($this->fieldLike as  $value) {
-            if ($request->has($value)) {
-                $this->repository->pushCriteria(new FieldLike($value, $request->input($value)));
-            }
-        }
         
-        if ($request->has('start') && $request->has('end')) {
-            $range= [];
-            $range[] = $request->input('start');
-            $range[] = $request->input('end');
-            $this->repository->pushCriteria(new DateRange($range));
+        $is_repeat = $request->input('is_repeat', 2);
+        $this->repository->pushCriteria(new FieldEqualLessThan('is_repeat', $is_repeat));
+        
+        if ($request->has('range')) {
+            $field = $request->input('auto_field', 'created_at');
+            $this->repository->pushCriteria(new DateRange($range, $field));
         } 
+        
+        
+        
+        if (array_merge($order, $requestParams)) {
+            $this->repository->pushCriteria(new Order($request));
+        }
+        
+        if (array_merge($address, $requestParams)) {
+            $this->repository->pushCriteria(new Address($request));
+        }
+        
+//         foreach ($this->fieldEqual as  $value) {
+//             if ($request->has($value)) {
+//                 $this->repository->pushCriteria(new FieldEqual($value, $request->input($value)));
+//             }
+//         }
+        
+//         foreach ($this->fieldLike as  $value) {
+//             if ($request->has($value)) {
+//                 $this->repository->pushCriteria(new FieldLike($value, $request->input($value)));
+//             }
+//         }
+        
+//         if ($request->has('start') && $request->has('end')) {
+//             $range= [];
+//             $range[] = $request->input('start');
+//             $range[] = $request->input('end');
+//             $this->repository->pushCriteria(new DateRange($range));
+//         } 
         
 //         if ($request->has('with')) {
 //             $with  = $request->input('with', []);
@@ -88,12 +151,8 @@ class AssignController extends Controller
 
         if ($request->has('with')) {
             $with  = $request->input('with', []);
-            foreach ($with as $model) {
-                if ($model == 'order') {
-                    $collection->load([$model=> function($query){
-                        $query->select('created_at');
-                    }]);
-                }
+            if (!empty($with)) {
+                $collection->load($with);
             }
         }
         
@@ -136,6 +195,21 @@ class AssignController extends Controller
     {
         //
     }
+    
+    public function showbyExpressSn(Request $request, $express_sn)
+    {
+        $model = Assign::where('express_sn', $express_sn)->first();
+        if (!$model) {
+            return $this->error([]);
+        }
+        if ($request->has('with')) {
+            $with = $request->input('with');
+            foreach ($with as $item) {
+                $model->{$item};
+            }
+        }
+        return $this->success($model);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -150,19 +224,18 @@ class AssignController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
+     * @todo 事件处理　操作记录
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $model = new Communicate();
-       $re =  $model->create($request->all());
-//        $re = $this->repository->update($request->all(), $id);
-        if ($request->has('sign_at')) {
-            event(new Signatured(Assign::find($id)));
-        }
+        
+        $re = $this->repository->update($request->all(), $id);
+//         if ($request->has('sign_at')) {
+//             event(new Signatured(Assign::find($id)));
+//         }
         if($re){
             return $this->success($re);
         }else{
@@ -170,6 +243,176 @@ class AssignController extends Controller
         }
 
     }
+    
+    /**
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @param unknown $id
+     * @return number[]|string[]|NULL[]
+     */
+    public function check(Request $request , $id)
+    {
+        //pass_check
+        //check_status
+        //status
+        //操作纪录可在这里处理　也可以用事件处理
+        $data = $request->all();
+        $data['pass_check'] = Carbon::now();
+        $data['check_status'] = 1;
+        $data['status'] = 1;
+        unset($data['id']);
+        $re = Assign::where('id', $id)->update($data);
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+        
+    }
+    
+    
+    /**
+     * 返单
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @param unknown $id
+     */
+    public function repeatOrder(Request $request, $id)
+    {
+//         {label:"导入状态", value:"1", sub:""},
+//         {label:"审核状态", value:"2", sub:""},　分配了快递公司　纸箱　快递号　快递号(面单可以更新)
+//         {label:"录入状态", value:"3", sub:"删除发货单"},　//需要重新生成　发货单　原来的　快递号　要怎么处理　查看电子面单接口
+//         注意这三个状态　需要改对应的字段　第三个暂时不需要改其它字段
+        $assign = Assign::find($id);
+        $is_repeat = $request->input('is_repeat');
+        $assign->is_repeat = $is_repeat;
+        $assign->repeat_mark = $request->input('repeat_mark');
+        switch ($is_repeat) {
+            case 1:
+                if (!$assign->isSetExpress()) {
+                    $assign->express_id = 0;
+                    $assign->express_name = '';
+                    $assign->express_sn = '';
+                }
+                $assign->corrugated_case = '';
+                $assign->corrugated_id = 0;
+                $re = $assign->save();
+                break;
+            case 2:
+                $re = $assign->save();
+                break;
+            case 3:
+                
+//                 $assign->corrugated_case = '';
+//                 $assign->corrugated_id = 0;
+//                 $assign->express_sn = '';
+                $re = $assign->save();
+                break;
+            default:
+                throw new \Exception('错误');
+                break;
+        }
+
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    
+    /**
+     * 拦截 toggle类型的操作 
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @param unknown $id
+     */
+    public function stopOrder(Request $request, $id)
+    {   
+        $assign = Assign::find($id);
+        $is_stop = $request->input('is_stop');
+        $assign->is_stop = $is_stop==0?1:0;
+        $assign->stop_mark = $request->input('stop_mark');
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    
+    /**
+     * 面单
+     * @todo 事件处理　操作记录
+     * 打印
+     */
+    public function waybillPrint(Request $request, $id)
+    {
+        $assign = Assign::find($id);
+        $assign->updateWaybillPrintStatus();
+        $re = $assign->save();
+        if ($re) {
+            return $this->success(['waybillcode'=>$assign->express_sn, 'print_data'=>$assign->print_data]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @return number[]|string[]|NULL[]
+     */
+    public function goodsPrint(Request $request)
+    {
+        $assign = Assign::find($id);
+        $assign->updateAssignPrintStatus();
+        $goods  = $assign->goods;
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([ ]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * 验货
+     * @todo 事件处理　操作记录
+     */
+    public function checkGoods(Request $request, $id)
+    {
+        $assign = Assign::find($id);
+        $assign->checkedGoods(auth()->user());
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * 称重发货
+     * @todo 事件处理　操作记录
+     */
+    public function weightGoods(Request $request, $id)
+    {
+        //减库存
+        $assign = Assign::find($id);
+        $assign->weightGoods($request->input('real_weigth'), auth()->user());
+        $re = $assign->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.
