@@ -39,13 +39,14 @@ class System
                     $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                         [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
                 } else {
-                    $this->model->insert([
-                        'entrepot_id'  => $entrepot_id ,
+                    $this->model->fill([
+                        'entrepot_id'  => $entrepot_id,
                         'sku_sn'       => $product->getSkuSn(),
                         'goods_name'   => $product->getName(),
                         'entrepot_count' => $product->getNum(),
                         'saleable_count' => $product->getNum(),
-                    ]);
+                    ])->save();
+                    
                 }
                 
                 
@@ -53,6 +54,7 @@ class System
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
+            logger('[sql]', [$e->getMessage()]);
             throw $e;
         }
         

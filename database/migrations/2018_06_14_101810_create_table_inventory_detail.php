@@ -18,7 +18,7 @@ class CreateTableInventoryDetail extends Migration
             $table->timestamps();
             
             $table->unsignedInteger('entrepot_id')->comment('配送中心ID');
-            $table->unsignedInteger('entrepot_name')->comment('配送中心');
+            $table->string('entrepot_name',20)->comment('配送中心');
             $table->char('sku_sn', 50)->comment('商品编号');
             $table->string('goods_name', 50)->comment('商品名称');
             $table->unsignedInteger('produce_in')->nullable()->comment('生产入库');

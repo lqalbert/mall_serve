@@ -21,7 +21,6 @@ class InventoryDetail extends Model
     ];
     
     protected $guarded = [
-        '*'
     ];
     
     

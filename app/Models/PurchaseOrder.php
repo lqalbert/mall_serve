@@ -40,4 +40,9 @@ class PurchaseOrder extends Model
     {
         return $this->hasMany('App\Models\ActualDeliveryGoods', 'purchase_order_id');
     }
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter');
+    }
 }

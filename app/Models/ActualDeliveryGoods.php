@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Contracts\Goods as GoodsContracts;
 
-class ActualDeliveryGoods extends Model
+
+class ActualDeliveryGoods extends Model implements GoodsContracts
 {
     use SoftDeletes;
 
@@ -32,4 +34,27 @@ class ActualDeliveryGoods extends Model
 
 
     ];
+    
+    
+    public function purchase()
+    {
+        return $this->belongsTo('App\Models\PurchaseOrder', 'purchase_order_id');
+    }
+    
+    public function getSkuSn()
+    {
+        return $this->attributes['sku_sn'];
+    }
+    
+    public function getNum()
+    {
+        return $this->attributes['actual_goods_num'];
+    }
+    
+    public function getName()
+    {
+        return $this->attributes['goods_name'];
+    }
+    
+    
 }

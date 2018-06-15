@@ -26,7 +26,8 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->entryUpdate($entrepot_id, $products);
+//             logger('[debug]', $entrepot->toArray());
+            $this->inventory->entryUpdate($entrepot->id, $products);
             $this->log->entryUpdate($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
@@ -46,7 +47,7 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->saleLock($entrepot_id, $products);
+            $this->inventory->saleLock($entrepot->id, $products);
             $this->log->saleLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
@@ -62,11 +63,11 @@ class InventoryService
      * @param unknown $user
      * @throws Exception
      */
-    public function saleLock($entrepot, $products, $user)
+    public function saleUnLock($entrepot, $products, $user)
     {
         DB::beginTransaction();
         try {
-            $this->inventory->saleLock($entrepot_id, $products, false);
+            $this->inventory->saleLock($entrepot->id, $products, false);
 //             $this->log->saleLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
@@ -86,7 +87,7 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->assignLock($entrepot_id, $products);
+            $this->inventory->assignLock($entrepot->id, $products);
             $this->log->assignLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
@@ -106,7 +107,7 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->rxUpdate($entrepot_id, $products);
+            $this->inventory->rxUpdate($entrepot->id, $products);
 //             $this->log->assignLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
@@ -127,7 +128,7 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->rxUpdateout($entrepot_id, $products);
+            $this->inventory->rxUpdateout($entrepot->id, $products);
             //             $this->log->assignLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {

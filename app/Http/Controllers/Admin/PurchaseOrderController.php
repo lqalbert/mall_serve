@@ -10,6 +10,7 @@ use App\Alg\Sn;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Services\Inventory\InventoryService;
 
 class PurchaseOrderController extends Controller
 {
@@ -17,9 +18,10 @@ class PurchaseOrderController extends Controller
 
     private $model = null;
 
-    public function  __construct(PurchaseOrder $PurchaseOrder)
+    public function  __construct(PurchaseOrder $PurchaseOrder, InventoryService $serve)
     {
         $this->model = $PurchaseOrder;
+        $this->serve = $serve;
     }
 
     /**
@@ -74,7 +76,8 @@ class PurchaseOrderController extends Controller
     public function store(Request $request)
     {
         if($request->input('sign')){
-            $this->signGoods();
+            
+            return $this->signGoods($request);
         }
         else{
             DB::beginTransaction();
@@ -112,9 +115,28 @@ class PurchaseOrderController extends Controller
     }
 
 
-    public function signGoods(){
-
-        return $this->success(1);
+    public function signGoods(Request $request){
+        $goodsList = $request->input('signGoodsList');
+//         logger('[debug]', $goodsList);
+        if (count($goodsList) == 0 ) {
+            return $this->error([]);
+        }
+        
+        $goodsModels = [];
+        foreach ($goodsList as $goods) {
+            $goodsModels[] = ActualDeliveryGoods::make($goods);
+        }
+        
+        $entrepot = $goodsModels[0]->purchase->entrepot;
+        
+        try {
+            $this->serve->entryUpdate($entrepot, $goodsModels, auth()->user());
+        } catch (\Exception $e) {
+            
+            return $this->error([], $e->getMessage());
+        }
+        
+        return $this->success([]);
 
     }
 
