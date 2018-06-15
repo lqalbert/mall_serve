@@ -18,7 +18,9 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
     Route::post('/logout', 'LoginController@out');
 });
 
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.basic'], function(){
+Route::group(['prefix'=>'admin', 'namespace' => 'Admin',
+    'middleware'=>'auth.basic'
+], function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
@@ -129,6 +131,10 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth.bas
 	Route::resource('/volumeratio',  'VolumeRatioController');
 	Route::resource('/expresscompensation',  'ExpressCompensationController');
 	Route::resource('/expressprice',  'ExpressPriceController');
+	Route::resource('/purchaseorder',  'PurchaseOrderController');
+	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
+	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
+	Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
 
 	Route::resource('/stock-check',  'StockCheckController');

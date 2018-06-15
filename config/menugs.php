@@ -213,7 +213,7 @@ return [
         ],
  //        35
         [
-                'text' => '采购管理',
+                'text' => '采购开单',
                 'icon' => null,
                 'index' => 'WarehousingProcess'
         ],
@@ -223,10 +223,15 @@ return [
         		'icon'=>null,
         		'index'=>'StockCheck',
         ],
- 	[
+ 	    [
             'text' => '快递赔偿',
             'icon' => null,
             'index' => 'ExpressCompensation'
+        ],
+        [
+            'text' => '采购单列表',
+            'icon' => null,
+            'index' => 'PurchaseList'
         ]
 
 		
