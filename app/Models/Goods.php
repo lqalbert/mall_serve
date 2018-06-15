@@ -40,6 +40,7 @@ class Goods extends Model
         'barcode',
         'weight',
         'bubble_bag',
+        'specifications',
     ];
     
     //多对多

@@ -189,7 +189,7 @@ return [
         ],  
         //31
         [
-        		'text'=>'物流公司',
+        		'text'=>'快递公司',
         		'icon'=>null,
         		'index'=>'ExpressCompany',
         ],
@@ -207,7 +207,7 @@ return [
         ],
 	//33
 	    [
-                'text' => '验货管理',
+                'text' => '验货',
                 'icon' => null,
                 'index' => 'GoodsInspect'
         ],
@@ -219,7 +219,7 @@ return [
         ],
  //        35
         [
-                'text' => '采购管理',
+                'text' => '采购开单',
                 'icon' => null,
                 'index' => 'WarehousingProcess'
         ],
@@ -235,6 +235,11 @@ return [
         		'icon'=>null,
         		'index'=>'StockCheck',
         ],
+ 	[
+            'text' => '采购单列表',
+            'icon' => null,
+            'index' => 'PurchaseList'
+        ]
 
 		
 ];

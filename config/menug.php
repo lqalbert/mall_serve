@@ -60,4 +60,9 @@ return [
 				'icon' => null,
 				'subIndex'=>['StockCheckGoods','StockCheck']
 		],
+		[
+			    'text' => '采购管理',
+			    'icon' => null,
+			    'subIndex'=>['WarehousingProcess','PurchaseList']
+		],
 ];

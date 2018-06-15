@@ -83,7 +83,7 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::resource('/shelvesmanagement','ShelvesManagementController');
-	Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
+	Route::resource('/expresscompany','ExpressCompanyController');
 	Route::get('/menus', 'NavController@getNav');
 	
 	Route::resource('/produce-entry', 'ProduceEntryController');
@@ -138,7 +138,11 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 	//电子面单
 	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
 	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
-	
+
+	Route::resource('/purchaseorder',  'PurchaseOrderController');
+	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
+	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
+	Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
 
 });
 
