@@ -28,7 +28,7 @@ class CreateTableInventoryDetail extends Migration
             $table->integer('exchange_lock')->nullable()->comment('换货锁定');
             
             $table->unsignedInteger('user_id')->comment('操作人ID');
-            $table->string('20')->comment('操作人姓名');
+            $table->string('user_name')->comment('操作人姓名');
         });
     }
 
