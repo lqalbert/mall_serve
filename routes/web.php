@@ -10,8 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+//[ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')
 
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
+if (env('APP_ENV') != "production") {
+    $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
+    $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
+} else {
+    $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
+    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
+}
+
+
+Route::group($logGroup, function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
     Route::post('/login', 'LoginController@login');
@@ -19,8 +29,8 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin'], function(){
     Route::get('/set-sender', 'WayBillController@setSender');
 });
 
-
-Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], function(){
+    //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
+Route::group($adminGroup, function(){
 	
 	
 	Route::resource('/deposits', 'DepositController');
