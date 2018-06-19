@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Models\Assign;
 use App\Alg\Sn;
 use App\Events\AssignCreating;
+use App\Events\AssignCreated;
 
 class AssignCreatedListener
 {
