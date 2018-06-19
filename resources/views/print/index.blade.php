@@ -27,7 +27,7 @@
             height: 10mm;
             line-height:10mm;
 /*             line-height:10mm; */
-            margin: 0mm auto 5mm;
+            margin: 5mm auto ;
         }
         .container{
 /*             width: 180mm; */
