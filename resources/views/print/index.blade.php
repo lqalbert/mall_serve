@@ -12,7 +12,7 @@
     <link  rel="stylesheet" href="/css/bootstrap.min.css">
     <style type="text/css" media="print">
         html,body{
-            width: 240mm;
+            width: 260mm;
             font-size: 12pt;
             height:auto;
         }
