@@ -53,7 +53,7 @@ return [
             'collation' => 'utf8_general_ci',
             'prefix' => '',
             'strict' => true,
-            'engine' => null,
+            'engine' => 'InnoDB',
         ],
 
         'pgsql' => [

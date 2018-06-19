@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\AssignCreating;
+// use App\Events\AssignCreating;
 use Carbon\Carbon;
+use App\Events\AssignCreated;
 
 class Assign extends Model
 {
