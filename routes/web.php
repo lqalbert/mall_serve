@@ -12,13 +12,14 @@
 */
 //[ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')
 
-if (env('APP_ENV') != "production") {
+// if (env('APP_ENV') != "production") {
     $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
     $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
-} else {
-    $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
-    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
-}
+// } else {
+//     $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
+//     $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
+// }
+
 
 
 Route::group($logGroup, function(){
@@ -64,6 +65,7 @@ Route::group($adminGroup, function(){
 	
 	Route::resource('/expressinfo','ExpressInfoController');
 	Route::post('/upload', 'UploadController@index')->name('upload');
+	Route::get('/upload', 'UploadController@index')->name('upload');
 	Route::resource('/roles','RoleController');
 	Route::get('/roles-assignable','RoleController@assignable');
 	

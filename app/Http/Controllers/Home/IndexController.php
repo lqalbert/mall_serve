@@ -14,9 +14,6 @@ class IndexController extends CommonController
     }
     //
     public function index(){
-        echo microtime ();
-        echo '<br>';
-        echo microtime (true);
         static::$bar['bar1']='sta';
         static::$bar['line1']='line';
         
