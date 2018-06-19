@@ -31,8 +31,8 @@ return [
 		[
 				'text' => '库存管理',
 				'icon' => null,
-				'subIndex' => ['StockDetails','StockSum','StockWarning','ShelvesManagement','WarehousingProcess']
-		    //'InventoryList',13,'StockOutDetails',
+				'subIndex' => ['StockDetails','StockSum','StockWarning','ShelvesManagement']
+		    //'InventoryList',13,'StockOutDetails','WarehousingProcess'
 		],
 		[
 				'text' => '配送管理',
