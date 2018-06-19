@@ -64,6 +64,7 @@ Route::group($adminGroup, function(){
 	
 	Route::resource('/expressinfo','ExpressInfoController');
 	Route::post('/upload', 'UploadController@index')->name('upload');
+	Route::get('/upload', 'UploadController@index')->name('upload2');
 	Route::resource('/roles','RoleController');
 	Route::get('/roles-assignable','RoleController@assignable');
 	
