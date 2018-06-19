@@ -11,7 +11,7 @@
     <title>打印{{ config('app.name', 'Laravel') }}</title>
     <link  rel="stylesheet" href="/css/bootstrap.min.css">
     <style type="text/css" media="print">
-        body{
+        html,body{
             width: 240mm;
             font-size: 12pt;
         }
