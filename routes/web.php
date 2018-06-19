@@ -16,7 +16,7 @@ if (env('APP_ENV') != "production") {
     $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
 } else {
     $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
-    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
+    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
 }
 
 
