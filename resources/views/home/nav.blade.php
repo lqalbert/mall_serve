@@ -49,17 +49,7 @@
                                                 <div class="{{$bar['line1']}}"></div>
                                             </a>
                                         </li>
-                                        {{--<li role="presentation">
-                                            <a class="dropdown-toggle {{$bar['bar3']}}" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                                产品系列
-                                                <span class="caret"></span>
-                                                <div class="{{$bar['line3']}}"></div>
-                                            </a>
-                                            <ul class="dropdown-menu m-drop">
-                                                <li><a href="{{URL('product/index?type=wakeup')}}">焕肤紧致系列</a></li>
-                                                <li><a href="{{URL('product/index?type=youth')}}">青春凝时冻龄系列</a></li>
-                                            </ul>
-                                        </li>--}}
+                                        
                                         <li role="presentation">
                                             <a href="{{URL('product/index')}}" class="{{$bar['bar2']}}">
                                                 全部产品
@@ -72,10 +62,7 @@
                                                 <div class="{{$bar['line4']}}"></div>
                                             </a>
                                         </li>
-                                        {{--<li role="presentation"><a href="{{URL('information/index')}}" class="{{$bar['bar5']}}">
-                                                肌肤诊断
-                                                <div class="{{$bar['line5']}}"></div>
-                                            </a></li>--}}
+                                        
                                         <li role="presentation"><a href="{{URL('sale/stars')}}" class="{{$bar['bar6']}}">
                                                 明星产品
                                                 <div class="{{$bar['line6']}}"></div>

@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Assign;
 use App\Models\ProduceEntry;
 use App\Models\ProduceEntryProduct;

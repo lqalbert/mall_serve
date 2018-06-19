@@ -31,8 +31,8 @@ Route::group($logGroup, function(){
 
     //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
 Route::group($adminGroup, function(){
-	
-	
+
+    	Route::post('/upload', 'UploadController@index')->name('upload');
 	Route::resource('/deposits', 'DepositController');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
@@ -63,8 +63,7 @@ Route::group($adminGroup, function(){
 	Route::resource('/groups','GroupController');
 	
 	Route::resource('/expressinfo','ExpressInfoController');
-	Route::post('/upload', 'UploadController@index')->name('upload');
-	Route::get('/upload', 'UploadController@index')->name('upload2');
+	
 	Route::resource('/roles','RoleController');
 	Route::get('/roles-assignable','RoleController@assignable');
 	
@@ -195,13 +194,13 @@ Route::get('/question/index', 'Home\QuestionController@index')->name('question/i
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
 // 	Route::get('/','AdminHomeController@index');
 // 	Route::resource('pages','PagesController');
 // });
-Route::resource('photo','PhotoController');
+// Route::resource('photo','PhotoController');
 		
 // Route::get('/', function () {
 // 	// return view('welcome');
