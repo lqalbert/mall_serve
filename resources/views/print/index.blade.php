@@ -28,6 +28,7 @@
         }
         .container{
 /*             width: 180mm; */
+            width: 240mm;
             margin: 0 auto;
         }
         .subtitle {
