@@ -72,13 +72,13 @@
             width: 20mm;
         }
         .text-left {
-            text-align:left;
+            text-align:left ;
         }
         td.text-left{
             text-indent: 3mm;
         }
         .text-right {
-            text-align: right;
+            text-align: right !important;
         }
         button{
             display:none;
