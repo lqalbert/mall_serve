@@ -109,7 +109,8 @@
 <body>
     <h1 class="text-center">宝贝清单</h1>
     <div class="container">
-    	<div class="subtitle　text-right">郑州普拉她</div>
+    	<div class="subtitle　text-right" style="float: right">郑州普拉她</div>
+    	
     	<table class="order">
     		<tr>
     			<td class="head-td">VIP</td>
