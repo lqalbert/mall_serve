@@ -14,6 +14,7 @@
         html,body{
             width: 240mm;
             font-size: 12pt;
+            height:auto;
         }
         .text-center {
             text-align: center;
