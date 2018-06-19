@@ -23,8 +23,9 @@
             text-align:center;
         }
         h1{
-            font-size: 15pt;
+            font-size: 30pt;
             line-height:35mm;
+            margin: 10mm auto;
         }
         .container{
 /*             width: 180mm; */
@@ -106,7 +107,7 @@
 <body>
     <h1 class="text-center">宝贝清单</h1>
     <div class="container">
-    	<p class="subtitle　text-right">郑州普拉她</p>
+    	<div class="subtitle　text-right">郑州普拉她</div>
     	<table class="order">
     		<tr>
     			<td class="head-td">VIP</td>
