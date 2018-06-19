@@ -29,8 +29,8 @@
     } 
    </script>
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.13/js/manifest.5fb99dc99bb6d9daceb2.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.13/js/vendor.78209d53ebd12fb5afbb.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.13/js/app.9800363169d9b73ecaac.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.10/js/manifest.291ee7792e1ad8f8e881.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.10/js/vendor.3546dd0b0b7e95e6116a.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.10/js/app.9705f14495ea56d10632.js"></script>
 </body>
 </html>
