@@ -151,6 +151,11 @@ class OrderBasic extends Model
         return $this->belongsTo('App\Models\Department', 'department_id');
     }
     
+    public function getGoods()
+    {
+        return $this->goods;
+    }
+    
     /**
      * 是否生成过配货单
      * 这里先直接返回 false 还没有
