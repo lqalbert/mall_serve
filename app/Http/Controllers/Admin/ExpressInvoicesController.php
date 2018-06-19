@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Expressinvoices;
 use App\Models\ExpressCompany;
 use Illuminate\Support\Facades\DB;

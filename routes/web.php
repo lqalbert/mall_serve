@@ -12,13 +12,15 @@
 */
 //[ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')
 
-// if (env('APP_ENV') != "production") {
+
+
+if (env('APP_ENV') != "production") {
     $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
     $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
-// } else {
-//     $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
-//     $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
-// }
+} else {
+    $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
+    $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
+}
 
 
 
@@ -32,8 +34,8 @@ Route::group($logGroup, function(){
 
     //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
 Route::group($adminGroup, function(){
-	
-	
+
+    Route::post('/upload', 'UploadController@index')->name('upload');
 	Route::resource('/deposits', 'DepositController');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
@@ -64,8 +66,7 @@ Route::group($adminGroup, function(){
 	Route::resource('/groups','GroupController');
 	
 	Route::resource('/expressinfo','ExpressInfoController');
-	Route::post('/upload', 'UploadController@index')->name('upload');
-	Route::get('/upload', 'UploadController@index')->name('upload');
+	
 	Route::resource('/roles','RoleController');
 	Route::get('/roles-assignable','RoleController@assignable');
 	
@@ -194,15 +195,16 @@ Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
 
+
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::group(['prefix'=>'admin','namespace'=>'Admin'],function (){
 // 	Route::get('/','AdminHomeController@index');
 // 	Route::resource('pages','PagesController');
 // });
-Route::resource('photo','PhotoController');
+// Route::resource('photo','PhotoController');
 		
 // Route::get('/', function () {
 // 	// return view('welcome');
