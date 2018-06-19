@@ -24,7 +24,7 @@
         }
         h1{
             font-size: 30pt;
-            line-height:35mm;
+            line-height:20mm;
             margin: 10mm auto;
         }
         .container{
