@@ -32,7 +32,7 @@ Route::group($logGroup, function(){
     //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
 Route::group($adminGroup, function(){
 
-    	Route::post('/upload', 'UploadController@index')->name('upload');
+    Route::post('/upload-file', 'UploadController@index')->name('upload');
 	Route::resource('/deposits', 'DepositController');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
