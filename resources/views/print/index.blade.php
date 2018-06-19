@@ -12,7 +12,7 @@
     <link  rel="stylesheet" href="/css/bootstrap.min.css">
     <style type="text/css" media="print">
         html,body{
-            width: 260mm;
+            width: 240mm;
             font-size: 12pt;
             height:auto;
         }
@@ -27,7 +27,7 @@
             line-height:35mm;
         }
         .container{
-            width: 180mm;
+/*             width: 180mm; */
             margin: 0 auto;
         }
         .subtitle {
