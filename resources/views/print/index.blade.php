@@ -117,8 +117,8 @@
     </style>
 </head>
 <body>
-	<div class="container logo">
-	<!--  <img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle; "/> -->
+	<div class="container ">
+	<img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle; "/>
 	
         <h1 class="text-center">宝贝清单</h1>
 	</div>
