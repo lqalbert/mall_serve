@@ -24,10 +24,10 @@
         }
         h1{
             font-size: 30pt;
-            height: 30mm;
-            line-height:30mm;
+            height: 10mm;
+            line-height:10mm;
 /*             line-height:10mm; */
-            margin: 0mm auto 0mm;
+            margin: 0mm auto 5mm;
         }
         .container{
 /*             width: 180mm; */
@@ -83,7 +83,11 @@
         button{
             display:none;
         }
-        
+        .logo{
+            background-image: url("/images/print_logo.fw.png");
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
     </style>
     <style type="text/css">
  
@@ -108,8 +112,9 @@
     </style>
 </head>
 <body>
-	<div class="container ">
-	<img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle; "/> 
+	<div class="container logo">
+	<!--  <img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle; "/> -->
+	
         <h1 class="text-center">宝贝清单</h1>
 	</div>
     <div class="container">
