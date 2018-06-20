@@ -135,9 +135,14 @@ Route::group(['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'], 
 
 	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
+	Route::get('/get-check-goods', 'StockCheckController@getCheckGoods');
 	//电子面单
 	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
 	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
+	
+	Route::put('/order-after-sale-check/{id}', 'AfterSaleController@checkStatus');
+	Route::put('/order-after-sale-sure/{id}', 'AfterSaleController@sureStatus');
+	Route::get('/cus-all-info/{id}', 'AfterSaleController@getCusAllInfo');
 	
 
 });

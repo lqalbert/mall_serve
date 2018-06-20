@@ -84,11 +84,12 @@ class StockCheckGoodsController extends Controller
      */
     public function store(Request $request)
     {
+        // var_dump($request->all());die();
         DB::beginTransaction();
         try {
-            $checkNum = "PD".time();
+            $checkSn = "PD".time();
             $allData = $request->all();
-            $allData['check_num'] = $checkNum;
+            $allData['check_sn'] = $checkSn;
             $stockCheck = StockCheck::make($allData);
             $re = $stockCheck->save();
             if (!$re) {
@@ -96,7 +97,7 @@ class StockCheckGoodsController extends Controller
             }
             $stockCheckGoodsModels = [];
             foreach ($request->input('check_goods_data') as $checkGoods) {
-                $checkGoods['check_num'] = $checkNum;
+                // $checkGoods['check_sn'] = $checkSn;
                 $stockCheckGoodsModels[] = StockCheckGoods::make($checkGoods);
             }
             if (!empty($stockCheckGoodsModels)) {

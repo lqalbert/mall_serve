@@ -56,7 +56,7 @@ class CustomerBasic extends Model
         
     ];
     protected $hidden = [
-        "created_at",
+        // "created_at",
         "updated_at",
         "deleted_at"
     ];
@@ -74,6 +74,15 @@ class CustomerBasic extends Model
     	return $this->hasOne('App\Models\CustomerUser', 'cus_id');
     }
     
+    //获取跟踪记录
+    public function trackLog(){
+        return $this->hasMany('App\Models\CustomerTrackLog', 'cus_id');
+    }
+
+    //获取客户省份
+    public function province(){
+        return $this->belongsTo('App\Models\AreaInfo','area_province');
+    }
     
     
     public function getSexTextAttribute()
@@ -88,9 +97,15 @@ class CustomerBasic extends Model
     {
         return CustomerApp::getType($this->attributes['type']);
     }
-    
+
     public function setV()
     {
         $this->type = 'V';
     }
+
+    //生成客户来源对应的文字
+    public function getSourceTextAttribute(){
+        return CustomerApp::getSource($this->attributes['source']);
+    }
+
 }

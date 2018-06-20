@@ -20,8 +20,8 @@ class StockCheckController extends Controller
     { 
         $model = new StockCheck();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
+        if ($request->has('check_sn')) {
+            $model = $model->where('check_sn', $request->input('check_sn'));
         }
 
         if ($request->has('start')) {
@@ -131,9 +131,9 @@ class StockCheckController extends Controller
         // echo $request->input('check_id');die();
         $model = new StockCheckGoods();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
-        }
+        // if ($request->has('check_sn')) {
+        //     $model = $model->where('check_sn', $request->input('check_sn'));
+        // }
         
         if ($request->has('check_id')) {
             $model = $model->where('check_id', $request->input('check_id'));
