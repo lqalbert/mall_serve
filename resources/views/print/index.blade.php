@@ -24,8 +24,8 @@
         }
         h1{
             font-size: 30pt;
-            height: 13mm;
-            line-height:13mm;
+            height: 12mm;
+            line-height:12mm;
 /*             line-height:10mm; */
             margin: 5mm auto 5mm;
         }
@@ -118,7 +118,7 @@
 </head>
 <body>
 	<div class="container " style="position: relative;">
-		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; -30px" width="125"/>
+		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; -40px" width="125"/>
         <h1 class="text-center">宝贝清单</h1>
 	</div>
     <div class="container">
