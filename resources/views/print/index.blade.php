@@ -109,7 +109,7 @@
 </head>
 <body>
 	<div class="container ">
-	<img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle"/> 
+	<img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle; position:relative; top:-5mm;"/> 
         <h1 class="text-center">宝贝清单</h1>
 	</div>
     <div class="container">
