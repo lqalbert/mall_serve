@@ -101,7 +101,7 @@ class StockCheckController extends Controller
             if(!$re){
                 throw new  \Exception('盘点状态改变失败');
             }
-            StockCheckGoods::where('id',$id)->update($request->all());
+            StockCheckGoods::where('id',$id)->update($request->except(['check','updated_at','created_at']));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -140,6 +140,7 @@ class StockCheckController extends Controller
         }
         
         $result = $model->get();
+        $result->load('check');
         return [
             'items'=> $result,
             'total'=> $result->count()
