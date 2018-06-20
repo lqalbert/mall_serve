@@ -24,10 +24,10 @@
         }
         h1{
             font-size: 30pt;
-            height: 20mm;
-            line-height:20mm;
+            height: 30mm;
+            line-height:30mm;
 /*             line-height:10mm; */
-            margin: 0mm auto 5mm;
+            margin: 0mm auto 0mm;
         }
         .container{
 /*             width: 180mm; */
