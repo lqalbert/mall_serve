@@ -109,6 +109,11 @@
 /*         th,td{ */
 /*             text-indent: 5px; */
 /*         } */
+.logo{
+            background-image: url("/images/print_logo.fw.png");
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
     </style>
 </head>
 <body>
