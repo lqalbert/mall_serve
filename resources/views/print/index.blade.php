@@ -118,7 +118,7 @@
 </head>
 <body>
 	<div class="container " style="position: relative;">
-		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; top:-50%;"/>
+		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; top:-50%;" width="140"/>
         <h1 class="text-center">宝贝清单</h1>
 	</div>
     <div class="container">
