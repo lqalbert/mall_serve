@@ -24,8 +24,8 @@
         }
         h1{
             font-size: 30pt;
-            height: 10mm;
-            line-height:10mm;
+            height: 15mm;
+            line-height:15mm;
 /*             line-height:10mm; */
             margin: 0mm auto 5mm;
         }
