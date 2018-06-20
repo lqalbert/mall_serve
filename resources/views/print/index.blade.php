@@ -24,10 +24,10 @@
         }
         h1{
             font-size: 30pt;
-            height: 10mm;
-            line-height:10mm;
+            height: 15mm;
+            line-height:15mm;
 /*             line-height:10mm; */
-            margin: 0mm auto 5mm;
+            margin: 5mm auto 5mm;
         }
         .container{
 /*             width: 180mm; */
@@ -118,7 +118,7 @@
 </head>
 <body>
 	<div class="container " style="position: relative;">
-		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; top:-50%;" width="140"/>
+		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; top:-50%;" width="130"/>
         <h1 class="text-center">宝贝清单</h1>
 	</div>
     <div class="container">
