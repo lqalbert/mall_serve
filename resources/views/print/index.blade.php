@@ -78,6 +78,7 @@
         button{
             display:none;
         }
+        
     </style>
     <style type="text/css">
  
@@ -102,7 +103,10 @@
     </style>
 </head>
 <body>
-    <h1 class="text-center">宝贝清单</h1>
+	<div class="container ">
+	<img src="/images/print_logo.fw.png" style="float:left; vertical-align:middle"/> 
+        <h1 class="text-center">宝贝清单</h1>
+	</div>
     <div class="container">
     	<p class="subtitle　text-right">郑州普拉她</p>
     	<table class="order">
