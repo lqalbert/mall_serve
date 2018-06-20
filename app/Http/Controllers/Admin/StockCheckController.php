@@ -21,7 +21,7 @@ class StockCheckController extends Controller
         $model = new StockCheck();
         
         if ($request->has('check_sn')) {
-            $model = $model->where('check_sn', $request->input('check_sn'));
+            $model = $model->where('check_sn','like',$request->input('check_sn')."%");
         }
 
         if ($request->has('start')) {
