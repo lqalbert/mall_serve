@@ -15,8 +15,8 @@ class ChangeColumnInventoryCheck extends Migration
     {
         Schema::table('inventory_check', function (Blueprint $table) {
             $table->dropColumn('check_num');
-            $table->char('check_sn',16)->nullable()->comment('盘点单号')->after('id');
-        });
+            $table->char('check_sn', 16)->nullable()->comment('盘点单号')->after('id'); 
+        });    
     }
 
     /**

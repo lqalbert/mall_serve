@@ -88,10 +88,10 @@ class StockCheckGoodsController extends Controller
         try {
             $checkSn = "PD".time();
             $allData = $request->all();
-            $allData['check_sn'] = $checkSn;
-            $stockCheck = StockCheck::make($allData);
-            $re = $stockCheck->save();
-            if (!$re) {
+//             $allData['check_sn'] = $checkSn;
+            $stockCheck = StockCheck::create($allData);
+            
+            if (!$stockCheck) {
                 throw new  \Exception('创建盘点单子失败');
             }
             $stockCheckGoodsModels = [];

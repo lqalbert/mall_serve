@@ -15,7 +15,7 @@ class ChangeAssignBasic extends Migration
     {
         Schema::table('assign_basic', function (Blueprint $table) {
             //
-            $table->char('assign_sn')->nullable()->change();
+            $table->string('assign_sn',16)->nullable()->change();
         });
     }
 

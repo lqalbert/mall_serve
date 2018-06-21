@@ -118,6 +118,10 @@ class EventServiceProvider extends ServiceProvider
         
         'App\Events\InventoryChecked' => [
             'App\Listeners\InventoryCheckedListener'
+        ],
+        
+        'App\Events\StockChecked' => [
+            'App\Listeners\StockSnListener'
         ]
         
         
