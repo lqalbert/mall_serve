@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InventoryDetail extends Model
 {
-    use SoftDeletes;
+   
     
     protected $table = 'inventory_detail';
     
@@ -17,7 +17,7 @@ class InventoryDetail extends Model
      * @var array
      */
     protected $dates = [
-        'deleted_at'
+//         'deleted_at'
     ];
     
     protected $guarded = [

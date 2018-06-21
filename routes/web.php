@@ -111,7 +111,7 @@ Route::group($adminGroup, function(){
 	
 	Route::get('/inventory-gather', 'InventoryGatherController@index');
 	//库存明细 不靠谱的
-	Route::get('/inventory-detail', 'InventoryGatherController@detail');
+	Route::get('/inventory-detail', 'InventoryDetailController@index');
 	
 	Route::get('/entry-product', 'EntryProductController@index');
 	Route::resource('/expressreceive', 'ExpressReceiveController');
