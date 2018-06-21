@@ -30,43 +30,43 @@ class InventoryGatherController extends Controller
         $model = new InventorySystem();
         
         if ($request->has('entrepot_id')) {
-            $model->where('entrepot_id', $request->input('entrepot_id'));
+            $model = $model->where('entrepot_id', $request->input('entrepot_id'));
         }
         
         if ($request->has('goods_name')) {
-            $model->where('goods_name', 'like', $request->input('goods_name'));
+            $model = $model->where('goods_name', 'like', $request->input('goods_name').'%');
         }
         
-        if ($request->has('cate_kind_id')) {
-            $cate_kind_id = $request->input('cate_kind_id');
-            $model = $model->wherehas('goods', function($query) use($cate_kind_id){
-                $query->where('cate_kind_id', $cate_kind_id);
-            });
-        } else if($request->has('cate_type_id')) {
-            $cate_type_id = $request->input('cate_type_id');
-            $model = $model->wherehas('goods', function($query) use($cate_type_id) {
-                $query->where('cate_type_id', $cate_type_id);
-            });
+        if ($request->has('sku_sn')) {
+            $model = $model->where('sku_sn', 'like', $request->input('sku_sn').'%');
         }
+        
+//         if ($request->has('cate_kind_id')) {
+//             $cate_kind_id = $request->input('cate_kind_id');
+//             $model = $model->wherehas('goods', function($query) use($cate_kind_id){
+//                 $query->where('cate_kind_id', $cate_kind_id);
+//             });
+//         } else if($request->has('cate_type_id')) {
+//             $cate_type_id = $request->input('cate_type_id');
+//             $model = $model->wherehas('goods', function($query) use($cate_type_id) {
+//                 $query->where('cate_type_id', $cate_type_id);
+//             });
+//         }
        
 //         $model->with(['goods','entrepot']);
 //         $model->setVisible(['goods']);
+
+        if ($request->has('with')) {
+            $model = $model->with($request->input('with'));
+        }
         
         $result = $model->paginate($request->input('pageSize', 20), $fields);
         
         $collection = $result->getCollection();
-        $collection->load('goods', 'entrepot');
+        
         
         $re = $collection->toArray();
-        
-        $range = [];
-        if($request->has('start') && $request->has('end')) {
-            $range[] = $request->input('start');
-            $range[] = $request->input('end');
-        }
-        
-        
-        $this->getAssign($re, $range);
+
         
         return [
             'items'=>$re,
