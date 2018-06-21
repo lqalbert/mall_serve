@@ -9,11 +9,13 @@ class StockCheck extends Model
     protected $table = 'inventory_check';
     
     protected $fillable = [
-        'check_num',
+        'check_sn',
 		'check_name',
 		'check_user_id',
         'remark',
-        'check_status'
+        'check_status',
+        'entrepot_id',
+        'entrepot_name',
     ];
 
 

@@ -19,7 +19,7 @@ class StockCheckGoods extends Model
     protected $table = 'inventory_check_goods';
     
     protected $fillable = [
-        'check_num',
+        // 'check_num',
         'check_id',
         'cate_kind_id',
         'cate_type_id',
@@ -27,8 +27,8 @@ class StockCheckGoods extends Model
         'cate_kind',
         'check_count',
         'entrepot_count',
-        'entrepot_id',
-        'entrepot_name',
+        // 'entrepot_id',
+        // 'entrepot_name',
         'goods_name',
         'goods_price',
         'inventory_id',

@@ -43,7 +43,9 @@ class AfterSale extends Model
         'fee',
         'user_name',
         'user_id',
-        'remark'
+        'remark',
+        'resend_fee',
+        'reservice_fee'
     ];
     
     protected $events = [
@@ -73,9 +75,10 @@ class AfterSale extends Model
         return $map[$this->attributes['check_status']];
     }
     
-    public function getType0TextAttribute()
+    public function getTypeTextAttribute()
     {
         $map = ['退货', '换货'];
         return $map[$this->attributes['type']];
     }
+
 }

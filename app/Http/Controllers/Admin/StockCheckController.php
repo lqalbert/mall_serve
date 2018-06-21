@@ -19,8 +19,8 @@ class StockCheckController extends Controller
     { 
         $model = new StockCheck();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
+        if ($request->has('check_sn')) {
+            $model = $model->where('check_sn','like',$request->input('check_sn')."%");
         }
 
         if ($request->has('start')) {
@@ -100,7 +100,7 @@ class StockCheckController extends Controller
             if(!$re){
                 throw new  \Exception('盘点状态改变失败');
             }
-            StockCheckGoods::where('id',$id)->update($request->all());
+            StockCheckGoods::where('id',$id)->update($request->except(['check','updated_at','created_at']));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -130,15 +130,16 @@ class StockCheckController extends Controller
         // echo $request->input('check_id');die();
         $model = new StockCheckGoods();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
-        }
+        // if ($request->has('check_sn')) {
+        //     $model = $model->where('check_sn', $request->input('check_sn'));
+        // }
         
         if ($request->has('check_id')) {
             $model = $model->where('check_id', $request->input('check_id'));
         }
         
         $result = $model->get();
+        $result->load('check');
         return [
             'items'=> $result,
             'total'=> $result->count()
