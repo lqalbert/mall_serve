@@ -23,9 +23,9 @@ class WebsiteController extends Controller
     public function index(Request $request)
     {
         $where = [];
-        $where['user_id'] = $request->input('id');
+        $where['user_id'] = $request->input('user_id');
         if ($request->has('webUrl')) {
-            $where['websites.webUrl'] = $request->input('webUrl');
+            $where[]=['webUrl','like',$request->input('webUrl').'%'];
         }
         $data = $this->model->where($where)
             ->orderBy('websites.created_at', 'desc')
