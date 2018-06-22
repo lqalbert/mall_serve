@@ -45,6 +45,10 @@ li{
     height: 100%;
 }
 
+.productInfo .proLef .view .swiper-container {
+    border: 1px solid #e3e3e3;
+}
+
 .productInfo .proLef .view .arrow-left {
     background: url(../../../images/home/index_tab_l.png) no-repeat left top;
     position: absolute;
