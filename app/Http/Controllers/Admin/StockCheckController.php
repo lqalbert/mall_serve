@@ -7,6 +7,7 @@ use App\Models\InventorySystem;
 use App\Models\StockCheckGoods;
 use App\Models\StockCheck;
 use Illuminate\Support\Facades\DB;
+use App\Models\PurchaseOrderGoods;
 
 class StockCheckController extends Controller
 {
@@ -100,7 +101,7 @@ class StockCheckController extends Controller
             if(!$re){
                 throw new  \Exception('盘点状态改变失败');
             }
-            StockCheckGoods::where('id',$id)->update($request->except(['check','updated_at','created_at']));
+            StockCheckGoods::where('id',$id)->update($request->except(['check','purchase_price','updated_at','created_at']));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -139,10 +140,25 @@ class StockCheckController extends Controller
         }
         
         $result = $model->get();
-        $result->load('check');
+
+        $result->load('check','purchasePrice');
+
         return [
-            'items'=> $result,
+            'items'=> $result->toArray(),
             'total'=> $result->count()
+        ];
+    }
+
+    //获取价格 {'122323':[{value:'aaa', label:'bbb'}}
+    public function getGoodsPrice(Request $request,$sku){
+        // echo $sku;
+        $request = PurchaseOrderGoods::where('sku_sn',$sku)->select('goods_purchase_price')->get();
+        $arr = [];
+        foreach ($request as $model) {
+            $arr['value']= $model->goods_purchase_price;
+        }
+        return [
+            $sku=>[$arr]
         ];
     }
 
