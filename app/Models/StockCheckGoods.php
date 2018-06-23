@@ -46,4 +46,9 @@ class StockCheckGoods extends Model
     {
         return $this->belongsTo('App\Models\StockCheck', 'check_id');
     }
+
+    public function purchasePrice(){
+         return $this->hasOne('App\Models\PurchaseOrderGoods', 'sku_sn','sku_sn');
+    }
+
 }

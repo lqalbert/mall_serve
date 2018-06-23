@@ -150,6 +150,7 @@ Route::group($adminGroup, function(){
 	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
 	Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');
+	Route::get('/get-goods-price/{sku}',  'StockCheckController@getGoodsPrice');
 	
 	//电子面单
 	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
