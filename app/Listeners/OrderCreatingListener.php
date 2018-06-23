@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderCreating;
 use App\Alg\Sn;
 use App\models\OrderBasic;
+use App\Events\OrderCreated;
 
 class OrderCreatingListener
 {
@@ -24,7 +25,7 @@ class OrderCreatingListener
      * @param  OrderCreating  $event
      * @return void
      */
-    public function handle(OrderCreating $event)
+    public function handle(OrderCreated $event)
     {
         $order = $event->getOrder();
         if (empty($order->entrepot_id)) {

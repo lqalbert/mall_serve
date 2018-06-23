@@ -97,12 +97,16 @@ Route::group($adminGroup, function(){
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::resource('/shelvesmanagement','ShelvesManagementController');
+
+	Route::get('/expresscompany-address/{id}','ExpressCompanyController@getAddress');
+	Route::put('/expresscompany-address/{id}','ExpressCompanyController@updateAddress');
 	Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
 	Route::get('/menus', 'NavController@getNav');
 	
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+	Route::put('/order-assign-check', 'AssignController@check');
 	Route::resource('/order-assign', 'AssignController');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');

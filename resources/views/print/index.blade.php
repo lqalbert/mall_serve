@@ -127,15 +127,15 @@
     	<table class="order">
     		<tr>
     			<td class="head-td">VIP</td>
-    			<td class="text-left">张三</td>
+    			<td class="text-left">{{ $model->address->name }}</td>
     			<td class="head-td">日期</td>
-    			<td class="text-left">2014-05-05</td>
+    			<td class="text-left">{{ Date('Y-m-d') }}</td>
     		</tr>
     		<tr>
     			<td class="head-td">电话</td>
-    			<td class="text-left">argaergaeg</td>
+    			<td class="text-left">{{ $model->address->phone }}</td>
     			<td class="head-td">单号</td>
-    			<td class="text-left">aergaerg</td>
+    			<td class="text-left">{{ $model->assign_sn }}</td>
     		</tr>
     	</table>
     	<table class="goods">
@@ -144,17 +144,27 @@
     			<td>宝贝名称</td>
     			<td class="goods-td">数量</td>
     		</tr>
+    		@php
+				$goods = $model->goods()->orderBy('sku_sn','asc')->get();
+				$total =0 ;
+			@endphp
+			
+			@foreach($goods as $key=>$item)
+    			<tr>
+        			<td class="goods-td">{{ $key+1 }}</td>
+        			<td class="text-left">[{{ $item->goods_number }}]{{ $item->sku_sn }}+{{ $item->goods_name }}+{{ $item->sku_name }}</td>
+        			<td class="goods-td">{{ $item->goods_number }}</td>
+        			@php
+        			$total += $item->goods_number;
+        			@endphp
+        		</tr>
+			@endforeach
     		
-    		<tr>
-    			<td class="goods-td">1</td>
-    			<td class="text-left">[数量]代码+品名+规格</td>
-    			<td class="goods-td">12</td>
-    		</tr>
     		
     		<tr>
     			<td class="goods-td">备注</td>
     			<td class="text-left">总数:</td>
-    			<td class="goods-td"></td>
+    			<td class="goods-td">{{ $total }}</td>
     			
     		</tr>
     	</table>

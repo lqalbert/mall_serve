@@ -39,7 +39,7 @@ class WayBillController extends Controller
         $express = ExpressCompany::find($express_id);
         if ($assin->express_id !=  $express_id) { //全新的
             $cmd = new TmsWayBillGet();
-            $cmd->setParam($assign, $express, $assign->order, auth()->user()->id);
+            $cmd->setParam([$assign], $express, auth()->user()->id);
         } else {
             //更新的
             $cmd = new TmsWayBillUpdate();

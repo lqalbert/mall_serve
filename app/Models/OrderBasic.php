@@ -4,7 +4,9 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\OrderCreating;
+// use App\Events\OrderCreating;
+use App\Events\OrderCreated;
+
 class OrderBasic extends Model
 {
     use SoftDeletes;
@@ -55,6 +57,7 @@ class OrderBasic extends Model
      */
     protected $events = [
 //         'creating' => OrderCreating::class,
+
         'created'  => OrderCreated::class
     ];
     

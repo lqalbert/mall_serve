@@ -23,7 +23,8 @@ class Assign extends Model
      * @var array
      */
     protected $dates = [
-        'deleted_at'
+        'deleted_at',
+        'print_data'
     ];
     //前端　查询那里是写死了的　这里修改了　前端还要再改一下
     private static $statusMap = [
@@ -94,6 +95,11 @@ class Assign extends Model
         return $this->hasMany('App\Models\OrderGoods');
     }
     
+    public function express()
+    {
+        return $this->belongsTo('App\Models\ExpressCompany');    
+    }
+    
     
     /**
      * 返回菜鸟接口要求的结构化的数据
@@ -144,6 +150,11 @@ class Assign extends Model
         $this->real_weigth = $weight;
 //         $this->user_id = $user->id;
 //         $this->user_name = $user->realname;
+    }
+    
+    public function getPrintDataAttribute($value)
+    {
+        return json_decode($value, true);
     }
     
     
