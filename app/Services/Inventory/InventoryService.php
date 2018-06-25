@@ -138,4 +138,21 @@ class InventoryService
     }
     
     
+    /**
+     * 盘点
+     */
+    public function stockCheck($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->stockCheck($entrepot->id, $products);
+            $this->log->stock($entrepot, $products, $user, $dan);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    
 }

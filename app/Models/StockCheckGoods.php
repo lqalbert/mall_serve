@@ -13,8 +13,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Contracts\Goods as CheckGoods;
 
-class StockCheckGoods extends Model
+class StockCheckGoods extends Model implements CheckGoods
 {
     protected $table = 'inventory_check_goods';
     
@@ -50,5 +51,42 @@ class StockCheckGoods extends Model
     public function purchasePrice(){
          return $this->hasOne('App\Models\PurchaseOrderGoods', 'sku_sn','sku_sn');
     }
+    
+    public function getName()
+    {
+        return $this->goods_name;
+    }
+    
+    public function getSkuSn()
+    {
+        return $this->sku_sn;
+    }
+    
+    public function getNum()
+    {
+        if ($this->profit_count == 0 && $this->loss_count == 0) {
+            return 0;
+        }
+        return $this->profit_count > 0 ? $this->profit_count : -$this->loss_count;
+    }
+    
+    public function setFixed()
+    {
+        $this->is_fixed = 1;
+        return $this;
+    }
+    
+    public function setUnFixed()
+    {
+        $this->is_fixed = 0;
+        return $this;
+    }
+    
+    public function isFixed()
+    {
+        return $this->is_fixed == 1;
+    }
+    
+    
 
 }
