@@ -96,12 +96,12 @@ class StockCheckController extends Controller
         // var_dump($request->all());die();
         DB::beginTransaction();
         try {
-            $check_id = $request->input('check_id');
-            $re = StockCheck::where('id',$check_id)->update(['check_status' => 2]);
-            if(!$re){
-                throw new  \Exception('盘点状态改变失败');
-            }
-            StockCheckGoods::where('id',$id)->update($request->except(['check','purchase_price','updated_at','created_at']));
+//             $check_id = $request->input('check_id');
+            $re = StockCheck::where('id',$id)->update($request->all());
+//             if(!$re){
+//                 throw new  \Exception('盘点状态改变失败');
+//             }
+//             StockCheckGoods::where('id',$id)->update($request->except(['check','purchase_price','updated_at','created_at']));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

@@ -150,7 +150,8 @@ Route::group($adminGroup, function(){
 	Route::resource('/expresscompensation',  'ExpressCompensationController');
 	Route::resource('/expressprice',  'ExpressPriceController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
-
+    
+	Route::put('/stock-check-goods-entrepot/{id}',  'StockCheckGoodsController@updateEntrepot');
 	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
 	Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');

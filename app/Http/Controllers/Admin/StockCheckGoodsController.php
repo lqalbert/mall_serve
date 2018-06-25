@@ -7,6 +7,7 @@ use App\Models\InventorySystem;
 use App\Models\StockCheckGoods;
 use App\Models\StockCheck;
 use Illuminate\Support\Facades\DB;
+use App\Services\Inventory\InventoryService;
 
 class StockCheckGoodsController extends Controller
 {
@@ -141,7 +142,22 @@ class StockCheckGoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // var_dump($request->all());die();
+       $re = StockCheckGoods::where('id',$id)
+                              ->update($request->only([
+                                  'check_count',
+                                  'goods_price',
+                                  'profit_count',
+                                  'profit_money',
+                                  'loss_count',
+                                  'loss_money'
+                              ]));
+       if ($re) {
+           return $this->success([]);;
+       }  else {
+           return $this->error([]);
+       }
+       
     }
 
     /**
@@ -153,5 +169,25 @@ class StockCheckGoodsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function updateEntrepot(Request $request, InventoryService $service,  $id)
+    {
+        $model = StockCheckGoods::find($id);
+        $checkModel = $model->check;
+        $entrepot = $checkModel->entrepot;
+        if ($model->isFixed()) {
+            return $this->error([],'已经维护过');
+        }
+        try {
+            $service->stockCheck($entrepot, [$model], auth()->user(), $checkModel->check_sn); 
+            $model->setFixed()->save();
+        } catch (\Exception $e) {
+            $model->setUnFixed()->save();
+            return $this->error([], $e->getMessage());
+            
+        }
+        
+        return $this->success([]);
     }
 }
