@@ -24,7 +24,8 @@ class SysNoticeController extends Controller
     {
         $where=[];
         if ($request->has('title')){
-            $where['sys_notices.title']=$request->input('title');
+//            $where['sys_notices.title']=$request->input('title');
+            $where[]=['sys_notices.title','like',$request->input('title')."%"];
         }
         $data = $this->model
             ->join('user_basic','user_basic.id','=','sys_notices.user_id')
