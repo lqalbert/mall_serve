@@ -80,6 +80,7 @@ class CustomerController extends Controller
         } catch (ValidationException $e) {
             event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
             throw $e;
+            
         }
         
         

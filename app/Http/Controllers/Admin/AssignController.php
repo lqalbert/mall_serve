@@ -421,6 +421,7 @@ class AssignController extends Controller
         $assign->checkedGoods(auth()->user());
         $re = $assign->save();
         if ($re) {
+            
             return $this->success([]);
         } else {
             return $this->error([]);
