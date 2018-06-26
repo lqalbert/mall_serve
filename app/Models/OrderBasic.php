@@ -48,6 +48,7 @@ class OrderBasic extends Model
         'order_remark',
         'express_remark',
         'express_name',
+        'type',
     ];
     
     /**
@@ -249,5 +250,11 @@ class OrderBasic extends Model
     public function getAfterSaleStatusTextAttribute()
     {
         return self::$afterSaleStatus["l".$this->attributes['after_sale_status']];
+    }
+    
+    public function getTypeTextAttribute()
+    {
+        $map = ['销售订','内部订单','商城订单'];
+        return $map[$this->type];
     }
 }
