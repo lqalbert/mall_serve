@@ -29,8 +29,8 @@ class ExpressCompanyController extends Controller
         if($request->has('contact_tel')){
             $where['contact_tel']=$request->input('contact_tel');
         }
-       $data = ExpressCompany::where($where)->get();
-        return ['items'=>$data,'total'=>count($data)];
+       $data = ExpressCompany::where($where)->paginate($request->input('pageSize'));
+        return ['items' => $data->items(), 'total' => $data->total()];
     }
 
     /**
