@@ -165,6 +165,12 @@ class CustomerService
         DB::beginTransaction();
         
         try {
+            $user = Auth::user();
+            if (!$user->hasGroup()) {
+                throw new \Exception('未分配小组，不能添加客户');
+            }
+            
+            
             $model = $this->customer_basic->create($this->request->all());
             
             $data = $this->request->all();
@@ -172,7 +178,6 @@ class CustomerService
             $modelc = $this->customer_contact->create($data);
             
             //0 代表添加
-            $user = Auth::user();
             event(new SetCustomerUser( $user, $model->id, CustomerUser::ADD));
             DB::commit();
         } catch (\Exception $e) {

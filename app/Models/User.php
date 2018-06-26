@@ -134,6 +134,11 @@ class User extends Authenticatable
         return $roles->contains('name','administrator');
     }
     
+    public function hasGroup()
+    {
+        return !($this->group_id == 0 Or $this->group_id == null);
+    }
+    
     
     
     
