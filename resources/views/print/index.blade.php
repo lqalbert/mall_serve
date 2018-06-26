@@ -152,7 +152,7 @@
 			@foreach($goods as $key=>$item)
     			<tr>
         			<td class="goods-td">{{ $key+1 }}</td>
-        			<td class="text-left">[{{ $item->goods_number }}]{{ $item->sku_sn }}+{{ $item->goods_name }}+{{ $item->sku_name }}</td>
+        			<td class="text-left">[{{ $item->goods_number }}]{{ $item->sku_sn }}+{{ $item->goods_name }}+{{ $item->specifications }}</td>
         			<td class="goods-td">{{ $item->goods_number }}</td>
         			@php
         			$total += $item->goods_number;
