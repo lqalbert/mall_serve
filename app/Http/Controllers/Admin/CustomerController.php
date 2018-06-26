@@ -66,6 +66,12 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         
+        $user = auth()->user();
+        if (!$user->hasGroup()) {
+            return $this->error([], '未分配小组，不能添加客户');
+//             throw new \Exception();
+        }
+        
 //         if (!$request->has('department_id')) {
 //             return $this->error([], '未分配部门，你还不能添加');
 //         }
@@ -87,8 +93,8 @@ class CustomerController extends Controller
         try {
            
             $this->service->storeData();
-        } catch (Exception $e) {
-            return $this->error(null, $e->getMessage());
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
         }
         
         return $this->success([]);

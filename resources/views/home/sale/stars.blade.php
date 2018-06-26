@@ -83,7 +83,7 @@
                             {{$goods->goods_name}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
-                            <span class="price">￥{{$goods->goods_price}}</span>
+                            <span class="price">￥{{$goods->getPrice()}}</span>
                             @if(!empty($goods->new_goods))
                                 <span class="saleN">新品</span>
                             @endif

@@ -165,10 +165,7 @@ class CustomerService
         DB::beginTransaction();
         
         try {
-            $user = Auth::user();
-            if (!$user->hasGroup()) {
-                throw new \Exception('未分配小组，不能添加客户');
-            }
+            
             
             
             $model = $this->customer_basic->create($this->request->all());

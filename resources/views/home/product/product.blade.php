@@ -54,19 +54,24 @@
             <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12 proRig">
                 <div class="proRigBox col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rigTit">
-                        {{--{{$goods->goods_name}}--}}
-                        普拉她完美水肌水嫩保湿系列
+                        {{$goods->goods_name}}
+                        
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 titDec">
-                        Pulata Perfect Hydromuscular Moisturizer Line
+                        {{$goods->subtitle}}
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proType">产品系列</div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proCon">
-                        水嫩保湿系列
+                    
+                    @foreach($goods->category as $cat)
+                        {{$cat->label}}
+                        @break
+                    @endforeach
+                        
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proType">产品功效</div>
                     <div class="col-lg-12 col-md-12 xol-sm-12 col-xs-12 proCon">
-                        洁净肌肤，舒缓保湿，淡化细纹，改善皮肤干燥，密集修复肌肤锁水能力，令肌肤透现活力光彩
+                        {{$goods->brief}}
                     </div>
                 </div>
             </div>
@@ -88,7 +93,7 @@
                                 </div>
                                 <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <span class="price">￥{{$reItem->goods_price}}</span>
+                                        <span class="price">￥{{$reItem->getPrice()}}</span>
                                     </div>
                                     <div class="volum col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                         <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>

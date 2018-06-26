@@ -104,7 +104,7 @@
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
                                     <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>
                         </div>
@@ -135,7 +135,7 @@
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
                                     <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>
                         </div>

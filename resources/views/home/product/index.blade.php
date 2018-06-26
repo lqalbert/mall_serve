@@ -61,7 +61,7 @@
                                 {{$item->goods_name}}
                             </div>
                             <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <span>￥{{$item->goods_price}}</span>
+                                <span>￥{{$item->getPrice()}}</span>
                                 <span class="high">￥{{$item->del_price}}</span>
                                 @if($item->new_goods == 1)
                                 <span class="hot">热卖</span>
