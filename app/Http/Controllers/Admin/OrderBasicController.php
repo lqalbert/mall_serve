@@ -91,14 +91,15 @@ class OrderBasicController extends Controller
             if (!empty($orderGoodsModels)) {
                 $orderModel->goods()->saveMany($orderGoodsModels);
             }
-            
-            foreach ($request->order_address as $address) {
-                $orderAddressModels = OrderAddress::make($address);
-            }
+            $address = $request->address;
+            unset($address['id']);
+            $address['cus_id']=$allData['cus_id'];
+            $orderAddressModels = OrderAddress::make($request->address);
             if (!empty($orderAddressModels)) {
                 $orderModel->address()->save($orderAddressModels);
+                $orderModel->address_id = $orderAddressModels->id;
+                $orderModel->save();
             }
-            
             event( new AddOrder($orderModel) );
             DB::commit();
         } catch (\Exception $e) {
