@@ -68,6 +68,7 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
+        // var_dump($request->all());die;
         DB::beginTransaction();
         try {
             $allData = $request->all();
