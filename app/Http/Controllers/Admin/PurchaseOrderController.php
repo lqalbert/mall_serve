@@ -209,10 +209,8 @@ class PurchaseOrderController extends Controller
 //                $goods_model->where('id','=',$v['id'])->update($v);
 //            }
         }else{//审核修改
-            if($request->input('status')==1){
-                $data['purchase_status'] = 1;
-            }else{
-                $data['purchase_status'] = 2;
+            if($request->input('status')){
+                $data['purchase_status'] = $request->input('status');
             }
             $res =$this->model->where('id','=',$id)->update($data);
             if ($res) {

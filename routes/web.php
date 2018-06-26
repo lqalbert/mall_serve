@@ -12,6 +12,8 @@
 */
 //[ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')
 
+
+
 if (env('APP_ENV') != "production") {
     $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
     $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
@@ -19,6 +21,7 @@ if (env('APP_ENV') != "production") {
     $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
     $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
 }
+
 
 
 Route::group($logGroup, function(){
@@ -93,13 +96,26 @@ Route::group($adminGroup, function(){
 	Route::resource('/website','WebsiteController');
 	Route::resource('/distributioncenter','DistributionCenterController');
 	Route::resource('/shelvesmanagement','ShelvesManagementController');
-	Route::resource('/expresscompany','ExpressCompanyController');
+
+	Route::get('/expresscompany-address/{id}','ExpressCompanyController@getAddress');
+	Route::put('/expresscompany-address/{id}','ExpressCompanyController@updateAddress');
+	Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
 	Route::get('/menus', 'NavController@getNav');
 	
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+	Route::put('/order-assign-check', 'AssignController@check');//----
 	Route::resource('/order-assign', 'AssignController');
+
+	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
+	Route::put('/order-assign-check/{id}', 'AssignController@check');//----
+	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
+	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
+	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
+	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
+	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
@@ -107,7 +123,7 @@ Route::group($adminGroup, function(){
 	
 	Route::get('/inventory-gather', 'InventoryGatherController@index');
 	//库存明细 不靠谱的
-	Route::get('/inventory-detail', 'InventoryGatherController@detail');
+	Route::get('/inventory-detail', 'InventoryDetailController@index');
 	
 	Route::get('/entry-product', 'EntryProductController@index');
 	Route::resource('/expressreceive', 'ExpressReceiveController');
@@ -142,13 +158,20 @@ Route::group($adminGroup, function(){
 	Route::resource('/expresscompensation',  'ExpressCompensationController');
 	Route::resource('/expressprice',  'ExpressPriceController');
 	Route::get('/aaa',  'CartonManagementController@goods_carton');
-
+    
+	Route::put('/stock-check-goods-entrepot/{id}',  'StockCheckGoodsController@updateEntrepot');
 	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
 	Route::resource('/stock-check',  'StockCheckController');
+	Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');
+	Route::get('/get-goods-price/{sku}',  'StockCheckController@getGoodsPrice');
+	
 	//电子面单
 	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
 	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
-
+	Route::put('/order-after-sale-check/{id}', 'AfterSaleController@checkStatus');
+	Route::put('/order-after-sale-sure/{id}', 'AfterSaleController@sureStatus');
+	Route::get('/cus-all-info/{id}', 'AfterSaleController@getCusAllInfo');
+	
 	Route::resource('/purchaseorder',  'PurchaseOrderController');
 	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
 	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
@@ -170,7 +193,7 @@ Route::get('/product/index', 'Home\ProductController@index')->name('product/inde
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
 Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product');
 Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
-Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
+// Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
 Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
@@ -179,7 +202,7 @@ Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
 Route::get('/connection/technology', 'Home\ConnectionController@technology')->name('connection/technology');
 Route::get('/car/index', 'Home\CarController@index')->name('car/index');
-Route::post('/login/loginIn','Home\LoginController@loginIn')->name('login/loginIn');
+// Route::post('/login/loginIn','Home\LoginController@loginIn')->name('login/loginIn');
 Route::get('/person/index', 'Home\PersonController@index')->name('person/index');
 Route::get('/person/address', 'Home\PersonController@address')->name('person/address');
 Route::get('/person/collection', 'Home\PersonController@collection')->name('person/collection');
@@ -191,6 +214,7 @@ Route::post('/person/personChange', 'Home\PersonController@personChange')->name(
 Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
+
 
 // Auth::routes();
 

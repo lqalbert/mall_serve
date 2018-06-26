@@ -9,27 +9,21 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use App\models\OrderBasic;
+use App\Models\StockCheck;
 
-class OrderCreated
+class StockChecked
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
-    private $order = null;
-
+    private $model = null;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(OrderBasic $order)
+    public function __construct(StockCheck $model)
     {
-        $this->order = $order;
-    }
-    
-    public function getOrder()
-    {
-        return $this->order;
+        $this->model = $model;
     }
 
     /**
@@ -41,4 +35,9 @@ class OrderCreated
 //     {
 //         return new PrivateChannel('channel-name');
 //     }
+
+    public function getModel()
+    {
+        return $this->model;
+    }
 }

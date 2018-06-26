@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -13,7 +13,7 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.1.16/css/app.2c33a592ae43ee32177e0d082c4492bb.css" rel="stylesheet">
+    <link href="/admin/static1.1.18/css/app.b4e4a0b67ed55dbd545f27cee6b56916.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,8 +28,8 @@
     } 
    </script>
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.16/js/manifest.ba089eb9fb185d76a6de.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.16/js/vendor.78209d53ebd12fb5afbb.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.16/js/app.eec74b27cd1cb61697ab.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.18/js/manifest.90e5539c8674afac81ca.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.18/js/vendor.97cddee02d1dbc0846b4.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.18/js/app.fd579a7f16ec19c2f503.js"></script>
 </body>
 </html>

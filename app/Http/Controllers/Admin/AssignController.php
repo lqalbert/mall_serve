@@ -15,6 +15,10 @@ use Carbon\Carbon;
 use App\Repositories\Criteria\Assign\Order;
 use App\Repositories\Criteria\Assign\Address;
 use App\Repositories\Criteria\FieldEqualLessThan;
+use App\Services\WayBill\WayBillService;
+use App\Models\ExpressCompany;
+use App\Services\WayBill\MsgType\TmsWayBillGet;
+use Illuminate\Support\Facades\Storage;
 
 class AssignController extends Controller
 {
@@ -250,22 +254,51 @@ class AssignController extends Controller
      * @param unknown $id
      * @return number[]|string[]|NULL[]
      */
-    public function check(Request $request , $id)
+    public function check(Request $request, WayBillService $service)
     {
         //pass_check
         //check_status
         //status
         //操作纪录可在这里处理　也可以用事件处理
+        $ids = $request->input('ids', []);
         $data = $request->all();
         $data['pass_check'] = Carbon::now();
         $data['check_status'] = 1;
         $data['status'] = 1;
-        unset($data['id']);
-        $re = Assign::where('id', $id)->update($data);
+        unset($data['ids']);
+        
+        $ids = $request->input('ids', []);
+        $re = Assign::whereIn('id', $ids)->update($data);
         if ($re) {
+            //处理面单请求
+            //直接申请新的吧
+            
+            $express = ExpressCompany::find($data['express_id']);
+            $assigns = Assign::find($ids);
+            $cmd = new TmsWayBillGet();
+            $cmd->setParam($assigns, $express, auth()->user()->id);
+            $re =  $service->send($cmd);
+            //根据返回的re 来处理
+            //成功要保存数据
+           if ($re['status'] == 1) { //成功
+               $data = $re['data']['waybillCloudPrintResponseList'];
+               if (count($data) == 0) {
+                   return $this->error([],'面单获取失败:数量为0');
+               }
+               foreach ($data as $item) {
+//                    "waybillCode":"9890000160004",
+//                    "printData":"json串",
+//                    "objectId":"12"
+                   Assign::where('id', $item['id'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
+               }
+           } else {
+               return $this->error([], '面单获取失败:'.$re['msg']);
+           }
+            
+           Storage::disk('local')->put('waybill.json', json_encode($re));
             return $this->success([]);
         } else {
-            return $this->error([]);
+            return $this->error([],'aa');
         }
         
     }
@@ -280,7 +313,7 @@ class AssignController extends Controller
     public function repeatOrder(Request $request, $id)
     {
 //         {label:"导入状态", value:"1", sub:""},
-//         {label:"审核状态", value:"2", sub:""},　分配了快递公司　纸箱　快递号　快递号(面单可以更新)
+//         {label:"审核状态", value:"2", sub:""},　分配了快递公司　　快递号　快递号(面单可以更新)
 //         {label:"录入状态", value:"3", sub:"删除发货单"},　//需要重新生成　发货单　原来的　快递号　要怎么处理　查看电子面单接口
 //         注意这三个状态　需要改对应的字段　第三个暂时不需要改其它字段
         $assign = Assign::find($id);
@@ -343,7 +376,7 @@ class AssignController extends Controller
     
     
     /**
-     * 面单
+     * 面单打印
      * @todo 事件处理　操作记录
      * 打印
      */
@@ -352,8 +385,9 @@ class AssignController extends Controller
         $assign = Assign::find($id);
         $assign->updateWaybillPrintStatus();
         $re = $assign->save();
+        $express = $assign->express;
         if ($re) {
-            return $this->success(['waybillcode'=>$assign->express_sn, 'print_data'=>$assign->print_data]);
+            return $this->success(['waybillcode'=>$assign->express_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
         } else {
             return $this->error([]);
         }
@@ -387,6 +421,7 @@ class AssignController extends Controller
         $assign->checkedGoods(auth()->user());
         $re = $assign->save();
         if ($re) {
+            
             return $this->success([]);
         } else {
             return $this->error([]);

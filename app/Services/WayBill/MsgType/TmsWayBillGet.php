@@ -65,41 +65,51 @@ class TmsWayBillGet
         ]
     ] */
     
-    public function setParam($assign, $express, $order, $userId)
+    public function setParam($assign, $express, $userId)
     {
         $data = [
             'cpCode'=>$express->eng,
             'sender' => $express->getSend(),
-            'tradeOrderInfoDtos'=> $this->getOrderInfo($assign ,$order, $express->getTemplateUrl(), $userId)
+            'tradeOrderInfoDtos'=> $this->getOrderInfo($assign, $express->getTemplateUrl(), $userId)
         ];
         
         $this->data = array_merge($this->data, $data);
         
     }
-    //目前只生成一个
-    public function getOrderInfo($assign, $order, $templateUrl, $userId)
+    
+    public function getOrderInfo($assign, $templateUrl, $userId)
     {
+        $result = [];
         
-        return [
-            "logisticsServices" => "",//可以不填
-            "objectId"=>$order->id,//必填 string 32位
-            "orderInfo"=>[
-                'orderChannelsType'=>'OTHERS', //订单渠道平台编码
-                'tradeOrderList' => [
-                    $order->order_sn
-                ]
-            ],
-            "packageInfo"=> $assign->getPackageInfo(),
-            'recipient'=> $order->getRecipient(),
-            'templateUrl'=>$templateUrl,//模板URL
-            'userId'=>$userId, //使用者ID
-        ];
+        foreach ($assign as $item) {
+            $result[] = [
+                "logisticsServices" => "",//可以不填
+                "objectId"=>$item->id,//必填 string 32位
+                "orderInfo"=>[
+                    'orderChannelsType'=>'OTHERS', //订单渠道平台编码
+                    'tradeOrderList' => [
+                        $item->order->order_sn
+                    ]
+                ],
+                "packageInfo"=> $item->getPackageInfo(),
+                'recipient'=> $item->order->getRecipient(),
+                'templateUrl'=>$templateUrl,//模板URL
+                'userId'=>$userId, //使用者ID
+            ];
+        }
+        
+        return $result;
     }
     
     
     public function getContent()
     {
         return $this->data;
+    }
+    
+    public function getToCode()
+    {
+        return  '';//$this->data['cpCode'];
     }
     
     final public function  getApi()

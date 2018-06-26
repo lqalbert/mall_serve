@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -11,9 +11,10 @@
     <title>打印{{ config('app.name', 'Laravel') }}</title>
     <link  rel="stylesheet" href="/css/bootstrap.min.css">
     <style type="text/css" media="print">
-        body{
+        html,body{
             width: 240mm;
             font-size: 12pt;
+            height:auto;
         }
         .text-center {
             text-align: center;
@@ -22,11 +23,15 @@
             text-align:center;
         }
         h1{
-            font-size: 15pt;
-            line-height:35mm;
+            font-size: 30pt;
+            height: 13mm;
+            line-height:13mm;
+/*             line-height:10mm; */
+            margin: 5mm auto 5mm;
         }
         .container{
-            width: 180mm;
+/*             width: 180mm; */
+            width: 240mm;
             margin: 0 auto;
         }
         .subtitle {
@@ -67,16 +72,21 @@
             width: 20mm;
         }
         .text-left {
-            text-align:left;
+            text-align:left ;
         }
         td.text-left{
             text-indent: 3mm;
         }
         .text-right {
-            text-align: right;
+            text-align: right !important;
         }
         button{
             display:none;
+        }
+        .logo{
+            background-image: url("/images/print_logo.fw.png");
+            background-repeat: no-repeat;
+            background-position: left center;
         }
     </style>
     <style type="text/css">
@@ -99,24 +109,33 @@
 /*         th,td{ */
 /*             text-indent: 5px; */
 /*         } */
+.logo{
+            background-image: url("/images/print_logo.fw.png");
+            background-repeat: no-repeat;
+            background-position: left center;
+        }
     </style>
 </head>
 <body>
-    <h1 class="text-center">宝贝清单</h1>
+	<div class="container " style="position: relative;">
+		<img src="/images/print_logo.fw.png" style="vertical-align:middle; position:absolute; top: -4px" width="122"/>
+        <h1 class="text-center">宝贝清单</h1>
+	</div>
     <div class="container">
-    	<p class="subtitle　text-right">郑州普拉她</p>
+    	<div class="subtitle　text-right" style="float: right">郑州普拉她</div>
+    	
     	<table class="order">
     		<tr>
     			<td class="head-td">VIP</td>
-    			<td class="text-left">张三</td>
+    			<td class="text-left">{{ $model->address->name }}</td>
     			<td class="head-td">日期</td>
-    			<td class="text-left">2014-05-05</td>
+    			<td class="text-left">{{ Date('Y-m-d') }}</td>
     		</tr>
     		<tr>
     			<td class="head-td">电话</td>
-    			<td class="text-left">argaergaeg</td>
+    			<td class="text-left">{{ $model->address->phone }}</td>
     			<td class="head-td">单号</td>
-    			<td class="text-left">aergaerg</td>
+    			<td class="text-left">{{ $model->assign_sn }}</td>
     		</tr>
     	</table>
     	<table class="goods">
@@ -125,17 +144,27 @@
     			<td>宝贝名称</td>
     			<td class="goods-td">数量</td>
     		</tr>
+    		@php
+				$goods = $model->goods()->orderBy('sku_sn','asc')->get();
+				$total =0 ;
+			@endphp
+			
+			@foreach($goods as $key=>$item)
+    			<tr>
+        			<td class="goods-td">{{ $key+1 }}</td>
+        			<td class="text-left">[{{ $item->goods_number }}]{{ $item->sku_sn }}+{{ $item->goods_name }}+{{ $item->specifications }}</td>
+        			<td class="goods-td">{{ $item->goods_number }}</td>
+        			@php
+        			$total += $item->goods_number;
+        			@endphp
+        		</tr>
+			@endforeach
     		
-    		<tr>
-    			<td class="goods-td">1</td>
-    			<td class="text-left">[数量]代码+品名+规格</td>
-    			<td class="goods-td">12</td>
-    		</tr>
     		
     		<tr>
     			<td class="goods-td">备注</td>
     			<td class="text-left">总数:</td>
-    			<td class="goods-td"></td>
+    			<td class="goods-td">{{ $total }}</td>
     			
     		</tr>
     	</table>

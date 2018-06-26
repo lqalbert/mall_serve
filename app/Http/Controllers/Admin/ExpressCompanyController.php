@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\ExpressCompany;
 use Illuminate\Http\Request;
+use App\Services\WayBill\WayBillService;
+use App\Services\WayBill\MsgType\TmsWayBillSubscriptionQuery;
 
 class ExpressCompanyController extends Controller
 {
@@ -83,7 +85,7 @@ class ExpressCompanyController extends Controller
      * @param  \App\Models\ExpressCompany  $expressCompany
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpressCompany $expressCompany,$id)
+    public function update(Request $request,$id)
     {
         ExpressCompany::where('id',$id)->update($request->all());
     }
@@ -94,8 +96,36 @@ class ExpressCompanyController extends Controller
      * @param  \App\Models\ExpressCompany  $expressCompany
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpressCompany $expressCompany,$id)
+    public function destroy($id)
     {
         ExpressCompany::destroy($id);
     }
+    
+    
+    public function getAddress(WayBillService $service, $id)
+    {
+        $model = ExpressCompany::find($id);
+        
+        $cmd = new TmsWayBillSubscriptionQuery();
+        $cmd->setParam(['cpCode'=>$model->eng]);
+        $re = $service->send($cmd);
+        if ($re['status'] !=0) {
+            return $this->success($re['data']);
+        } else {
+            return $this->error([], $re['msg']);
+        }
+    }
+    
+    public function updateAddress(Request $request, $id)
+    {
+        $model = ExpressCompany::find($id);
+        $model->send_address = $request->input('send_address');
+        $re = $model->save();
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
 }

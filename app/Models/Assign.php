@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\AssignCreating;
+// use App\Events\AssignCreating;
 use Carbon\Carbon;
+use App\Events\AssignCreated;
 
 class Assign extends Model
 {
@@ -22,7 +23,8 @@ class Assign extends Model
      * @var array
      */
     protected $dates = [
-        'deleted_at'
+        'deleted_at',
+        'print_data'
     ];
     //前端　查询那里是写死了的　这里修改了　前端还要再改一下
     private static $statusMap = [
@@ -90,7 +92,12 @@ class Assign extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods');
+        return $this->hasMany('App\Models\OrderGoods','order_id');
+    }
+    
+    public function express()
+    {
+        return $this->belongsTo('App\Models\ExpressCompany');    
     }
     
     
@@ -143,6 +150,11 @@ class Assign extends Model
         $this->real_weigth = $weight;
 //         $this->user_id = $user->id;
 //         $this->user_name = $user->realname;
+    }
+    
+    public function getPrintDataAttribute($value)
+    {
+        return json_decode($value, true);
     }
     
     

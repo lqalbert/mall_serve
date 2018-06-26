@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\WayBill\CainiaoRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 class Response 
 {
 
@@ -22,7 +24,10 @@ class Response
        /*
         * １判断一下返回的数组格式 json 还是 xml
         *   
-        *   */
+        **/
+       
+       Storage::disk('local')->put('waybill.txt', $str);
+       
        $result = json_decode($str, true);
        
        if ($result != false) {

@@ -7,6 +7,7 @@ use App\Models\InventorySystem;
 use App\Models\StockCheckGoods;
 use App\Models\StockCheck;
 use Illuminate\Support\Facades\DB;
+use App\Models\PurchaseOrderGoods;
 
 class StockCheckController extends Controller
 {
@@ -19,8 +20,8 @@ class StockCheckController extends Controller
     { 
         $model = new StockCheck();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
+        if ($request->has('check_sn')) {
+            $model = $model->where('check_sn','like',$request->input('check_sn')."%");
         }
 
         if ($request->has('start')) {
@@ -95,12 +96,12 @@ class StockCheckController extends Controller
         // var_dump($request->all());die();
         DB::beginTransaction();
         try {
-            $check_id = $request->input('check_id');
-            $re = StockCheck::where('id',$check_id)->update(['check_status' => 2]);
-            if(!$re){
-                throw new  \Exception('盘点状态改变失败');
-            }
-            StockCheckGoods::where('id',$id)->update($request->all());
+//             $check_id = $request->input('check_id');
+            $re = StockCheck::where('id',$id)->update($request->all());
+//             if(!$re){
+//                 throw new  \Exception('盘点状态改变失败');
+//             }
+//             StockCheckGoods::where('id',$id)->update($request->except(['check','purchase_price','updated_at','created_at']));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -130,18 +131,34 @@ class StockCheckController extends Controller
         // echo $request->input('check_id');die();
         $model = new StockCheckGoods();
         
-        if ($request->has('check_num')) {
-            $model = $model->where('check_num', $request->input('check_num'));
-        }
+        // if ($request->has('check_sn')) {
+        //     $model = $model->where('check_sn', $request->input('check_sn'));
+        // }
         
         if ($request->has('check_id')) {
             $model = $model->where('check_id', $request->input('check_id'));
         }
         
         $result = $model->get();
+
+        $result->load('check','purchasePrice');
+
         return [
-            'items'=> $result,
+            'items'=> $result->toArray(),
             'total'=> $result->count()
+        ];
+    }
+
+    //获取价格 {'122323':[{value:'aaa', label:'bbb'}}
+    public function getGoodsPrice(Request $request,$sku){
+        // echo $sku;
+        $request = PurchaseOrderGoods::where('sku_sn',$sku)->select('goods_purchase_price')->get();
+        $arr = [];
+        foreach ($request as $model) {
+            $arr['value']= $model->goods_purchase_price;
+        }
+        return [
+            $sku=>[$arr]
         ];
     }
 

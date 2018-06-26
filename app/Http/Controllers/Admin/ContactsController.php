@@ -24,12 +24,14 @@ class ContactsController extends Controller
     public function index(Request $request)
     {
         $where = [];
-        $where['user_id'] = $request->input('id');
+        if ($request->has('user_id')) {
+            $where['user_id'] = $request->input('user_id');
+        }
         if ($request->has('name')) {
-            $where['contacts.name'] = $request->input('name');
+            $where[]=['name','like',$request->input('name').'%'];
         }
         if ($request->has('phone')) {
-            $where['contacts.phone'] = $request->input('phone');
+            $where[]=['phone','like',$request->input('phone').'%'];
         }
         $data = $this->model->where($where)
             ->orderBy('contacts.created_at', 'desc')

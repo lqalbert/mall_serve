@@ -53,6 +53,11 @@ class TmsWayBillUpdate
         return $this->data;
     }
     
+    public function getToCode()
+    {
+        return '';//$this->data['cpCode'];
+    }
+    
     final public function  getApi()
     {
         return 'TMS_WAYBILL_UPDATE';

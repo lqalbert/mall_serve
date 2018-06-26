@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Models\Assign;
 
 class PrintController extends Controller
 {
@@ -14,6 +15,7 @@ class PrintController extends Controller
     
     public function printAssign($id)
     {
-        return view('print/index');
+        $assign = Assign::findOrFail($id);
+        return view('print/index', ['model'=>$assign]);
     }
 }

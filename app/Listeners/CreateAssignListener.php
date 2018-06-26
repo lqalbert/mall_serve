@@ -35,11 +35,11 @@ class CreateAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
-        logger("[debug]", ['not here']);
+//         logger("[debug]", ['not here']);
         $data = [
             'entrepot_id'=> $order->entrepot_id,
             'order_id'   => $order->id,
-            'address_id' => $order->address->id,
+            'address_id' => $order->address_id,
         ];
         
         if ($order->isSetExpress()) {
@@ -47,12 +47,12 @@ class CreateAssignListener
             $data['express_id'] = $order->express_id;
             $data['express_name'] = $order->express_name;
         }
-        logger("[debug]", ['not here2']);
+//         logger("[debug]", ['not here2']);
         $model = Assign::create($data);
         if ($model== false) {
             throw new \Exception('发货单创建失败');
         }
-        logger("[debug]", ['not here3']);
+//         logger("[debug]", ['not here3']);
         $goods = $order->getGoods();
         $goods->each(function ($item, $key) use($model){
                $item->assign_id = $model->id;

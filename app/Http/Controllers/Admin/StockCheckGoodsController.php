@@ -7,6 +7,7 @@ use App\Models\InventorySystem;
 use App\Models\StockCheckGoods;
 use App\Models\StockCheck;
 use Illuminate\Support\Facades\DB;
+use App\Services\Inventory\InventoryService;
 
 class StockCheckGoodsController extends Controller
 {
@@ -83,19 +84,20 @@ class StockCheckGoodsController extends Controller
      */
     public function store(Request $request)
     {
+        // var_dump($request->all());die();
         DB::beginTransaction();
         try {
-            $checkNum = "PD".time();
+            $checkSn = "PD".time();
             $allData = $request->all();
-            $allData['check_num'] = $checkNum;
-            $stockCheck = StockCheck::make($allData);
-            $re = $stockCheck->save();
-            if (!$re) {
+//             $allData['check_sn'] = $checkSn;
+            $stockCheck = StockCheck::create($allData);
+            
+            if (!$stockCheck) {
                 throw new  \Exception('创建盘点单子失败');
             }
             $stockCheckGoodsModels = [];
             foreach ($request->input('check_goods_data') as $checkGoods) {
-                $checkGoods['check_num'] = $checkNum;
+                // $checkGoods['check_sn'] = $checkSn;
                 $stockCheckGoodsModels[] = StockCheckGoods::make($checkGoods);
             }
             if (!empty($stockCheckGoodsModels)) {
@@ -140,7 +142,22 @@ class StockCheckGoodsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // var_dump($request->all());die();
+       $re = StockCheckGoods::where('id',$id)
+                              ->update($request->only([
+                                  'check_count',
+                                  'goods_price',
+                                  'profit_count',
+                                  'profit_money',
+                                  'loss_count',
+                                  'loss_money'
+                              ]));
+       if ($re) {
+           return $this->success([]);;
+       }  else {
+           return $this->error([]);
+       }
+       
     }
 
     /**
@@ -152,5 +169,25 @@ class StockCheckGoodsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function updateEntrepot(Request $request, InventoryService $service,  $id)
+    {
+        $model = StockCheckGoods::find($id);
+        $checkModel = $model->check;
+        $entrepot = $checkModel->entrepot;
+        if ($model->isFixed()) {
+            return $this->error([],'已经维护过');
+        }
+        try {
+            $service->stockCheck($entrepot, [$model], auth()->user(), $checkModel->check_sn); 
+            $model->setFixed()->save();
+        } catch (\Exception $e) {
+            $model->setUnFixed()->save();
+            return $this->error([], $e->getMessage());
+            
+        }
+        
+        return $this->success([]);
     }
 }

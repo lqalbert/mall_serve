@@ -38,9 +38,13 @@ class DepartmentService
         
         $collection = $result->getCollection();
         $collection = ModelCollection::setAppends($collection, ['type_text']);
-        
+        $data =[];
+        foreach ($collection as $k=>$v){
+            $data[$v['id']]=$v;
+        }
         return [
         	'items'=> $collection,
+        	'res'=> $data,
             'total'=> $result->total()
         ];
     }

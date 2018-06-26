@@ -15,7 +15,7 @@ class Sn
     const OUT_ENTREPOT = 'OU';
     const ORDER_RETURN = 'RX';
     const ORDER_EXCHANGE = 'EX';
-    const CHECK = 'CH';
+    const CHECK = 'PD';
     
 	/**
 	 * 生成商品编号

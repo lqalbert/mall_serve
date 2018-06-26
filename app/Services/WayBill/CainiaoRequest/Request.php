@@ -16,10 +16,20 @@ class Request
     
     public function __construct() 
     {
-        $this->url = env('APP_ENV') != "production" ? config('cainiao.test_url') : config('cainiao.api_url') ;
-        $this->code = config('cainiao.code');
-        $this->app_key = config('cainiao.app_key');
-        $this->app_secret = config('cainiao.app_secret');
+        
+        if (env('APP_ENV') != "production") {
+            $this->url =  config('cainiao.test_url');
+            $this->code = config('cainiao.test.code');
+            $this->app_key = config('cainiao.test.app_key');
+            $this->app_secret = config('cainiao.test.app_secret');
+        } else {
+            $this->url = config('cainiao.api_url') ;
+            $this->code = config('cainiao.code');
+            $this->app_key = config('cainiao.app_key');
+            $this->app_secret = config('cainiao.app_secret');
+        }
+        
+        
             
     }
     
@@ -28,24 +38,64 @@ class Request
         
         $this->api = $obj->getApi();
         $this->content = $obj->getContent();
-//         $this->to_code = $toCode;
+        $this->to_code = $obj->getToCode();
         return $this;
     }
     
     public function makeSign()
     {
-        return base64_encode(md5(json_encode($this->content).$this->app_secret, true));
+        $str = env('APP_ENV') != "production" ? $this->getContent() : json_encode($this->content);
+        return base64_encode(md5($str.$this->app_secret, true));
     }
     
     public function getBody()
     {
         return http_build_query([
             'msg_type'=> $this->api, //这个是API名称
-//             'to_code' => $this->to_code, //与具体的打印参数有关　比如　不同的快递公司　不同的code
-            'logistics_interface'=> json_encode($this->content),
+            'to_code' => $this->to_code, //与具体的打印参数有关　比如　不同的快递公司　不同的code
+            'logistics_interface'=> $this->getContent(),
             'data_digest' => $this->makeSign(), //$digest, //签名
             'logistic_provider_id'=> $this->code
         ]);
+    }
+    
+    public function getContent()
+    {
+        return env('APP_ENV') != "production" ?  $this->toXml($this->content) : json_encode($this->content);
+    }
+    
+    public function toXml($data)
+    {
+        if(!is_array($data) || count($data) <= 0){
+            return false;
+        }
+        $xml = "<request>";
+        $xml .= $this->array2xml($data);
+        $xml.="</request>";
+        
+        return $xml;  
+    }
+    
+    private function array2xml($data)
+    {
+        if(!is_array($data) || count($data) <= 0){
+            return false;
+        }
+        $xml = "";
+        foreach ($data as $key=>$val){
+            $prev = "<".$key.">";
+            if (is_array($val) or is_object($val)){
+                $prev.= $this->array2xml($val);
+            }else{
+                $prev.=$val;
+            }
+            $prev.="</".$key.">";
+            $xml .= $prev;
+            
+        }
+        
+        return $xml;  
+        
     }
     
     public function send()
@@ -63,7 +113,7 @@ class Request
         //curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST'); 我用上面这行替换了
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//返回信息
         //因为我用 CURLOPT_POST 替换　CURLOPT_CUSTOMREQUEST　好像这里就不用设置了
-        //curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type:application/x-www-form-urlencoded']);
+//         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type:application/x-www-form-urlencoded']);
         
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getBody());
         //curl_setopt($ch, CURLOPT_POST, 1); demo上这里是有设置的　我暂时注释掉

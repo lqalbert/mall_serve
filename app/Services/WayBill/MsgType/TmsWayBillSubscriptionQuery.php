@@ -26,6 +26,11 @@ class TmsWayBillSubscriptionQuery
         return $this->data;
     }
     
+    public function getToCode()
+    {
+        return '';
+    }
+    
     final public function  getApi()
     {
         return 'TMS_WAYBILL_SUBSCRIPTION_QUERY';

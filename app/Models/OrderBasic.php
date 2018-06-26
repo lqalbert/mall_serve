@@ -4,7 +4,9 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Events\OrderCreating;
+// use App\Events\OrderCreating;
+use App\Events\OrderCreated;
+
 class OrderBasic extends Model
 {
     use SoftDeletes;
@@ -46,6 +48,7 @@ class OrderBasic extends Model
         'order_remark',
         'express_remark',
         'express_name',
+        'type',
     ];
     
     /**
@@ -55,6 +58,7 @@ class OrderBasic extends Model
      */
     protected $events = [
 //         'creating' => OrderCreating::class,
+
         'created'  => OrderCreated::class
     ];
     
@@ -151,6 +155,11 @@ class OrderBasic extends Model
         return $this->belongsTo('App\Models\Department', 'department_id');
     }
     
+    public function getGoods()
+    {
+        return $this->goods;
+    }
+    
     /**
      * 是否生成过配货单
      * 这里先直接返回 false 还没有
@@ -241,5 +250,11 @@ class OrderBasic extends Model
     public function getAfterSaleStatusTextAttribute()
     {
         return self::$afterSaleStatus["l".$this->attributes['after_sale_status']];
+    }
+    
+    public function getTypeTextAttribute()
+    {
+        $map = ['销售订','内部订单','商城订单'];
+        return $map[$this->type];
     }
 }

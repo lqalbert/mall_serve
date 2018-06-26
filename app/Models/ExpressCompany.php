@@ -17,7 +17,8 @@ class ExpressCompany extends Model
       'contact_name',
       'contact_tel',
       'remark',
-      'eng'
+      'eng',
+      'printer'
     ];
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
     protected $dates = [
@@ -30,29 +31,12 @@ class ExpressCompany extends Model
      */
     public function getSend()
     {
-//         'sender'=>[
-//             'address'=>[
-//                 'province'=>"",
-//                 'city'    =>"",
-//                 'district'=>"",
-//                 'town'    =>"",
-//                 'detail'  =>""
-//             ],
-//             "phone"=>"",
-//             "mobile"=>"",
-//             "name"=>""
-//         ]
+        $contact = $this->entrepot;
         return [
-            'address'=>[
-                'province'=>"",
-                'city'    =>"",
-                'district'=>"",
-                'town'    =>"",
-                'detail'  =>""
-            ],
-            "phone"=>"",
-            "mobile"=>"",
-            "name"=>""
+            'address'=>json_decode($this->send_address, true),
+            "phone"=>$contact->fixed_telephone,
+            "mobile"=>$contact->contact_phone,
+            "name"=>$contact->contact
         ];
     }
     
@@ -61,6 +45,18 @@ class ExpressCompany extends Model
      */
     public function getTemplateUrl()
     {
-       return config('cainiao.'.$this->attributes['eng']);
+        return config('cainiao.print_template.'.$this->eng);
     }
+    
+    public function setSendAddressAttribute($value)
+    {
+        return $this->attributes['send_address'] = json_encode($value);
+    }
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter');
+    }
+    
+    
 }
