@@ -79,6 +79,14 @@
 @section('js')
     <script>
         $(document).ready(function () {
+        	let hei=parseInt($('#product .productLists').css('height'));
+            if(hei<=100){
+            	$('.navBottom').css('position','absolute');
+	            $('.navBottom').css('width','100%');
+	            $('.navBottom').css('left','50%');
+	            $('.navBottom').css('bottom','0');
+	            $('.navBottom').css('transform','translate(-50%, 0)');
+            }
         })
     </script>
 @endsection
