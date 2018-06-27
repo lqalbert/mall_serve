@@ -165,7 +165,7 @@ class CustomerService
         DB::beginTransaction();
         
         try {
-            
+            $user = auth()->user();
             
             
             $model = $this->customer_basic->create($this->request->all());
