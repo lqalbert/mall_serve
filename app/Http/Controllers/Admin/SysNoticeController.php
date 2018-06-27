@@ -35,7 +35,7 @@ class SysNoticeController extends Controller
 //             ->orderBy('sys_notices.created_at', 'desc')
 //             ->paginate($request->input('pageSize'));
         
-       $this->model = $this->model->with('user');
+        $this->model = $this->model->with('user')->orderBy('id','desc');
        
        $result = $this->model->paginate($request->input('pageSize'));
        
