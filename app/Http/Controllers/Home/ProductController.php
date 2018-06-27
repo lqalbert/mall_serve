@@ -53,10 +53,6 @@ class ProductController extends CommonController
         return view('home/product/product',['bar'=>static::$bar, 'goods'=>$goods, 'recoms'=>$recoms]);
     }
     
-    private function getCateByLabel($label)
-    {
-        return Category::where('label', $label)->first();
-    }
     
     /**
      * 这个应该抽离出去 不应该写在这里
