@@ -128,8 +128,10 @@
 }
 
 #stars .proLists .proList .proTit{
-    line-height: 20px;
-    height: 40px;
+    line-height: 30px;
+    height: 30px;
+    white-space: nowrap;
+    text-align: center;
     overflow: hidden;
     font-size: 16px;
     text-overflow: ellipsis;
@@ -141,6 +143,7 @@
 #stars .proLists .proList .priceBox{
     line-height: 30px;
     margin-top: 5px;
+    text-align: center;
 }
 
 #stars .proLists .proList .priceBox span{
@@ -158,10 +161,12 @@
     text-align: center;
     line-height: 20px;
     color: #fff;
-    padding: 5px 10px 5px 10px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
 
 #stars .proLists .proList .priceBox .saleB{
