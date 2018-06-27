@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\SysNotice;
 use Illuminate\Http\Request;
+use App\Alg\ModelCollection;
 
 class SysNoticeController extends Controller
 {
@@ -27,13 +28,25 @@ class SysNoticeController extends Controller
 //            $where['sys_notices.title']=$request->input('title');
             $where[]=['sys_notices.title','like',$request->input('title')."%"];
         }
-        $data = $this->model
-            ->join('user_basic','user_basic.id','=','sys_notices.user_id')
-            ->select('sys_notices.*','user_basic.account')
-            ->where($where)
-            ->orderBy('sys_notices.created_at', 'desc')
-            ->paginate($request->input('pageSize'));
-        return ['items' => $data->items(), 'total' => $data->total()];
+//         $data = $this->model
+//             ->join('user_basic','user_basic.id','=','sys_notices.user_id')
+//             ->select('sys_notices.*','user_basic.account')
+//             ->where($where)
+//             ->orderBy('sys_notices.created_at', 'desc')
+//             ->paginate($request->input('pageSize'));
+        
+       $this->model = $this->model->with('user');
+       
+       $result = $this->model->paginate($request->input('pageSize'));
+       
+       $collection = $result->getCollection();
+       
+       if ($request->has('appends')) {
+           $collection = ModelCollection::setAppends($collection, $request->input('appends'));
+       }
+        
+        
+       return ['items' => $collection->toArray(), 'total' => $result->total()];
     }
 
     /**
