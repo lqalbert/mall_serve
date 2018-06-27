@@ -1,4 +1,4 @@
-@extends('home.base')
+@extends('home.base', ['bar' => $bar])
 
 @section('css')
     <link rel="stylesheet" href="/css/home/product/index.css"/>
@@ -21,29 +21,30 @@
                     </a>
                 </div>--}}
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{URL('product/index?type=new')}}">
-                        <div class="{{$type['new']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="{{ route('product/index', ['label'=>'护肤'])  }}">
+<!--                     {{--$type['new']--}} -->
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             护肤
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{URL('product/index?type=sale')}}">
-                        <div class="{{$type['sale']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="{{ route('product/index', ['label'=>'彩妆'])  }}">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             彩妆
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{URL('product/index?type=wakeup')}}">
-                        <div class="{{$type['wakeup']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="{{ route('product/index', ['label'=>'焕肤紧致系列'])  }}">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             焕肤紧致系列
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{URL('product/index?type=youth')}}">
-                        <div class="{{$type['youth']}} col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列'])  }}">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             青春凝时冻龄系列
                         </div>
                     </a>
@@ -51,7 +52,7 @@
             </div>
         </div>
         <div class="productLists col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            @foreach($goods as $item)
+            @forelse ($goods as $item)
             <a href="{{URL('product', ['id'=>$item->id])}}">
                 <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
                     <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -71,7 +72,9 @@
                     </div>
                 </div>
             </a>
-            @endforeach
+            @empty
+            <p style="text-align: center; padding: 20px 0px;"> 新款待上线，敬请关注</p>
+            @endforelse 
         </div>
         
     </div>

@@ -15,7 +15,7 @@
 </head>
 <body>
 <!--导航-->
-@include("home.nav")
+@include("home.nav",['bar' => $bar])
 <!--/ 导航-->
 <div class="container  indexContent">
     <div class="row">
