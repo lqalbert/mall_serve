@@ -43,22 +43,22 @@
     	<div id="minBanner">
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <a href="{{ route('product/index', ['label'=>'面膜'])  }}">
-                    <img width="100%" src="images/home/index/minBanner/1.png" alt="">
+                    <img width="100%" src="images/2018-06-27/1.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <a href="{{ route('product/index', ['label'=>'彩妆']) }}">
-                    <img width="100%" src="images/home/index/minBanner/2.png" alt="">
+                    <img width="100%" src="images/2018-06-27/2.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <a href="{{ route('product/index', ['label'=>'焕肤紧致系列']) }}">
-                    <img width="100%" src="images/home/index/minBanner/3.png" alt="">
+                    <img width="100%" src="images/2018-06-27/3.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列']) }}">
-                    <img width="100%" src="images/home/index/minBanner/4.png" alt="">
+                    <img width="100%" src="images/2018-06-27/4.png" alt="">
                 </a>
             </div>
         </div>
@@ -68,12 +68,12 @@
     	<div id="productList">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
                 <a href="{{URL('sale/stars')}}">
-                    <img src="/images/home/index/leftsidebar.jpg" alt="">
+                    <img src="/images/2018-06-27/s1.jpg" alt="">
                 </a>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
                 <a href="{{URL('sale/stars?type=youth')}}">
-                    <img src="/images/home/index/rightsidebar.jpg" alt="">
+                    <img src="/images/2018-06-27/s2.png" alt="">
                 </a>
             </div>
         </div>
