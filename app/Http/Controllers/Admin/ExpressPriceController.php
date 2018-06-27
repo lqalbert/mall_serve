@@ -25,9 +25,9 @@ class ExpressPriceController extends Controller
 //        if ($request->has('express_id')) {
 //            $where[] = ['express_id','=',$request->input('express_id')];
 //        }
-//        if ($request->has('company_name')) {
-//            $where[] = ['express_name','=',$request->input('company_name')];
-//        }
+        if ($request->has('express_name')) {
+            $where[] = ['express_name','=',$request->input('express_name')];
+        }
         if ($request->has('area_province_id')) {
             $where[] = ['area_province_id','=',$request->input('area_province_id')];
         }
