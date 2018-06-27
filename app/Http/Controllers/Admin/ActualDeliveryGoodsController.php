@@ -22,7 +22,10 @@ class ActualDeliveryGoodsController extends Controller
     {
         $where=[];
         if($request->has('purchase_order_id')){
-            $where['purchase_order_id']=$request->input('purchase_order_id');
+            $where[]=['purchase_order_id','=',$request->input('purchase_order_id')];
+        }
+        if($request->has('sign_status')){
+            $where[]=['sign_status','=',$request->input('sign_status')];
         }
         $data = $this->model->where($where)->get();
         $data = $data->toArray();
