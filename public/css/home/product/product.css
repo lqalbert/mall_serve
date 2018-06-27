@@ -37,7 +37,7 @@ li{
 
 .productInfo .proLef .view .swiper-container {
      width: 100%;
-     height: 500px;
+     height: 362px; //500px
  }
 
 .productInfo .proLef .view .swiper-container .swiper-slide img{
