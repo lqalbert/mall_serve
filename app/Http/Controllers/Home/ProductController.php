@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\URL;
 use App\Models\Goods;
+use App\models\Category;
 
 class ProductController extends CommonController
 {
@@ -21,11 +20,20 @@ class ProductController extends CommonController
         if($request->has('seachText')){
             $goodsModel = $goodsModel->where('goods_name', 'like', '%'.$request->input('seachText').'%');
         }
-
+        
+        if ($request->has('label')) {
+            $cate = $this->getCateByLabel($request->input('label'));
+            $goodsModel = $goodsModel->whereHas('midCate',function($query) use($cate){
+                $query->where('cate_id', $cate->id);
+            });
+        }
+        
         $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->get();
-        $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
+        
+        
+//         $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
 
-        return view('home/product/index',['bar'=>static::$bar, 'goods'=>$goods, 'gust'=>$gust,'type'=>$type,'name'=>$name[$request->input('type','all')]]);
+        return view('home/product/index',['bar'=>static::$bar, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
     }
 
     
@@ -40,6 +48,11 @@ class ProductController extends CommonController
         //推荐
         $recoms = Goods::select(['id','cover_url','goods_name','sale_count','goods_price'])->limit(6)->get();
         return view('home/product/product',['bar'=>static::$bar, 'goods'=>$goods, 'recoms'=>$recoms]);
+    }
+    
+    private function getCateByLabel($label)
+    {
+        return Category::where('label', $label)->firstOrFail();
     }
     
     /**

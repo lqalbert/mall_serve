@@ -15,7 +15,7 @@
 </head>
 <body>
 <!--导航-->
-@include("home.nav")
+@yield('nav')
 <!--/ 导航-->
 <div class="container  indexContent">
     <div class="row">

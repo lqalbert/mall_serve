@@ -31,6 +31,7 @@ class ActualDeliveryGoods extends Model implements GoodsContracts
         'goods_case_num',
         'goods_case_weight',
         'goods_manufacture_time',
+        'sign_status',
 
 
     ];

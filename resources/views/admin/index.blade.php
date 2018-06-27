@@ -13,23 +13,24 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.1.18/css/app.afc9f1c4e9dfc28f348f44470e6ac440.css" rel="stylesheet">
+    <link href="/admin/static1.1.26/css/app.06168263436e8c1d7e2aa397a358204c.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
     </div>
-	<script>
-	//给IE10的 上面的 条件注释在IE10以上的浏览器不起作用了y
-    if(isIE = navigator.userAgent.indexOf("MSIE")!=-1) { 
-        var h = document.getElementsByTagName('head');
-        var scr = document.createElement('script');
-        scr.setAttribute('src', 'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js');
-        h[0].appendChild(scr);
-    } 
-   </script>
+<!-- 	<script> 
+// 	//给IE10的 上面的 条件注释在IE10以上的浏览器不起作用了y
+//     if(isIE = navigator.userAgent.indexOf("MSIE")!=-1) { 
+//         var h = document.getElementsByTagName('head');
+//         var scr = document.createElement('script');
+//         scr.setAttribute('src', 'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js');
+//         h[0].appendChild(scr);
+//     } 
+   </script>-->
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.18/js/manifest.cf0936717c04363cd032.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.18/js/vendor.78209d53ebd12fb5afbb.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.18/js/app.97a31bfc319cd02653b2.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.26/js/manifest.0f0cb0e6df3be63421e2.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.26/js/vendor.0c122c06ebcaba843bc4.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.26/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.26/js/app.c65258e1339420dfe6df.js"></script>
 </body>
 </html>

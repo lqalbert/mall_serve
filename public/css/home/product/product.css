@@ -7,6 +7,10 @@ li{
     padding: 10px 0 10px 0;
 }
 
+.indexContent{
+    width: 100%;
+}
+
 /*----------------productInfo------------------*/
 .productBanner{
     padding: 0;
@@ -33,12 +37,16 @@ li{
 
 .productInfo .proLef .view .swiper-container {
      width: 100%;
-     height: 500px;
+     height: 362px; //500px
  }
 
 .productInfo .proLef .view .swiper-container .swiper-slide img{
     width: 100%;
     height: 100%;
+}
+
+.productInfo .proLef .view .swiper-container {
+    border: 1px solid #e3e3e3;
 }
 
 .productInfo .proLef .view .arrow-left {
@@ -134,84 +142,28 @@ li{
 
 .productInfo .proRig .rigTit{
     line-height: 30px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
     margin-top: 20px;
     color: #444;
 }
 
-.productInfo .proRig .rigPrice{
-    line-height: 40px;
-    margin-top: 15px;
-    background: #EEEBE4;
-    padding: 10px 15px 10px 15px;
+.productInfo .proRig .titDec{
+    font-size: 16px;
+    line-height: 30px;
+    color: #999;
 }
 
-.productInfo .proRig .rigPrice div{
-    padding: 0;
-}
-
-.productInfo .proRig .rigPrice .left .llPrice{
-    text-decoration: line-through;
-}
-
-.productInfo .proRig .rigPrice .right{
-    text-align: right;
-}
-
-.productInfo .proRig .rigPrice .nowPrice{
-    color: red;
-    font-size: 22px;
-}
-
-.productInfo .proRig .rigPrice .nowMsg{
-    padding: 3px 8px 3px 8px;
-    background: #ECC27A;
-    color: #FF3E64;
-    margin-left: 10px;
-}
-
-.productInfo .proRig .rigPrice .lowTickets{
-    border: 1px solid red;
-    padding: 5px 10px 5px 10px;
-    color: red;
-    cursor: pointer;
-}
-
-.productInfo .proRig .rigNum{
-    margin-top: 20px;
-}
-
-.productInfo .proRig .rigNum div{
-    padding: 0;
-    float: left;
-    margin-right: 10px;
-    line-height: 40px;
-}
-
-.productInfo .proRig .rigNum .middleN{
-    width: 140px;
-    position: relative;
-}
-
-.productInfo .proRig .rigNum .left{
-    padding-right: 15px;
-}
-
-.productInfo .proRig .rigNum .left .productNumber{
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    height: 40px;
-    padding: 0 50px 0 50px;
+.productInfo .proRig .proType{
+    line-height: 30px;
     font-size: 18px;
-    outline:none;
-    color: #666;
+    color: #2E5990;
+    margin-top: 15px;
 }
 
-.productInfo .proRig .rigNum .left .productNumber:focus{
-    border: 1px solid #ECC27A;
-    box-shadow: 0 0 2px #ECC27A,0 0 3px #ECC27A;
+.productInfo .proRig .proCon{
+    line-height: 30px;
+    font-size: 16px;
+    color: #999;
 }
 
 /*鍘婚櫎input type涓簄umber鏃� 绠ご鏍峰紡*/
@@ -383,6 +335,7 @@ li{
 .productContent .contentLeft{
     height: auto;
     padding-left: 0;
+    margin-bottom: 15px;
 }
 
 .productContent .contentLeft a{
@@ -442,6 +395,7 @@ li{
     background: #fff;
     height: auto;
     padding: 0;
+    margin-bottom: 15px;
 }
 
 .productContent .contentRight .title{
@@ -490,11 +444,7 @@ li{
     padding: 0;
 }
 
-.productContent .contentRight .contentDetail .imgBox{
-    margin-bottom: 15px;
-}
-
-.productContent .contentRight .contentDetail .imgBox img{
+.productContent .contentRight .contentDetail img{
     width: 100%;
 }
 

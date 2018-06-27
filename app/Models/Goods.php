@@ -77,6 +77,26 @@ class Goods extends Model
         return $this->hasMany("App\Models\SkuAttr", 'goods_id');
     }
     
+//     public function getGoodsPriceAttribute($value)
+//     {
+//         $value = number_format($value,2,'.','');
+//         if ($value == "0.00") {
+//             return '敬请关注';
+//         } else {
+//             return $value;
+//         }
+//     }
+
+    public function getPrice()
+    {
+        $value = number_format($this->goods_price,2,'.','');
+        if ($value == "0.00") {
+            return '敬请关注';
+        } else {
+            return $value;
+        }
+    }
+    
     
     /**
      * 获取封面图片。

@@ -117,20 +117,35 @@ class PurchaseOrderController extends Controller
 
     public function signGoods(Request $request){
         $goodsList = $request->input('signGoodsList');
+        $purchase_order_id = $request->input('purchase_order_id');
+//        采购单采购商品总数
+        $goods_total = (int)$this->model->where('id','=',$purchase_order_id)->first()['goods_total'];
 //         logger('[debug]', $goodsList);
         if (count($goodsList) == 0 ) {
             return $this->error([]);
         }
         
         $goodsModels = [];
+        $goodsIds = [];
         foreach ($goodsList as $goods) {
             $goodsModels[] = ActualDeliveryGoods::make($goods);
+            $goodsIds[]=$goods['id'];
         }
-        
         $entrepot = $goodsModels[0]->purchase->entrepot;
-        
+        $actual_where=[];
+        $actual_where[]=['purchase_order_id','=',$purchase_order_id];
+        $actual_where[]=['sign_status','=',1];
         try {
             $this->serve->entryUpdate($entrepot, $goodsModels, auth()->user());
+            ActualDeliveryGoods::whereIn('id',$goodsIds)->update(['sign_status'=>1]);
+//        发货单发货商品签收总数
+            $actual_delivery_goods_total =(int) ActualDeliveryGoods::where($actual_where)->sum('actual_goods_num');
+            if($actual_delivery_goods_total<$goods_total){
+                $this->model->where('id','=',$purchase_order_id)->update(['warehousing_status'=>2]);//部分入库
+            }else{
+                $this->model->where('id','=',$purchase_order_id)->update(['warehousing_status'=>3]);//完全入库
+            }
+
         } catch (\Exception $e) {
             
             return $this->error([], $e->getMessage());

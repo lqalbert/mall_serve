@@ -4,6 +4,10 @@
     <link rel="stylesheet" href="/css/home/information/index.css"/>
 @endsection
 
+@section('nav')
+@include("home.nav",['bar' => $bar])
+@endsection
+
 @section('content')
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 protectContent">
 

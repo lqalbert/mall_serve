@@ -35,7 +35,7 @@ body{
 
 #saleBest .saleLists .saleList{
     padding: 15px;
-    border: 1px solid #fff;
+    border: 1px solid #F5F5F5;
 }
 
 #saleBest .saleLists .saleList:hover{
@@ -46,23 +46,27 @@ body{
     width: 100%;
     min-width: 200px;
     height: 260px;
+    display: block;
     
 }
 
 #saleBest .saleLists .saleList .listTitle{
-    line-height: 20px;
-    height: 60px;
+    line-height: 30px;
+    height: 30px;
     overflow: hidden;
     font-size: 16px;
     text-overflow: ellipsis;
+    white-space: nowrap;
     font-weight: bold;
     color: #333;
     text-decoration: none;
+    text-align: center;
 }
 
 #saleBest .saleLists .saleList .listPrice{
     line-height: 30px;
     margin-top: 5px;
+    text-align: center;
 }
 
 #saleBest .saleLists .saleList .listPrice span{
@@ -78,12 +82,16 @@ body{
     height: 20px;
     background: #F5D29C;
     text-align: center;
+    display: block;
     line-height: 20px;
     color: #fff;
-    padding: 5px 10px 5px 10px;
+    padding: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
 }
 
 #saleBest .saleLists .saleList .listPrice .saleB{

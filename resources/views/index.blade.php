@@ -42,22 +42,22 @@
     <div class="row" >
     	<div id="minBanner">
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{URL('product/index?type=new')}}">
+                <a href="{{ route('product/index', ['label'=>'面膜'])  }}">
                     <img width="100%" src="images/home/index/minBanner/1.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{URL('product/index?type=sale')}}">
+                <a href="{{ route('product/index', ['label'=>'彩妆']) }}">
                     <img width="100%" src="images/home/index/minBanner/2.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{URL('product/index?type=wakeup')}}">
+                <a href="{{ route('product/index', ['label'=>'焕肤紧致系列']) }}">
                     <img width="100%" src="images/home/index/minBanner/3.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{URL('product/index?type=youth')}}">
+                <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列']) }}">
                     <img width="100%" src="images/home/index/minBanner/4.png" alt="">
                 </a>
             </div>
@@ -104,7 +104,7 @@
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
                                     <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>
                         </div>
@@ -135,7 +135,7 @@
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
                                     <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->goods_price}}</div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>
                         </div>

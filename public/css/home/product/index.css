@@ -81,7 +81,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid #fff;
+    border: 1px solid #F5F5F5;
 
 }
 
@@ -92,7 +92,7 @@
 #product .productLists .productList img{
     width: 100%;
     float: left;
-    height: 290px;
+    height: 125px;
 }
 
 #product .productLists .productList .msgPro{
@@ -111,6 +111,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-align: center;
 }
 
 #product .productLists .productList .msgPro .price{

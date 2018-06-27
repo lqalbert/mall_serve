@@ -2,6 +2,11 @@
 @section('css')
     <link rel="stylesheet" href="/css/home/sale/index.css"/>
 @endsection
+
+@section('nav')
+@include("home.nav",['bar' => $bar])
+@endsection
+
 @section('content')
     <div id="saleBest" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="saleBestTitle col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -18,7 +23,7 @@
                             {{$goods->goods_name}}
                         </div>
                         <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <span class="price">￥{{$goods->goods_price}}</span>
+                            <span class="price">￥{{$goods->getPrice()}}</span>
                             @if(!empty($goods->new_goods))
                                 <span class="saleN">新品</span>
                             @endif
@@ -58,7 +63,16 @@
 @section('js')
     <script>
       $(document).ready(function () {
-
+	      $(document).ready(function () {
+		      let hei=parseInt($('#saleBest .saleLists').css('height'));
+		      if(hei<=100){
+			      $('.navBottom').css('position','absolute');
+			      $('.navBottom').css('width','100%');
+			      $('.navBottom').css('left','50%');
+			      $('.navBottom').css('bottom','0');
+			      $('.navBottom').css('transform','translate(-50%, 0)');
+		      }
+	      })
       })
     </script>
 @endsection
