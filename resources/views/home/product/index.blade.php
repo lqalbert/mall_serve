@@ -4,6 +4,11 @@
     <link rel="stylesheet" href="/css/home/product/index.css"/>
 @endsection
 
+@section('nav')
+@include("home.nav",['bar' => $bar])
+@endsection
+
+
 @section('content')
     <div id="product" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productContent">
         <div class="productTitle col-lg-12 col-md-12 col-sm-12 col-xs-12">

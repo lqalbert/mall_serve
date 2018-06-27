@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\URL;
 use App\Models\Goods;
-use App\Repositories\Criteria\Goods\Categories;
 use App\models\Category;
 
 class ProductController extends CommonController
@@ -25,10 +22,10 @@ class ProductController extends CommonController
         }
         
         if ($request->has('label')) {
-            $label = $request->input('label');
-            $goodsModel = $goodsModel->with(['category'=>function($query) use($label){
-                $query->where('label', $label);
-            }]);
+            $cate = $this->getCateByLabel($request->input('label'));
+            $goodsModel = $goodsModel->whereHas('midCate',function($query) use($cate){
+                $query->where('cate_id', $cate->id);
+            });
         }
         
         $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->get();
@@ -53,6 +50,10 @@ class ProductController extends CommonController
         return view('home/product/product',['bar'=>static::$bar, 'goods'=>$goods, 'recoms'=>$recoms]);
     }
     
+    private function getCateByLabel($label)
+    {
+        return Category::where('label', $label)->firstOrFail();
+    }
     
     /**
      * 这个应该抽离出去 不应该写在这里

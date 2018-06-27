@@ -2,6 +2,11 @@
 @section('css')
     <link rel="stylesheet" href="/css/home/brand/index.css"/>
 @endsection
+
+@section('nav')
+@include("home.nav",['bar' => $bar])
+@endsection
+
 @section('content')
     <div id="brand" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="left col-lg-2 col-md-3 col-sm-3 col-xs-12">
