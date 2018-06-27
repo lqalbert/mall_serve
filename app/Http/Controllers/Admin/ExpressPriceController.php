@@ -20,19 +20,24 @@ class ExpressPriceController extends Controller
      */
     public function index(Request $request)
     {
+//        var_dump($request->all());die;
         $where = [];
-        if ($request->has('express_id')) {
-            $where['express_id'] = $request->input('express_id');
-        }
 //        if ($request->has('express_id')) {
-//            $where['express_compensations.express_id'] = $request->input('express_id');
+//            $where[] = ['express_id','=',$request->input('express_id')];
 //        }
-//        if ($request->has('order_number')) {
-//            $where['express_compensations.order_number'] = $request->input('order_number');
-//        }
-//        if ($request->has('express_number')) {
-//            $where['express_compensations.express_number'] = $request->input('express_number');
-//        }
+        if ($request->has('express_name')) {
+            $where[] = ['express_name','=',$request->input('express_name')];
+        }
+        if ($request->has('area_province_id')) {
+            $where[] = ['area_province_id','=',$request->input('area_province_id')];
+        }
+        if ($request->has('area_city_id')) {
+            $where[] = ['area_city_id','=',$request->input('area_city_id')];
+        }
+        if ($request->has('area_district_id')) {
+            $where[] = ['area_district_id','=',$request->input('area_district_id')];
+        }
+
         $data = $this->model->where($where)
             ->paginate($request->input('pageSize'));
         return ['items' => $data->items(), 'total' => $data->total()];
@@ -94,9 +99,14 @@ class ExpressPriceController extends Controller
      * @param  \App\Models\ExpressPrice  $expressPrice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpressPrice $expressPrice)
+    public function update(Request $request,$id)
     {
-        //
+        $re=$this->model->where('id',$id)->update($request->all());
+        if ($re) {
+            return $this->success($re);
+        } else {
+            return $this->error(0);
+        }
     }
 
     /**
@@ -105,8 +115,13 @@ class ExpressPriceController extends Controller
      * @param  \App\Models\ExpressPrice  $expressPrice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpressPrice $expressPrice)
+    public function destroy($id)
     {
-        //
+        $re = $this->model->destroy($id);
+        if ($re) {
+            return $this->success(1);;
+        } else {
+            return $this->error(0);
+        }
     }
 }
