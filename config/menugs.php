@@ -224,18 +224,18 @@ return [
                 'index' => 'WarehousingProcess'
         ],
     //36
-				[
+		[
         		'text'=>'盘点开单',
         		'icon'=>null,
         		'index'=>'StockCheckGoods',
         ],
 
-	    	[
+    	[
         		'text'=>'盘存盘点',
         		'icon'=>null,
         		'index'=>'StockCheck',
         ],
- 	[
+ 	    [
             'text' => '采购单列表',
             'icon' => null,
             'index' => 'PurchaseList'
