@@ -28,7 +28,7 @@
 //     } 
    </script>-->
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.26/js/manifest.8f7abb7eb68c21f34d27.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.26/js/manifest.6cf305cd6b0c0a332a19.js"></script>
     <script type="text/javascript" src="/admin/static1.1.26/js/vendor.a3dc0b2b08d772122a5a.js"></script>
     <script type="text/javascript" src="/admin/static1.1.26/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
     <script type="text/javascript" src="/admin/static1.1.26/js/app.cee55b436c38569148b2.js"></script>

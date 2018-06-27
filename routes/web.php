@@ -199,6 +199,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/{id}', 'Home\InformationController@detail');
+Route::post('/connection/store', 'Home\ConnectionController@store');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
 Route::get('/connection/technology', 'Home\ConnectionController@technology')->name('connection/technology');
 Route::get('/car/index', 'Home\CarController@index')->name('car/index');
