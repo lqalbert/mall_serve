@@ -13,8 +13,8 @@ class SaleController extends CommonController
     public  function index(){
         static::$bar['bar4']='sta';
         static::$bar['line4']='line';
-        
-        $allgoods = Goods::active()->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
+        //hot_goods 应做成查询作用域
+        $allgoods = Goods::active()->where('hot_goods',1)->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
         return view('home/sale/index',['bar'=>static::$bar, 'allGoods'=>$allgoods]);
     }
     public  function stars(Request $request){
