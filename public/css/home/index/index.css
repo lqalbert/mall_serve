@@ -675,6 +675,7 @@
     right: 6%;
     background: #DF385F;
     border-radius: 5px;
+    display: none;
 }
 
 #scrollBox .sbox{
@@ -697,6 +698,11 @@
     text-align: center;
     line-height: 40px;
     display: none;
+}
+
+#scrollBox .sbox .content a{
+    color: #fff;
+    text-decoration: none;
 }
 
 #scrollBox .sbox:hover > .content{

@@ -48,9 +48,9 @@
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 right">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgBox">
                     @if($yt=='wakeup')
-                        <img src="/images/home/index/leftsidebar.jpg" alt="">
+                        <img src="/images/2018-06-27/s2.jpg" alt="">
                     @else
-                        <img src="/images/home/index/rightsidebar.jpg" alt="">
+                        <img src="/images/2018-06-27/s2.jpg" alt="">
                     @endif
                 </div>
             </div>

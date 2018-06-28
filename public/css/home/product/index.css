@@ -115,11 +115,11 @@
 }
 
 #product .productLists .productList .msgPro .price{
-    line-height: 25px;
+    line-height: 30px;
+    text-align: center;
 }
 
 #product .productLists .productList .msgPro .price span{
-    margin-right: 5px;
     color: #FF0EA7;
 }
 
@@ -135,6 +135,10 @@
     color: orange;
     padding: 0 5px 0 5px;
     font-size: 12px;
+    line-height: 20px;
+    position: absolute;
+    right:5px;
+    top: 5px;
 }
 
 /*---------------------enjoyProduct--------------*/
