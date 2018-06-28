@@ -12,8 +12,8 @@ class ProductController extends CommonController
     public function index(Request $request){
         static::$bar['bar2']='sta';
         static::$bar['line2']='line';
-        $type=array('sale'=>'','youth'=>'','wakeup'=>'','new'=>'');
-        $type[$request->input('type','new')]='actionBar';
+        $type=array('面膜'=>'','彩妆'=>'','焕肤紧致系列'=>'','青春凝时冻龄系列'=>'','全部'=>'');
+        $type[$request->input('label','全部')]='actionBar';
         $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肤紧致系列','new'=>'新品首发');
 
         $goodsModel = new Goods;
@@ -33,7 +33,7 @@ class ProductController extends CommonController
         
 //         $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
 
-        return view('home/product/index',['bar'=>static::$bar, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
+        return view('home/product/index',['bar'=>static::$bar,'type'=>$type, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
     }
 
     

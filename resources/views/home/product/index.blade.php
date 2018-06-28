@@ -26,30 +26,30 @@
                     </a>
                 </div>--}}
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{ route('product/index', ['label'=>'护肤'])  }}">
+                    <a href="{{ route('product/index', ['label'=>'面膜'])  }}">
 <!--                     {{--$type['new']--}} -->
-                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$type['面膜']}}">
                             护肤
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
                     <a href="{{ route('product/index', ['label'=>'彩妆'])  }}">
-                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$type['彩妆']}}">
                             彩妆
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
                     <a href="{{ route('product/index', ['label'=>'焕肤紧致系列'])  }}">
-                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$type['焕肤紧致系列']}}">
                             焕肤紧致系列
                         </div>
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
                     <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列'])  }}">
-                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 青春凝时冻龄系列">
                             青春凝时冻龄系列
                         </div>
                     </a>
