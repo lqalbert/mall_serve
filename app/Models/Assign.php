@@ -92,7 +92,7 @@ class Assign extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods','order_id');
+        return $this->hasMany('App\Models\OrderGoods','assign_id');
     }
     
     public function express()
@@ -144,10 +144,11 @@ class Assign extends Model
         $this->user_name = $user->realname;    
     }
     
-    public function weightGoods($weight ,User $user)
+    public function weightGoods($weight,$express_fee,User $user)
     {
         $this->status = self::STATUS_WEIGHTGOODS;
         $this->real_weigth = $weight;
+        $this->express_fee = $express_fee;
 //         $this->user_id = $user->id;
 //         $this->user_name = $user->realname;
     }
