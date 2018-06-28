@@ -68,12 +68,12 @@
     	<div id="productList">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
                 <a href="{{URL('sale/stars')}}">
-                    <img src="/images/2018-06-27/s2.jpg" alt="">
+                    <img src="/images/2018-06-27/s2.png" alt="">
                 </a>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
                 <a href="{{URL('sale/stars?type=youth')}}">
-                    <img src="/images/2018-06-27/s1.png" alt="">
+                    <img src="/images/2018-06-27/s1.jpg" alt="">
                 </a>
             </div>
         </div>

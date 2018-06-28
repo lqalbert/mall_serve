@@ -17,10 +17,10 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productTit">
             <div class="col-lg-6 col-lg-offset-3 col-md-6 col-sm-8 col-xs-12">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{URL('sale/stars')}}" class="{{$type['wakeup']}}">焕肤系列</a>
+                    <a href="{{ route('sale/stars', ['label'=>'焕肤紧致系列'])  }}" class="{{$type['wakeup']}}">焕肤系列</a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{URL('sale/stars?type=youth')}}" class="{{$type['youth']}}">
+                    <a href="{{ route('sale/stars', ['label'=>'青春凝时冻龄系列'])  }}" class="{{$type['youth']}}">
                         青春凝时冻龄系列
                     </a>
                 </div>
@@ -48,9 +48,9 @@
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 right">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgBox">
                     @if($yt=='wakeup')
-                        <img src="/images/2018-06-27/s2.jpg" alt="">
+                        <img src="/images/2018-06-27/s2.png" alt="">
                     @else
-                        <img src="/images/2018-06-27/s2.jpg" alt="">
+                        <img src="/images/2018-06-27/s1.jpg" alt="">
                     @endif
                 </div>
             </div>
