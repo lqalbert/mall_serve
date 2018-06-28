@@ -92,7 +92,7 @@
 #product .productLists .productList img{
     width: 100%;
     float: left;
-    height: 125px;
+    height: auto;
 }
 
 #product .productLists .productList .msgPro{
