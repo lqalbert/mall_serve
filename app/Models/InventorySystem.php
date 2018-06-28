@@ -198,7 +198,7 @@ class InventorySystem extends Model
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            throw new Exception('inventory_system update error');
+            throw new Exception('库存扣除失败');
         }
     }
     
