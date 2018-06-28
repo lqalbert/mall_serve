@@ -13,7 +13,7 @@
                 <div class="conTi col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <a href="{{URL('/')}}">首页</a>>
                     <span>联系我们</span>
-                </div>
+                </div>{{--
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
                     联系我们
                 </div>
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 messageBox">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
