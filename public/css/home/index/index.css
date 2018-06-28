@@ -422,8 +422,9 @@
 
 /*-------------------banner-----------------*/
 #banner{
-    /*padding: 0;*/
+    padding: 0;
     height: auto;
+    margin-top: 109px;
 }
 #banner img{
     width: 100%;

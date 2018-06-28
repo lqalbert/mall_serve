@@ -16,29 +16,36 @@
 @include("home.nav")
 <!--/ 导航-->
 
-<div id="banner" class="indexContent">
-        <img src="/images/home/index/banner.jpg">
-        {{--<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12 col-sm-12">--}}
-            {{--<div class=" bannerBox col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">--}}
-                {{--<div class="swiper-container2" style="width: 100%;height: 100%">--}}
-                    {{--<div class="swiper-wrapper">--}}
-                        {{--<div class="swiper-slide">--}}
-                            {{--<img class="imgs" src="images/home/index/banner1.png" alt="">--}}
-                        {{--</div>--}}
-                        {{--<div class="swiper-slide">--}}
-                            {{--<img class="imgs" src="images/home/index/banner2.png" alt="">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="swiper-pagination"></div>--}}
-                    {{--<div class="swiper-button-prev"></div>--}}
-                    {{--<div class="swiper-button-next"></div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
+<div id="banner" class="indexContent container-fluid">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" style="padding: 0">
+            <div class=" bannerBox col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">
+                <div class="swiper-container2" style="width: 100%;height: 100%">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <a href="{{ route('product/index', ['label'=>'焕肤紧致系列'])  }}">
+                                <img class="imgs" src="images/home/index/banner1.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列'])  }}">
+                                <img class="imgs" src="images/home/index/banner2.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="swiper-slide">
+                            <a href="{{ route('product/index', ['label'=>'护肤'])  }}">
+                                <img class="imgs" src="images/home/index/banner3.jpg" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
 </div>
 
 <div class="container ">
-
     <div class="row" >
     	<div id="minBanner">
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
