@@ -15,10 +15,10 @@ class AlterExpressPricesTable extends Migration
     {
 
         Schema::table('express_prices', function (Blueprint $table) {
-            $table->unsignedInteger('first_weight')->default(0)->comment('首重')->change();
-            $table->decimal('first_price')->default(0)->comment('首价')->change();
-            $table->unsignedInteger('first_weight')->default(0)->comment('续重')->change();
-            $table->decimal('continued_price')->default(0)->comment('续价')->change();
+                $table->unsignedInteger('first_weight')->default(0)->comment('首重')->change();
+                $table->decimal('first_price')->default(0)->comment('首价')->change();
+                $table->unsignedInteger('continued_weight')->default(0)->comment('续重')->change();
+                $table->decimal('continued_price')->default(0)->comment('续价')->change();
         });
     }
 
@@ -29,8 +29,8 @@ class AlterExpressPricesTable extends Migration
      */
     public function down()
     {
-       Schema::table('express_prices', function (Blueprint $table) {
+//        Schema::table('express_prices', function (Blueprint $table) {
 //            $table->dropColumn(['first_weight','first_price','continued_weight','continued_price']);
-       });
+//        });
     }
 }
