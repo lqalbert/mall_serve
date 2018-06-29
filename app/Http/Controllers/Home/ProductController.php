@@ -12,9 +12,9 @@ class ProductController extends CommonController
     public function index(Request $request){
         static::$bar['bar2']='sta';
         static::$bar['line2']='line';
-        $type=array('面膜'=>'','彩妆'=>'','焕肤紧致系列'=>'','青春凝时冻龄系列'=>'','全部'=>'');
+        $type=array('面膜'=>'','彩妆'=>'','焕肌紧致系列'=>'','青春凝时冻龄系列'=>'','全部'=>'');
         $type[$request->input('label','全部')]='actionBar';
-        $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肤紧致系列','new'=>'新品首发');
+        $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肌紧致系列','new'=>'新品首发');
 
         $goodsModel = new Goods;
         if($request->has('seachText')){
