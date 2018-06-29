@@ -14,12 +14,14 @@
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">美丽帮助</div>
                     <div class="">
-                        <a href="{{URL('information/news')}}">
+                        {{--{{URL('information/news')}}--}}
+                        <a href="">
                             美丽资讯
                         </a>
                     </div>
                     <div class="">
-                        <a href="{{URL('connection/technology')}}">
+                        {{--{{URL('connection/technology')}}--}}
+                        <a href="">
                             技术咨询
                         </a>
                     </div>
@@ -28,7 +30,8 @@
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">客户服务</div>
                     <div class="">
-                        <a href="{{URL('question/index')}}">
+                        {{--{{URL('question/index')}}--}}
+                        <a href="">
                             常见问题
                         </a>
                     </div>
@@ -37,11 +40,14 @@
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">联系我们</div>
                     <div class="">微商城</div>
-                    <div class="">公众号：</div>
+                    <div class="">公众号</div>
                 </div>
            
         </div>
         
     </div>
-    <div class="navNum">备案号：<a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备18050024</a> 广州普拉她生物科技有限公司</div>
+    <div class="navNum">
+        备案号：<a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备18050024</a> 广州普拉她生物科技有限公司
+        <span class="phone">咨询热线  400-158-2369</span>
+    </div>
 </div>

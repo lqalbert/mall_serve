@@ -661,6 +661,14 @@
     line-height: 50px;
     text-align: center;
     background: #F5C3CF;
+    position: relative;
+}
+
+.navBottom .navNum .phone{
+    position: absolute;
+    right: 20%;
+    line-height: 30px;
+    top: 10px;
 }
 
 .productBanner{
@@ -809,6 +817,12 @@
 
     #productList .list:last-child{
         padding:0 15px 0 15px;
+    }
+}
+@media (max-width: 1170px) {
+
+    .navBottom .navNum .phone{
+        right: 10%;
     }
 }
 

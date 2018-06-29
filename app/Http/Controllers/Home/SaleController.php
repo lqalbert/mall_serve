@@ -19,7 +19,7 @@ class SaleController extends CommonController
     }
     public  function stars(Request $request){
         $type=['wakeup'=>'','youth'=>''];
-        $label = $request->input('label','3');
+        $label = $request->input('cate_id','3');
         if ($label == '3') {
             $type['wakeup'] = 'active';
             $yt = 'wakeup';

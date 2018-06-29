@@ -49,22 +49,22 @@
     <div class="row" >
     	<div id="minBanner">
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'1'])  }}">
+                <a href="{{ route('product/index', ['cate_id'=>'1'])  }}">
                     <img width="100%" src="images/2018-06-27/1.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'2']) }}">
+                <a href="{{ route('product/index', ['cate_id'=>'2']) }}">
                     <img width="100%" src="images/2018-06-27/2.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'3']) }}">
+                <a href="{{ route('product/index', ['cate_id'=>'3']) }}">
                     <img width="100%" src="images/2018-06-27/3.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'4']) }}">
+                <a href="{{ route('product/index', ['cate_id'=>'4']) }}">
                     <img width="100%" src="images/2018-06-27/4.png" alt="">
                 </a>
             </div>

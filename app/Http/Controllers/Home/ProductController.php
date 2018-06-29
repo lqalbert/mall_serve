@@ -15,27 +15,28 @@ class ProductController extends CommonController
         static::$bar['line2']='line';
         
         $subNav = [
-            '1'=>['url'=>route('product/index', ['label'=>'1']),'isactive'=>'','name'=>''],
-            '2'=>['url'=>route('product/index', ['label'=>'2']),'isactive'=>'','name'=>''],
-            '3'=>['url'=>route('product/index', ['label'=>'3']),'isactive'=>'','name'=>''],
-            '4'=>['url'=>route('product/index', ['label'=>'4']),'isactive'=>'','name'=>'']
+            '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>''],
+            '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>''],
+            '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>''],
+            '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'']
         ];
         $name='';
         $goodsTypeName=GoodsType::all();
         foreach ($goodsTypeName as $k=>$v){
-            $subNav[$v['id']]=$v['name'];
+            $subNav[$v['id']]['name']=$v['name'];
         }
-        $label = $request->input('label', '0');
-        $subNav[$label]['isactive'] ='actionBar';
+        if($request->has('cate_id')){
+            $subNav[$request->input('cate_id')]['isactive'] ='actionBar';
+        }
         $goodsModel = new Goods;
         if($request->has('seachText')){
             $goodsModel = $goodsModel->where('goods_name', 'like', '%'.$request->input('seachText').'%');
         }
         
-        if ($label>=1) {
-            $name= $subNav[$label]['name'];
+        if ($request->has('cate_id')) {
+            $name= $subNav[$request->input('cate_id')]['name'];
             //$cate = $this->getCateByLabel($request->input('label'));
-            $cate = $request->input('label');
+            $cate = $request->input('cate_id');
             $goodsModel = $goodsModel->whereHas('midCate',function($query) use($cate){
                 $query->where('cate_id', $cate);
             });

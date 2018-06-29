@@ -17,10 +17,10 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productTit">
             <div class="col-lg-6 col-lg-offset-3 col-md-6 col-sm-8 col-xs-12">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{ route('sale/stars', ['label'=>'3'])  }}" class="{{$type['wakeup']}}">金致焕肌系列</a>
+                    <a href="{{ route('sale/stars', ['cate_id'=>'3'])  }}" class="{{$type['wakeup']}}">金致焕肌系列</a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{ route('sale/stars', ['label'=>'4'])  }}" class="{{$type['youth']}}">
+                    <a href="{{ route('sale/stars', ['cate_id'=>'4'])  }}" class="{{$type['youth']}}">
                         水嫩保湿系列
                     </a>
                 </div>
@@ -34,9 +34,9 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 minTit">
                         @if($yt=='wakeup')
-                            普拉她  焕肤系列
+                            普拉她  金致焕肌系列
                         @else
-                            普拉她  青春凝时冻龄系列
+                            普拉她  水嫩保湿系列
                         @endif
                         <div class="line"></div>
                     </div>
