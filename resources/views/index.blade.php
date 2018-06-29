@@ -22,17 +22,17 @@
                 <div class="swiper-container2" style="width: 100%;height: 100%">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'3'])  }}">
+                            <a href="{{ route('product/index', ['cate_id'=>'3'])  }}">
                                 <img class="imgs" src="images/home/index/banner1.jpg" alt="">
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'4'])  }}">
+                            <a href="{{ route('product/index', ['cate_id'=>'4'])  }}">
                                 <img class="imgs" src="images/home/index/banner2.jpg" alt="">
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'1'])  }}">
+                            <a href="{{ route('product/index', ['cate_id'=>'1'])  }}">
                                 <img class="imgs" src="images/home/index/banner3.jpg" alt="">
                             </a>
                         </div>
