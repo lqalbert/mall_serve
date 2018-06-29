@@ -59,7 +59,7 @@
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'焕肤紧致系列']) }}">
+                <a href="{{ route('product/index', ['label'=>'焕肌紧致系列']) }}">
                     <img width="100%" src="images/2018-06-27/3.png" alt="">
                 </a>
             </div>

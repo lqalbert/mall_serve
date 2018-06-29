@@ -41,9 +41,9 @@
                     </a>
                 </div>
                 <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                    <a href="{{ route('product/index', ['label'=>'焕肤紧致系列'])  }}">
-                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$type['焕肤紧致系列']}}">
-                            焕肤紧致系列
+                    <a href="{{ route('product/index', ['label'=>'焕肌紧致系列'])  }}">
+                        <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$type['焕肌紧致系列']}}">
+                            焕肌紧致系列
                         </div>
                     </a>
                 </div>
