@@ -15,7 +15,17 @@ class ProductController extends CommonController
         $type=array('面膜'=>'','彩妆'=>'','焕肌紧致系列'=>'','青春凝时冻龄系列'=>'','全部'=>'');
         $type[$request->input('label','全部')]='actionBar';
         $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肌紧致系列','new'=>'新品首发');
-
+        
+        $subNav = [
+            '护肤'=>['url'=>route('product/index', ['label'=>'护肤']),'isactive'=>''],
+            '彩妆'=>['url'=>route('product/index', ['label'=>'彩妆']),'isactive'=>''],
+            '焕肌紧致系列'=>['url'=>route('product/index', ['label'=>'焕肌紧致系列']),'isactive'=>''],
+            '青春凝时冻龄系列'=>['url'=>route('product/index', ['label'=>'青春凝时冻龄系列']),'isactive'=>'']
+        ];
+        
+        $label = $request->input('label', '护肤');
+        $subNav[$label]['isactive'] ='actionBar';
+        
         $goodsModel = new Goods;
         if($request->has('seachText')){
             $goodsModel = $goodsModel->where('goods_name', 'like', '%'.$request->input('seachText').'%');
@@ -33,7 +43,7 @@ class ProductController extends CommonController
         
 //         $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
 
-        return view('home/product/index',['bar'=>static::$bar,'type'=>$type, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
+        return view('home/product/index',['bar'=>static::$bar, 'subNav'=>$subNav, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
     }
 
     
