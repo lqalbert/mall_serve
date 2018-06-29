@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Models\GoodsType;
 use Illuminate\Http\Request;
 use App\Models\Goods;
 use App\models\Category;
@@ -12,33 +13,34 @@ class ProductController extends CommonController
     public function index(Request $request){
         static::$bar['bar2']='sta';
         static::$bar['line2']='line';
-        $type=array('面膜'=>'','彩妆'=>'','焕肌紧致系列'=>'','青春凝时冻龄系列'=>'','全部'=>'');
-        $type[$request->input('label','全部')]='actionBar';
-        $name=array('sale'=>'畅销产品','youth'=>'青春系列','all'=>'全部','wakeup'=>'焕肌紧致系列','new'=>'新品首发');
         
         $subNav = [
-            '护肤'=>['url'=>route('product/index', ['label'=>'护肤']),'isactive'=>''],
-            '彩妆'=>['url'=>route('product/index', ['label'=>'彩妆']),'isactive'=>''],
-            '焕肌紧致系列'=>['url'=>route('product/index', ['label'=>'焕肌紧致系列']),'isactive'=>''],
-            '青春凝时冻龄系列'=>['url'=>route('product/index', ['label'=>'青春凝时冻龄系列']),'isactive'=>'']
+            '1'=>['url'=>route('product/index', ['label'=>'1']),'isactive'=>'','name'=>''],
+            '2'=>['url'=>route('product/index', ['label'=>'2']),'isactive'=>'','name'=>''],
+            '3'=>['url'=>route('product/index', ['label'=>'3']),'isactive'=>'','name'=>''],
+            '4'=>['url'=>route('product/index', ['label'=>'4']),'isactive'=>'','name'=>'']
         ];
-        
-        $label = $request->input('label', '护肤');
-        if ($label == '面膜') {
-            $label = '护肤';
+        $name='';
+        $goodsTypeName=GoodsType::all();
+        foreach ($goodsTypeName as $k=>$v){
+            $subNav[$v['id']]=$v['name'];
         }
+        $label = $request->input('label', '0');
         $subNav[$label]['isactive'] ='actionBar';
-        
         $goodsModel = new Goods;
         if($request->has('seachText')){
             $goodsModel = $goodsModel->where('goods_name', 'like', '%'.$request->input('seachText').'%');
         }
         
-        if ($request->has('label')) {
-            $cate = $this->getCateByLabel($request->input('label'));
+        if ($label>=1) {
+            $name= $subNav[$label]['name'];
+            //$cate = $this->getCateByLabel($request->input('label'));
+            $cate = $request->input('label');
             $goodsModel = $goodsModel->whereHas('midCate',function($query) use($cate){
-                $query->where('cate_id', $cate->id);
+                $query->where('cate_id', $cate);
             });
+        }else{
+            $name='全部';
         }
         
         $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->get();
@@ -46,7 +48,7 @@ class ProductController extends CommonController
         
 //         $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
 
-        return view('home/product/index',['bar'=>static::$bar, 'subNav'=>$subNav, 'goods'=>$goods, 'name'=>$request->input('label','全部')]);
+        return view('home/product/index',['bar'=>static::$bar, 'subNav'=>$subNav, 'goods'=>$goods, 'name'=>$name]);
     }
 
     

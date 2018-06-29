@@ -17,11 +17,11 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 productTit">
             <div class="col-lg-6 col-lg-offset-3 col-md-6 col-sm-8 col-xs-12">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{ route('sale/stars', ['label'=>'焕肌紧致系列'])  }}" class="{{$type['wakeup']}}">焕肤系列</a>
+                    <a href="{{ route('sale/stars', ['label'=>'3'])  }}" class="{{$type['wakeup']}}">金致焕肌系列</a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <a href="{{ route('sale/stars', ['label'=>'青春凝时冻龄系列'])  }}" class="{{$type['youth']}}">
-                        青春凝时冻龄系列
+                    <a href="{{ route('sale/stars', ['label'=>'4'])  }}" class="{{$type['youth']}}">
+                        水嫩保湿系列
                     </a>
                 </div>
             </div>

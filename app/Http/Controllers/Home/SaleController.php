@@ -19,8 +19,8 @@ class SaleController extends CommonController
     }
     public  function stars(Request $request){
         $type=['wakeup'=>'','youth'=>''];
-        $label = $request->input('label','焕肌紧致系列');
-        if ($label == '焕肌紧致系列') {
+        $label = $request->input('label','3');
+        if ($label == '3') {
             $type['wakeup'] = 'active';
             $yt = 'wakeup';
         } else {
@@ -34,10 +34,10 @@ class SaleController extends CommonController
         static::$bar['bar6']='sta';
         static::$bar['line6']='line';
         
-        $cate = $this->getCateByLabel($label);
+        $cate =$label;
         
         $allgoods = Goods::active()->whereHas('midCate',function($query) use($cate){
-            $query->where('cate_id', $cate->id);
+            $query->where('cate_id', $cate);
         })->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
         
         

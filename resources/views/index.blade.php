@@ -22,17 +22,17 @@
                 <div class="swiper-container2" style="width: 100%;height: 100%">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'焕肤紧致系列'])  }}">
+                            <a href="{{ route('product/index', ['label'=>'3'])  }}">
                                 <img class="imgs" src="images/home/index/banner1.jpg" alt="">
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列'])  }}">
+                            <a href="{{ route('product/index', ['label'=>'4'])  }}">
                                 <img class="imgs" src="images/home/index/banner2.jpg" alt="">
                             </a>
                         </div>
                         <div class="swiper-slide">
-                            <a href="{{ route('product/index', ['label'=>'护肤'])  }}">
+                            <a href="{{ route('product/index', ['label'=>'1'])  }}">
                                 <img class="imgs" src="images/home/index/banner3.jpg" alt="">
                             </a>
                         </div>
@@ -49,22 +49,22 @@
     <div class="row" >
     	<div id="minBanner">
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'面膜'])  }}">
+                <a href="{{ route('product/index', ['label'=>'1'])  }}">
                     <img width="100%" src="images/2018-06-27/1.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'彩妆']) }}">
+                <a href="{{ route('product/index', ['label'=>'2']) }}">
                     <img width="100%" src="images/2018-06-27/2.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'焕肌紧致系列']) }}">
+                <a href="{{ route('product/index', ['label'=>'3']) }}">
                     <img width="100%" src="images/2018-06-27/3.png" alt="">
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['label'=>'青春凝时冻龄系列']) }}">
+                <a href="{{ route('product/index', ['label'=>'4']) }}">
                     <img width="100%" src="images/2018-06-27/4.png" alt="">
                 </a>
             </div>
@@ -102,7 +102,7 @@
                 </div>
                 <div class="newC col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="left col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                        <img src="images/home/index/new/leftnew.jpg" alt="">
+                        <img src="images/home/index/new/leftnew.png" alt="">
                     </div>
                     <div class="right col-lg-7 col-md-7 col-sm-6 col-xs-12">
                     	@foreach($newGoods as $goods)
@@ -133,7 +133,7 @@
                 </div>
                 <div class="newC col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="left col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                        <img src="images/home/index/product/selling.jpg" alt="">
+                        <img src="images/home/index/product/selling.png" alt="">
                     </div>
                     <div class="right col-lg-7 col-md-7 col-sm-6 col-xs-12">
                     	@foreach($hotGoods as $goods)
