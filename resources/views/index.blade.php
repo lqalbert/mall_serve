@@ -79,7 +79,7 @@
                 </a>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 list">
-                <a href="{{URL('sale/stars?type=youth')}}">
+                <a href="{{URL('sale/stars?cate_id=4')}}">
                     <img src="/images/2018-06-27/s1.jpg" alt="">
                 </a>
             </div>
