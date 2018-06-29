@@ -19,8 +19,8 @@ class SaleController extends CommonController
     }
     public  function stars(Request $request){
         $type=['wakeup'=>'','youth'=>''];
-        $label = $request->input('label','焕肤紧致系列');
-        if ($label == '焕肤紧致系列') {
+        $label = $request->input('label','焕肌紧致系列');
+        if ($label == '焕肌紧致系列') {
             $type['wakeup'] = 'active';
             $yt = 'wakeup';
         } else {
