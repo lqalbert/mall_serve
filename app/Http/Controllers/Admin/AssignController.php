@@ -19,6 +19,8 @@ use App\Services\WayBill\WayBillService;
 use App\Models\ExpressCompany;
 use App\Services\WayBill\MsgType\TmsWayBillGet;
 use Illuminate\Support\Facades\Storage;
+use App\Models\CartonManagement;
+use App\Models\ExpressPrice;
 
 class AssignController extends Controller
 {
@@ -200,20 +202,20 @@ class AssignController extends Controller
         //
     }
     
-    public function showbyExpressSn(Request $request, $express_sn)
-    {
-        $model = Assign::where('express_sn', $express_sn)->first();
-        if (!$model) {
-            return $this->error([]);
-        }
-        if ($request->has('with')) {
-            $with = $request->input('with');
-            foreach ($with as $item) {
-                $model->{$item};
-            }
-        }
-        return $this->success($model);
-    }
+    // public function showbyExpressSn(Request $request, $express_sn)
+    // {
+    //     $model = Assign::where('express_sn', $express_sn)->first();
+    //     if (!$model) {
+    //         return $this->error([]);
+    //     }
+    //     if ($request->has('with')) {
+    //         $with = $request->input('with');
+    //         foreach ($with as $item) {
+    //             $model->{$item};
+    //         }
+    //     }
+    //     return $this->success($model);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -410,7 +412,8 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
-    
+
+
     /**
      * 验货
      * @todo 事件处理　操作记录
@@ -418,16 +421,85 @@ class AssignController extends Controller
     public function checkGoods(Request $request, $id)
     {
         $assign = Assign::find($id);
+        $assign->load('goods');//
+        $goodsArr = collect($assign->toArray())->get('goods');
+        $goodsVolume = 0;
+        $goodsWeight = 0;
+        foreach ($goodsArr as $goods) {
+            $goodsVolume += $goods['width']*$goods['height']*$goods['len'];
+            $goodsWeight += $goods['goods_number']*$goods['weight']+$goods['goods_number']*$goods['bubble_bag'];
+        }
+        $carton = CartonManagement::where('carton_volume','>=',$goodsVolume/0.7)->orderBy('carton_volume')->get();
+        $cartonArr = collect($carton->toArray())->first();
+        $assign->corrugated_case = $cartonArr['carton_name'];
+        $assign->corrugated_id = $cartonArr['id'];
+        $assign->corrugated_weight = $cartonArr['carton_weight'];
+        $assign->reckon_weigth =  $goodsWeight+$cartonArr['carton_weight'];
+
         $assign->checkedGoods(auth()->user());
         $re = $assign->save();
         if ($re) {
-            
-            return $this->success([]);
+            $msg = $cartonArr['carton_number'] == 0 ?'合适的纸箱数量为0':'操作成功';
+            return $this->success([],$msg);
         } else {
             return $this->error([]);
         }
     }
-    
+
+    public function showbyExpressSn(Request $request, $express_sn)
+    {
+        $model = Assign::where('express_sn', $express_sn)->first();
+        if (!$model) {
+            return $this->error([]);
+        }
+        if ($request->has('with')) {
+            $with = $request->input('with');
+            foreach ($with as $item) {
+                $model->{$item};
+            }
+        }
+
+        $result = $model->toArray();
+
+        if($request->has('field')){
+            $expressPrice = $this->getGoodsExpressPrice($result);
+            $result['express_price']=$expressPrice;
+        }
+
+        return $this->success($result);
+    }
+
+    public function getGoodsExpressPrice($result){
+        $district = $result['address']['area_district_id'];//区
+        $city = $result['address']['area_city_id'];//市
+        $province = $result['address']['area_province_id'];//省
+
+        $where = [
+            ['express_id','=',$result['express_id']],
+            ['is_use','=',ExpressPrice::IS_USE],
+        ];
+
+        $expressModel = new ExpressPrice;
+        $expressModel = $expressModel->where($where);
+
+        $expressPrice = null;
+        $priceModel = $expressModel->where('area_district_id',$district)->first();//一维数组
+        if(!$priceModel){
+            array_push($where, ['area_city_id','=',$city]);
+            $priceModel = ExpressPrice::where($where)->first();
+            if(!$priceModel){
+                array_pop($where);
+                array_push($where,['area_province_id','=',$province]);
+                $priceModel = ExpressPrice::where($where)->first();
+            }
+        }
+        if($priceModel){
+            $expressPrice = $priceModel->toArray();
+        }
+
+        return $expressPrice;
+    }
+
     /**
      * 称重发货
      * @todo 事件处理　操作记录
@@ -435,8 +507,11 @@ class AssignController extends Controller
     public function weightGoods(Request $request, $id)
     {
         //减库存
+        // var_dump($request->all());die();
         $assign = Assign::find($id);
-        $assign->weightGoods($request->input('real_weigth'), auth()->user());
+        $real_weigth = $request->input('real_weigth');
+        $express_fee = $request->input('express_fee',0);
+        $assign->weightGoods($real_weigth,$express_fee,auth()->user());
         $re = $assign->save();
         if ($re) {
             return $this->success([]);
@@ -445,9 +520,7 @@ class AssignController extends Controller
         }
     }
     
-    
-    
-    
+
 
     /**
      * Remove the specified resource from storage.

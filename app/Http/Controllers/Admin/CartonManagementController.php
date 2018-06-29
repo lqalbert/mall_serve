@@ -50,7 +50,11 @@ class CartonManagementController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all ();
+        $data = $request->all();
+        $long = $request->carton_long;
+        $wide = $request->carton_wide;
+        $high = $request->carton_high;
+        $data['carton_volume'] = $long*$wide*$high;
         $re = $this->model->create( $data );
         if ($re) {
             return $this->success ( $re );

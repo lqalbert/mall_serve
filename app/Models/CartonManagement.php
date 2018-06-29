@@ -19,6 +19,7 @@ class CartonManagement extends Model
         'carton_weight',
         'carton_number',
         'remark',
+        'carton_volume'
     ];
     /**
      * 在数组中想要隐藏的属性。
