@@ -24,6 +24,9 @@ class ProductController extends CommonController
         ];
         
         $label = $request->input('label', '护肤');
+        if ($label == '面膜') {
+            $label = '护肤';
+        }
         $subNav[$label]['isactive'] ='actionBar';
         
         $goodsModel = new Goods;
