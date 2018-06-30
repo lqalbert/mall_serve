@@ -226,11 +226,17 @@ class OrderBasicController extends Controller
     {
         DB::beginTransaction();
         try {
+            $model = \App\Models\OrderBasic::find($id);
+            if ($model->isAssign()) {
+                throw new \Exception('已通过审核生成发货单，不能取消');
+            }
+            
             $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
-            event(new OrderCancel(\App\models\OrderBasic::find($id)));
+            event(new OrderCancel($model));
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
+            logger('dd',[$e->getMessage()]);
             return $this->error([], $e->getMessage());
         }
         

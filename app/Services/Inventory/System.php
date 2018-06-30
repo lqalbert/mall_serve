@@ -95,7 +95,7 @@ class System
         $lockoper = $on ? '+' : '-' ;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set  saleable_count = saleable_count '.$oper.' ? , sale_lock = sale_lock '.$lockoper.' ?',
+                $affectedRows += $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , sale_lock = sale_lock '.$lockoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
 //             DB::commit();

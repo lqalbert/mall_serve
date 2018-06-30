@@ -60,7 +60,7 @@ class InventoryGatherController extends Controller
             $model = $model->with($request->input('with'));
         }
         
-        $result = $model->paginate($request->input('pageSize', 20), $fields);
+        $result = $model->paginate($request->input('pageSize', 20));
         
         $collection = $result->getCollection();
         

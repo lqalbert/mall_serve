@@ -43,9 +43,9 @@ class InventoryDetailController extends Controller
         }
         
         if (!empty($where)) {
-            $result = $this->model->where($where)->paginate($this->request->input('pageSize',20));
+            $result = $this->model->where($where)->orderby('id','desc')->paginate($this->request->input('pageSize',20));
         } else {
-            $result = $this->model->paginate($this->request->input('pageSize',20));
+            $result = $this->model->orderby('id','desc')->paginate($this->request->input('pageSize',20));
         }
          
         
