@@ -6,6 +6,8 @@ use App\Models\OrderGoods;
 use App\Services\Ordergoods\OrdergoodsService;
 use App\Repositories\OrdergoodsRepository;
 use App\Repositories\Criteria\Ordergoods\Ordergoods as OrdergoodsC;
+use Illuminate\Support\Facades\DB;
+use App\Services\Inventory\InventoryService;
 class OrderGoodsController extends Controller
 {
     //
@@ -41,18 +43,32 @@ class OrderGoodsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, InventoryService  $service, $id)
     {
-        //update 返回 bool
-        //var_dump(Department::find($id));die();
-        $re = $this->repository->update($request->input(), $id);
-        if ($re) {
-            return $this->success(Orderlist::find($id));
-            //return 1;
-        } else {
-            return $this->error();
-            //return 2;
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            $model = OrderGoods::findOrFail($id);
+            
+            $deta_num = $model->getNum() - $data['goods_number'];
+            if ($deta_num != 0) {
+                $model->goods_number = $deta_num;
+                $service->saleLock( $model->order->entrepot, [$model], $request->user());
+                $model->goods_number = $data['goods_number'];
+            }
+            
+            if ($model->remark != $data['remark']) {
+                $model->remark == $data['remark'];
+            }
+            $model->save();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
         }
+        
+        DB::commit();
+        
+        return $this->success([]);
     }
     /**
      * Store a newly created resource in storage.
@@ -62,9 +78,22 @@ class OrderGoodsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            $model = OrderGoods::create($data);
+            
+            $deta_num = $model->getNum() - $data['goods_number'];
+            $service->saleLock( $order->entrepot, $model, $request->user());
+            
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        
+        DB::commit();
         //throw new \Exception('test');
-        $re = $this->repository->create($request->input());
+//         $re = $this->repository->create($request->input());
         if ($re) {
             return $this->success($re);
         } else {

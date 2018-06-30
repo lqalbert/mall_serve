@@ -61,7 +61,13 @@ class DeliveryAddressController extends Controller
         if($request->default_address == 1){
             $this->model->where('cus_id',$request->cus_id)->update(['default_address' => 0]);
         }
-        $this->model->create($request->all());
+       $re =  $this->model->create($request->all());
+       
+       if ($re) {
+           return $this->success([]);
+       } else {
+           return $this->error();
+       }
     }
 
     /**
