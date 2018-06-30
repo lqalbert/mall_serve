@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -161,7 +161,7 @@ class OrderBasic extends Model
     }
     
     /**
-     * 是否生成过配货单
+     * 是否通过
      * 这里先直接返回 false 还没有
      * @todo 修改成正式的代码
      * 
@@ -169,7 +169,7 @@ class OrderBasic extends Model
      */
     public function isAssign()
     {
-        return $this->attributes['product_status'] == 1;
+        return $this->status == 1;
     }
     
     /**
