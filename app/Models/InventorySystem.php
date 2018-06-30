@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use App\traits\EntrepotProductCategoryTrait;
+use Exception;
 
 class InventorySystem extends Model
 {
@@ -196,9 +197,9 @@ class InventorySystem extends Model
                     [$item->goods_number, $item->goods_number, $entrepot_id, $item->sku_sn]);
             }
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
-            throw new Exception('库存扣除失败');
+            throw new \Exception('库存扣除失败');
         }
     }
     
