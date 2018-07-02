@@ -29,8 +29,8 @@ class AlterExpressPricesTable extends Migration
      */
     public function down()
     {
-//        Schema::table('express_prices', function (Blueprint $table) {
+       Schema::table('express_prices', function (Blueprint $table) {
 //            $table->dropColumn(['first_weight','first_price','continued_weight','continued_price']);
-//        });
+       });
     }
 }
