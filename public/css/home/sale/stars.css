@@ -64,6 +64,7 @@
 
 #stars .productBanners .left .lefBox .minTit{
     line-height: 40px;
+    margin-bottom: 15px;
 }
 
 #stars .productBanners .left .lefBox .minTit .line{
@@ -76,10 +77,20 @@
     margin-left: -20px;
 }
 
+#stars .productBanners .left .lefBox .tet{
+    font-weight: bold;
+    line-height: 25px;
+}
+
+#stars .productBanners .left .lefBox .tet p{
+    margin: 0;
+}
+
 #stars .productBanners .left .lefBox .lefCon{
     line-height: 25px;
     text-align: left;
     margin-top: 10px;
+    text-indent: 2em;
 }
 
 #stars .productBanners .right{
