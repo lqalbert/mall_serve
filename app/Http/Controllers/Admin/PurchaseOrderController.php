@@ -50,10 +50,9 @@ class PurchaseOrderController extends Controller
         if($request->has('settlement_status')){
             $where['settlement_status']=$request->input('settlement_status');
         }
-        $data = $this->model->where($where)->orderBy('created_at','desc')->get();
+        $data = $this->model->where($where)->orderBy('created_at','desc')->paginate($request->input('pageSize'));
         $data->load('goods','actual_delivery_goods');
-        $data = $data->toArray();
-        return ['items'=>$data,'total'=>count($data)];
+        return ['items'=>$data->items(),'total'=>$data->total()];
 
     }
 
