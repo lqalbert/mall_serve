@@ -189,7 +189,7 @@ class CustomerService
 
     public function upDate($id)
     {
-        $this->customer_basic->where('id','=',$id)->update($this->request->all());
+        return $this->customer_basic->where('id','=',$id)->update($this->request->all());
     }
 
     public function destroyData($id)

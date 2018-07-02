@@ -131,7 +131,12 @@ class CustomerController extends Controller
      */
     public function update($id)
     {
-        $this->service->upDate($id);
+       $re =  $this->service->upDate($id);
+       if ($re) {
+           return $this->success([]);
+       } else {
+           return $this->error([]);
+       }
 
     }
 
@@ -144,7 +149,7 @@ class CustomerController extends Controller
     public function destroy($id)
     {
         $this->service->destroyData($id);
-
+        return $this->success([]);
     }
     
     /**
