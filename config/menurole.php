@@ -51,6 +51,14 @@ return [
         'Contacts',
         'Website'
     ],
+    'assign-buyer'=>[
+        'WarehousingProcess',
+        'PurchaseList'
+    ],
+    'assign-buyer-manager' => [
+        'WarehousingProcess',
+        'PurchaseList'
+    ],
     // 隐藏的角色
     'group-member' => [],
     'department-manager' => [],

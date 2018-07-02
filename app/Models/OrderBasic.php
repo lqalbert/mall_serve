@@ -169,7 +169,7 @@ class OrderBasic extends Model
      */
     public function isAssign()
     {
-        return $this->status == 1;
+        return Assign::where('id', $this->id)->select('id')->first();
     }
     
     /**
