@@ -9,7 +9,7 @@ class PlanController extends Controller
 
     public function update(Request $request)
     {
-            var_dump($request->input());
+//             var_dump($request->input());
         $re = CustomerUser::where('id',$request->input('id'))->update($request->input());
         if ($re) {
             return $this->success(1);
