@@ -44,7 +44,7 @@ class ProductController extends CommonController
             $name='全部';
         }
         
-        $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->get();
+        $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url','brief','specifications'])->active()->get();
         
         
 //         $gust = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url'])->active()->inRandomOrder()->limit(8)->get();
@@ -62,7 +62,7 @@ class ProductController extends CommonController
         $this->setAttrGroup($goods);
         
         //推荐
-        $recoms = Goods::select(['id','cover_url','goods_name','sale_count','goods_price'])->limit(6)->get();
+        $recoms = Goods::select(['id','cover_url','goods_name','sale_count','goods_price','brief','specifications'])->limit(6)->get();
         return view('home/product/product',['bar'=>static::$bar, 'goods'=>$goods, 'recoms'=>$recoms]);
     }
     

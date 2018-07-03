@@ -102,7 +102,11 @@
                             <img src="{{$goods->cover_url or ''}}" height="244" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTit">
-                            {{$goods->goods_name}}
+                            {{$goods->goods_name}}&nbsp;
+                            <span style="font-size: 14px;color: #666">{{$goods->specifications}}</span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 brief">
+                            {{$goods->brief}}
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceBox">
                             <span class="price">￥{{$goods->getPrice()}}</span>

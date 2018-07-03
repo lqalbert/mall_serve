@@ -17,7 +17,7 @@ class IndexController extends CommonController
         static::$bar['bar1']='sta';
         static::$bar['line1']='line';
         
-        $indexModelFields = ['id','cover_url','goods_price','goods_name'];
+        $indexModelFields = ['id','cover_url','goods_price','goods_name','specifications','brief'];
         
         $allgoods = Goods::all(['id','cover_url']);
         

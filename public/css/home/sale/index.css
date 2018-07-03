@@ -63,6 +63,16 @@ body{
     text-align: center;
 }
 
+#saleBest .saleLists .saleList .brief{
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    line-height: 25px;
+}
+
 #saleBest .saleLists .saleList .listPrice{
     line-height: 30px;
     margin-top: 5px;

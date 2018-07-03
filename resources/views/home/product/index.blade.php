@@ -45,7 +45,11 @@
                         <img src="{{$item->cover_url}}" alt="">
                         <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
                             <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                {{$item->goods_name}}
+                                {{$item->goods_name}}&nbsp;
+                                <span style="font-size: 14px;color: #666">{{$item->specifications}}</span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 tet">
+                                {{$item->brief}}
                             </div>
                             <div class="price col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <span>￥{{$item->getPrice()}}</span>

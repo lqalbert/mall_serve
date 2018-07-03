@@ -378,10 +378,23 @@ li{
 
 .productContent .contentLeft .lists .listName{
     margin-top: 10px;
-    line-height: 20px;
-    max-height: 40px;
+    line-height: 30px;
     overflow: hidden;
+    font-size: 16px;
     padding: 0 5px 0 5px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.productContent .contentLeft .lists .tet{
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 25px;
 }
 
 .productContent .contentLeft .lists .listPrice {
