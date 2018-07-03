@@ -288,9 +288,6 @@ class AssignController extends Controller
                    return $this->error([],'面单获取失败:数量为0');
                }
                foreach ($data as $item) {
-//                    "waybillCode":"9890000160004",
-//                    "printData":"json串",
-//                    "objectId":"12"
                    Assign::where('id', $item['id'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
                }
            } else {
