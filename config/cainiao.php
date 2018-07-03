@@ -6,7 +6,7 @@ return [
     'code' => "a1ZVQ1pPamZ3UGp4Umc5cjhZekFEWUxaY3FHWlJ2VzFvZktURkNiZ2pST1VTc2s2V001NkQyUmlnL3pUbytmSg==", //4d2e8684082d47f0bfd07ecef3adb57b
     
    'api_url'=>"http://link.cainiao.com/gateway/link.do",
-   'test_url'=>"https://link.tbsandbox.com/gateway/link.do",
+   'test_url'=>"http://link.cainiao.com/gateway/link.do",
     
     'test'=>[
         'app_key' => '102568',
