@@ -9,6 +9,12 @@ return [
    'test_url'=>"https://linkdaily.tbsandbox.com/gateway/link.do",
     
     'test'=>[
+        'app_key' => '102568',
+        'app_secret' => '5Cdf24ZdFO8589Q7j318y90X9tj21wos',
+        'code' => 'a1ZVQ1pPamZ3UGp4Umc5cjhZekFEWUxaY3FHWlJ2VzFvZktURkNiZ2pST1VTc2s2V001NkQyUmlnL3pUbytmSg=='
+    ],
+    
+    'test2'=>[
         'app_key' => '766654',
         'app_secret' => 'F53eqq903jQySV100Z8w06f9g914A13Z',
         'code' => 'TmpFU1ZOUGoyRnoybDZmT3lyaW9hWGR4VFNad0xNYTBUek9QZk9kamt2Z1hJMytsVkVHK0FjVW55T25wcUR1Qw=='
