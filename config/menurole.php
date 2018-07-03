@@ -59,6 +59,64 @@ return [
         'WarehousingProcess',
         'PurchaseList'
     ],
+    
+    'assign-manager'=>[
+        'StockDetails',
+        'StockSum',
+        'StockWarning',
+        'ShelvesManagement',
+        'DistributionCenter',
+        'DistributionDelivery',
+        'GoodsInspect',
+        'DeliverGoods',
+        'ExpressReceive',
+        'ExpressCompany',
+        'ExpressCompensation',
+        'CartonManagement'
+    ],
+    'assign-captain'=>[
+        'StockDetails',
+        'StockSum',
+        'StockWarning',
+        'ShelvesManagement',
+        'DistributionCenter',
+        'DistributionDelivery',
+        'GoodsInspect',
+        'DeliverGoods',
+        'ExpressReceive',
+        'ExpressCompany',
+        'ExpressCompensation',
+        'CartonManagement'
+    ],
+    'assign-staff'=>[
+        'StockDetails',
+        'StockSum',
+        'StockWarning',
+        'ShelvesManagement',
+        'DistributionCenter',
+        'DistributionDelivery',
+        'GoodsInspect',
+        'DeliverGoods',
+        'ExpressReceive',
+        'ExpressCompany',
+        'ExpressCompensation',
+        'CartonManagement'
+    ],
+    'assign-service'=>[
+        'StockDetails',
+        'StockSum',
+        'StockWarning',
+        'ShelvesManagement',
+        'DistributionCenter',
+        'DistributionDelivery',
+        'GoodsInspect',
+        'DeliverGoods',
+        'ExpressReceive',
+        'ExpressCompany',
+        'ExpressCompensation',
+        'CartonManagement'
+    ],
+    
     // 隐藏的角色
     'group-member' => [],
     'department-manager' => [],
