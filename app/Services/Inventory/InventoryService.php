@@ -154,5 +154,25 @@ class InventoryService
         }
     }
     
+    /**
+     * 换货锁定
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     * @throws Exception
+     */
+    public function exLock($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->exLock($entrepot->id, $products);
+            $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     
 }

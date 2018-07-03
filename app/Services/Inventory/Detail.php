@@ -81,9 +81,9 @@ class Detail
      * @param unknown $products
      * @param User $user
      */
-    public function exchangeLock(DistributionCenter $entrepot, $products, User $user)
+    public function exchangeLock(DistributionCenter $entrepot, $products, User $user, $dan)
     {
-        $this->save($entrepot, $products, $user, 'exchange_lock');
+        $this->save($entrepot, $products, $user, 'exchange_lock', $dan);
     }
     
     

@@ -8,6 +8,8 @@ use App\Contracts\Goods as GoodsContracts;
 
 class OrderGoods extends Model implements GoodsContracts
 {
+    const STATUS_RETURN = 1;
+    const STATUS_EXCHANGE  =2;
     use SoftDeletes;
     protected $table = 'order_goods';
     protected $dates = [
@@ -67,5 +69,15 @@ class OrderGoods extends Model implements GoodsContracts
     }
     public function getName(){
         return $this->attributes['goods_name'];
+    }
+    
+    public function isExchange()
+    {
+        return $this->status == self::STATUS_EXCHANGE;
+    }
+    
+    public function setExchangeStatus()
+    {
+        $this->status = self::STATUS_EXCHANGE;
     }
 }

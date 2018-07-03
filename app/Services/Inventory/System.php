@@ -184,7 +184,7 @@ class System
     
     
     /**
-     * 
+     * 盘点
      * @param unknown $entrepot_id
      * @param array $products
      */
@@ -195,6 +195,30 @@ class System
         try{
             foreach ($products as $product) {
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
+                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+            }
+            //             DB::commit();
+        } catch (\Exception $e) {
+            //             DB::rollBack();
+            throw $e;
+        }
+        
+        return $affectedRows;
+    }
+    
+    /**
+     * 换货锁定/解锁
+     *
+     */
+    public function exLock($entrepot_id, array $products, $on = true)
+    {
+        $affectedRows = 0;
+        //         DB::beginTransaction();
+        $countoper = $on ? '-' : '+';
+        $lockoper = $on ? '+' : '-' ;
+        try{
+            foreach ($products as $product) {
+                $affectedRows += $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , exchange_lock = exchange_lock '.$lockoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
             //             DB::commit();

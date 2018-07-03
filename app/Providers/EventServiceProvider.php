@@ -108,7 +108,7 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\ContactconflictListener'
         ],
         
-        //仓库换货一个商品
+        //仓库换货一个商品 不用这个了
 //         'App\Events\ProductExchange' => [
 //             'App\Listeners\ChangeExchangeAfterSaleUnLockListener' //解锁
 //         ]
