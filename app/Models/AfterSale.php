@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\AfterCreated;
+use Carbon\Carbon;
 
 class AfterSale extends Model
 {
     use SoftDeletes;
     
     
-    const RETURN_BACK = 0;
-    const EXCHANGE_GOODS  = 1;
+//     const RETURN_BACK = 0;
+//     const EXCHANGE_GOODS  = 1;
     
     protected $table = 'order_after';
     
@@ -55,7 +56,9 @@ class AfterSale extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods', 'order_id');
+        return $this->hasMany('App\Models\OrderGoods', 'order_id')->where(function($query){
+            $query->where('status', OrderGoods::STATUS_RETURN)->orWhere('status', OrderGoods::STATUS_EXCHANGE);
+        });
     }
     
     public function entrepot()
@@ -79,6 +82,14 @@ class AfterSale extends Model
     {
         $map = ['退货', '换货'];
         return $map[$this->attributes['type']];
+    }
+    
+    public function setSure()
+    {
+//         $data['sure_at'] = Carbon::now();
+        $this->sure_at = Carbon::now();
+        $this->status = 2;
+        
     }
 
 }

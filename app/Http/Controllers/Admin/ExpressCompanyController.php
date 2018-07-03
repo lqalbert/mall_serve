@@ -88,6 +88,7 @@ class ExpressCompanyController extends Controller
     public function update(Request $request,$id)
     {
         ExpressCompany::where('id',$id)->update($request->all());
+        return $this->success([]);
     }
 
     /**

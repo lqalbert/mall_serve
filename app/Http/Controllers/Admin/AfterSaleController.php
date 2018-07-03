@@ -12,6 +12,8 @@ use App\Alg\ModelCollection;
 use App\Models\OrderGoods;
 use App\Models\CustomerBasic;
 use Carbon\Carbon;
+use App\Models\Assign;
+use App\Services\Inventory\InventoryService;
 
 class AfterSaleController extends Controller
 {
@@ -203,9 +205,45 @@ class AfterSaleController extends Controller
      * @return [type]           [description]
      */
     public function sureStatus(Request $request,$id){
-        $data = $request->all();
-        $data['sure_at'] = Carbon::now();
-        $re = AfterSale::where('id', $id)->update($data);
+//         $data = $request->all();
+//         $data['sure_at'] = Carbon::now();
+
+        DB::beginTransaction();
+        try {
+            $model = AfterSale::find($id);
+            $model->setSure();
+            $re = $model->save();
+            
+            $goods = $model->goods;
+            $exchangeGoods = $goods->filter(function($value){
+                return $value->isExchange();
+            });
+            if ($exchangeGoods->count() > 0) {
+                //生成发货单;
+                //库存修改
+                //先临时这么写
+                $data = [
+                    'entrepot_id'=> $model->entrepot_id,
+                    'order_id'   => $model->order_id,
+                    'address_id' => $model->order->address_id,
+                ];
+                $assignmodel = Assign::create($data);
+                $newGoods = [];
+                foreach ($exchangeGoods as $xGoods){
+                    $newModel = $xGoods->replicate();
+                    $newModel->setExchangeStatus();
+                    $newModel->save();
+                    $newGoods[]  = $newModel;
+                }
+
+                $service = new InventoryService();
+                $service->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error($e->getMessage());
+        }
         if($re){
             return $this->success([]);
         }else{
