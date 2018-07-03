@@ -110,7 +110,13 @@
                             <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {{$goods->goods_name}}&nbsp;
+                                        <span style="font-size: 14px;color: #666">{{$goods->specifications}}</span>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 brief">
+                                        {{$goods->brief}}
+                                    </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>
@@ -141,7 +147,13 @@
                             <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                                 <img src="{{$goods->cover_url}}" alt="">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 msg">
-                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">{{$goods->goods_name}}</div>
+                                    <div class="goodsName col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {{$goods->goods_name}}&nbsp;
+                                        <span style="font-size: 14px;color: #666">{{$goods->specifications}}</span>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 brief">
+                                        {{$goods->brief}}
+                                    </div>
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 price">￥{{$goods->getPrice()}}</div>
                                 </div>
                             </a>

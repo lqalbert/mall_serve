@@ -14,7 +14,7 @@ class SaleController extends CommonController
         static::$bar['bar4']='sta';
         static::$bar['line4']='line';
         //hot_goods 应做成查询作用域
-        $allgoods = Goods::active()->where('hot_goods',1)->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
+        $allgoods = Goods::active()->where('hot_goods',1)->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods','specifications','brief']);
         return view('home/sale/index',['bar'=>static::$bar, 'allGoods'=>$allgoods]);
     }
     public  function stars(Request $request){
@@ -38,7 +38,7 @@ class SaleController extends CommonController
         
         $allgoods = Goods::active()->whereHas('midCate',function($query) use($cate){
             $query->where('cate_id', $cate);
-        })->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods']);
+        })->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods','specifications','brief']);
         
         
         

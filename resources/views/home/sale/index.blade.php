@@ -20,7 +20,11 @@
                     <a href="{{URL("product",['id'=>$goods->id])}}" title="{{$goods->goods_name}}">
                         <img class="mainImg" src="{{$goods->cover_url}}" alt="">
                         <div class="listTitle col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            {{$goods->goods_name}}
+                            {{$goods->goods_name}}&nbsp;
+                            <span style="font-size: 14px;color: #666">{{$goods->specifications}}</span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xs-12 brief">
+                            {{$goods->brief}}
                         </div>
                         <div class="listPrice col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <span class="price">￥{{$goods->getPrice()}}</span>

@@ -114,6 +114,16 @@
     text-align: center;
 }
 
+#product .productLists .productList .msgPro .tet{
+    text-align: center;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    line-height: 25px;
+}
+
 #product .productLists .productList .msgPro .price{
     line-height: 30px;
     text-align: center;

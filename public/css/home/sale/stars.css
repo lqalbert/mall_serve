@@ -150,6 +150,16 @@
     text-decoration: none;
 }
 
+#stars .proLists .proList .brief{
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 25px;
+}
+
 #stars .proLists .proList .priceBox{
     line-height: 30px;
     margin-top: 5px;

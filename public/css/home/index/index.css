@@ -590,6 +590,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 0 10px 0 10px;
+    font-size: 16px;
+}
+
+.newProduct .newC .right .imgBox .msg .brief{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 0 10px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
 }
 
 .newProduct .newC .right .imgBox .msg .price{
