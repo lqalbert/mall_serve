@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\PurchaseOrderGoods;
+use App\Models\PurchaseOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseOrderGoodsController extends Controller
 {
@@ -83,9 +85,34 @@ class PurchaseOrderGoodsController extends Controller
      * @param  \App\Models\PurchaseOrderGoods  $purchaseOrderGoods
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PurchaseOrderGoods $purchaseOrderGoods)
+    public function update(Request $request,$id)
     {
         //
+        $purchaseOrderModel =  new PurchaseOrder;
+        $purchaseOrderModel_data = $request->except('purchase_goods');
+        $purchaseOrderModel_goods_data = $request->input('purchase_goods');
+
+        DB::beginTransaction();
+        try {
+            $re = $purchaseOrderModel->where(['id'=>$id])->update($purchaseOrderModel_data);
+            if (!$re) {
+                throw new  \Exception('订单修改失败');
+            }
+            foreach ($purchaseOrderModel_goods_data as $goods) {
+                $this->model->where(['id'=>$goods['id']])->update($goods);
+//                $orderGoodsModels[] = PurchaseOrderGoods::make($goods);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+
+        return $this->success([]);
+
+
+
     }
 
     /**
@@ -94,8 +121,14 @@ class PurchaseOrderGoodsController extends Controller
      * @param  \App\Models\PurchaseOrderGoods  $purchaseOrderGoods
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PurchaseOrderGoods $purchaseOrderGoods)
+    public function destroy($id)
     {
-        //
+//        var_dump($id);die;
+        $re = $this->model->destroy($id);
+        if ($re) {
+            return $this->success(1);
+        } else {
+            return $this->error(0);
+        }
     }
 }
