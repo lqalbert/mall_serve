@@ -16,6 +16,7 @@ class PurchaseOrder extends Model
     ];
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
     protected $fillable = [
+        'id',
         'shipper',
         'order_sn',
         'entrepot_id',
