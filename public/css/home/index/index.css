@@ -556,7 +556,6 @@
 }
 
 .newProduct .newC .right .imgBox {
-    padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
     justify-content: center;
@@ -582,7 +581,7 @@
 .newProduct .newC .right .imgBox .msg div{
     width: 100%;
     text-align: center;
-    height: 30px;
+    height: 20px;
 }
 
 .newProduct .newC .right .imgBox .msg .goodsName{
@@ -599,6 +598,8 @@
     overflow: hidden;
     padding: 0 10px;
     font-size: 12px;
+    height: 30px;
+    line-height: 30px;
     color: #999;
     text-align: center;
 }
