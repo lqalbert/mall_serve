@@ -283,12 +283,12 @@ class AssignController extends Controller
             //根据返回的re 来处理
             //成功要保存数据
            if ($re['status'] == 1) { //成功
-               $cainiodata = $re['data']['waybillCloudPrintResponseList'];
+               $cainiodata = $re['data'];
                if (count($cainiodata) == 0) {
                    return $this->error([],'面单获取失败:数量为0');
                }
                foreach ($cainiodata as $item) {
-                   Assign::where('id', $item['id'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
+                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
                }
            } else {
                return $this->error([], '面单获取失败:'.$re['msg']);
