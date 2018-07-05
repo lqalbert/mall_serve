@@ -24,7 +24,6 @@ class Assign extends Model
      */
     protected $dates = [
         'deleted_at',
-        'print_data'
     ];
     //前端　查询那里是写死了的　这里修改了　前端还要再改一下
     private static $statusMap = [
