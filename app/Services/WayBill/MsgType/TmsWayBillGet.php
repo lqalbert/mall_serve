@@ -51,7 +51,7 @@ class TmsWayBillGet
     </sender>
     <tradeOrderInfoDtos>
             <tradeOrderInfoDto>
-                <objectId>1</objectId>
+                <objectId>4</objectId>
                 <orderInfo>
                     <orderChannelsType>OTHERS</orderChannelsType>
                     <tradeOrderList>
