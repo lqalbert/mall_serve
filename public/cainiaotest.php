@@ -2,7 +2,7 @@
 // die('注释我');
 $linkUrl = 'https://linkdaily.tbsandbox.com/gateway/link.do';
 
-$content = [ "cpCode" => "STO"]; // 如果接口配置为json格式，这儿内容就是json，否则是xml格式
+$content = "<request><cpCode></cpCode></request>";//[ "cpCode" => ""]; // 如果接口配置为json格式，这儿内容就是json，否则是xml格式
 
 $appSecret = 'F53eqq903jQySV100Z8w06f9g914A13Z'; // APPKEY对应的秘钥
 
@@ -12,7 +12,7 @@ $msgType = 'TMS_WAYBILL_SUBSCRIPTION_QUERY'; //调用的API名
 
 $toCode = '';//'STO'; //调用的目标TOCODE，有些接口TOCODE可以不用填写
 
-$digest = base64_encode(md5(json_encode($content).$appSecret, true)); //生成签名
+$digest = base64_encode(md5($content.$appSecret, true)); //生成签名
 
 echo 'digest is '.$digest."\n";
 

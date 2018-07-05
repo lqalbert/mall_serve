@@ -110,13 +110,13 @@ class Assign extends Model
         $goods = $this->goods;
         $items = [];
         foreach ($goods  as $item ){
-            $items[] = ['counte'=> $item->goods_number, 'name'=>$item->goods_name];
+            $items[] = ['count'=> $item->goods_number, 'name'=>$item->goods_name];
         }
         return [
             'id'=>$this->attributes['id'],
             "items"=>$items,
-            "volume"=>"", //体积　非必填
-            "weight"=>"", //重量　非必填
+           // "volume"=>"", //体积　非必填
+           // "weight"=>"", //重量　非必填
         ];
     }
     
