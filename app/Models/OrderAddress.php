@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @var string area_city_name
+ * @author hyf
+ *
+ */
 class OrderAddress extends Model
 {
     use SoftDeletes;
@@ -51,15 +56,15 @@ class OrderAddress extends Model
         //         ]
         return [
             'address'=>[
-                'province'=>"",
-                'city'    =>"",
-                'district'=>"",
-                'town'    =>"",
-                'detail'  =>""
+                'province'=>$this->area_province_name,
+                'city'    =>$this->area_city_name,
+                'district'=>$this->area_district_name,
+//                 'town'    =>"",
+                'detail'  =>$this->address
             ],
-            "phone"=>"",
-            "mobile"=>"",
-            "name"=>""
+            "phone"=>$this->fixed_telephone,
+            "mobile"=>$this->phone,
+            "name"=>$this->name
         ];
     }
 
