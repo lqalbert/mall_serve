@@ -29,9 +29,9 @@
    </script>-->
     <!-- Scripts -->
     
-	<script type="text/javascript" src="/admin/static1.1.39/js/manifest.abe65a396f07af197776.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.39/js/manifest.eb899b024f5f8c664d32.js"></script>
     <script type="text/javascript" src="/admin/static1.1.39/js/vendor.0c122c06ebcaba843bc4.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.39/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
     <script type="text/javascript" src="/admin/static1.1.39/js/app.109fc0f60d3c46bb5a44.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.39/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
 </body>
 </html>
