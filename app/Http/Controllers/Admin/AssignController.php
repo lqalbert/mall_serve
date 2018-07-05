@@ -386,7 +386,7 @@ class AssignController extends Controller
         $re = $assign->save();
         $express = $assign->express;
         if ($re) {
-            return $this->success(['waybillcode'=>$assign->express_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
+            return $this->success(['express_sn'=>$assign->express_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
         } else {
             return $this->error([]);
         }
