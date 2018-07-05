@@ -62,8 +62,13 @@ class OrdergoodsService
             $this->repository->pushCriteria(new DateRange($range));
         } 
         
+        if ($this->request->has('with')) {
+            $this->repository->with($this->request->input('with'));
+        }
+        
         $result = $this->repository->paginate();
         $collection = $result->getCollection();
+        
         
         
         if ($this->request->has('load')) {
