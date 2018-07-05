@@ -2,114 +2,107 @@
 namespace App\Services\WayBill\MsgType;
 
 /**
- * 生成如下连接结构的数据
- * http://pac.i56.taobao.com/apiinfo/showDetail.htm?spm=0.0.0.0.WcSVHI&apiId=TMS_WAYBILL_GET&type=merchant_electronic_sheet
+ * 查看文档
+ * http://pac.i56.taobao.com/apiinfo/showDetail.htm?spm=0.0.0.0.wHMfPP&apiId=TMS_WAYBILL_SUBSCRIPTION_QUERY&type=merchant_electronic_sheet
+ * 这个文档主要是为了用来获取发货地址的．
+ * 需要保存
  * @author hyf
  *
  */
-class TmsWayBillGet 
+class TmsWayBillGet
 {
+    
     private $data = [
-        'cpCode'=>'',
-        'sender'=>null,
-        'tradeOrderInfoDtos'=>null
+        'cpCode'=>''
     ];
-    //来处快递公司
-    /* 'sender'=>[
-        'address'=>[
-            'province'=>"",
-            'city'    =>"",
-            'district'=>"",
-            'town'    =>"",
-            'detail'  =>""
-        ],
-        "phone"=>"",
-        "mobile"=>"",
-        "name"=>""
-    ] */
     
-    //这个是数组　最多可以有10个
-    /* 'tradeOrderInfoDtos'=>[
-        [
-            "logisticsServices" => "",//可以不填
-            "objectId"=>"" //必填 string 32位
-            "orderInfo"=>[
-                'orderChannelsType'=>'OTHERS' //订单渠道平台编码
-                'tradeOrderList' => [
-                    '订单号1'
-                ]    
-            ],
-            "packageInfo"=>[
-                "id"=>"",
-                "items"=>[
-                    ['count'=>1,'name'=>'洗脸的'],
-                    ['count'=>2,'name'=>'洗脸的3'],
-                ],
-                "volume"=>"", //体积　非必填
-                "weight"=>"", //重量　非必填
-            ],
-            'recipient'=>[
-                'address'=>[
-                    'province'=>"",
-                    'city'    =>"",
-                    'district'=>"",
-                    'town'    =>"",
-                    'detail'  =>""
-                ],
-                "phone"=>"",
-                "mobile"=>"",
-                "name"=>""
-            ],
-            'templateUrl'=>'',//模板URL
-            'userId'=>'', //使用者ID
-        ]
-    ] */
-    
-    public function setParam($assign, $express, $userId)
+    public function setParam($param)
     {
-        $data = [
-            'cpCode'=>$express->eng,
-            'sender' => $express->getSend(),
-            'tradeOrderInfoDtos'=> $this->getOrderInfo($assign, $express->getTemplateUrl(), $userId)
-        ];
-        
-        $this->data = array_merge($this->data, $data);
+//         $this->data = array_merge($this->data, $param);
+    }
+    
+    public function setDataType($dataType)
+    {
         
     }
     
-    public function getOrderInfo($assign, $templateUrl, $userId)
+    public function getContent($dataType)
     {
-        $result = [];
-        
-        foreach ($assign as $item) {
-            $result[] = [
-                "logisticsServices" => "",//可以不填
-                "objectId"=>$item->id,//必填 string 32位
-                "orderInfo"=>[
-                    'orderChannelsType'=>'OTHERS', //订单渠道平台编码
-                    'tradeOrderList' => [
-                        $item->order->order_sn
-                    ]
-                ],
-                "packageInfo"=> $item->getPackageInfo(),
-                'recipient'=> $item->order->getRecipient(),
-                'templateUrl'=>$templateUrl,//模板URL
-                'userId'=>$userId, //使用者ID
-            ];
-        }
-        
-        return $result;
+//         logger('xml', [$dataType]);
+//         if ($dataType == 'xml') {
+//             return $this->toXml($this->data);
+//         } else {
+//             return json_encode($this->data);
+//         }
+        $str = <<<ET
+        <request>
+    <cpCode>EMS</cpCode>
+    <sender>
+        <address>
+            <city>北京市</city>
+            <detail>花家地社区卫生服务站</detail>
+            <district>朝阳区</district>
+            <province>北京</province>
+            <town>望京街道</town>
+        </address>
+        <mobile>1326443654</mobile>
+        <name>Bar</name>
+        <phone>057123222</phone>
+    </sender>
+    <tradeOrderInfoDtos>
+            <tradeOrderInfoDto>
+                <objectId>1</objectId>
+                <orderInfo>
+                    <orderChannelsType>OTHERS</orderChannelsType>
+                    <tradeOrderList>
+                            <tradeOrder>ssas</tradeOrder>
+                    </tradeOrderList>
+                </orderInfo>
+                <packageInfo>
+                    <id>1</id>
+                    <items>
+                            <item>
+                                <count>1</count>
+                                <name>衣服</name>
+                            </item>
+                    </items>
+                    <volume>1</volume>
+                    <weight>1</weight>
+                </packageInfo>
+                <recipient>
+                    <address>
+                        <city>北京市</city>
+                        <detail>花家地社区卫生服务站</detail>
+                        <district>朝阳区</district>
+                        <province>北京</province>
+                        <town>望京街道</town>
+                    </address>
+                    <mobile>1326443654</mobile>
+                    <name>Bar</name>
+                    <phone>057123222</phone>
+                </recipient>
+                <templateUrl>http://cloudprint.daily.taobao.net/template/standard/137411/1</templateUrl>
+                <userId>12</userId>
+            </tradeOrderInfoDto>
+    </tradeOrderInfoDtos>
+</request>
+ET;
+//         return  str_replace(["\t","\n","\r","\0","\x0B"," "], "", trim($str));
+        return  trim($str);
     }
     
-    
-    public function getContent()
+    public function toXml($data)
     {
-        return $this->data;
+        $xml = simplexml_load_string('<request></request>');
+        
+        $xml->addChild('cpCode', $data['cpCode']); 
+        
+        return $xml->saveXML();
     }
     
     public function getToCode()
     {
-        return  '';//$this->data['cpCode'];
+        return '';
     }
     
     final public function  getApi()

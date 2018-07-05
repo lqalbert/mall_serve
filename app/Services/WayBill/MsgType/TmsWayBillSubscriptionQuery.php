@@ -18,12 +18,31 @@ class TmsWayBillSubscriptionQuery
     
     public function setParam(array $param)
     {
-        $this->data = array_merge($this->data, $param);
+//         $this->data = array_merge($this->data, $param);
     }
     
-    public function getContent()
+    public function setDataType($dataType)
     {
-        return $this->data;
+        
+    }
+    
+    public function getContent($dataType)
+    {
+//         logger('xml', [$dataType]);
+        if ($dataType == 'xml') {
+            return $this->toXml($this->data);
+        } else {
+            return json_encode($this->data);
+        }
+    }
+    
+    public function toXml($data)
+    {
+        $xml = simplexml_load_string('<request></request>');
+        
+        $xml->addChild('cpCode', $data['cpCode']); 
+        
+        return $xml->saveXML();
     }
     
     public function getToCode()

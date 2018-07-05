@@ -7,9 +7,15 @@ use App\Services\WayBill\CainiaoRequest\Response;
 
 class WayBillService 
 {
+    
+    public $dataType = 'xml';//json
+    
     public function __construct(Request $cainiaorequest, Response $cainiaoresponse) {
         $this->request = $cainiaorequest;
         $this->response = $cainiaoresponse;
+        
+        $this->request->setDataType($this->dataType);
+        $this->response->setDataType($this->dataType);
     }
     
     public function getANew(OrderBasic $order)
@@ -21,7 +27,8 @@ class WayBillService
     
     public function send($obj)
     {
-        return  $this->response->setBack($this->request->setParam($obj)->send()) ;
+        $this->response->setBackClass($obj->getApi());
+        return  $this->response->setBack($this->request->setParam($obj)->send());
     }
     
     

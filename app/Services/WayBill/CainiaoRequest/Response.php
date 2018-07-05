@@ -5,12 +5,34 @@ use Illuminate\Support\Facades\Storage;
 
 class Response 
 {
-
+    
+    private $msg = null;
+    private $dataType = "json";
     
     public function __construct() 
     {
       
             
+    }
+    
+    
+    public function setBackClass($class)
+    {
+        logger("[response]", [$class]);
+        switch ($class) {
+            case 'TMS_WAYBILL_GET':
+                $this->msg = new TmsWayBillGetResponse();
+                break;
+             default:
+                 throw new \Exception('请求接口没有设置返回处理类');
+        }
+        
+        logger("[response]", [get_class($this->msg)]);
+    }
+    
+    public function setDataType($str)
+    {
+        $this->dataType = $str;
     }
     
     /**
@@ -26,20 +48,13 @@ class Response
         *   
         **/
        
-       Storage::disk('local')->put('waybill.txt', $str);
+       Storage::disk('local')->put('waybill.xml', $str);
        
-       $result = json_decode($str, true);
        
-       if ($result != false) {
-           $returnMsg = $this->setReturnMsg($result);
+       if ($this->dataType == 'json') {
+           $result = json_decode($str, true);
+           $this->msg->setParam($result, $this->dataType);
        } else {
-           /* 
-            * <response>
-                <success>false</success>
-                <errorCode>S23</errorCode>
-                <errorMsg>查询不到应用授权信息:please authorize to resources,can't find  app through fromCode =4d2e8684082d47f0bfd07ecef3adb57b traceId:0abdc1d315281814365342415e3a38</errorMsg>
-            </response> 
-            */
            $xml = simplexml_load_string($str);
            if ($xml === false) {
                return [
@@ -48,10 +63,11 @@ class Response
                    'data'=>['info'=>$str]
                ];
            }
-           $returnMsg = $this->setReturnMsg(json_decode(json_encode($xml), true));  
+           $this->msg->setParam($xml, $this->dataType);
        }
-       
-       return $returnMsg;
+
+        $this->msg->deal();
+        return $this->msg->setReturnMsg();
    }
    
    public function setReturnMsg($result)

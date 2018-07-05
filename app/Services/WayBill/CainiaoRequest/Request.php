@@ -3,6 +3,8 @@ namespace App\Services\WayBill\CainiaoRequest;
 
 
 
+use Illuminate\Support\Facades\Storage;
+
 class Request 
 {
     private $url = "";
@@ -13,6 +15,8 @@ class Request
     private $api = "";
     private $content = "";
     private $to_code = "";
+    
+    private $dataType = "";
     
     public function __construct() 
     {
@@ -28,24 +32,29 @@ class Request
             $this->app_key = config('cainiao.app_key');
             $this->app_secret = config('cainiao.app_secret');
         }
-        
-        
-            
+       
+    }
+    
+    
+    public function setDataType($str)
+    {
+        $this->dataType = $str;
+        return $this;
     }
     
     public function setParam($obj)//  String $api, array $content, String $toCode=null)
     {
         
         $this->api = $obj->getApi();
-        $this->content = $obj->getContent();
+        $this->content = $obj->getContent($this->dataType);
         $this->to_code = $obj->getToCode();
         return $this;
     }
     
     public function makeSign()
     {
-        $str = env('APP_ENV') != "production" ? $this->getContent() : json_encode($this->content);
-        return base64_encode(md5($str.$this->app_secret, true));
+        Storage::disk('local')->put('request.xml', $this->content);
+        return base64_encode(md5($this->content.$this->app_secret, true));
     }
     
     public function getBody()
@@ -61,42 +70,52 @@ class Request
     
     public function getContent()
     {
-        return env('APP_ENV') != "production" ?  $this->toXml($this->content) : json_encode($this->content);
+        return $this->content;
     }
     
-    public function toXml($data)
-    {
-        if(!is_array($data) || count($data) <= 0){
-            return false;
-        }
-        $xml = "<request>";
-        $xml .= $this->array2xml($data);
-        $xml.="</request>";
-        
-        return $xml;  
-    }
+//     public function toXml($data)
+//     {
+//         if(!is_array($data) || count($data) <= 0){
+//             return false;
+//         }
+//         $xml = "<request>";
+//         $xml .= $this->array2xml($data);
+//         $xml.="</request>";
+//         Storage::disk('local')->put('request.xml', $xml);
+//         return $xml;  
+//     }
     
-    private function array2xml($data)
-    {
-        if(!is_array($data) || count($data) <= 0){
-            return false;
-        }
-        $xml = "";
-        foreach ($data as $key=>$val){
-            $prev = "<".$key.">";
-            if (is_array($val) or is_object($val)){
-                $prev.= $this->array2xml($val);
-            }else{
-                $prev.=$val;
-            }
-            $prev.="</".$key.">";
-            $xml .= $prev;
-            
-        }
+//     private function array2xml($data)
+//     {
+//         if(!is_array($data) || count($data) <= 0){
+//             return false;
+//         }
+//         $xml = "";
+//         foreach ($data as $key=>$val){
+//             if (is_string($val)) {
+//                 $prev = "<".$key.">";
+//                 $prev.="</".$key.">";
+//                 $xml .= $prev;
+//             } else if(is_array($val)){
+//                 $xml .= $this->array2xml($val);
+//             }
+//             if (!is_numeric($key)) {
+//                 $prev = "<".$key.">";
+//                 if (is_array($val) or is_object($val)){
+//                     $prev.= $this->array2xml($val);
+//                 }else{
+//                     $prev.=$val;
+//                 }
+//                 $prev.="</".$key.">";
+//                 $xml .= $prev;
+//             } else {
+//                 $xml .= $this->array2xml($val);
+//             }    
+//         }
         
-        return $xml;  
+//         return $xml;  
         
-    }
+//     }
     
     public function send()
     {
