@@ -26,7 +26,7 @@ class Response
         *   
         **/
        
-       Storage::disk('local')->put('waybill.txt', $str);
+       Storage::disk('local')->put('waybill.xml', $str);
        
        $result = json_decode($str, true);
        
