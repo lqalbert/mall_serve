@@ -36,6 +36,7 @@ class Assign extends Model
         '已验货'
     ];
     
+    protected $hidden = ['print_data'];
     
 //     protected $fillable = [
 //         'entrepot_id',
