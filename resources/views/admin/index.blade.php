@@ -29,7 +29,7 @@
    </script>-->
     <!-- Scripts -->
     
-	<script type="text/javascript" src="/admin/static1.1.39/js/manifest.16c74d5a4a924831f044.js"></script>
+	<script type="text/javascript" src="/admin/static1.1.39/js/manifest.c76ab8f65f560955b1f9.js"></script>
     <script type="text/javascript" src="/admin/static1.1.39/js/vendor.0c122c06ebcaba843bc4.js"></script>
     <script type="text/javascript" src="/admin/static1.1.39/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
     <script type="text/javascript" src="/admin/static1.1.39/js/app.109fc0f60d3c46bb5a44.js"></script>
