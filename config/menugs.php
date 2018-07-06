@@ -239,6 +239,16 @@ return [
             'text' => '采购单列表',
             'icon' => null,
             'index' => 'PurchaseList'
+        ],
+        [
+            'text' => '销售业绩',
+            'icon' => null,
+            'index' => 'SalesPerformance'
+        ],
+        [
+            'text' => '销售量化',
+            'icon' => null,
+            'index' => 'SalesQuantization'
         ]
 
 		
