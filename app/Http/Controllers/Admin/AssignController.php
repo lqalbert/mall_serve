@@ -108,8 +108,7 @@ class AssignController extends Controller
             $this->repository->pushCriteria(new DateRange($range, $field));
         } 
         
-        
-        
+
         if (array_merge($order, $requestParams)) {
             $this->repository->pushCriteria(new Order($request));
         }
@@ -148,6 +147,10 @@ class AssignController extends Controller
 //             }
 //         }
         
+        if ($request->has('with')) {
+            $this->repository->with($request->input('with'));
+        }
+        
         $pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields',['*']));
         
         if ($request->has('appends')) {
@@ -157,13 +160,10 @@ class AssignController extends Controller
         }
 
 
-        if ($request->has('with')) {
-            $with  = $request->input('with', []);
-            if (!empty($with)) {
-                $collection->load($with);
-            }
+        if ($request->has('load')) {
+            $collection->load($request->input('load'));
         }
-        
+        logger("[assing]", $collection->toArray());
         $result = [
             'items' => $collection,
             'total' => $pager->total()
