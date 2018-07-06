@@ -34,38 +34,9 @@ namespace App\Services\WayBill\CainiaoRequest;
 class TmsWayBillGetResponse extends MsgResponse
 {
     
-    private $ResonseData = null;
-    private $type = "json";
     
-    public function setParam($data, $type)
-    {
-        $this->ResonseData = $data;
-        $this->type = $type;
-    }
     
-    /**
-     * 处理数据
-     * @return mixed
-     */
-    public function deal()
-    {
-        if ($this->type == 'xml') {
-            $this->xmlSetAll($this->ResonseData);
-        } else {
-            $this->jsonSetAll($this->ResonseData);
-        }
-    }
-    
-    public function xmlSetAll($xml)
-    {
-        $this->xmlSetStatus($xml);
-        if ($this->isSuccess()) { //成功需要设置返回数据 失败不需要
-            $this->xmlSetData($xml);
-        } else {
-            $this->msg = $this->xmlSetMsg($xml);
-        } 
-    }
-    
+
     public function xmlSetData($xml)
     {
         $responseList = $xml->waybillCloudPrintResponseList; //$xml->xpath('waybillCloudPrintResponseList');
@@ -81,19 +52,11 @@ class TmsWayBillGetResponse extends MsgResponse
         }
         $this->data = $re;
     }
+
     
-    public function xmlSetMsg($xml)
+    public function jsonSetData($arr)
     {
-        $msg = $xml->errorMs;//$xml->path('/response/errorMsg');
-        $this->msg= $msg;
-    }
-    
-    public function jsonSetAll()
-    {
-        //未完成
-    }
-    
-    
-    
+        $this->data= $arr['waybillCloudPrintResponseList'];
+    }    
     
 }

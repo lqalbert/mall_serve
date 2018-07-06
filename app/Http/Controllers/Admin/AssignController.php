@@ -105,6 +105,7 @@ class AssignController extends Controller
         
         if ($request->has('range')) {
             $field = $request->input('auto_field', 'created_at');
+            $range = $request->input('range');
             $this->repository->pushCriteria(new DateRange($range, $field));
         } 
         
@@ -116,36 +117,6 @@ class AssignController extends Controller
         if (array_merge($address, $requestParams)) {
             $this->repository->pushCriteria(new Address($request));
         }
-        
-//         foreach ($this->fieldEqual as  $value) {
-//             if ($request->has($value)) {
-//                 $this->repository->pushCriteria(new FieldEqual($value, $request->input($value)));
-//             }
-//         }
-        
-//         foreach ($this->fieldLike as  $value) {
-//             if ($request->has($value)) {
-//                 $this->repository->pushCriteria(new FieldLike($value, $request->input($value)));
-//             }
-//         }
-        
-//         if ($request->has('start') && $request->has('end')) {
-//             $range= [];
-//             $range[] = $request->input('start');
-//             $range[] = $request->input('end');
-//             $this->repository->pushCriteria(new DateRange($range));
-//         } 
-        
-//         if ($request->has('with')) {
-//             $with  = $request->input('with', []);
-//             foreach ($with as $model) {
-//                 if ($model == 'order') {
-//                     $this->repository->with([$model=>function($query){
-//                         $query->select('created_at');
-//                     }]);
-//                 }
-//             }
-//         }
         
         if ($request->has('with')) {
             $this->repository->with($request->input('with'));
@@ -159,11 +130,10 @@ class AssignController extends Controller
             $collection = $pager->getCollection();
         }
 
-
         if ($request->has('load')) {
             $collection->load($request->input('load'));
         }
-        logger("[assing]", $collection->toArray());
+
         $result = [
             'items' => $collection,
             'total' => $pager->total()
@@ -296,7 +266,7 @@ class AssignController extends Controller
                return $this->error([], '面单获取失败:'.$re['msg']);
            }
             
-           Storage::disk('local')->put('waybill.json', json_encode($re));
+//            Storage::disk('local')->put('waybill.json', json_encode($re));
             return $this->success([]);
         } else {
             return $this->error([],'aa');

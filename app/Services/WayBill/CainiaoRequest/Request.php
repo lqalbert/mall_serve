@@ -32,7 +32,6 @@ class Request
             $this->app_key = config('cainiao.app_key');
             $this->app_secret = config('cainiao.app_secret');
         }
-       
     }
     
     
@@ -48,12 +47,13 @@ class Request
         $this->api = $obj->getApi();
         $this->content = $obj->getContent($this->dataType);
         $this->to_code = $obj->getToCode();
+        Storage::disk('local')->put('request_content', $this->content);
         return $this;
     }
     
     public function makeSign()
     {
-        Storage::disk('local')->put('request.xml', $this->content);
+        
         return base64_encode(md5($this->content.$this->app_secret, true));
     }
     
@@ -70,52 +70,9 @@ class Request
     
     public function getContent()
     {
+        Storage::disk('local')->put('request.xml', $this->content);
         return $this->content;
     }
-    
-//     public function toXml($data)
-//     {
-//         if(!is_array($data) || count($data) <= 0){
-//             return false;
-//         }
-//         $xml = "<request>";
-//         $xml .= $this->array2xml($data);
-//         $xml.="</request>";
-//         Storage::disk('local')->put('request.xml', $xml);
-//         return $xml;  
-//     }
-    
-//     private function array2xml($data)
-//     {
-//         if(!is_array($data) || count($data) <= 0){
-//             return false;
-//         }
-//         $xml = "";
-//         foreach ($data as $key=>$val){
-//             if (is_string($val)) {
-//                 $prev = "<".$key.">";
-//                 $prev.="</".$key.">";
-//                 $xml .= $prev;
-//             } else if(is_array($val)){
-//                 $xml .= $this->array2xml($val);
-//             }
-//             if (!is_numeric($key)) {
-//                 $prev = "<".$key.">";
-//                 if (is_array($val) or is_object($val)){
-//                     $prev.= $this->array2xml($val);
-//                 }else{
-//                     $prev.=$val;
-//                 }
-//                 $prev.="</".$key.">";
-//                 $xml .= $prev;
-//             } else {
-//                 $xml .= $this->array2xml($val);
-//             }    
-//         }
-        
-//         return $xml;  
-        
-//     }
     
     public function send()
     {

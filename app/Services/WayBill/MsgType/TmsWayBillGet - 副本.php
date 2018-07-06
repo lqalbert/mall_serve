@@ -124,21 +124,24 @@ class TmsWayBillGet
     
     public function toXml($data)
     {
-        $xml = simplexml_load_string('<request></request>');
+       /*  $xml = simplexml_load_string('<request></request>');
 
         $xml->addChild('cpCode', $data['cpCode']);
         
         $this->setSender($xml, $data['sender']);
         $this->addTrade($xml, $data['tradeOrderInfoDtos']);
-        $str = <<<ET
+        return trim(str_replace('<?xml version="1.0"?>','',html_entity_decode($xml->saveXML(), ENT_NOQUOTES, 'UTF-8'))); */
+	
+		$str = <<<ET
         <request>
     <cpCode>EMS</cpCode>
     <sender>
         <address>
-            <detail>良睦路999号</detail>
-			<district>余杭区</district>
-			<city>杭州市</city>
-			<province>浙江省</province>
+            <city>北京市</city>
+            <detail>花家地社区卫生服务站</detail>
+            <district>朝阳区</district>
+            <province>北京</province>
+            <town>望京街道</town>
         </address>
         <mobile>1326443654</mobile>
         <name>Bar</name>
@@ -146,10 +149,9 @@ class TmsWayBillGet
     </sender>
     <tradeOrderInfoDtos>
             <tradeOrderInfoDto>
-                
-                <objectId>1</objectId>
+                <objectId>4</objectId>
                 <orderInfo>
-                    <orderChannelsType>TB</orderChannelsType>
+                    <orderChannelsType>OTHERS</orderChannelsType>
                     <tradeOrderList>
                             <tradeOrder>ssas</tradeOrder>
                     </tradeOrderList>
@@ -177,14 +179,13 @@ class TmsWayBillGet
                     <name>Bar</name>
                     <phone>057123222</phone>
                 </recipient>
-                <templateUrl>http://cloudprint.cainiao.com/template/standard/701/114</templateUrl>
+                <templateUrl>http://cloudprint.daily.taobao.net/template/standard/137411/1</templateUrl>
                 <userId>12</userId>
             </tradeOrderInfoDto>
     </tradeOrderInfoDtos>
 </request>
 ET;
-        return  str_replace(["\t","\n","\r","\0","\x0B"," "], "", trim($str));
-/*         return trim(str_replace('<?xml version="1.0"?>','',html_entity_decode($xml->saveXML(), ENT_NOQUOTES, 'UTF-8'))) ;*/
+		return $str;
     }
     
     public function setSender($xml, $data)

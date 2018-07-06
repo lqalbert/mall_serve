@@ -45,7 +45,7 @@ class ExpressCompany extends Model
      */
     public function getTemplateUrl()
     {
-        return config('cainiao.print_template.'.$this->eng);
+        return  env('APP_ENV') == 'production' ? config('cainiao.print_template.'.$this->eng) : "http://cloudprint.daily.taobao.net/template/standard/137411/1";
     }
     
     public function setSendAddressAttribute($value)

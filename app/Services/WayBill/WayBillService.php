@@ -14,6 +14,8 @@ class WayBillService
         $this->request = $cainiaorequest;
         $this->response = $cainiaoresponse;
         
+        $this->dataType = env('APP_ENV') != 'production' ? 'xml' :'json';
+        
         $this->request->setDataType($this->dataType);
         $this->response->setDataType($this->dataType);
     }
