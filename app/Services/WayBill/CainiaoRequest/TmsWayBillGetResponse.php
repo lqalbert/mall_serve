@@ -35,8 +35,6 @@ class TmsWayBillGetResponse extends MsgResponse
 {
     
     
-    
-
     public function xmlSetData($xml)
     {
         $responseList = $xml->waybillCloudPrintResponseList; //$xml->xpath('waybillCloudPrintResponseList');
@@ -52,7 +50,6 @@ class TmsWayBillGetResponse extends MsgResponse
         }
         $this->data = $re;
     }
-
     
     public function jsonSetData($arr)
     {

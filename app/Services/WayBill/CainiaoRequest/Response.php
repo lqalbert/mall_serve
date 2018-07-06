@@ -18,6 +18,7 @@ class Response
     
     public function setBackClass($class)
     {
+        logger("[response]", [$class]);
         switch ($class) {
             case 'TMS_WAYBILL_GET':
                 $this->msg = new TmsWayBillGetResponse();
@@ -28,6 +29,8 @@ class Response
              default:
                  throw new \Exception('请求接口没有设置返回处理类');
         }
+        
+        logger("[response]", [get_class($this->msg)]);
     }
     
     public function setDataType($str)
@@ -53,13 +56,6 @@ class Response
            $result = json_decode($str, true);
            $this->msg->setParam($result, $this->dataType);
        } else {
-           /* 
-            * <response>
-                <success>false</success>
-                <errorCode>S23</errorCode>
-                <errorMsg>查询不到应用授权信息:please authorize to resources,can't find  app through fromCode =4d2e8684082d47f0bfd07ecef3adb57b traceId:0abdc1d315281814365342415e3a38</errorMsg>
-            </response> 
-            */
            $xml = simplexml_load_string($str);
            if ($xml === false) {
                return [
@@ -73,5 +69,5 @@ class Response
 
         $this->msg->deal();
         return $this->msg->setReturnMsg();
-   } 
+   }
 }

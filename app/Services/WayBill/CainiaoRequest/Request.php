@@ -47,13 +47,11 @@ class Request
         $this->api = $obj->getApi();
         $this->content = $obj->getContent($this->dataType);
         $this->to_code = $obj->getToCode();
-        //Storage::disk('local')->put('request_content', $this->content);
         return $this;
     }
     
     public function makeSign()
     {
-        
         return base64_encode(md5($this->content.$this->app_secret, true));
     }
     
@@ -70,7 +68,6 @@ class Request
     
     public function getContent()
     {
-       // Storage::disk('local')->put('request.xml', $this->content);
         return $this->content;
     }
     
