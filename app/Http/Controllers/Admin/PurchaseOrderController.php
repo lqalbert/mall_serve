@@ -243,8 +243,13 @@ class PurchaseOrderController extends Controller
      * @param  \App\Models\PurchaseOrder  $purchaseOrder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PurchaseOrder $purchaseOrder)
+    public function destroy($id)
     {
-        //
+        $re = $this->model->destroy($id);
+        if ($re) {
+            return $this->success(1);
+        } else {
+            return $this->error(0);
+        }
     }
 }
