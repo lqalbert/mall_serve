@@ -119,7 +119,7 @@ class OrderBasicController extends Controller
             DB::rollback();
             return  $this->error([], $e->getMessage());
         }
-        
+
         return $this->success([$orderModel->id]);
     }
 
@@ -207,7 +207,7 @@ class OrderBasicController extends Controller
         $this->model->destroy($id);
         return $this->success([]);
     }
-    
+
     public function updateCheckStatus(Request $request , $id)
     {
         $data = $request->all();
@@ -225,15 +225,15 @@ class OrderBasicController extends Controller
                     return $this->error([], $e->getMessage());
                 }
             } else {
-                
+
             }
-            
+
             return $this->success([]);
         } else {
             return $this->error([]);
         }
     }
-    
+
     public function cancel(Request $request , $id)
     {
         DB::beginTransaction();
@@ -242,7 +242,7 @@ class OrderBasicController extends Controller
             if ($model->isAssign()) {
                 throw new \Exception('已通过审核生成发货单，不能取消');
             }
-            
+
             $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
             event(new OrderCancel($model));
             DB::commit();
@@ -251,7 +251,7 @@ class OrderBasicController extends Controller
             logger('dd',[$e->getMessage()]);
             return $this->error([], $e->getMessage());
         }
-        
+
         return $this->success([]);
     }
 }

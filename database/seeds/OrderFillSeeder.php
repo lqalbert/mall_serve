@@ -15,7 +15,7 @@ class OrderFillSeeder extends Seeder
      */
     public function run()
     {
-        
+
         OrderBasic::whereNull('user_id')->orderBy('id','desc')->chunk(100, function ($orders) {
             foreach ($orders as $order) {
                 $cusModel = CustomerBasic::find($order->cus_id);
@@ -23,13 +23,13 @@ class OrderFillSeeder extends Seeder
                 $user = User::find($ownerBusness->user_id);
                 $group = $user->group()->select(['id','name'])->first();
                 $department = $user->department()->select(['id','name'])->first();
-                
+
                 $order->user_id = $user->id;
                 $order->user_id = $user->realname;
-               
+
                 $order->group_name = $group ? $group->name : null ;
                 $order->department_name = $department ? $department->name : null;
-                
+
                 $order->save();
             }
         });
