@@ -52,12 +52,20 @@ return [
         'Website'
     ],
     'assign-buyer'=>[
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
         'WarehousingProcess',
         'PurchaseList'
     ],
     'assign-buyer-manager' => [
         'WarehousingProcess',
-        'PurchaseList'
+        'PurchaseList',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
     ],
     
     'assign-manager'=>[
@@ -72,7 +80,11 @@ return [
         'ExpressReceive',
         'ExpressCompany',
         'ExpressCompensation',
-        'CartonManagement'
+        'CartonManagement',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -86,7 +98,11 @@ return [
         'ExpressReceive',
         'ExpressCompany',
         'ExpressCompensation',
-        'CartonManagement'
+        'CartonManagement',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
     ],
     'assign-staff'=>[
         'StockDetails',
@@ -100,7 +116,11 @@ return [
         'ExpressReceive',
         'ExpressCompany',
         'ExpressCompensation',
-        'CartonManagement'
+        'CartonManagement',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
     ],
     'assign-service'=>[
         'StockDetails',
@@ -114,7 +134,11 @@ return [
         'ExpressReceive',
         'ExpressCompany',
         'ExpressCompensation',
-        'CartonManagement'
+        'CartonManagement',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
     ],
     
     // 隐藏的角色
