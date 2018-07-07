@@ -119,7 +119,6 @@ class PurchaseOrderController extends Controller
         $purchase_order_id = $request->input('purchase_order_id');
 //        采购单采购商品总数
         $goods_total = (int)$this->model->where('id','=',$purchase_order_id)->first()['goods_total'];
-//         logger('[debug]', $goodsList);
         if (count($goodsList) == 0 ) {
             return $this->error([]);
         }

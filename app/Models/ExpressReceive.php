@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Scopes\IdDesc;
 
 class ExpressReceive extends Model
 {
@@ -22,4 +23,11 @@ class ExpressReceive extends Model
     protected $dates = [
         'deleted_at'
     ];
+    
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new IdDesc());
+    }
 }

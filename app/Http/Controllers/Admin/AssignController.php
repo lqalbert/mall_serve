@@ -33,7 +33,8 @@ class AssignController extends Controller
         'assign_sn',
         'status',//发货状态
         'corrugated_id',
-        
+        'express_sn', //物流揽件要用
+        'order_id', //订单下面查询要用
 
     ];
     
@@ -72,6 +73,7 @@ class AssignController extends Controller
             'range',
             'status',
             'entrepot_id',
+            
         ];
         
         $order = [
@@ -90,7 +92,7 @@ class AssignController extends Controller
         ];
         
         $requestParams= $request->all();
-        
+        //忘了为什么这么写
         if (array_merge($assign, $requestParams)) {
             foreach ($this->fieldEqual as  $value) {
                 if ($request->has($value)) {
