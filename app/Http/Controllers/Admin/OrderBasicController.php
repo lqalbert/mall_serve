@@ -15,6 +15,7 @@ use App\Events\OrderPass;
 use App\Events\OrderCancel;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\FieldLike;
+use App\Models\User;
 class OrderBasicController extends Controller
 {
 
@@ -76,6 +77,16 @@ class OrderBasicController extends Controller
             if ($allData['entrepot_id'] == 0) {
                 throw new \Exception('没有绑定配送中心');
             }
+            //添加一些字段数据
+            $user = User::findOrFail($allData['user_id']);
+            $group = $user->group()->select(['id','name'])->firstOrFail();
+            $department = $user->department()->select(['id','name'])->firstOrFail();
+            $allData['user_name'] = $user->realname;
+            $allData['group_id'] = $group->id;
+            $allData['group_name'] = $group->name;
+            $allData['department_id'] = $department->id;
+            $allData['department_name'] = $department->name;
+            
             $orderModel = OrderBasic::make($allData);
             $re = $orderModel->save();
             if (!$re) {
