@@ -177,6 +177,9 @@ Route::group($adminGroup, function(){
 	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
 	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
 	Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
+	
+	Route::get('/sale-quan', 'SaleQuanController@index');
+	Route::get('/sale-quan2', 'SaleQuanController@saleIndex');
 
 });
 
