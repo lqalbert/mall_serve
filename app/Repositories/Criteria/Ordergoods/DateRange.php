@@ -13,7 +13,7 @@ class DateRange extends Criteria
     
     public function  __construct($range, $field="created_at")
     {
-        $this->range= $entrepot_id;
+        $this->range= $range;
         $this->field = $field;
     }
     
