@@ -49,5 +49,6 @@
     <div class="navNum">
         备案号：<a href="http://www.miibeian.gov.cn" target="_blank">粤ICP备18050024</a> 广州普拉她生物科技有限公司
         <span class="phone">咨询热线  400-158-2369</span>
+        <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
     </div>
 </div>
