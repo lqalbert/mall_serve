@@ -32,5 +32,7 @@
     <script type="text/javascript" src="/admin/static1.1.37/js/vendor.a3dc0b2b08d772122a5a.js"></script>
     <script type="text/javascript" src="/admin/static1.1.37/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
     <script type="text/javascript" src="/admin/static1.1.37/js/app.4df9717864a5a6b301d1.js"></script>
+    
+    <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>
 </html>
