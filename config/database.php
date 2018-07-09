@@ -55,17 +55,17 @@ return [
             'strict' => false,
             'engine' => 'InnoDB',
         ],
-        
+
         'mysql_read' => [
-            
+
             'host' => '106.14.36.185',
             'database' => 'run_palata',
             'username' => 'run_palata',
             'password' => '111111',
             'driver' => 'mysql',
-            
+
             'port' => env('DB_PORT', '3306'),
-            
+
             'unix_socket' => env('DB_SOCKET', ''),
             //'charset' => 'utf8mb4',
             'charset' => 'utf8',
