@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\OrderGoods;
+use App\Models\OrderBasic;
 use App\Services\Ordergoods\OrdergoodsService;
 use App\Repositories\OrdergoodsRepository;
 use App\Repositories\Criteria\Ordergoods\Ordergoods as OrdergoodsC;
@@ -47,6 +48,11 @@ class OrderGoodsController extends Controller
     {
         DB::beginTransaction();
         try {
+            $orderCheck = OrderBasic::find($request->order_id)->isPass();
+            if(!$orderCheck){
+                return $this->error([], "审核未通过或未审核不能更新");
+            }
+
             $data = $request->all();
             $model = OrderGoods::findOrFail($id);
             
@@ -76,15 +82,16 @@ class OrderGoodsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,InventoryService $service)
     {
+        // var_dump($request->all());die();
         DB::beginTransaction();
         try {
             $data = $request->all();
             $model = OrderGoods::create($data);
-            
+
             $deta_num = $model->getNum() - $data['goods_number'];
-            $service->saleLock( $order->entrepot, $model, $request->user());
+            $service->saleLock( $model->order->entrepot, [$model], $request->user());
             
         } catch (Exception $e) {
             DB::rollback();
@@ -92,13 +99,7 @@ class OrderGoodsController extends Controller
         }
         
         DB::commit();
-        //throw new \Exception('test');
-//         $re = $this->repository->create($request->input());
-        if ($re) {
-            return $this->success($re);
-        } else {
-            return $this->error($re);
-        }
+        return $this->success([]);
     }
     /**
      * Display the specified resource.
@@ -119,6 +120,12 @@ class OrderGoodsController extends Controller
     public function destroy($id)
     {
         //返回 int
+        $orderModel = OrderGoods::where('id',$id)->select('order_id')->first();
+        $orderCheck = OrderBasic::find($orderModel->order_id)->isPass();
+        if(!$orderCheck){
+            return $this->error([], "审核未通过或未审核不能删除");
+        }
+
         $re = $this->repository->delete($id);
         if ($re) {
             //return $this->success(1);

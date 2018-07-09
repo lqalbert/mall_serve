@@ -21,6 +21,8 @@ use App\Services\WayBill\MsgType\TmsWayBillGet;
 use Illuminate\Support\Facades\Storage;
 use App\Models\CartonManagement;
 use App\Models\ExpressPrice;
+use App\Models\VolumeRatio;
+use Illuminate\Support\Facades\DB;
 
 class AssignController extends Controller
 {
@@ -417,30 +419,48 @@ class AssignController extends Controller
      */
     public function checkGoods(Request $request, $id)
     {
-        $assign = Assign::find($id);
-        $assign->load('goods');//
-        $goodsArr = collect($assign->toArray())->get('goods');
-        $goodsVolume = 0;
-        $goodsWeight = 0;
-        foreach ($goodsArr as $goods) {
-            $goodsVolume += $goods['width']*$goods['height']*$goods['len'];
-            $goodsWeight += $goods['goods_number']*$goods['weight']+$goods['goods_number']*$goods['bubble_bag'];
-        }
-        $carton = CartonManagement::where('carton_volume','>=',$goodsVolume/0.7)->orderBy('carton_volume')->get();
-        $cartonArr = collect($carton->toArray())->first();
-        $assign->corrugated_case = $cartonArr['carton_name'];
-        $assign->corrugated_id = $cartonArr['id'];
-        $assign->corrugated_weight = $cartonArr['carton_weight'];
-        $assign->reckon_weigth =  $goodsWeight+$cartonArr['carton_weight'];
+        DB::beginTransaction();
+        try {
+            $assign = Assign::find($id);
+            $assign->load('goods');//
+            $goodsArr = collect($assign->toArray())->get('goods');
+            $goodsVolume = 0;
+            $goodsWeight = 0;
+            foreach ($goodsArr as $goods) {
+                $goodsVolume += $goods['width']*$goods['height']*$goods['len'];
+                $goodsWeight += $goods['goods_number']*$goods['weight']+$goods['goods_number']*$goods['bubble_bag'];
+            }
+            
+            $per = VolumeRatio::first(['volume_ratio']);
+            
+            if(!$per){
+                throw new  \Exception('纸箱获取失败,未设置纸箱比例');
+            }
+            $carton = CartonManagement::where('carton_volume','>=',$goodsVolume/$per->volume_ratio)
+                                        ->orderBy('carton_volume')->first();
+            if(!$carton){
+                throw new  \Exception('获取纸箱型号失败！');
+            }
+            $assign->corrugated_case = $carton->carton_name;
+            $assign->corrugated_id = $carton->id;
+            $assign->corrugated_weight = $carton->carton_weight;
+            $assign->reckon_weigth =  $goodsWeight+$carton->carton_weight;
+            $assign->checkedGoods(auth()->user());
+            $re = $assign->save();
+            if(!$re){
+                throw new  \Exception('纸箱分配保存失败');
+            }
+            $msg = $carton->carton_number == 0 ?'合适的纸箱数量为0':'操作成功';
 
-        $assign->checkedGoods(auth()->user());
-        $re = $assign->save();
-        if ($re) {
-            $msg = $cartonArr['carton_number'] == 0 ?'合适的纸箱数量为0':'操作成功';
-            return $this->success([],$msg);
-        } else {
-            return $this->error([]);
+            $cartonModel = CartonManagement::find($carton->id);
+            $cartonModel->minusCartonNumber($carton->carton_number);
+            $cartonModel->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
         }
+        return $this->success([],$msg);  
     }
 
     public function showbyExpressSn(Request $request, $express_sn)

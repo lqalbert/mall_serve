@@ -18,11 +18,11 @@ return [
 				'icon'=>null,
 				'subIndex'=>['Department','Group','Employee','Deposit']
 		],
-// 		[
-// 				'text'=>'客户管理',
-// 				'icon'=>null,
-// 				'subIndex'=>[]
-// 		],
+		// [
+		// 		'text'=>'客户管理',
+		// 		'icon'=>null,
+		// 		'subIndex'=>[]
+		// ],
 		[
 				'text' => '客户订单',
 				'icon'=>null,
@@ -65,4 +65,9 @@ return [
 			    'icon' => null,
 			    'subIndex'=>['WarehousingProcess','PurchaseList']
 		],
+		/*[
+			    'text' => '统计报表',
+			    'icon' => null,
+			    'subIndex'=>['SalesPerformance','SalesQuantization']
+		],*/
 ];

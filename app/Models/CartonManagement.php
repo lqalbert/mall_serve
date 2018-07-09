@@ -28,4 +28,8 @@ class CartonManagement extends Model
      */
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
 
+    public function minusCartonNumber($num){
+        $this->carton_number = $num==0 ? 0 : $num-1;
+    }
+
 }
