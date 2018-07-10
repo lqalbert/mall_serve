@@ -41,8 +41,8 @@ class ExpressReceiveController extends Controller
             $where[]=['created_at','<=',$request->input('end')];
         }
 //        var_dump($where);die();
-        $data = $this->model->where($where)->orderBy('created_at','desc')->get();
-        return ['items'=>$data, 'total'=>count($data)];
+        $data = $this->model->where($where)->orderBy('created_at','desc')->paginate($request->input('pageSize'));
+        return ['items'=>$data->items(), 'total'=>$data->total()];
     }
 
     /**
@@ -100,7 +100,12 @@ class ExpressReceiveController extends Controller
     public function update(Request $request, ExpressReceive $expressReceive,$id)
     {
         $data = $request->all();
-        $this->model->where('id',$id)->update($data);
+       $re = $this->model->where('id',$id)->update($data);
+        if($re){
+            return $this->success([]);
+        }else{
+            return $this->error([]);
+        }
     }
 
     /**
