@@ -180,6 +180,8 @@ Route::group($adminGroup, function(){
 	
 	Route::get('/sale-quan', 'SaleQuanController@index');
 	Route::get('/sale-quan2', 'SaleQuanController@saleIndex');
+    Route::resource('/salesperformance',  'SalesPerformanceController');
+    Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
 
 });
 
