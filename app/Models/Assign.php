@@ -92,7 +92,7 @@ class Assign extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods','assign_id');
+        return $this->hasMany('App\Models\OrderGoods','assign_id')->orderBy('sku_sn','asc');
     }
     
     public function express()

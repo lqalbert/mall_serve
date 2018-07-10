@@ -371,14 +371,14 @@ class AssignController extends Controller
      * @param Request $request
      * @return number[]|string[]|NULL[]
      */
-    public function goodsPrint(Request $request)
+    public function goodsPrint(Request $request, $id)
     {
         $assign = Assign::find($id);
         $assign->updateAssignPrintStatus();
         $goods  = $assign->goods;
         $re = $assign->save();
         if ($re) {
-            return $this->success([ ]);
+            return $this->success($goods);
         } else {
             return $this->error([]);
         }
