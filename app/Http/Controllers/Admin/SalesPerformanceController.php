@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+<<<<<<< HEAD
 use App\Models\OrderBasic;
+=======
+>>>>>>> 20180710修改
 
 class SalesPerformanceController extends Controller
 {
@@ -15,10 +18,13 @@ class SalesPerformanceController extends Controller
         $groupBy = $request->input('type');
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
+<<<<<<< HEAD
         
         $orderField = $request->input('orderField','cus_count');
         $orderWay  = $request->input('orderWay','desc');
         
+=======
+>>>>>>> 20180710修改
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
@@ -31,6 +37,7 @@ class SalesPerformanceController extends Controller
 //        if($request->input($groupBy)){
 //            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
 //        }
+<<<<<<< HEAD
         //退款尝试用子查询 如果加 group_id = x  department_id=y 这种可能会更快
         $refundQuery = DB::table('order_after as oa')
                                                    ->join('order_basic as ob','oa.order_id','=', 'ob.id')
@@ -42,15 +49,23 @@ class SalesPerformanceController extends Controller
                                                   ]);
         
         $builder = DB::table('order_basic as db')
+=======
+        $result = DB::table('order_basic as db')
+>>>>>>> 20180710修改
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
                 DB::raw('sum(order_all_money) as all_pay'),
+<<<<<<< HEAD
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
+=======
+                DB::raw('sum(order_after.fee) as refund'),
+>>>>>>> 20180710修改
                 'db.user_name',
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
+<<<<<<< HEAD
                 'db.group_id',
                 'db.user_id'
             )
@@ -84,6 +99,16 @@ class SalesPerformanceController extends Controller
         return [
             'items'=> $items,
             'total'=> $result->total()
+=======
+                'db.group_id'
+            )
+            ->leftJoin('order_after','db.id','=','order_after.order_id')
+            ->where($where)->groupBy('db.'.$groupBy)->paginate($pageSize);
+
+        return [
+            'items'=>$result->items(),
+            'total'=>$result->total()
+>>>>>>> 20180710修改
         ];
     }
 
@@ -114,6 +139,7 @@ class SalesPerformanceController extends Controller
                 'db.created_at as traded_at',
                 'db.order_sn',
                 'customer_basic.name as cus_name',
+<<<<<<< HEAD
                 'order_address.phone as cus_phone'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
@@ -159,4 +185,17 @@ class SalesPerformanceController extends Controller
             
         });
     }
+=======
+                'customer_contact.phone as cus_phone'
+            )
+            ->leftJoin('order_after','db.id','=','order_after.order_id')
+            ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
+            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
+            ->where($where)->paginate($pageSize);
+        return [
+            'items'=>$result->items(),
+            'total'=>$result->total()
+        ];
+    }
+>>>>>>> 20180710修改
 }
