@@ -240,7 +240,7 @@ return [
             'icon' => null,
             'index' => 'PurchaseList'
         ],
-        /*[
+        [
             'text' => '销售业绩',
             'icon' => null,
             'index' => 'SalesPerformance'
@@ -249,7 +249,7 @@ return [
             'text' => '销售量化',
             'icon' => null,
             'index' => 'SalesQuantization'
-        ]*/
+        ]
 
 		
 ];
