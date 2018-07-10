@@ -49,6 +49,10 @@ class OrderBasic extends Model
         'express_remark',
         'express_name',
         'type',
+        'user_id',
+        'user_name',
+        'group_name',
+        'department_name',
     ];
     
     /**

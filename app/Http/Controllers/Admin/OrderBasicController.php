@@ -81,12 +81,13 @@ class OrderBasicController extends Controller
             $user = User::findOrFail($allData['user_id']);
             $group = $user->group()->select(['id','name'])->firstOrFail();
             $department = $user->department()->select(['id','name'])->firstOrFail();
+            $allData['user_id'] = $user->id;
             $allData['user_name'] = $user->realname;
             $allData['group_id'] = $group->id;
             $allData['group_name'] = $group->name;
             $allData['department_id'] = $department->id;
             $allData['department_name'] = $department->name;
-            
+
             $orderModel = OrderBasic::make($allData);
             $re = $orderModel->save();
             if (!$re) {
