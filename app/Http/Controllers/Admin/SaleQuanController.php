@@ -28,14 +28,14 @@ class SaleQuanController extends Controller
             $where[] = ['cu.group_id','=',$group_id];
         }
 
-        $result = DB::table('customer_basic as cb')->select(
+        $result = DB::connection('mysql_read')->table('customer_basic as cb')->select(
                 DB::raw('count(cb.id) as cus_count'),
                 DB::raw('count(cba.id) as c_cus_count'),
                 DB::raw('count(cbas.id) as b_cus_count'),
                 DB::raw('count(distinct ob.cus_id) as obcus_count'),
                 DB::raw('count(ob.id) as ob_count'),
                 DB::raw('count(cus.id) as track_count')
-            )->addSelect('cu.department_name','cu.group_name','cu.user_name','cb.created_at')
+            )->addSelect('cu.department_name','cu.group_name','cu.user_name','cb.created_at','cu.department_id','cu.group_id','cu.user_id')
             ->join('customer_user as cu','cu.cus_id','=','cb.id')
             ->leftJoin('order_basic as ob','ob.cus_id','=','cb.id')
             ->join('customer_basic as cba',function($join){
@@ -51,11 +51,73 @@ class SaleQuanController extends Controller
             ->where($where)->whereNull('cb.deleted_at')->whereNull('cu.deleted_at')
             ->groupBy('cu.'.$groupBy)
             ->paginate($pageSize);
-
+        
+        $items = $result->getCollection();
+        $key = $groupBy;
+        if (!$items->isEmpty()) {
+            $keyValue = $items->pluck($key);
+        } else {
+            $keyValue = [-1];
+        }
+        
+        $this->setTrans($key, $keyValue, $start, $end, $items);
+        
+            
         return [
-            'items'=> $result->items(),
+            'items'=> $items,
             'total'=> $result->total()
         ];
+    }
+    
+    /**
+     * 
+     */
+    public function setTrans($groupBy, $values, $start, $end, $items)
+    {   
+        //转进来的
+        $userInSubQuery= DB::connection('mysql_read')->table('customer_user as a')->join('customer_user as b','a.cus_id','=','b.cus_id')
+        ->whereIn('b.type',[1,2])
+        ->whereIN('b.'.$groupBy, $values)
+        ->where([
+            ['b.created_at','>=',$start],
+            ['b.created_at','<=',$end],
+            ['a.'.$groupBy,'!=','b.'.$groupBy]
+        ])->select(DB::raw("count(b.id) as in_count"),"b.{$groupBy} as map_key")->groupby('b.'.$groupBy);
+        $inResult = $userInSubQuery->get();
+        if (!$inResult->isEmpty()) {
+            $inMap = $inResult->mapWithKeys(function($item){
+                return [$item->map_key => $item->in_count];
+            });
+        } else {
+            $inMap = collect([1]);
+        }
+        $items->each(function($itm) use($inMap, $groupBy){
+            $itm->trans_in =  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+        });
+        
+        //转出去的
+        $userOutSubQuery= DB::connection('mysql_read')->table('customer_user as a')->join('customer_user as b', 'a.cus_id','=','b.cus_id')
+        ->whereIn('b.type',[1,2])
+        ->whereIn('a.'.$groupBy, $values)
+        ->where([
+            ['a.deleted_at','>=',$start],
+            ['a.deleted_at','<=',$end],
+            ['a.'.$groupBy,'!=','b.'.$groupBy]
+        ])
+        ->select(DB::raw("count(a.id) as in_count"),"a.{$groupBy} as map_key")->groupby('a.'.$groupBy);
+        $outResult = $userOutSubQuery->get();
+        if (!$outResult->isEmpty()) {
+            $outMap = $outResult->mapWithKeys(function($item){
+                return [$item->map_key => $item->in_count];
+            });
+        } else {
+            $outMap= collect([1]);
+        }
+        $items->each(function($itm) use($outMap, $groupBy){
+            $itm->trans_out =  $outMap->has($itm->{$groupBy}) ? $outMap->get($itm->{$groupBy}) : 0;
+        });
+        
+        
     }
 
     public function index2(Request $request)
@@ -134,6 +196,8 @@ class SaleQuanController extends Controller
         // ->offset($offset)
         // ->limit($pageSize)
         // ->get();
+        
+
         
         
         return [
