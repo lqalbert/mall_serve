@@ -28,7 +28,7 @@ class SaleQuanController extends Controller
             $where[] = ['cu.group_id','=',$group_id];
         }
 
-        $result = DB::connection('mysql_read')->table('customer_basic as cb')->select(
+        $result = DB::table('customer_basic as cb')->select(
                 DB::raw('count(cb.id) as cus_count'),
                 DB::raw('count(cba.id) as c_cus_count'),
                 DB::raw('count(cbas.id) as b_cus_count'),

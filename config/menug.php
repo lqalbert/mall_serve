@@ -65,9 +65,9 @@ return [
 			    'icon' => null,
 			    'subIndex'=>['WarehousingProcess','PurchaseList']
 		],
-		/*[
+		[
 			    'text' => '统计报表',
 			    'icon' => null,
 			    'subIndex'=>['SalesPerformance','SalesQuantization']
-		],*/
+		]
 ];
