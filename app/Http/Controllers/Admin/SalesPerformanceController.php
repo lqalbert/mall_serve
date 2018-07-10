@@ -26,7 +26,7 @@ class SalesPerformanceController extends Controller
 //        if($request->input($groupBy)){
 //            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
 //        }
-        $result = DB::table('order_basic as db')
+        $builder = DB::table('order_basic as db')
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
@@ -39,8 +39,14 @@ class SalesPerformanceController extends Controller
                 'db.group_id'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
-            ->where($where)->groupBy('db.'.$groupBy)->paginate($pageSize);
-
+            ->where($where)->groupBy('db.'.$groupBy);
+        
+        if ($groupBy == 'department_id') {
+            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
+        }  
+            
+        $result = $builder-> paginate($pageSize);
+            
         return [
             'items'=>$result->items(),
             'total'=>$result->total()
