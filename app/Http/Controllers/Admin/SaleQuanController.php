@@ -48,7 +48,7 @@ class SaleQuanController extends Controller
                 $join->on('cus.id','=','cu.id')->whereNotNull('cus.last_track');
             },null,null,'left')
             ->where('cu.type',0)
-            ->where($where)->whereNull('cb.deleted_at')->whereNull('cu.deleted_at')
+            ->where($where)->whereNull('cb.deleted_at')
             ->groupBy('cu.'.$groupBy)
             ->paginate($pageSize);
         
