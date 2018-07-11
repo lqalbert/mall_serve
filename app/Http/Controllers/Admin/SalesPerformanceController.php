@@ -64,7 +64,12 @@ class SalesPerformanceController extends Controller
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-
+//        if($request->has('department_id')){
+//            $where[]=['db.department_id','=', $request->input('department_id')];
+//        }
+//        if($request->has('group_id')){
+//            $where[]=['db.group_id','=', $request->input('group_id')];
+//        }
         if($request->input($groupBy)){
             $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
         }
