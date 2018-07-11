@@ -44,7 +44,7 @@ class SalesPerformanceController extends Controller
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
-            ->groupBy('order_basic.'.$groupBy);
+            ->groupBy('db.'.$groupBy);
         
         if ($groupBy == 'department_id') {
             $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
