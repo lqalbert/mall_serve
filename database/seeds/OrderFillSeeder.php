@@ -15,7 +15,7 @@ class OrderFillSeeder extends Seeder
     public function run()
     {
         
-        DB::table('order_basic')->whereNull('user_id')->chunk(100, function ($orders) {
+        DB::table('order_basic')->whereNull('user_id')->orderBy('id','desc')->chunk(100, function ($orders) {
             foreach ($orders as $order) {
                 $cusModel = CustomerBasic::find($order->cus_id);
                 $ownerBusness = $cusModel->midRelative;
