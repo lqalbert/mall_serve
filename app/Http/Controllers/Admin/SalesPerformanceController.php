@@ -59,17 +59,11 @@ class SalesPerformanceController extends Controller
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
-        $pageSize = $request->input('pageSize', 20);
-        $offset = ($request->input('page',1) -1) * $pageSize;
+        
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-//        if($request->has('department_id')){
-//            $where[]=['db.department_id','=', $request->input('department_id')];
-//        }
-//        if($request->has('group_id')){
-//            $where[]=['db.group_id','=', $request->input('group_id')];
-//        }
+
         if($request->input($groupBy)){
             $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
         }
@@ -85,10 +79,10 @@ class SalesPerformanceController extends Controller
             ->leftJoin('order_after','db.id','=','order_after.order_id')
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
             ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
-            ->where($where)->paginate($pageSize);
+            ->where($where)->get();
         return [
-            'items'=>$result->items(),
-            'total'=>$result->total()
+            'items'=>$result,
+            'total'=>$result->count()
         ];
     }
 }
