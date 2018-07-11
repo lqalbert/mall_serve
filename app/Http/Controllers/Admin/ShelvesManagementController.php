@@ -53,7 +53,12 @@ class ShelvesManagementController extends Controller
      */
     public function store(Request $request)
     {
-        ShelvesManagement::create($request->all());
+       $re = ShelvesManagement::create($request->all());
+        if ($re) {
+            return $this->success([]);;
+        } else {
+            return $this->error([]);
+        }
     }
 
     /**
@@ -87,7 +92,12 @@ class ShelvesManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        ShelvesManagement::where('id',$id)->update($request->all());
+       $re = ShelvesManagement::where('id',$id)->update($request->all());
+        if ($re) {
+            return $this->success([]);;
+        } else {
+            return $this->error([]);
+        }
     }
 
     /**

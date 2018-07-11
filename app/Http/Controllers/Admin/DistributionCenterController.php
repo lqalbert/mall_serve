@@ -35,8 +35,8 @@ class DistributionCenterController extends Controller
         if($request->has('contact_phone')){
             $where['contact_phone']=$request->input('contact_phone');
         }
-        $data = $this->model->where($where)->orderBy('created_at','desc')->get();
-        return ['items'=>$data, 'total'=>count($data)];
+        $data = $this->model->where($where)->orderBy('created_at','desc') ->paginate($request->input('pageSize'));
+        return ['items' => $data->items(), 'total' => $data->total()];
     }
 
     /**
