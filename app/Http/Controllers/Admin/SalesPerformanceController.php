@@ -105,8 +105,8 @@ class SalesPerformanceController extends Controller
             ->leftJoin('order_address','order_address.order_id','=','db.id')
             ->where($where)
             ->where([
-                ['order_basic.status','>', OrderBasic::UN_CHECKED],
-                ['order_basic.status','<', OrderBasic::ORDER_STATUS_7],
+                ['db.status','>', OrderBasic::UN_CHECKED],
+                ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
             ->get();
         return [
