@@ -80,9 +80,9 @@ class SaleQuanController extends Controller
         ->whereIN('b.'.$groupBy, $values)
         ->where([
             ['b.created_at','>=',$start],
-            ['b.created_at','<=',$end],
-            ['a.'.$groupBy,'!=','b.'.$groupBy]
-        ])->select(DB::raw("count(b.id) as in_count"),"b.{$groupBy} as map_key")->groupby('b.'.$groupBy);
+            ['b.created_at','<=',$end]
+        ])->whereColumn('a.'.$groupBy,'!=','b.'.$groupBy)
+        ->select(DB::raw("count(b.id) as in_count"),"b.{$groupBy} as map_key")->groupby('b.'.$groupBy);
         $inResult = $userInSubQuery->get();
         if (!$inResult->isEmpty()) {
             $inMap = $inResult->mapWithKeys(function($item){
@@ -101,9 +101,8 @@ class SaleQuanController extends Controller
         ->whereIn('a.'.$groupBy, $values)
         ->where([
             ['a.deleted_at','>=',$start],
-            ['a.deleted_at','<=',$end],
-            ['a.'.$groupBy,'!=','b.'.$groupBy]
-        ])
+            ['a.deleted_at','<=',$end]
+        ])->whereColumn('a.'.$groupBy,'!=','b.'.$groupBy)
         ->select(DB::raw("count(a.id) as in_count"),"a.{$groupBy} as map_key")->groupby('a.'.$groupBy);
         $outResult = $userOutSubQuery->get();
         if (!$outResult->isEmpty()) {
