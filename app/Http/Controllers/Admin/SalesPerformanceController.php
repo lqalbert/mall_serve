@@ -39,18 +39,34 @@ class SalesPerformanceController extends Controller
                 'db.department_id',
                 'db.group_id'
             )
-            ->leftJoin('order_after','db.id','=','order_after.order_id')
-            ->where($where)->groupBy('db.'.$groupBy);
+            ->where($where)
+            ->where([
+                ['db.status','>', OrderBasic::UN_CHECKED],
+                ['db.status','<', OrderBasic::ORDER_STATUS_7],
+            ])
+            ->groupBy('order_basic.'.$groupBy);
         
         if ($groupBy == 'department_id') {
             $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
-        }  
-            
-        $result = $builder-> paginate($pageSize);
-            
+        }
+        $result = $builder->paginate($pageSize);
+        
+
+        
+        $items = $result->getCollection();
+        $key = $groupBy;
+        if (!$items->isEmpty()) {
+            $keyValue = $items->pluck($key);
+        } else {
+            $keyValue = [-1];
+        }
+        
+        $this->setTrans($key, $keyValue, $start, $end, $items);
+        
+        
         return [
-            'items'=>$result->items(),
-            'total'=>$result->total()
+            'items'=> $items,
+            'total'=> $result->total()
         ];
     }
 
@@ -87,10 +103,35 @@ class SalesPerformanceController extends Controller
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
 //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
             ->leftJoin('order_address','order_address.order_id','=','db.id')
-            ->where($where)->get();
+            ->where($where)
+            ->whereNotIn('db.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
+            ->get();
         return [
             'items'=>$result,
             'total'=>$result->count()
         ];
+    }
+    
+    public function setTrans($groupBy, $keyValue, $start, $end, $items)
+    {
+        //退款金额
+        $userInSubQuery= DB::table('order_after as a')
+        ->join('order_basic as db','a.order_id','=','db.id')
+        ->where([
+            ['a.created_at','>=',$start],
+            ['a.created_at','<=',$end],
+            ['a.status','=',1]
+        ])->select(DB::raw("sum(a.fee) as fee"),"db.{$groupBy} as map_key")->groupby('db.'.$groupBy);
+        $inResult = $userInSubQuery->get();
+        if (!$inResult->isEmpty()) {
+            $inMap = $inResult->mapWithKeys(function($item){
+                return [$item->map_key => $item->fee];
+            });
+        } else {
+            $inMap = collect([1]);
+        }
+        $items->each(function($itm) use($inMap, $groupBy){
+            $itm->refund=  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+        });
     }
 }
