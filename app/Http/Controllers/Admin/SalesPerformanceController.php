@@ -80,11 +80,12 @@ class SalesPerformanceController extends Controller
                 'db.created_at as traded_at',
                 'db.order_sn',
                 'customer_basic.name as cus_name',
-                'customer_contact.phone as cus_phone'
+                'order_address.phone as cus_phone'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
-            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
+//            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
+            ->leftJoin('order_address','order_address.order_id','=','db.id')
             ->where($where)->paginate($pageSize);
         return [
             'items'=>$result->items(),
