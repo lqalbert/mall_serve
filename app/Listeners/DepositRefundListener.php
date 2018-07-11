@@ -35,7 +35,7 @@ class DepositRefundListener
         $department = $order->department;
         
         $department->addDeposit($order->order_pay_money);
-        if ($department->save()) {
+        if (!$department->save()) {
             throw new \Exception('退还保证金失败');
         }
         
