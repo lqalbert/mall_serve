@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\CustomerBasic;
+use App\Models\OrderBasic;
 
 class OrderFillSeeder extends Seeder
 {
@@ -15,7 +16,7 @@ class OrderFillSeeder extends Seeder
     public function run()
     {
         
-        DB::table('order_basic')->whereNull('user_id')->orderBy('id','desc')->chunk(100, function ($orders) {
+        OrderBasic::whereNull('user_id')->orderBy('id','desc')->chunk(100, function ($orders) {
             foreach ($orders as $order) {
                 $cusModel = CustomerBasic::find($order->cus_id);
                 $ownerBusness = $cusModel->midRelative;
