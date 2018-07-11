@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\OrderBasic;
 
 class SalesPerformanceController extends Controller
 {
@@ -15,41 +16,68 @@ class SalesPerformanceController extends Controller
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
-        $where[]=['db.created_at','>=', $start];
-        $where[]=['db.created_at','<=', $end];
+        $where1 = [];
+        $where[]=['order_basic.created_at','>=', $start];
+        $where[]=['order_basic.created_at','<=', $end];
+        $where1[]=['order_after.created_at','>=', $start];
+        $where1[]=['order_after.created_at','<=', $end];
+        $where1[]=['order_after.status','=', 1];
         if($request->has('department_id')){
-            $where[]=['db.department_id','=', $request->input('department_id')];
+            $where[]=['order_basic.department_id','=', $request->input('department_id')];
         }
         if($request->has('group_id')){
-            $where[]=['db.group_id','=', $request->input('group_id')];
+            $where[]=['order_basic.group_id','=', $request->input('group_id')];
         }
+        //获取满足查询条件的退款金
+        $refunds = OrderBasic::select(
+                DB::raw('sum(order_after.fee) as refund'),
+                'order_basic.department_id',
+                'order_basic.group_id',
+                'order_basic.user_id'
+            )
+            ->leftJoin('order_after','order_basic.id','=','order_after.order_id')
+            ->where($where1)->groupBy('order_basic.'.$groupBy)->get()->toArray();
 //        if($request->input($groupBy)){
 //            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
 //        }
-        $builder = DB::table('order_basic as db')
-            ->select(
-                DB::raw('count(distinct db.cus_id) as cus_count'),
-                DB::raw('count(db.id) as c_cus_count'),
+        $builder = OrderBasic::select(
+                DB::raw('count(distinct order_basic.cus_id) as cus_count'),
+                DB::raw('count(order_basic.id) as c_cus_count'),
                 DB::raw('sum(order_all_money) as all_pay'),
-                DB::raw('sum(order_after.fee) as refund'),
-                'db.user_name',
-                'db.group_name',
-                'db.department_name',
-                'db.department_id',
-                'db.group_id'
+                'order_basic.user_name',
+                'order_basic.group_name',
+                'order_basic.department_name',
+                'order_basic.department_id',
+                'order_basic.group_id',
+                'order_basic.user_id'
             )
-            ->leftJoin('order_after','db.id','=','order_after.order_id')
-            ->where($where)->groupBy('db.'.$groupBy);
+            ->where($where)
+            ->whereNotIn('order_basic.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
+            ->groupBy('order_basic.'.$groupBy);
         
         if ($groupBy == 'department_id') {
-            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
-        }  
-            
-        $result = $builder-> paginate($pageSize);
-            
+            $builder->join('department_basic','order_basic.department_id','=','department_basic.id')->addSelect('deposit');
+        }
+        $result = $builder-> paginate($pageSize)->toArray();
+        $result = $result['data'];
+
+        foreach ($result as $k1=>$v1){
+            foreach ($refunds as $k2=>$v2){
+                if($groupBy=='department_id' && ($v1['department_id'] == $v2['department_id'])){
+                    $result[$k1]['refund'] = $v2['refund'];
+                }
+                if($groupBy=='group_id' && ($v1['group_id'] == $v2['group_id'])){
+                    $result[$k1]['refund'] = $v2['refund'];
+                }
+            }
+        }
+//        return [
+//            'items'=>$result->items(),
+//            'total'=>$result->total()
+//        ];
         return [
-            'items'=>$result->items(),
-            'total'=>$result->total()
+            'items'=>$result,
+            'total'=>count($result)
         ];
     }
 
@@ -86,7 +114,9 @@ class SalesPerformanceController extends Controller
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
 //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
             ->leftJoin('order_address','order_address.order_id','=','db.id')
-            ->where($where)->paginate($pageSize);
+            ->where($where)
+            ->whereNotIn('db.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
+            ->paginate($pageSize);
         return [
             'items'=>$result->items(),
             'total'=>$result->total()

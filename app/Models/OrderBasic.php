@@ -19,7 +19,9 @@ class OrderBasic extends Model
     
     CONST AFTER_SALE_RETURN_DONE = 13;
     CONST AFTER_SALE_EXCHANGE_DONE = 23;
-    
+    CONST ORDER_STATUS_7 = 7;
+    CONST ORDER_STATUS_8 = 8;
+
     
     protected $table = 'order_basic';
     protected $dates = [
