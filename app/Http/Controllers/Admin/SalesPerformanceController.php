@@ -104,7 +104,10 @@ class SalesPerformanceController extends Controller
 //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
             ->leftJoin('order_address','order_address.order_id','=','db.id')
             ->where($where)
-            ->whereNotIn('db.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
+            ->where([
+                ['order_basic.status','>', OrderBasic::UN_CHECKED],
+                ['order_basic.status','<', OrderBasic::ORDER_STATUS_7],
+            ])
             ->get();
         return [
             'items'=>$result,
