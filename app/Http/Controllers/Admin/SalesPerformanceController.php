@@ -37,7 +37,8 @@ class SalesPerformanceController extends Controller
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
-                'db.group_id'
+                'db.group_id',
+                'db.user_id'
             )
             ->where($where)
             ->where([
