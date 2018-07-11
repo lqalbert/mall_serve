@@ -12,7 +12,7 @@ class OrderBasic extends Model
     use SoftDeletes;
     
     CONST WATI_TO_CHANGR =2;
-    CONST CANCEL = 5;
+    CONST CANCEL = 7;
     
     CONST AFTER_SALE_TYPE_RETURN = 0;
     CONST AFTER_SALE_TYPE_EXCHANGE = 1;

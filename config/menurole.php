@@ -20,7 +20,9 @@ return [
         'Workbench',
         'SysNotice',
         'Contacts',
-        'Website'
+        'Website',
+        'SalesPerformance',
+        'SalesQuantization'
     ],
     'human-resources' => [
       
@@ -40,7 +42,9 @@ return [
         'Workbench',
         'SysNotice',
         'Contacts',
-        'Website'
+        'Website',
+        'SalesPerformance',
+        'SalesQuantization'
     ],
     'sale-staff' => [
         'GoodsDetails',
