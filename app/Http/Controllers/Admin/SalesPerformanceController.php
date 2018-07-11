@@ -32,7 +32,7 @@ class SalesPerformanceController extends Controller
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
                 DB::raw('sum(order_all_money) as all_pay'),
-                DB::raw('sum(order_after.fee) as refund'),
+               
                 'db.user_name',
                 'db.group_name',
                 'db.department_name',
