@@ -126,6 +126,7 @@ class SalesPerformanceController extends Controller
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
             ->get();
+
         return [
             'items'=>$result,
             'total'=>$result->count()
