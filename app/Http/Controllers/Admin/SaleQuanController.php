@@ -89,10 +89,14 @@ class SaleQuanController extends Controller
                 return [$item->map_key => $item->in_count];
             });
         } else {
-            $inMap = collect([1]);
+            $inMap = collect();
         }
         $items->each(function($itm) use($inMap, $groupBy){
-            $itm->trans_in =  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+            if (!$inMap->isEmpty()) {
+                $itm->trans_in =  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+            } else {
+                $itm->trans_in="0";
+            }
         });
         
         //转出去的
@@ -111,10 +115,14 @@ class SaleQuanController extends Controller
                 return [$item->map_key => $item->in_count];
             });
         } else {
-            $outMap= collect([1]);
+            $outMap= collect();
         }
         $items->each(function($itm) use($outMap, $groupBy){
-            $itm->trans_out =  $outMap->has($itm->{$groupBy}) ? $outMap->get($itm->{$groupBy}) : 0;
+            if (!$inMap->isEmpty()) {
+                $itm->trans_out =  $outMap->has($itm->{$groupBy}) ? $outMap->get($itm->{$groupBy}) : 0;
+            } else {
+                $itm->trans_in="0";
+            }
         });
         
         

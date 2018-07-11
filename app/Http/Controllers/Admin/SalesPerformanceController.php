@@ -131,10 +131,15 @@ class SalesPerformanceController extends Controller
                 return [$item->map_key => $item->fee];
             });
         } else {
-            $inMap = collect([1]);
+            $inMap = collect();
         }
         $items->each(function($itm) use($inMap, $groupBy){
-            $itm->refund=  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+            if (!$inMap->isEmpty()) {
+                $itm->refund=  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+            } else {
+                $itm->refund="0";
+            }
+            
         });
     }
 }
