@@ -75,7 +75,7 @@ class SaleQuanController extends Controller
     public function setTrans($groupBy, $values, $start, $end, $items)
     {   
         //转进来的
-        $userInSubQuery= DB::connection('mysql_read')->table('customer_user as a')->join('customer_user as b','a.cus_id','=','b.cus_id')
+        $userInSubQuery= DB::table('customer_user as a')->join('customer_user as b','a.cus_id','=','b.cus_id')
         ->whereIn('b.type',[1,2])
         ->whereIN('b.'.$groupBy, $values)
         ->where([
@@ -96,7 +96,7 @@ class SaleQuanController extends Controller
         });
         
         //转出去的
-        $userOutSubQuery= DB::connection('mysql_read')->table('customer_user as a')->join('customer_user as b', 'a.cus_id','=','b.cus_id')
+        $userOutSubQuery= DB::table('customer_user as a')->join('customer_user as b', 'a.cus_id','=','b.cus_id')
         ->whereIn('b.type',[1,2])
         ->whereIn('a.'.$groupBy, $values)
         ->where([
