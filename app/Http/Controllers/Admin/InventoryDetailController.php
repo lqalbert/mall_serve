@@ -24,7 +24,7 @@ class InventoryDetailController extends Controller
     {
         $where = [];
         if ($this->request->has('entrepot_id')) {
-            $where[] = ['entrepot_id', $this->request->input('enretpot_id')];
+            $where[] = ['entrepot_id', $this->request->input('entrepot_id')];
         }
         if ($this->request->has('sku_sn')){
             $where[] = ['sku_sn', $this->request->input('sku_sn')];
@@ -35,11 +35,11 @@ class InventoryDetailController extends Controller
         }
         
         if ($this->request->has('start')){
-            $where[] = ['created', '>=', $this->request->input('start')];
+            $where[] = ['created_at', '>=', $this->request->input('start')];
         }
         
         if ($this->request->has('end')){
-            $where[] = ['created', '<=', $this->request->input('end')];
+            $where[] = ['created_at', '<=', $this->request->input('end')];
         }
         
         if (!empty($where)) {
