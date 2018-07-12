@@ -18,7 +18,7 @@ class TmsWayBillSubscriptionQuery
     
     public function setParam(array $param)
     {
-        $this->data = array_merge($this->data, $param);
+//         $this->data = array_merge($this->data, $param);
     }
     
     public function setDataType($dataType)

@@ -83,7 +83,7 @@ class TmsWayBillGet
         
         foreach ($assign as $item) {
             $result[] = [
-                "logisticsServices" => "",//可以不填
+//                 "logisticsServices" => "",//可以不填
                 "objectId"=>$item->id,//必填 string 32位
                 "orderInfo"=>[
                     'orderChannelsType'=>'OTHERS', //订单渠道平台编码
@@ -114,7 +114,7 @@ class TmsWayBillGet
     
     public function getToCode()
     {
-        return  '';// $this->data['cpCode'];
+        return  $this->data['cpCode'];
     }
     
     final public function  getApi()
@@ -130,8 +130,61 @@ class TmsWayBillGet
         
         $this->setSender($xml, $data['sender']);
         $this->addTrade($xml, $data['tradeOrderInfoDtos']);
-        return html_entity_decode($xml->saveXML(), ENT_NOQUOTES, 'UTF-8');
-
+        $str = <<<ET
+        <request>
+    <cpCode>EMS</cpCode>
+    <sender>
+        <address>
+            <detail>良睦路999号</detail>
+			<district>余杭区</district>
+			<city>杭州市</city>
+			<province>浙江省</province>
+        </address>
+        <mobile>1326443654</mobile>
+        <name>Bar</name>
+        <phone>057123222</phone>
+    </sender>
+    <tradeOrderInfoDtos>
+            <tradeOrderInfoDto>
+                
+                <objectId>1</objectId>
+                <orderInfo>
+                    <orderChannelsType>TB</orderChannelsType>
+                    <tradeOrderList>
+                            <tradeOrder>ssas</tradeOrder>
+                    </tradeOrderList>
+                </orderInfo>
+                <packageInfo>
+                    <id>1</id>
+                    <items>
+                            <item>
+                                <count>1</count>
+                                <name>衣服</name>
+                            </item>
+                    </items>
+                    <volume>1</volume>
+                    <weight>1</weight>
+                </packageInfo>
+                <recipient>
+                    <address>
+                        <city>北京市</city>
+                        <detail>花家地社区卫生服务站</detail>
+                        <district>朝阳区</district>
+                        <province>北京</province>
+                        <town>望京街道</town>
+                    </address>
+                    <mobile>1326443654</mobile>
+                    <name>Bar</name>
+                    <phone>057123222</phone>
+                </recipient>
+                <templateUrl>http://cloudprint.cainiao.com/template/standard/701/114</templateUrl>
+                <userId>12</userId>
+            </tradeOrderInfoDto>
+    </tradeOrderInfoDtos>
+</request>
+ET;
+        return  str_replace(["\t","\n","\r","\0","\x0B"," "], "", trim($str));
+/*         return trim(str_replace('<?xml version="1.0"?>','',html_entity_decode($xml->saveXML(), ENT_NOQUOTES, 'UTF-8'))) ;*/
     }
     
     public function setSender($xml, $data)

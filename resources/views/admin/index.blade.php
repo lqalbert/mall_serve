@@ -28,9 +28,10 @@
 //     } 
    </script>-->
     <!-- Scripts -->
-	<script type="text/javascript" src="/admin/static1.1.48/js/manifest.e7941157b80a2c35afb1.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.48/js/vendor.164fa7391e517c2439f8.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.48/js/babel-polyfill.b70aa46778028066d797.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.48/js/app.da1ffe6a8d8110df0cbf.js"></script>
+    
+	<script type="text/javascript" src="/admin/static1.1.37/js/manifest.4b661d7c78ad1748ff21.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.37/js/vendor.0c122c06ebcaba843bc4.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.37/js/babel-polyfill.9e41b68c2bb89c9472cf.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.37/js/app.109fc0f60d3c46bb5a44.js"></script>
 </body>
 </html>

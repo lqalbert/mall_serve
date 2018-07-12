@@ -18,11 +18,11 @@ return [
 				'icon'=>null,
 				'subIndex'=>['Department','Group','Employee','Deposit']
 		],
-		// [
-		// 		'text'=>'客户管理',
-		// 		'icon'=>null,
-		// 		'subIndex'=>[]
-		// ],
+// 		[
+// 				'text'=>'客户管理',
+// 				'icon'=>null,
+// 				'subIndex'=>[]
+// 		],
 		[
 				'text' => '客户订单',
 				'icon'=>null,
