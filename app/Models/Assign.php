@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // use App\Events\AssignCreating;
 use Carbon\Carbon;
 use App\Events\AssignCreated;
+use App\Models\Scopes\IdDesc;
 
 class Assign extends Model
 {
@@ -173,5 +174,12 @@ class Assign extends Model
     {
         return self::withTrashed()->where('entrepot_id', $entrepot_id)
         ->lockForUpdate()->count();
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new IdDesc());
     }
 }

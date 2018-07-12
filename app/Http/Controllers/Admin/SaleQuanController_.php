@@ -35,25 +35,26 @@ class SaleQuanController extends Controller
         
         $sqlDoc=<<<ET
             select  __fields__
-            from ({$mainTableBuilder['sql']})  as main_table
-               
-                    
+            from ({$mainTableBuilder['sql']})  as main_table 
+                left join ({$trans_in['sql']}) as trans_in on main_table.{$groupBy} = trans_in.{$groupBy}
+                left join ({$trans_out['sql']}) as trans_out on main_table.{$groupBy} = trans_out.{$groupBy}
+            
 ET;
-        $sqlAppends = " order by {$orderField} {$orderWay} limit :pageSize offset {$offset} ";
-        $fiels = " main_table.*";
+        $sqlAppends = " order by :orderField {$orderWay} limit :limit offset :offset ";
+        $fiels = " main_table.*, IFNULL(trans_in.in_count,0), IFNULL(trans_out.out_count, 0) ";
         
-        //         $binds =  array_merge($trans_out['binds'] , array_merge( $trans_in['binds'], array_merge($mainTableBuilder['binds'], [$orderField, $orderWay, $pageSize, $offset])));
-        $binds =  array_merge($mainTableBuilder['binds'],$trans_in['binds'], $trans_out['binds']);  // , [$orderField, $pageSize, $offset]
+//         $binds =  array_merge($trans_out['binds'] , array_merge( $trans_in['binds'], array_merge($mainTableBuilder['binds'], [$orderField, $orderWay, $pageSize, $offset]))); 
+        $binds =  array_merge($mainTableBuilder['binds'],$trans_in['binds'], $trans_out['binds']);  // , [$orderField, $pageSize, $offset] 
         
         
         $sqlCount  = str_replace('__fields__', "count(main_table.{$groupBy}) as c", $sqlDoc);
         $resultCount  = DB::connection('mysql_read')->select($sqlCount, $binds);
         $sql = str_replace('__fields__', $fiels, $sqlDoc) . $sqlAppends;
-        $result = DB::connection('mysql_read')->select($sql, array_merge($binds ,["pageSize"=>$pageSize]));
+        $result = DB::connection('mysql_read')->select($sql, array_merge($binds, ['orderField'=> $orderField, 'limit'=>$pageSize, 'offset'=>$offset] ));
         dd($result);
+         
         
-        
-        
+
         return [
             'items'=> $result,
             'total'=> $resultCount[0]->c
@@ -63,18 +64,26 @@ ET;
     
     private function getMainTableBuilder($start, $end, $groupBy, $request)
     {
-        
+
         $binds = [
-            'maintable_start'=>$start,
+            'maintable_start'=>$start, 
             'maintable_end'=>$end
         ];
-        //count(cba.id) as c_cus_count, count(cbb.id) as b_cus_count, IFNULL(ob.obcus_count, 0), IFNULL(ob.ob_count,0), count(cus.id) as track_count, 
+
         $sql=<<<ET
-        select count(cb.id) as cus_count, cu.{$groupBy}
-        from customer_basic as cb
+        select count(cb.id) as cus_count, count(cba.id) as c_cus_count, count(cbb.id) as b_cus_count, IFNULL(ob.obcus_count, 0), IFNULL(ob.ob_count,0), count(cus.id) as track_count, cu.{$groupBy}
+        from customer_basic as cb 
         inner join customer_user as cu on cb.id = cu.cus_id
+        left join  (select count( distinct cus_id) as obcus_count, count(id) as ob_count , order_basic.{$groupBy}
+                    from order_basic 
+                    where  order_basic.status>0 and order_basic.status<7 
+                    group by order_basic.{$groupBy} ) as ob on cu.{$groupBy} = ob.{$groupBy}
+        left join customer_basic as cba on cb.id = cba.id and cba.type = 'C'
+        left join customer_basic as cbb on cb.id = cbb.id and cbb.type = 'B'
+        left join customer_user as cus on cus.id = cu.id  and cus.last_track is not null
         where cu.type = 0
         and cb.created_at >= ':maintable_start'
+              and cb.created_at <= '$end'
               where_str_
               and cb.deleted_at is null
         group by cu.{$groupBy}
@@ -93,14 +102,14 @@ ET;
         $sql = str_replace('where_str_', $where_str_, $sql);
         
         return ['sql'=>$sql, 'binds'=>['maintable_start'=>$start]];
-        
+              
     }
     
     public function getTransIn($start, $end, $groupBy)
     {
         //转进来的
         $binds = [
-            'trans_in_start'=>$start,
+            'trans_in_start'=>$start, 
             'trans_in_end'=>$end
         ];
         $sql=<<<ET
@@ -112,14 +121,14 @@ ET;
 ET;
         return ['sql'=>$sql, 'binds'=>[]];
         
-        
+
     }
     
     public function getTransOut($start, $end, $groupBy)
     {
         //转出去的
         $binds = [
-            'trans_out_start' => $start,
+            'trans_out_start' => $start, 
             'trans_out_end' =>$end
         ];
         $sql=<<<ET
@@ -134,7 +143,7 @@ ET;
     
     
     
-    
+
     public function index_bak(Request $request){
         $start = $request->input('start')." 00:00:00";
         $end = $request->input('end')." 23:59:59";
@@ -142,25 +151,25 @@ ET;
         $pageSize = $request->input('pageSize', 15);
         $where = [
             ['cb.created_at','>=',$start],
-            ['cb.created_at','<=',$end]
+            ['cb.created_at','<=',$end] 
         ];
         if($request->has('department_id')){
             $department_id = $request->input('department_id');
             $where[] = ['cu.department_id','=',$department_id];
         }
-        
+
         if($request->has('group_id')){
             $group_id = $request->input('group_id');
             $where[] = ['cu.group_id','=',$group_id];
         }
-        
+
         $result = DB::table('customer_basic as cb')->select(
-            DB::raw('count(cb.id) as cus_count'),
-            DB::raw('count(cba.id) as c_cus_count'),
-            DB::raw('count(cbas.id) as b_cus_count'),
-            DB::raw('count(distinct ob.cus_id) as obcus_count'),
-            DB::raw('count(ob.id) as ob_count'),
-            DB::raw('count(cus.id) as track_count')
+                DB::raw('count(cb.id) as cus_count'),
+                DB::raw('count(cba.id) as c_cus_count'),
+                DB::raw('count(cbas.id) as b_cus_count'),
+                DB::raw('count(distinct ob.cus_id) as obcus_count'),
+                DB::raw('count(ob.id) as ob_count'),
+                DB::raw('count(cus.id) as track_count')
             )->addSelect('cu.department_name','cu.group_name','cu.user_name','cb.created_at','cu.department_id','cu.group_id','cu.user_id')
             ->join('customer_user as cu','cu.cus_id','=','cb.id')
             ->leftJoin('order_basic as ob','ob.cus_id','=','cb.id')
@@ -177,29 +186,29 @@ ET;
             ->where($where)->whereNull('cb.deleted_at')
             ->groupBy('cu.'.$groupBy)
             ->paginate($pageSize);
+        
+        $items = $result->getCollection();
+        $key = $groupBy;
+        if (!$items->isEmpty()) {
+            $keyValue = $items->pluck($key);
+        } else {
+            $keyValue = [-1];
+        }
+        
+        $this->setTrans($key, $keyValue, $start, $end, $items);
+        
             
-            $items = $result->getCollection();
-            $key = $groupBy;
-            if (!$items->isEmpty()) {
-                $keyValue = $items->pluck($key);
-            } else {
-                $keyValue = [-1];
-            }
-            
-            $this->setTrans($key, $keyValue, $start, $end, $items);
-            
-            
-            return [
-                'items'=> $items,
-                'total'=> $result->total()
-            ];
+        return [
+            'items'=> $items,
+            'total'=> $result->total()
+        ];
     }
     
     /**
-     *
+     * 
      */
     public function setTrans($groupBy, $values, $start, $end, $items)
-    {
+    {   
         //转进来的
         $userInSubQuery= DB::table('customer_user as a')->join('customer_user as b','a.cus_id','=','b.cus_id')
         ->whereIn('b.type',[1,2])
@@ -220,31 +229,31 @@ ET;
         $items->each(function($itm) use($inMap, $groupBy){
             $itm->trans_in =  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
         });
-            
-            //转出去的
-            $userOutSubQuery= DB::table('customer_user as a')->join('customer_user as b', 'a.cus_id','=','b.cus_id')
-            ->whereIn('b.type',[1,2])
-            ->whereIn('a.'.$groupBy, $values)
-            ->where([
-                ['a.deleted_at','>=',$start],
-                ['a.deleted_at','<=',$end]
-            ])->whereColumn('a.'.$groupBy,'!=','b.'.$groupBy)
-            ->select(DB::raw("count(a.id) as in_count"),"a.{$groupBy} as map_key")->groupby('a.'.$groupBy);
-            $outResult = $userOutSubQuery->get();
-            if (!$outResult->isEmpty()) {
-                $outMap = $outResult->mapWithKeys(function($item){
-                    return [$item->map_key => $item->in_count];
-                });
-            } else {
-                $outMap= collect([1]);
-            }
-            $items->each(function($itm) use($outMap, $groupBy){
-                $itm->trans_out =  $outMap->has($itm->{$groupBy}) ? $outMap->get($itm->{$groupBy}) : 0;
+        
+        //转出去的
+        $userOutSubQuery= DB::table('customer_user as a')->join('customer_user as b', 'a.cus_id','=','b.cus_id')
+        ->whereIn('b.type',[1,2])
+        ->whereIn('a.'.$groupBy, $values)
+        ->where([
+            ['a.deleted_at','>=',$start],
+            ['a.deleted_at','<=',$end]
+        ])->whereColumn('a.'.$groupBy,'!=','b.'.$groupBy)
+        ->select(DB::raw("count(a.id) as in_count"),"a.{$groupBy} as map_key")->groupby('a.'.$groupBy);
+        $outResult = $userOutSubQuery->get();
+        if (!$outResult->isEmpty()) {
+            $outMap = $outResult->mapWithKeys(function($item){
+                return [$item->map_key => $item->in_count];
             });
-                
-                
+        } else {
+            $outMap= collect([1]);
+        }
+        $items->each(function($itm) use($outMap, $groupBy){
+            $itm->trans_out =  $outMap->has($itm->{$groupBy}) ? $outMap->get($itm->{$groupBy}) : 0;
+        });
+        
+        
     }
-    
+
     public function index2(Request $request)
     {
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
@@ -253,7 +262,7 @@ ET;
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
         
-        //         DB::select('select sum(a.id) as cus_count from customer_basic as a where  created_at >= :start and ', ['start' => $start, 'end'=>$end]);
+//         DB::select('select sum(a.id) as cus_count from customer_basic as a where  created_at >= :start and ', ['start' => $start, 'end'=>$end]);
         //不能连接，只能单独查询
         //转进来的
         $userInSubQuery= DB::connection('mysql_read')->table('customer_user as a')->join('customer_user as b','a.cus_id','=','b.cus_id')
@@ -284,53 +293,53 @@ ET;
             DB::raw('count(c_cus.id) as c_cus_count'),//一般客户数量
             DB::raw('count(b_cus.id) as b_cus_count'), //意向客户数量
             DB::raw('count(user_track.id) as track_count')//跟踪数 ---//obcus_count 成交客户数    ob_count 成交单数
-            // DB::raw('count(user_in.id) as user_in_count'),
+           // DB::raw('count(user_in.id) as user_in_count'),
             //DB::raw('count(user_out.id) as user_out_count')
             )
-            ->addSelect(DB::raw('count(ob.id) as ob_count, count(distinct ob.cus_id) as obcus_count'))
-            ->addSelect('owner.department_name','owner.group_name','owner.user_name','cus_a.created_at')
-            ->join('customer_user as owner','cus_a.id','=','owner.cus_id')
-            ->leftJoin('order_basic as ob','cus_a.id','=','ob.cus_id')
-            ->join('customer_basic as c_cus', function($join){ // c 类型
-                $join->on('cus_a.id','=','c_cus.id')
+        ->addSelect(DB::raw('count(ob.id) as ob_count, count(distinct ob.cus_id) as obcus_count'))
+        ->addSelect('owner.department_name','owner.group_name','owner.user_name','cus_a.created_at')
+        ->join('customer_user as owner','cus_a.id','=','owner.cus_id')
+        ->leftJoin('order_basic as ob','cus_a.id','=','ob.cus_id')
+        ->join('customer_basic as c_cus', function($join){ // c 类型
+            $join->on('cus_a.id','=','c_cus.id')
                 ->where('c_cus.type','=','C');
-            },null,null,'left')
-            ->join('customer_basic as b_cus', function($join){ // b 类型
-                $join->on('cus_a.id','=','b_cus.id')
-                ->where('b_cus.type','=','B');
-            },null, null, 'left')
-            ->join('customer_user as user_track', function($join){ //跟踪数
-                $join->on('owner.id','=','user_track.id')
+        },null,null,'left')
+        ->join('customer_basic as b_cus', function($join){ // b 类型
+            $join->on('cus_a.id','=','b_cus.id')
+                 ->where('b_cus.type','=','B');
+        },null, null, 'left')
+        ->join('customer_user as user_track', function($join){ //跟踪数
+            $join->on('owner.id','=','user_track.id')
                 ->whereNotNull('user_track.last_track');
-            },null,null,'left')
-            //         ->from(DB::raw("({$userInSubQuery->toSql()}) as user_in"))
-                //->from("({$userOutSubQuery->toSql()}) as user_out")
-                ->where('owner.type',0)
-                ->where([
-                    ['cus_a.created_at','>=',$start],
-                    ['cus_a.created_at','<=',$end]
-                ])
-                //         ->where('user_in.'.$groupBy,'=','owner.'.$groupBy)
-                //->where('user_out.'.$groupBy,'=','owner.'.$groupBy)
-                ->whereNull('cus_a.deleted_at')
-                ->whereNull('owner.deleted_at')
-                //         ->mergeBindings($userInSubQuery)
-                //->mergeBindings($userOutSubQuery->getQuery())
-                ->groupBy('owner.'.$groupBy)
-                ->paginate($request->input('pageSize', 20));
-                // ->offset($offset)
-                // ->limit($pageSize)
-                // ->get();
-                
-                
-                
-                
-                return [
-                    'items'=> $result->items(),
-                    'total'=> $result->total()
-                ];
+        },null,null,'left')
+//         ->from(DB::raw("({$userInSubQuery->toSql()}) as user_in"))
+        //->from("({$userOutSubQuery->toSql()}) as user_out")
+        ->where('owner.type',0)
+        ->where([
+            ['cus_a.created_at','>=',$start],
+            ['cus_a.created_at','<=',$end]  
+        ])
+//         ->where('user_in.'.$groupBy,'=','owner.'.$groupBy)
+        //->where('user_out.'.$groupBy,'=','owner.'.$groupBy)
+        ->whereNull('cus_a.deleted_at')
+        ->whereNull('owner.deleted_at')
+//         ->mergeBindings($userInSubQuery)
+        //->mergeBindings($userOutSubQuery->getQuery())
+        ->groupBy('owner.'.$groupBy)
+        ->paginate($request->input('pageSize', 20));
+        // ->offset($offset)
+        // ->limit($pageSize)
+        // ->get();
+        
+
+        
+        
+        return [
+            'items'=> $result->items(),
+            'total'=> $result->total()
+        ];
     }
-    
+
     /**
      * 例子
      */
@@ -348,15 +357,15 @@ ET;
             'db.group_name',
             'db.department_name'
             )
-            ->leftJoin('order_after','db.id','=','order_after.order_id')
-            ->where([
-                ['db.created_at','>=', $start],
-                ['db.created_at','<=', $end],
-            ])->groupBy('db.user_id')->get();
-            
-            return [
-                'items'=>$result,
-                'total'=>0
-            ];
+        ->leftJoin('order_after','db.id','=','order_after.order_id')
+        ->where([
+            ['db.created_at','>=', $start],
+            ['db.created_at','<=', $end],
+        ])->groupBy('db.user_id')->get();
+        
+        return [
+            'items'=>$result,
+            'total'=>0
+        ];
     }
 }

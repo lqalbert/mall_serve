@@ -72,7 +72,7 @@ return [
             //'collation' => 'utf8mb4_unicode_ci',
             'collation' => 'utf8_general_ci',
             'prefix' => '',
-//             'strict' => true,
+            'strict' => false,
             'engine' => 'InnoDB',
         ],
 
