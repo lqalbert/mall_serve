@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
             
             
             
-            Log::debug('[sql]', ['sql'=>str_replace(array_keys($query->bindings), array_values($query->bindings), $query->sql), 'bindings'=>$query->bindings, 'time'=>$query->time, 'connection'=>$query->connectionName]);
+            Log::debug('[sql]', ['sql'=>$query->sql, 'bindings'=>$query->bindings, 'time'=>$query->time, 'connection'=>$query->connectionName]);
         });
     }
 
