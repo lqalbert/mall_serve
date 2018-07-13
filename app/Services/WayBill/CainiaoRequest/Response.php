@@ -15,7 +15,11 @@ class Response
             
     }
     
-    
+    /**
+     * 简单的工厂 这里可以用反射的方式实现
+     * @param unknown $class
+     * @throws \Exception
+     */
     public function setBackClass($class)
     {
         logger("[response]", [$class]);

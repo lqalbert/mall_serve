@@ -225,7 +225,9 @@ class AssignController extends Controller
     }
     
     /**
-     * @todo 事件处理　操作记录
+     * 审核
+     * 
+     * @todo 事件处理　操作记录 
      * @param Request $request
      * @param unknown $id
      * @return number[]|string[]|NULL[]
@@ -408,7 +410,10 @@ class AssignController extends Controller
             if(!$per){
                 throw new  \Exception('纸箱获取失败,未设置纸箱比例');
             }
-            $carton = CartonManagement::where('carton_volume','>=',$goodsVolume/$per->volume_ratio)
+            $carton = CartonManagement::where([ 
+                ['carton_volume','<=',$goodsVolume/$per->volume_ratio * 100],
+                ['carton_volume','<',$goodsVolume ]                
+            ])
                                         ->orderBy('carton_volume')->first();
             if(!$carton){
                 throw new  \Exception('获取纸箱型号失败！');

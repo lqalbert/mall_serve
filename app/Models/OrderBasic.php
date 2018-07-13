@@ -184,7 +184,7 @@ class OrderBasic extends Model
      */
     public function isPass()
     {
-        return $this->attributes['status'] >= 1 ;
+        return $this->status >= 1 ;
     }
     
     public function isSetExpress()

@@ -36,8 +36,8 @@ class System
         try{
             foreach ($products as $product) {
                 if ($this->model->hasOneBySkuSn($entrepot_id, $product->getSkuSn())) {
-                    $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
-                        [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                    $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?, produce_in = produce_in + ?',
+                        [ $product->getNum(), $product->getNum(),$product->getNum(),$entrepot_id, $product->getSkuSn() ]);
                 } else {
                     $this->model->fill([
                         'entrepot_id'  => $entrepot_id,

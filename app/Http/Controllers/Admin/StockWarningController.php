@@ -40,7 +40,7 @@ class StockWarningController extends Controller
         $result = $model->paginate($request->input('pageSize', 15));
         
         $collection = $result->getCollection();
-        $collection->load('goods', 'entrepot');
+        $collection->load('entrepot'); //'goods', 
         
         $re = $collection->toArray();
         

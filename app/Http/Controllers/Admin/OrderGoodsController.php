@@ -49,7 +49,7 @@ class OrderGoodsController extends Controller
         DB::beginTransaction();
         try {
             $orderCheck = OrderBasic::find($request->order_id)->isPass();
-            if(!$orderCheck){
+            if($orderCheck){
                 return $this->error([], "审核未通过或未审核不能更新");
             }
 
@@ -58,8 +58,13 @@ class OrderGoodsController extends Controller
             
             $deta_num = $model->getNum() - $data['goods_number'];
             if ($deta_num != 0) {
-                $model->goods_number = $deta_num;
-                $service->saleLock( $model->order->entrepot, [$model], $request->user());
+                $model->goods_number = -$deta_num;
+                if ($model->goods_number > 0) {
+                    $service->saleLock( $model->order->entrepot, [$model], $request->user());;
+                } else {
+                    $service->saleUnLock( $model->order->entrepot, [$model], $request->user());
+                }
+                
                 $model->goods_number = $data['goods_number'];
             }
             
@@ -67,7 +72,7 @@ class OrderGoodsController extends Controller
                 $model->remark == $data['remark'];
             }
             $model->save();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());
         }

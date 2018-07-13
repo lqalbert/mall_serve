@@ -144,6 +144,16 @@ return [
         'Contacts',
         'Website',
     ],
+    'finance'=>[
+        'SalesPerformance',
+        'SalesQuantization',
+        'Workbench',
+        'SysNotice',
+        'Contacts',
+        'Website',
+        'WarehousingProcess',
+        'PurchaseList'
+    ],
     
     // 隐藏的角色
     'group-member' => [],

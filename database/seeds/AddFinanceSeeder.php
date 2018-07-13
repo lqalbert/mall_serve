@@ -14,7 +14,7 @@ class AddFinanceSeeder extends Seeder
     {
         $administrator = new Role();
         $administrator->name = 'finance';
-        $administrator->display_name = '财务';
+        $administrator->display_name = '财务总监';
         $administrator->description = '财务角色';
         $administrator->save();
     }
