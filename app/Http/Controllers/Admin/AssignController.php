@@ -412,7 +412,7 @@ class AssignController extends Controller
             }
             $carton = CartonManagement::where([ 
                 ['carton_volume','<=',$goodsVolume/$per->volume_ratio * 100],
-                ['carton_volume','<',$goodsVolume ]                
+                ['carton_volume','>',$goodsVolume ]                
             ])
                                         ->orderBy('carton_volume')->first();
             if(!$carton){
