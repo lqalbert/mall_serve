@@ -90,7 +90,7 @@ class AssignController extends Controller
         ];
         
         $requestParams= $request->all();
-        
+//        var_dump($requestParams);die;
         if (array_merge($assign, $requestParams)) {
             foreach ($this->fieldEqual as  $value) {
                 if ($request->has($value)) {
@@ -104,7 +104,11 @@ class AssignController extends Controller
         $this->repository->pushCriteria(new FieldEqualLessThan('is_repeat', $is_repeat));
         
         if ($request->has('range')) {
-            $field = $request->input('auto_field', 'created_at');
+            $range = $request->input('range');
+            $field = 'created_at';
+            if($request->has('auto_field')){
+                $field = $request->input('auto_field', 'created_at');
+            }
             $this->repository->pushCriteria(new DateRange($range, $field));
         } 
         
@@ -399,7 +403,7 @@ class AssignController extends Controller
      * @param Request $request
      * @return number[]|string[]|NULL[]
      */
-    public function goodsPrint(Request $request)
+    public function goodsPrint(Request $request,$id)
     {
         $assign = Assign::find($id);
         $assign->updateAssignPrintStatus();

@@ -11,6 +11,7 @@ class OrderBasic extends Model
 {
     use SoftDeletes;
     
+    CONST UN_CHECKED =0;
     CONST WATI_TO_CHANGR =2;
     CONST CANCEL = 5;
     

@@ -16,68 +16,58 @@ class SalesPerformanceController extends Controller
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
-        $where1 = [];
-        $where[]=['order_basic.created_at','>=', $start];
-        $where[]=['order_basic.created_at','<=', $end];
-        $where1[]=['order_after.created_at','>=', $start];
-        $where1[]=['order_after.created_at','<=', $end];
-        $where1[]=['order_after.status','=', 1];
+        $where[]=['db.created_at','>=', $start];
+        $where[]=['db.created_at','<=', $end];
         if($request->has('department_id')){
-            $where[]=['order_basic.department_id','=', $request->input('department_id')];
+            $where[]=['db.department_id','=', $request->input('department_id')];
         }
         if($request->has('group_id')){
-            $where[]=['order_basic.group_id','=', $request->input('group_id')];
+            $where[]=['db.group_id','=', $request->input('group_id')];
         }
-        //获取满足查询条件的退款金
-        $refunds = OrderBasic::select(
-                DB::raw('sum(order_after.fee) as refund'),
-                'order_basic.department_id',
-                'order_basic.group_id',
-                'order_basic.user_id'
-            )
-            ->leftJoin('order_after','order_basic.id','=','order_after.order_id')
-            ->where($where1)->groupBy('order_basic.'.$groupBy)->get()->toArray();
 //        if($request->input($groupBy)){
 //            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
 //        }
-        $builder = OrderBasic::select(
-                DB::raw('count(distinct order_basic.cus_id) as cus_count'),
-                DB::raw('count(order_basic.id) as c_cus_count'),
+        $builder = DB::table('order_basic as db')
+            ->select(
+                DB::raw('count(distinct db.cus_id) as cus_count'),
+                DB::raw('count(db.id) as c_cus_count'),
                 DB::raw('sum(order_all_money) as all_pay'),
-                'order_basic.user_name',
-                'order_basic.group_name',
-                'order_basic.department_name',
-                'order_basic.department_id',
-                'order_basic.group_id',
-                'order_basic.user_id'
+
+                'db.user_name',
+                'db.group_name',
+                'db.department_name',
+                'db.department_id',
+                'db.group_id',
+                'db.user_id'
             )
             ->where($where)
-            ->whereNotIn('order_basic.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
-            ->groupBy('order_basic.'.$groupBy);
-        
-        if ($groupBy == 'department_id') {
-            $builder->join('department_basic','order_basic.department_id','=','department_basic.id')->addSelect('deposit');
-        }
-        $result = $builder-> paginate($pageSize)->toArray();
-        $result = $result['data'];
+            ->where([
+                ['db.status','>', OrderBasic::UN_CHECKED],
+                ['db.status','<', OrderBasic::ORDER_STATUS_7],
+            ])
+            ->groupBy('db.'.$groupBy);
 
-        foreach ($result as $k1=>$v1){
-            foreach ($refunds as $k2=>$v2){
-                if($groupBy=='department_id' && ($v1['department_id'] == $v2['department_id'])){
-                    $result[$k1]['refund'] = $v2['refund'];
-                }
-                if($groupBy=='group_id' && ($v1['group_id'] == $v2['group_id'])){
-                    $result[$k1]['refund'] = $v2['refund'];
-                }
-            }
+        if ($groupBy == 'department_id') {
+            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
         }
-//        return [
-//            'items'=>$result->items(),
-//            'total'=>$result->total()
-//        ];
+        $result = $builder->paginate($pageSize);
+
+
+
+        $items = $result->getCollection();
+        $key = $groupBy;
+        if (!$items->isEmpty()) {
+            $keyValue = $items->pluck($key);
+        } else {
+            $keyValue = [-1];
+        }
+
+        $this->setTrans($key, $keyValue, $start, $end, $items);
+
+
         return [
-            'items'=>$result,
-            'total'=>count($result)
+            'items'=> $items,
+            'total'=> $result->total()
         ];
     }
 
@@ -115,11 +105,42 @@ class SalesPerformanceController extends Controller
 //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
             ->leftJoin('order_address','order_address.order_id','=','db.id')
             ->where($where)
-            ->whereNotIn('db.status',[OrderBasic::ORDER_STATUS_7,OrderBasic::ORDER_STATUS_8])
-            ->paginate($pageSize);
+            ->where([
+                ['db.status','>', OrderBasic::UN_CHECKED],
+                ['db.status','<', OrderBasic::ORDER_STATUS_7],
+            ])
+            ->get();
         return [
-            'items'=>$result->items(),
-            'total'=>$result->total()
+            'items'=>$result,
+            'total'=>$result->count()
         ];
+    }
+
+    public function setTrans($groupBy, $keyValue, $start, $end, $items)
+    {
+        //退款金额
+        $userInSubQuery= DB::table('order_after as a')
+            ->join('order_basic as db','a.order_id','=','db.id')
+            ->where([
+                ['a.created_at','>=',$start],
+                ['a.created_at','<=',$end],
+                ['a.status','=',1]
+            ])->select(DB::raw("sum(a.fee) as fee"),"db.{$groupBy} as map_key")->groupby('db.'.$groupBy);
+        $inResult = $userInSubQuery->get();
+        if (!$inResult->isEmpty()) {
+            $inMap = $inResult->mapWithKeys(function($item){
+                return [$item->map_key => $item->fee];
+            });
+        } else {
+            $inMap = collect();
+        }
+        $items->each(function($itm) use($inMap, $groupBy){
+            if (!$inMap->isEmpty()) {
+                $itm->refund=  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
+            } else {
+                $itm->refund="0";
+            }
+
+        });
     }
 }
