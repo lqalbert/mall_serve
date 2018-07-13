@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
 class AssignController extends Controller
 {
     private $repository = null;
-    
+
     private $fieldEqual = [
         'entrepot_id',
         'assign_sn',
@@ -37,7 +37,7 @@ class AssignController extends Controller
         'order_id', //订单下面查询要用
 
     ];
-    
+
 //     private $fieldLike = [
 //         'goods_name',
 //         'sale_name',
@@ -46,7 +46,7 @@ class AssignController extends Controller
 //         'express_name',
 //         'user_name'
 //     ];
-    
+
     public function __construct(AssignRepository $repository)
     {
         $this->repository = $repository;
@@ -58,14 +58,14 @@ class AssignController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         //分成几类
-        
+
         //assign 本表的　发货单　箱类型　查询日期　range
         //order 表的　订单编号　订单金额　订单备注
         //order_address表的　收货人　收货手机　收货省份　收货城市
         //order_goods表　商品类型　
-        
+
         $assign = [
             'assign_sn',
             'corrugated_id',
@@ -73,9 +73,9 @@ class AssignController extends Controller
             'range',
             'status',
             'entrepot_id',
-            
+
         ];
-        
+
         $order = [
             'order_sn',
             'price_range', // 0 1 2 3 
@@ -88,9 +88,9 @@ class AssignController extends Controller
             'area_city_id'
         ];
         $goods = [
-          'cate_ids'  
+            'cate_ids'
         ];
-        
+
         $requestParams= $request->all();
         //忘了为什么这么写
         if (array_merge($assign, $requestParams)) {
@@ -100,32 +100,32 @@ class AssignController extends Controller
                 }
             }
         }
-        
-        
+
+
         $is_repeat = $request->input('is_repeat', 2);
         $this->repository->pushCriteria(new FieldEqualLessThan('is_repeat', $is_repeat));
-        
+
         if ($request->has('range')) {
             $field = $request->input('auto_field', 'created_at');
             $range = $request->input('range');
             $this->repository->pushCriteria(new DateRange($range, $field));
-        } 
-        
+        }
+
 
         if (array_merge($order, $requestParams)) {
             $this->repository->pushCriteria(new Order($request));
         }
-        
+
         if (array_merge($address, $requestParams)) {
             $this->repository->pushCriteria(new Address($request));
         }
-        
+
         if ($request->has('with')) {
             $this->repository->with($request->input('with'));
         }
-        
+
         $pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields',['*']));
-        
+
         if ($request->has('appends')) {
             $collection = ModelCollection::setAppends($pager->getCollection(), $request->input('appends'));
         } else {
@@ -140,7 +140,7 @@ class AssignController extends Controller
             'items' => $collection,
             'total' => $pager->total()
         ];
-        
+
         return $result;
     }
 
@@ -175,7 +175,7 @@ class AssignController extends Controller
     {
         //
     }
-    
+
     // public function showbyExpressSn(Request $request, $express_sn)
     // {
     //     $model = Assign::where('express_sn', $express_sn)->first();
@@ -211,7 +211,7 @@ class AssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $re = $this->repository->update($request->all(), $id);
 //         if ($request->has('sign_at')) {
 //             event(new Signatured(Assign::find($id)));
@@ -223,7 +223,7 @@ class AssignController extends Controller
         }
 
     }
-    
+
     /**
      * @todo 事件处理　操作记录
      * @param Request $request
@@ -242,13 +242,13 @@ class AssignController extends Controller
         $data['check_status'] = 1;
         $data['status'] = 1;
         unset($data['ids']);
-        
+
         $ids = $request->input('ids', []);
         $re = Assign::whereIn('id', $ids)->update($data);
         if ($re) {
             //处理面单请求
             //直接申请新的吧
-            
+
             $express = ExpressCompany::find($data['express_id']);
             $assigns = Assign::find($ids);
             $cmd = new TmsWayBillGet();
@@ -256,27 +256,27 @@ class AssignController extends Controller
             $re =  $service->send($cmd);
             //根据返回的re 来处理
             //成功要保存数据
-           if ($re['status'] == 1) { //成功
-               $cainiodata = $re['data'];
-               if (count($cainiodata) == 0) {
-                   return $this->error([],'面单获取失败:数量为0');
-               }
-               foreach ($cainiodata as $item) {
-                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
-               }
-           } else {
-               return $this->error([], '面单获取失败:'.$re['msg']);
-           }
-            
+            if ($re['status'] == 1) { //成功
+                $cainiodata = $re['data'];
+                if (count($cainiodata) == 0) {
+                    return $this->error([],'面单获取失败:数量为0');
+                }
+                foreach ($cainiodata as $item) {
+                    Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData']]);
+                }
+            } else {
+                return $this->error([], '面单获取失败:'.$re['msg']);
+            }
+
 //            Storage::disk('local')->put('waybill.json', json_encode($re));
             return $this->success([]);
         } else {
             return $this->error([],'aa');
         }
-        
+
     }
-    
-    
+
+
     /**
      * 返单
      * @todo 事件处理　操作记录
@@ -308,7 +308,7 @@ class AssignController extends Controller
                 $re = $assign->save();
                 break;
             case 3:
-                
+
 //                 $assign->corrugated_case = '';
 //                 $assign->corrugated_id = 0;
 //                 $assign->express_sn = '';
@@ -325,16 +325,16 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
-    
-    
+
+
     /**
-     * 拦截 toggle类型的操作 
+     * 拦截 toggle类型的操作
      * @todo 事件处理　操作记录
      * @param Request $request
      * @param unknown $id
      */
     public function stopOrder(Request $request, $id)
-    {   
+    {
         $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
         $assign->is_stop = $is_stop==0?1:0;
@@ -346,8 +346,8 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
-    
-    
+
+
     /**
      * 面单打印
      * @todo 事件处理　操作记录
@@ -365,7 +365,7 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
-    
+
     /**
      * @todo 事件处理　操作记录
      * @param Request $request
@@ -402,14 +402,14 @@ class AssignController extends Controller
                 $goodsVolume += $goods['width']*$goods['height']*$goods['len'];
                 $goodsWeight += $goods['goods_number']*$goods['weight']+$goods['goods_number']*$goods['bubble_bag'];
             }
-            
+
             $per = VolumeRatio::first(['volume_ratio']);
-            
+
             if(!$per){
                 throw new  \Exception('纸箱获取失败,未设置纸箱比例');
             }
             $carton = CartonManagement::where('carton_volume','>=',$goodsVolume/$per->volume_ratio)
-                                        ->orderBy('carton_volume')->first();
+                ->orderBy('carton_volume')->first();
             if(!$carton){
                 throw new  \Exception('获取纸箱型号失败！');
             }
@@ -432,7 +432,7 @@ class AssignController extends Controller
             DB::rollback();
             return  $this->error([], $e->getMessage());
         }
-        return $this->success([],$msg);  
+        return $this->success([],$msg);
     }
 
     public function showbyExpressSn(Request $request, $express_sn)
@@ -508,7 +508,7 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
-    
+
 
 
     /**
