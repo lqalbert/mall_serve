@@ -261,7 +261,7 @@ class OrderBasic extends Model
     
     public function getTypeTextAttribute()
     {
-        $map = ['销售订','内部订单','商城订单'];
+        $map = ['销售订单','内部订单','商城订单'];
         return $map[$this->type];
     }
 }

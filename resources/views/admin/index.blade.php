@@ -13,7 +13,7 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.1.52/css/app.1b57da5946e727eaeef34f39c9c49471.css" rel="stylesheet">
+    <link href="/admin/static1.1.53/css/app.e2809f86738596566b34010757127d9a.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -28,9 +28,9 @@
 //     } 
    </script>-->
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static1.1.52/js/manifest.30e0a9728eb7b0908f07.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.52/js/vendor.164fa7391e517c2439f8.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.52/js/babel-polyfill.b70aa46778028066d797.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.52/js/app.206989aff54f7ef8f3a4.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.53/js/manifest.444cb07725b258d0b604.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.53/js/vendor.164fa7391e517c2439f8.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.53/js/babel-polyfill.b70aa46778028066d797.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.53/js/app.206989aff54f7ef8f3a4.js"></script>
 </body>
 </html>
