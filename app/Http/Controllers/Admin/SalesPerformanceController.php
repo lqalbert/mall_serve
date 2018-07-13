@@ -32,7 +32,7 @@ class SalesPerformanceController extends Controller
 //            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
 //        }
         //退款尝试用子查询 如果加 group_id = x  department_id=y 这种可能会更快
-        $refundQuery = DB::connection('mysql_read')->table('order_after as oa')
+        $refundQuery = DB::table('order_after as oa')
                                                    ->join('order_basic as ob','oa.order_id','=', 'ob.id')
                                                    ->select('oa.fee',"ob.{$groupBy} as map_key")
                                                   ->where([
@@ -41,7 +41,7 @@ class SalesPerformanceController extends Controller
                                                       ['oa.status','>=',1]
                                                   ]);
         
-        $builder = DB::connection('mysql_read')->table('order_basic as db')
+        $builder = DB::table('order_basic as db')
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
