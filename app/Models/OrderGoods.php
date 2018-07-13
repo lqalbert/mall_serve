@@ -82,9 +82,14 @@ class OrderGoods extends Model implements GoodsContracts
         $this->status = self::STATUS_EXCHANGE;
     }
     
-    //多对多
-    public function category()
+    
+    public function goods()
     {
-        return $this->belongsToMany('App\Models\Category', 'goods_categories', 'goods_id', 'cate_id');
+        return $this->belongsTo('App\Models\Goods',  'goods_id')->select('id')->with('category');
+    }
+    
+    public function getCategoryAttribute()
+    {
+        return $this->goods->category;
     }
 }

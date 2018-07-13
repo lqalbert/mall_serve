@@ -7,6 +7,7 @@ use App\Repositories\Criteria\Ordergoods\Ordergoods;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\Ordergoods\Enterpot;
 use App\Repositories\Criteria\Ordergoods\DateRange;
+use App\Alg\ModelCollection;
 class OrdergoodsService
 {
     /**
@@ -69,6 +70,9 @@ class OrdergoodsService
         $result = $this->repository->paginate();
         $collection = $result->getCollection();
         
+        if ($this->request->has('appends')) {
+            ModelCollection::setAppends($collection, $this->request->input('appends'));
+        }
         
         
         if ($this->request->has('load')) {
