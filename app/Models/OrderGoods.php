@@ -85,7 +85,6 @@ class OrderGoods extends Model implements GoodsContracts
     //多对多
     public function category()
     {
-        //->withTimestamps()
         return $this->belongsToMany('App\Models\Category', 'goods_categories', 'goods_id', 'cate_id');
     }
 }
