@@ -411,8 +411,7 @@ class AssignController extends Controller
                 throw new  \Exception('纸箱获取失败,未设置纸箱比例');
             }
             $carton = CartonManagement::where([ 
-                ['carton_volume','<=',$goodsVolume/$per->volume_ratio * 100],
-                ['carton_volume','>',$goodsVolume ]                
+                ['carton_volume','>=',$goodsVolume/$per->volume_ratio * 100]           
             ])
                                         ->orderBy('carton_volume')->first();
             if(!$carton){
