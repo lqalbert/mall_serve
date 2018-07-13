@@ -101,7 +101,7 @@ class ExpressReceiveController extends Controller
     {
         $data = $request->all();
 
-       $re = $this->model->where('id',$id)->update($data);
+        $re = $this->model->where('id',$id)->update($data);
         if($re){
             return $this->success([]);
         }else{

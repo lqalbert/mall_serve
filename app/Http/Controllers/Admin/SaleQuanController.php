@@ -43,8 +43,8 @@ ET;
         $sqlAppends = " order by {$orderField} {$orderWay} limit {$pageSize} offset {$offset} ";
         $fiels = " main_table.*, IFNULL(trans_in.in_count,0) as in_count, IFNULL(trans_out.out_count, 0) as out_count ";
 
-//         $binds =  array_merge($trans_out['binds'] , array_merge( $trans_in['binds'], array_merge($mainTableBuilder['binds'], [$orderField, $orderWay, $pageSize, $offset]))); 
-        $binds =  array_merge($mainTableBuilder['binds'], $trans_in['binds'],  $trans_out['binds']);  // , [$orderField, $pageSize, $offset] 
+//         $binds =  array_merge($trans_out['binds'] , array_merge( $trans_in['binds'], array_merge($mainTableBuilder['binds'], [$orderField, $orderWay, $pageSize, $offset])));
+        $binds =  array_merge($mainTableBuilder['binds'], $trans_in['binds'],  $trans_out['binds']);  // , [$orderField, $pageSize, $offset]
         logger('[binds]', $binds);
 
         $sqlCount  = str_replace('__fields__', "count(main_table.{$groupBy}) as c", $sqlDoc);
