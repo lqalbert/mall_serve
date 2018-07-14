@@ -18,15 +18,6 @@
 <body>
     <div id="app">
     </div>
-<!-- 	<script> 
-// 	//给IE10的 上面的 条件注释在IE10以上的浏览器不起作用了y
-//     if(isIE = navigator.userAgent.indexOf("MSIE")!=-1) { 
-//         var h = document.getElementsByTagName('head');
-//         var scr = document.createElement('script');
-//         scr.setAttribute('src', 'https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js');
-//         h[0].appendChild(scr);
-//     } 
-   </script>-->
     <!-- Scripts -->
     <script type="text/javascript" src="/admin/static1.1.53/js/manifest.444cb07725b258d0b604.js"></script>
     <script type="text/javascript" src="/admin/static1.1.53/js/vendor.164fa7391e517c2439f8.js"></script>

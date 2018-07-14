@@ -43,10 +43,10 @@ class InventorySystem extends Model
         'entry_at'
     ];
     
-    public function goods()
-    {
-        return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
-    }
+//     public function goods()
+//     {
+//         return $this->belongsTo('App\Models\EntrepotProductCategory', 'sku_sn', 'sku_sn');
+//     }
     
     public function entrepot()
     {
@@ -63,7 +63,15 @@ class InventorySystem extends Model
         return $this->belongsTo('App\Models\StockCheckGoods', 'sku_sn','sku_sn');
     }
     
+    public function goods()
+    {
+        return $this->belongsTo('App\Models\Goods',  'sku_sn', 'sku_sn')->select('id')->with('category');
+    }
     
+    public function getCategoryAttribute()
+    {
+        return $this->goods ? $this->goods->category : [] ;
+    }
  
     
     /**

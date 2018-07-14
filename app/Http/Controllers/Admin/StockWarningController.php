@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\InventorySystem;
+use App\Alg\ModelCollection;
 
 class StockWarningController extends Controller
 {
@@ -41,6 +42,11 @@ class StockWarningController extends Controller
         
         $collection = $result->getCollection();
         $collection->load('entrepot'); //'goods', 
+        
+        if ($request->has('appends')) {
+            ModelCollection::setAppends($collection, $request->input('appends'));
+        }
+        
         
         $re = $collection->toArray();
         
