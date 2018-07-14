@@ -14,13 +14,13 @@ class SaleQuanController extends Controller
      * @return unknown[]|NULL[]
      */
     public function index(Request $request){
-        $start = $request->input('start')." 00:00:00";
-        $end = $request->input('end')." 23:59:59";
-        $groupBy = $request->input('type');
-        $pageSize = $request->input('pageSize', 15);
-        $page = $request->input('page',1);
-        $orderField = $request->input('orderField','cus_count');
-        $orderWay  = $request->input('orderWay','desc');
+        $start = mysqli_escape_string($request->input('start')." 00:00:00") ;
+        $end = mysqli_escape_string($request->input('end')." 23:59:59");
+        $groupBy = mysqli_escape_string($request->input('type'));
+        $pageSize = mysqli_escape_string( $request->input('pageSize', 15) );
+        $page = mysqli_escape_string( $request->input('page',1) );
+        $orderField = mysqli_escape_string( $request->input('orderField','cus_count') );
+        $orderWay  = mysqli_escape_string( $request->input('orderWay','desc') );
         $offset = ($page - 1) * $pageSize;
         
         if (!in_array($orderWay, ['asc','desc'])) {
@@ -28,7 +28,7 @@ class SaleQuanController extends Controller
         }
         
         
-        //似乎是严重的bug 参数只能有一个
+        //似乎是严重的bug 参数只能有一个 $end 大于今天 就要出错
         $mainTableBuilder = $this->getMainTableBuilder($start, $end ,$groupBy, $request);
         $trans_in = $this->getTransIn($start, $end, $groupBy);
         $trans_out = $this->getTransOut($start, $end, $groupBy);
@@ -86,7 +86,7 @@ ET;
         left join customer_basic as cbb on cb.id = cbb.id and cbb.type = 'B'
         left join customer_user as cus on cus.id = cu.id  and cus.last_track is not null
         where cu.type = 0
-        and   cb.created_at >= ':maintable_start'
+        and   cb.created_at >= '{$start}'
               and cb.created_at <= '$end'
               where_str_
               and cb.deleted_at is null
@@ -120,7 +120,7 @@ ET;
             select count(b.id) as in_count , b.`{$groupBy}`
             from customer_user as a
             inner join customer_user as b on a.cus_id = b.cus_id
-            where  b.`{$groupBy}` != a.`{$groupBy}`  and b.created_at >= ':trans_in_start' and b.created_at <= '$end' and   (b.type=1 or b.type=2)
+            where  b.`{$groupBy}` != a.`{$groupBy}`  and b.created_at >= '{$start}' and b.created_at <= '$end' and   (b.type=1 or b.type=2)
             group by b.`{$groupBy}`
 ET;
         return ['sql'=>$sql, 'binds'=>$binds];
@@ -139,7 +139,7 @@ ET;
             select count(a.id) as out_count , a.`{$groupBy}`
             from customer_user as a
             inner join customer_user as b on a.cus_id = b.cus_id
-            where a.`{$groupBy}` != b.`{$groupBy}` and a.deleted_at >= ':trans_out_start' and a.deleted_at <= '$end' and  (b.type=1 or b.type=2)
+            where a.`{$groupBy}` != b.`{$groupBy}` and a.deleted_at >= '{$start}' and a.deleted_at <= '$end' and  (b.type=1 or b.type=2)
             group by b.`{$groupBy}`
 ET;
         return ['sql'=>$sql, 'binds'=>$binds];
