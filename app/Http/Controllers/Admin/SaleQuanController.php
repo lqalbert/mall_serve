@@ -14,17 +14,39 @@ class SaleQuanController extends Controller
      * @return unknown[]|NULL[]
      */
     public function index(Request $request){
-        $start = mysqli_escape_string($request->input('start')." 00:00:00") ;
-        $end = mysqli_escape_string($request->input('end')." 23:59:59");
-        $groupBy = mysqli_escape_string($request->input('type'));
-        $pageSize = mysqli_escape_string( $request->input('pageSize', 15) );
-        $page = mysqli_escape_string( $request->input('page',1) );
-        $orderField = mysqli_escape_string( $request->input('orderField','cus_count') );
-        $orderWay  = mysqli_escape_string( $request->input('orderWay','desc') );
+        $start = $request->input('start')." 00:00:00";
+        $end = $request->input('end')." 23:59:59";
+        $groupBy = $request->input('type');
+        $pageSize = intval($request->input('pageSize', 15)) ;
+        $page = intval($request->input('page',1));
+        $orderField = $request->input('orderField','cus_count');
+        $orderWay  = $request->input('orderWay','desc');
         $offset = ($page - 1) * $pageSize;
         
         if (!in_array($orderWay, ['asc','desc'])) {
-            return $this->error([], '参数出错');
+//             return $this->error([], '参数出错');
+            throw new \Exception('参数出错1');
+        }
+        
+        if (!in_array($groupBy, ['user_id','group_id', 'department_id'])) {
+            throw new \Exception('参数出错2');
+        }
+        
+        if (!in_array($groupBy, ['user_id','group_id', 'department_id'])) {
+            throw new \Exception('参数出错3');
+        }
+        
+        if (!in_array($orderField, ['cus_count','obcus_count','ob_count','c_cus_count','b_cus_count', 'track_count','in_count','out_count'])) {
+            throw new \Exception('参数出错4');
+        }
+        
+        $preg = '/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}$/';
+        if (preg_match($preg, $start) == 0) {
+            throw new \Exception('参数出错5');
+        }
+        
+        if (preg_match($preg, $end) == 0) {
+            throw new \Exception('参数出错6');
         }
         
         
@@ -48,9 +70,9 @@ ET;
         logger('[binds]', $binds);
         
         $sqlCount  = str_replace('__fields__', "count(main_table.{$groupBy}) as c", $sqlDoc);
-        $resultCount  = DB::select($sqlCount, $binds);
+        $resultCount  = DB::connection('mysql_read')->select($sqlCount, $binds);
         $sql = str_replace('__fields__', $fiels, $sqlDoc) . $sqlAppends;
-        $result = DB::select($sql, $binds);
+        $result = DB::connection('mysql_read')->select($sql, $binds);
         
         
 
