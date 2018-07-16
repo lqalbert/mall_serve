@@ -95,7 +95,7 @@ class CartonManagementController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $data['carton_volume'] = $long*$wide*$high;
+        $data['carton_volume'] = $data['carton_high'] * $data['carton_long'] * $data['carton_wide'];
         $re=$this->model->where('id',$id)->update($data);
         if ($re) {
             return $this->success($re);
