@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Repositories\EmployeeRepository;
@@ -95,6 +94,9 @@ class EmployeeController extends Controller
             			'total' => $pager->total()
             	];
             	break;
+            case 'user-department':
+                $result = $this->getUserDepartment($request);
+                break;
             default:
                 $result = $this->service->get();
         }
@@ -252,4 +254,31 @@ class EmployeeController extends Controller
     		return $this->error($re,'修改失败');
     	}
     }
+
+
+    /**
+     * [getUserDepartment 获取员工和所属部门信息]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getUserDepartment(Request $request){
+        $id = $request->input('id');
+        $fields = $request->input('fields');
+        $user = User::where('id',$id)->select($fields)->first();
+        $user->load('department');
+        if(!$user->department->manager_id){
+            throw new \Exception("無法找到部門經理");
+        }
+        $manager = User::where('id',$user->department->manager_id)
+            ->select('account as m_account','qq as m_qq','mobilephone as m_mobilephone')->first();
+        
+        $result = collect($user)->merge($manager);
+
+        return [$result->all()];
+    }
+
+
+
+
+
 }
