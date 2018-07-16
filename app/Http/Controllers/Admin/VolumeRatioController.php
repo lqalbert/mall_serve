@@ -19,7 +19,7 @@ class VolumeRatioController extends Controller
      */
     public function index()
     {
-        $data = $this->model->first()->toArray();
+        $data = $this->model->first();
         return ['items' => $data];
     }
 
