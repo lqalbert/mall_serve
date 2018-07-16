@@ -35,6 +35,10 @@ class OrderlistService
             // $where[]=['id','=',$this->request->id];
             $this->repository->pushCriteria(new FieldEqual('id', $this->request->id));
         }
+        if ($this->request->has('cus_id')) {
+            // $where[]=['id','=',$this->request->id];
+            $this->repository->pushCriteria(new FieldEqual('cus_id', $this->request->cus_id));
+        }
         if ($this->request->has('sn')) {
         	// $where[]=['order_sn','like',$this->request->sn."%"];
             $this->repository->pushCriteria(new FieldLike('order_sn', $this->request->sn));
