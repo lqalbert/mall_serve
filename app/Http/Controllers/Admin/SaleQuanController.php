@@ -70,11 +70,9 @@ ET;
         logger('[binds]', $binds);
         
         $sqlCount  = str_replace('__fields__', "count(main_table.{$groupBy}) as c", $sqlDoc);
-        $resultCount  = DB::connection('mysql_read')->select($sqlCount, $binds);
+        $resultCount  = DB::select($sqlCount, $binds);
         $sql = str_replace('__fields__', $fiels, $sqlDoc) . $sqlAppends;
-        $result = DB::connection('mysql_read')->select($sql, $binds);
-        
-        
+        $result = DB::select($sql, $binds);
 
         return [
             'items'=> $result,
