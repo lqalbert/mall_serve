@@ -39,7 +39,7 @@ class System
                     $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?, produce_in = produce_in + ?',
                         [ $product->getNum(), $product->getNum(),$product->getNum(),$entrepot_id, $product->getSkuSn() ]);
                 } else {
-                    $this->model->fill([
+                    $re = $this->model->fill([
                         'entrepot_id'  => $entrepot_id,
                         'sku_sn'       => $product->getSkuSn(),
                         'goods_name'   => $product->getName(),
@@ -47,10 +47,16 @@ class System
                         'saleable_count' => $product->getNum(),
                     ])->save();
                     
+                    //模拟成功
+                    if ($re) {
+                        $affectedRows += 1;
+                    }
+                    
                 }
                 
                 
             }
+            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -74,6 +80,7 @@ class System
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -99,6 +106,8 @@ class System
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
 //             DB::commit();
+            $this->updateIsSuccess($affectedRows);
+            
         } catch (\Exception $e) {
 //             DB::rollBack();
             throw $e;
@@ -128,6 +137,7 @@ class System
                 $affectedRows += $this->updates('set  sale_lock = sale_lock '.$oper.' ? , assign_lock = assign_lock '.$oper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -151,6 +161,7 @@ class System
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -172,6 +183,7 @@ class System
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -197,6 +209,7 @@ class System
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
             //             DB::commit();
         } catch (\Exception $e) {
             //             DB::rollBack();
@@ -221,6 +234,7 @@ class System
                 $affectedRows += $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , exchange_lock = exchange_lock '.$lockoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
+            $this->updateIsSuccess($affectedRows);
             //             DB::commit();
         } catch (\Exception $e) {
             //             DB::rollBack();
@@ -228,5 +242,17 @@ class System
         }
         
         return $affectedRows;
+    }
+    
+    /**
+     * 
+     * @param unknown $affectedRows
+     * @throws \Exception
+     */
+    private function updateIsSuccess($affectedRows)
+    {
+        if ($affectedRows == 0) {
+            throw new \Exception('库存操作失败');
+        }
     }
 }

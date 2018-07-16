@@ -48,7 +48,8 @@ class OrderGoodsController extends Controller
     {
         DB::beginTransaction();
         try {
-            $orderCheck = OrderBasic::find($request->order_id)->isPass();
+            $orderModel = OrderBasic::find($request->order_id);
+            $orderCheck = $orderModel->isPass();
             if($orderCheck){
                 return $this->error([], "审核未通过或未审核不能更新");
             }
@@ -60,9 +61,9 @@ class OrderGoodsController extends Controller
             if ($deta_num != 0) {
                 $model->goods_number = -$deta_num;
                 if ($model->goods_number > 0) {
-                    $service->saleLock( $model->order->entrepot, [$model], $request->user());;
+                    $service->saleLock( $orderModel->entrepot, [$model], $request->user());;
                 } else {
-                    $service->saleUnLock( $model->order->entrepot, [$model], $request->user());
+                    $service->saleUnLock( $orderModel->entrepot, [$model], $request->user());
                 }
                 
                 $model->goods_number = $data['goods_number'];
@@ -71,7 +72,13 @@ class OrderGoodsController extends Controller
             if ($model->remark != $data['remark']) {
                 $model->remark == $data['remark'];
             }
-            $model->save();
+            $re = $model->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            } 
+            
+            $this->updateOrderMoney($orderModel);
+            
         } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());
@@ -97,6 +104,8 @@ class OrderGoodsController extends Controller
 
             $deta_num = $model->getNum() - $data['goods_number'];
             $service->saleLock( $model->order->entrepot, [$model], $request->user());
+            
+            $this->updateOrderMoney(OrderBasic::find($request->input('order_id')));
             
         } catch (Exception $e) {
             DB::rollback();
@@ -138,6 +147,22 @@ class OrderGoodsController extends Controller
         } else {
             //return $this->error();
             return 2;
+        }
+    }
+    
+    /**
+     * 
+     * @param unknown $orderModel
+     * @throws \Exception
+     */
+    private function updateOrderMoney($orderModel)
+    {
+        $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
+        $orderModel->order_all_money = $money->m;
+        $orderModel->order_pay_money = $money->m;
+        $re = $orderModel->save();
+        if (!$re) {
+            throw  new \Exception('更新订单失败');
         }
     }
 }
