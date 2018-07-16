@@ -428,9 +428,9 @@ class AssignController extends Controller
             }
             $msg = $carton->carton_number == 0 ?'合适的纸箱数量为0':'操作成功';
 
-            $cartonModel = CartonManagement::find($carton->id);
-            $cartonModel->minusCartonNumber($carton->carton_number);
-            $cartonModel->save();
+            // $cartonModel = CartonManagement::find($carton->id);
+            // $cartonModel->minusCartonNumber($carton->carton_number);
+            // $cartonModel->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
