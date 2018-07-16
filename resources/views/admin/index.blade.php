@@ -23,5 +23,6 @@
     <script type="text/javascript" src="/admin/static1.1.54/js/vendor.164fa7391e517c2439f8.js"></script>
     <script type="text/javascript" src="/admin/static1.1.54/js/babel-polyfill.b70aa46778028066d797.js"></script>
     <script type="text/javascript" src="/admin/static1.1.54/js/app.206989aff54f7ef8f3a4.js"></script>
+    <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>
 </html>
