@@ -90,10 +90,11 @@ class SalesPerformanceController extends Controller
 
 
     public function selectOrder(Request $request){
+//        var_dump($request->all());die;
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
-        $pageSize = $request->input('pageSize', 20);
+        $pageSize = $request->input('pageSize', 15);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
         $where[]=['db.created_at','>=', $start];
@@ -125,10 +126,10 @@ class SalesPerformanceController extends Controller
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
-            ->get();
+            ->paginate($pageSize);
         return [
-            'items'=>$result,
-            'total'=>$result->count()
+            'items'=>$result->getCollection(),
+            'total'=>$result->total()
         ];
     }
 
