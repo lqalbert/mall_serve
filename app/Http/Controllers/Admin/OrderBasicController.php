@@ -114,6 +114,8 @@ class OrderBasicController extends Controller
                 $orderModel->save();
             }
             event( new AddOrder($orderModel) );
+            //添加下单操作记录事件
+            
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
