@@ -51,7 +51,7 @@ class OrderGoodsController extends Controller
             $orderModel = OrderBasic::find($request->order_id);
             $orderCheck = $orderModel->isPass();
             if($orderCheck){
-                return $this->error([], "审核未通过或未审核不能更新");
+                return $this->error([], "审核未通过或通过审核不能更新");
             }
 
             $data = $request->all();
