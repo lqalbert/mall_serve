@@ -15,10 +15,10 @@ class SalesPerformanceController extends Controller
         $groupBy = $request->input('type');
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
-        
+
         $orderField = $request->input('orderField','cus_count');
         $orderWay  = $request->input('orderWay','desc');
-        
+
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
@@ -33,14 +33,14 @@ class SalesPerformanceController extends Controller
 //        }
         //退款尝试用子查询 如果加 group_id = x  department_id=y 这种可能会更快
         $refundQuery = DB::table('order_after as oa')
-                                                   ->join('order_basic as ob','oa.order_id','=', 'ob.id')
-                                                   ->select('oa.fee',"ob.{$groupBy} as map_key")
-                                                  ->where([
-                                                      ['oa.created_at', '>=', $start],
-                                                      ['oa.created_at', '<=', $end],
-                                                      ['oa.status','>=',1]
-                                                  ]);
-        
+            ->join('order_basic as ob','oa.order_id','=', 'ob.id')
+            ->select('oa.fee',"ob.{$groupBy} as map_key")
+            ->where([
+                ['oa.created_at', '>=', $start],
+                ['oa.created_at', '<=', $end],
+                ['oa.status','>=',1]
+            ]);
+
         $builder = DB::table('order_basic as db')
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
@@ -62,14 +62,14 @@ class SalesPerformanceController extends Controller
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
             ->groupBy('db.'.$groupBy)->orderBy($orderField, $orderWay);
-        
+
         if ($groupBy == 'department_id') {
             $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
         }
         $result = $builder->paginate($pageSize);
-        
 
-        
+
+
         $items = $result->getCollection();
 //         $key = $groupBy;
 //         if (!$items->isEmpty()) {
@@ -77,10 +77,10 @@ class SalesPerformanceController extends Controller
 //         } else {
 //             $keyValue = [-1];
 //         }
-        
+
 //         $this->setTrans($key, $keyValue, $start, $end, $items);
-        
-        
+
+
         return [
             'items'=> $items,
             'total'=> $result->total()
@@ -90,10 +90,11 @@ class SalesPerformanceController extends Controller
 
 
     public function selectOrder(Request $request){
+//        var_dump($request->all());die;
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
-        $pageSize = $request->input('pageSize', 20);
+        $pageSize = $request->input('pageSize', 15);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
         $where[]=['db.created_at','>=', $start];
@@ -125,23 +126,23 @@ class SalesPerformanceController extends Controller
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ])
-            ->get();
+            ->paginate($pageSize);
         return [
-            'items'=>$result,
-            'total'=>$result->count()
+            'items'=>$result->getCollection(),
+            'total'=>$result->total()
         ];
     }
-    
+
     public function setTrans($groupBy, $keyValue, $start, $end, $items)
     {
         //退款金额
         $userInSubQuery= DB::table('order_after as a')
-        ->join('order_basic as db','a.order_id','=','db.id')
-        ->where([
-            ['a.created_at','>=',$start],
-            ['a.created_at','<=',$end],
-            ['a.status','=',1]
-        ])->select(DB::raw("sum(a.fee) as fee"),"db.{$groupBy} as map_key")->groupby('db.'.$groupBy);
+            ->join('order_basic as db','a.order_id','=','db.id')
+            ->where([
+                ['a.created_at','>=',$start],
+                ['a.created_at','<=',$end],
+                ['a.status','=',1]
+            ])->select(DB::raw("sum(a.fee) as fee"),"db.{$groupBy} as map_key")->groupby('db.'.$groupBy);
         $inResult = $userInSubQuery->get();
         if (!$inResult->isEmpty()) {
             $inMap = $inResult->mapWithKeys(function($item){
@@ -156,7 +157,7 @@ class SalesPerformanceController extends Controller
             } else {
                 $itm->refund="0";
             }
-            
+
         });
     }
 }

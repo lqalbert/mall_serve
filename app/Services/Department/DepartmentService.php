@@ -34,7 +34,7 @@ class DepartmentService
             $this->repository->pushCriteria(new Type($this->request->input('type')));
         }
         
-        $result = $this->repository->with(['manager'])->paginate();
+        $result = $this->repository->with(['manager'])->paginate($this->request->input('pageSize'));
         
         $collection = $result->getCollection();
         $collection = ModelCollection::setAppends($collection, ['type_text']);

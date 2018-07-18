@@ -32,159 +32,159 @@ Route::group($logGroup, function(){
     Route::get('/set-sender', 'WayBillController@setSender');
 });
 
-    //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
+//['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
 Route::group($adminGroup, function(){
 
     Route::post('/upload-file', 'UploadController@index')->name('upload');
-	Route::resource('/deposits', 'DepositController');
-	
-	Route::get('/categorys/{lel}','CategoryController@getLevels');
-	Route::get('/getCategorys/{pid}','CategoryController@getChildrens');
-	Route::resource('/categorys','CategoryController');
-	Route::get('/tree','CategoryController@getCascade');
-	Route::get('/deleteCategory/{id}','CategoryController@haveChildren');
-	Route::resource('/customers','CustomerController');
-	Route::match(['put','patch','post'], '/customers-transfer', 'CustomerController@transfer');
-	Route::match(['put','patch','post'], '/customers-quit-transfer', 'CustomerController@quitTransfer');
-	Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
-	Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
-	Route::get('/getDepartmentByType/{type}','DepartmentController@getDepartmentByType');
+    Route::resource('/deposits', 'DepositController');
 
-	
-	Route::resource('/orderlist','OrderListController');
-	Route::resource('/buyorders','BuyOrderController');
+    Route::get('/categorys/{lel}','CategoryController@getLevels');
+    Route::get('/getCategorys/{pid}','CategoryController@getChildrens');
+    Route::resource('/categorys','CategoryController');
+    Route::get('/tree','CategoryController@getCascade');
+    Route::get('/deleteCategory/{id}','CategoryController@haveChildren');
+    Route::resource('/customers','CustomerController');
+    Route::match(['put','patch','post'], '/customers-transfer', 'CustomerController@transfer');
+    Route::match(['put','patch','post'], '/customers-quit-transfer', 'CustomerController@quitTransfer');
+    Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
+    Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
+    Route::get('/getDepartmentByType/{type}','DepartmentController@getDepartmentByType');
+
+
+    Route::resource('/orderlist','OrderListController');
+    Route::resource('/buyorders','BuyOrderController');
 // 	Route::resource('/users','EmployeeController');
-	Route::resource('/employees','EmployeeController');
-	Route::match(['put','patch'], '/employeesupdate', 'EmployeeController@updates');
-	//passowrd/2 put patch
-	Route::match(['put','patch'], '/passowrd/{id}', 'EmployeeController@changePassword');
-	
-	
-	Route::resource('/buyers','CustomerController');
-	Route::resource('/inventorylist','InventoryListController');
-	Route::resource('/departments','DepartmentController');
-	Route::resource('/groups','GroupController');
-	
-	Route::resource('/expressinfo','ExpressInfoController');
-	
-	Route::resource('/roles','RoleController');
-	Route::get('/roles-assignable','RoleController@assignable');
-	
-	
-	Route::resource('/goodsdetails','GoodsDetailsController');
-	Route::resource('/customer-contact','CustomerContactController');
-	Route::resource('/departments','DepartmentController');
-	// Route::resource('/orderlists','OrderListController');
-	Route::resource('/ordergoods','OrderGoodsController');
-	
-	Route::resource('/goodsout','GoodsOutController');
-	Route::resource('/goodsinto','GoodsIntoController');
-	Route::resource('/goodsspecs','GoodsSpecsController');
-	Route::resource('/goodstype','GoodsTypeController');
-	Route::resource('/goodssku', 'GoodsSkuController');
-	Route::get('/goodstypelist','GoodsTypeController@goodsTypeList');
-	Route::resource('/deliveryaddress','DeliveryAddressController');
-	Route::match(['put','post'], '/updateCheckStatus/{id}', 'OrderBasicController@updateCheckStatus');
-	Route::match(['put','post'], '/order-cancel/{id}', 'OrderBasicController@cancel');
-	Route::resource('/orderbasic','OrderBasicController');
-	
-	Route::resource('/articles' , 'ArticleController');
-	Route::resource('/connection' , 'ConnectionController');
-	Route::resource('/skincareinfo','SkinCateInfoController');
-	Route::resource('/sysnotice','SysNoticeController');
-	Route::resource('/contacts','ContactsController');
-	Route::resource('/website','WebsiteController');
-	Route::resource('/distributioncenter','DistributionCenterController');
-	Route::resource('/shelvesmanagement','ShelvesManagementController');
+    Route::resource('/employees','EmployeeController');
+    Route::match(['put','patch'], '/employeesupdate', 'EmployeeController@updates');
+    //passowrd/2 put patch
+    Route::match(['put','patch'], '/passowrd/{id}', 'EmployeeController@changePassword');
 
-	Route::get('/expresscompany-address/{id}','ExpressCompanyController@getAddress');
-	Route::put('/expresscompany-address/{id}','ExpressCompanyController@updateAddress');
-	Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
-	Route::get('/menus', 'NavController@getNav');
-	
-	Route::resource('/produce-entry', 'ProduceEntryController');
-	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
-	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
-	Route::put('/order-assign-check', 'AssignController@check');//----
-	Route::resource('/order-assign', 'AssignController');
 
-	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
-	Route::put('/order-assign-check/{id}', 'AssignController@check');//----
-	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
-	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
-	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
-	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
-	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
-	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
-	
-	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
-	Route::resource('/inventory-exchange', 'InventoryExchangeController');
-    
-	
-	Route::get('/inventory-gather', 'InventoryGatherController@index');
-	//库存明细 不靠谱的
-	Route::get('/inventory-detail', 'InventoryDetailController@index');
-	
-	Route::get('/entry-product', 'EntryProductController@index');
-	Route::resource('/expressreceive', 'ExpressReceiveController');
-	Route::get('/shelvespick', 'ShelvesPickController@index');
-	Route::resource('/shelvespick', 'ShelvesPickController');
-	Route::resource('/stockoutdetails', 'StockOutDetailsController');
-	Route::get('/distribution-delivery', 'DistributionDeliveryController@index');
+    Route::resource('/buyers','CustomerController');
+    Route::resource('/inventorylist','InventoryListController');
+    Route::resource('/departments','DepartmentController');
+    Route::resource('/groups','GroupController');
 
-	Route::resource('/order-address','OrderAddressController');
-	Route::resource('/stock-warning','StockWarningController');
-	
-	Route::resource('/order-after-sale', 'AfterSaleController');
+    Route::resource('/expressinfo','ExpressInfoController');
+
+    Route::resource('/roles','RoleController');
+    Route::get('/roles-assignable','RoleController@assignable');
+
+
+    Route::resource('/goodsdetails','GoodsDetailsController');
+    Route::resource('/customer-contact','CustomerContactController');
+    Route::resource('/departments','DepartmentController');
+    // Route::resource('/orderlists','OrderListController');
+    Route::resource('/ordergoods','OrderGoodsController');
+
+    Route::resource('/goodsout','GoodsOutController');
+    Route::resource('/goodsinto','GoodsIntoController');
+    Route::resource('/goodsspecs','GoodsSpecsController');
+    Route::resource('/goodstype','GoodsTypeController');
+    Route::resource('/goodssku', 'GoodsSkuController');
+    Route::get('/goodstypelist','GoodsTypeController@goodsTypeList');
+    Route::resource('/deliveryaddress','DeliveryAddressController');
+    Route::match(['put','post'], '/updateCheckStatus/{id}', 'OrderBasicController@updateCheckStatus');
+    Route::match(['put','post'], '/order-cancel/{id}', 'OrderBasicController@cancel');
+    Route::resource('/orderbasic','OrderBasicController');
+
+    Route::resource('/articles' , 'ArticleController');
+    Route::resource('/connection' , 'ConnectionController');
+    Route::resource('/skincareinfo','SkinCateInfoController');
+    Route::resource('/sysnotice','SysNoticeController');
+    Route::resource('/contacts','ContactsController');
+    Route::resource('/website','WebsiteController');
+    Route::resource('/distributioncenter','DistributionCenterController');
+    Route::resource('/shelvesmanagement','ShelvesManagementController');
+
+    Route::get('/expresscompany-address/{id}','ExpressCompanyController@getAddress');
+    Route::put('/expresscompany-address/{id}','ExpressCompanyController@updateAddress');
+    Route::resource('/expresscompany','ExpressCompanyController');//entrepot-product-count
+    Route::get('/menus', 'NavController@getNav');
+
+    Route::resource('/produce-entry', 'ProduceEntryController');
+    Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
+    Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+    Route::put('/order-assign-check', 'AssignController@check');//----
+    Route::resource('/order-assign', 'AssignController');
+
+    Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
+    Route::put('/order-assign-check/{id}', 'AssignController@check');//----
+    Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
+    Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
+    Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+    Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
+    Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
+    Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
+
+    Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
+    Route::resource('/inventory-exchange', 'InventoryExchangeController');
+
+
+    Route::get('/inventory-gather', 'InventoryGatherController@index');
+    //库存明细 不靠谱的
+    Route::get('/inventory-detail', 'InventoryDetailController@index');
+
+    Route::get('/entry-product', 'EntryProductController@index');
+    Route::resource('/expressreceive', 'ExpressReceiveController');
+    Route::get('/shelvespick', 'ShelvesPickController@index');
+    Route::resource('/shelvespick', 'ShelvesPickController');
+    Route::resource('/stockoutdetails', 'StockOutDetailsController');
+    Route::get('/distribution-delivery', 'DistributionDeliveryController@index');
+
+    Route::resource('/order-address','OrderAddressController');
+    Route::resource('/stock-warning','StockWarningController');
+
+    Route::resource('/order-after-sale', 'AfterSaleController');
 // 	Route::resource('/after-goods', 'AfterGoodsController');
-	
-	Route::resource('/return-record', 'ReturnRecordController');
-	
-	Route::get('/order-operate-records', 'OrderOperateController@index');
 
-	Route::resource('/area','AreaInfoController');
-	Route::resource('/track-log','CustomerTrackLogController');
-	Route::resource('/plan','PlanController');
-	Route::resource('/complain','CustomerComplainController');
-	Route::resource('/communicate','CommunicateController');
-	
+    Route::resource('/return-record', 'ReturnRecordController');
+
+    Route::get('/order-operate-records', 'OrderOperateController@index');
+
+    Route::resource('/area','AreaInfoController');
+    Route::resource('/track-log','CustomerTrackLogController');
+    Route::resource('/plan','PlanController');
+    Route::resource('/complain','CustomerComplainController');
+    Route::resource('/communicate','CommunicateController');
+
 // 	Route::get('/print/{id}', 'PrintController@index');
-	Route::get('/print/assign/{id}', 'PrintController@printAssign');
-	
-	Route::resource('/express-invoices', 'ExpressInvoicesController');
-	Route::resource('/assign-invoices',  'AssignInvoicesController');
-	Route::resource('/cartonmanagement',  'CartonManagementController');
-	Route::resource('/volumeratio',  'VolumeRatioController');
-	Route::resource('/expresscompensation',  'ExpressCompensationController');
-	Route::resource('/expressprice',  'ExpressPriceController');
-	Route::get('/aaa',  'CartonManagementController@goods_carton');
-    
-	Route::put('/stock-check-goods-entrepot/{id}',  'StockCheckGoodsController@updateEntrepot');
-	Route::resource('/stock-check-goods',  'StockCheckGoodsController');
-	Route::resource('/stock-check',  'StockCheckController');
-	Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');
-	Route::get('/get-goods-price/{sku}',  'StockCheckController@getGoodsPrice');
-	
-	//电子面单
-	Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
-	->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
-	Route::put('/order-after-sale-check/{id}', 'AfterSaleController@checkStatus');
-	Route::put('/order-after-sale-sure/{id}', 'AfterSaleController@sureStatus');
-	Route::get('/cus-all-info/{id}', 'AfterSaleController@getCusAllInfo');
-	
-	Route::resource('/purchaseorder',  'PurchaseOrderController');
-	Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
-	Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
-	Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
-	
-	Route::get('/sale-quan', 'SaleQuanController@index');
+    Route::get('/print/assign/{id}', 'PrintController@printAssign');
+
+    Route::resource('/express-invoices', 'ExpressInvoicesController');
+    Route::resource('/assign-invoices',  'AssignInvoicesController');
+    Route::resource('/cartonmanagement',  'CartonManagementController');
+    Route::resource('/volumeratio',  'VolumeRatioController');
+    Route::resource('/expresscompensation',  'ExpressCompensationController');
+    Route::resource('/expressprice',  'ExpressPriceController');
+    Route::get('/aaa',  'CartonManagementController@goods_carton');
+
+    Route::put('/stock-check-goods-entrepot/{id}',  'StockCheckGoodsController@updateEntrepot');
+    Route::resource('/stock-check-goods',  'StockCheckGoodsController');
+    Route::resource('/stock-check',  'StockCheckController');
+    Route::get('/get-check-goods',  'StockCheckController@getCheckGoods');
+    Route::get('/get-goods-price/{sku}',  'StockCheckController@getGoodsPrice');
+
+    //电子面单
+    Route::get('/getOne/{assign_id}/{express_id}', 'WayBillController@getOne')
+        ->where(['assign_id'=>'[0-9]+','express_id' => '[0-9]+', 'order_id' => '[0-9]+']);
+    Route::put('/order-after-sale-check/{id}', 'AfterSaleController@checkStatus');
+    Route::put('/order-after-sale-sure/{id}', 'AfterSaleController@sureStatus');
+    Route::get('/cus-all-info/{id}', 'AfterSaleController@getCusAllInfo');
+
+    Route::resource('/purchaseorder',  'PurchaseOrderController');
+    Route::resource('/purchaseordergoods',  'PurchaseOrderGoodsController');
+    Route::resource('/actualdeliveryexpress',  'ActualDeliveryExpressController');
+    Route::resource('/actualdeliverygoods',  'ActualDeliveryGoodsController');
+
+    Route::get('/sale-quan', 'SaleQuanController@index');
     Route::get('/salesperformance',  'SalesPerformanceController@index');
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
 
 });
 
 
-	
+
 // Route::get('/', function () {
 // 	// return view('welcome');
 // 	return view('test/test');
@@ -230,7 +230,7 @@ Route::get('/question/index', 'Home\QuestionController@index')->name('question/i
 // 	Route::resource('pages','PagesController');
 // });
 // Route::resource('photo','PhotoController');
-		
+
 // Route::get('/', function () {
 // 	// return view('welcome');
 // 	return view('test/test');
