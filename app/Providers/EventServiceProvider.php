@@ -122,8 +122,11 @@ class EventServiceProvider extends ServiceProvider
         
         'App\Events\StockChecked' => [
             'App\Listeners\StockSnListener'
+        ],
+
+        'App\Events\AddOrderOperationLog' => [
+            'App\Listeners\AddOrderOperationLogListener'
         ]
-        
         
     ];
 

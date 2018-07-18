@@ -48,7 +48,7 @@ class DepartmentController extends Controller
                 break;
             default:
 //                 $service = new DepartmentService($this->repository);
-                $service = app('App\Services\Department\DepartmentService');
+                $service = app('App\Services\Department\DepartmentService');//resolve也可以
                 $result = $service->get();
                 break;
         }
