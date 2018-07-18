@@ -512,6 +512,33 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
+
+    /**
+     * 更新面单信息
+     * @param Request $request
+     * @param WayBillService $service
+     * @param unknown $id
+     * @return number[]|string[]|NULL[]
+     */
+    public function updateWayBill(Request $request, WayBillService $service, $id)
+    {
+        $assign = Assign::find($id);
+        logger('[d]',[$assign, $assign->express, $assign->order]);
+        $re =  $service->updateWayBill($assign, $assign->express, $assign->order);
+//          $service->send($cmd);
+
+//         logger("[waybillupdate]", $re);
+        if ($re['status'] == 1) { //成功
+//             logger("[printDate]", [gettype($re['data']['printDate'])]);
+            $updateRe = Assign::where('id', $id)->update(['express_sn'=> $re['data']['waybillCode'], 'print_data'=> $re['data']['printDate']]);
+            if (!$updateRe) {
+                return $this->error([], '');
+            }
+        } else {
+            return $this->error([], '面单获取失败:'.$re['msg']);
+        }
+        return $this->success([]);
+    }
     
 
 

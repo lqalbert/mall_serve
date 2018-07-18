@@ -186,19 +186,17 @@ class TmsWayBillGet
     {
         $packageInfoxml = $xml->addChild('packageInfo');
         $packageInfoxml->addChild('id', $data['id']);
-        $this->setItems($packageInfoxml, $data['items']);
+        $this->setPackageInfoItems($packageInfoxml, $data['items']);
         if (isset($data['volume'])) {
             $packageInfoxml->addChild('volume', $data['volume']);
         }
         
         if (isset($data['weight'])) {
             $packageInfoxml->addChild('weight', $data['weight']);
-        }
-        
-        
+        }   
     }
     
-    public function setItems($xml, $data)
+    public function setPackageInfoItems($xml, $data)
     {
         $items = $xml->addChild('items');
         foreach ($data as $product) {

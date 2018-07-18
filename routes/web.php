@@ -109,13 +109,14 @@ Route::group($adminGroup, function(){
 	Route::resource('/order-assign', 'AssignController');
 
 	Route::get('/assign-expresssn/{express_sn}', 'AssignController@showbyExpressSn');
-	Route::put('/order-assign-check/{id}', 'AssignController@check');//----
+	//Route::put('/order-assign-check/{id}', 'AssignController@check');//---- 改成多个 ids
 	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
 	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
+	Route::put('/assign-update-waybill/{id}', 'AssignController@updateWayBill');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');

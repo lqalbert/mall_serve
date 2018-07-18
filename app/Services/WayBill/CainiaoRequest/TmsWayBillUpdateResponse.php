@@ -40,7 +40,6 @@ class TmsWayBillUpdateResponse extends MsgResponse
     
     public function jsonSetData($arr)
     {
-        //$xml->waybillCloudPrintResponseList; //$xml->xpath('waybillCloudPrintResponseList');
         $this->data= [
             'waybillCode' => $arr['waybillCode'],
             'printDate'  => $arr['printDate']

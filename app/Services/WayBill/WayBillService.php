@@ -4,6 +4,7 @@ namespace App\Services\WayBill;
 use App\models\OrderBasic;
 use App\Services\WayBill\CainiaoRequest\Request;
 use App\Services\WayBill\CainiaoRequest\Response;
+use App\Services\WayBill\MsgType\TmsWayBillUpdate;
 
 class WayBillService 
 {
@@ -20,12 +21,14 @@ class WayBillService
         $this->response->setDataType($this->dataType);
     }
     
-    public function getANew(OrderBasic $order)
+    public function updateWayBill($assign, $express, $order)
     {
-        //连接LINK PAC
+        $cmd = new TmsWayBillUpdate();
+        $cmd->setParam($assign, $express, $order);
         
-        return '';
+        return $this->send($cmd);
     }
+    
     
     public function send($obj)
     {
