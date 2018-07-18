@@ -73,6 +73,8 @@ ET;
         $resultCount  = DB::select($sqlCount, $binds);
         $sql = str_replace('__fields__', $fiels, $sqlDoc) . $sqlAppends;
         $result = DB::select($sql, $binds);
+        
+        
 
         return [
             'items'=> $result,

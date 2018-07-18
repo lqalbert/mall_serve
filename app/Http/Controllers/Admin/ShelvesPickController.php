@@ -65,8 +65,9 @@ class ShelvesPickController extends Controller
        }
        if($res){
            ShelvesManagement::where('id',$shelves_id)->update($request->input('shelvesData'));
+           return $this->success([]);
        }else{
-           return false;
+           return $this->error([]);;
        }
   }
 

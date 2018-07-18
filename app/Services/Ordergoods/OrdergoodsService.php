@@ -58,8 +58,8 @@ class OrdergoodsService
         
         if ($this->request->has('start') && $this->request->has('end')) {
             $range= [];
-            $range[] = $request->input('start');
-            $range[] = $request->input('end');
+            $range[] = $this->request->input('start');
+            $range[] = $this->request->input('end');
             $this->repository->pushCriteria(new DateRange($range));
         } 
         
@@ -89,7 +89,7 @@ class OrdergoodsService
 
         return [
             'items'=> $collection->toArray(),
-            'totle'=> $result->total()
+            'total'=> $result->total()
         ];
     }
 }
