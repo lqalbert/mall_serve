@@ -114,6 +114,7 @@ Route::group($adminGroup, function(){
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
 	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
+	Route::put('/assign-update-waybill/{id}', 'AssignController@updateWayBill');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
