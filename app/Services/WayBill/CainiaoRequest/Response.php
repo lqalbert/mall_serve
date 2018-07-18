@@ -2,6 +2,7 @@
 namespace App\Services\WayBill\CainiaoRequest;
 
 use Illuminate\Support\Facades\Storage;
+use App\Services\WayBill\MsgType\TmsWayBillUpdate;
 
 class Response 
 {
@@ -16,7 +17,8 @@ class Response
     }
     
     /**
-     * 简单的工厂 这里可以用反射的方式实现
+     * 简单的工厂 
+     * 这里还可以用反射的方式实现
      * @param unknown $class
      * @throws \Exception
      */
@@ -29,6 +31,9 @@ class Response
                 break;
             case 'TMS_WAYBILL_SUBSCRIPTION_QUERY':
                 $this->msg = new TmsWayBillSubscriptionQueryResponse();
+                break;
+            case 'TMS_WAYBILL_UPDATE':
+                $this->msg = new TmsWayBillUpdateResponse();
                 break;
              default:
                  throw new \Exception('请求接口没有设置返回处理类');

@@ -42,6 +42,41 @@ namespace App\Services\WayBill\MsgType;
     </sender>
     <templateUrl>http://cloudprint.cainiaoRL.com/cloudprint/template/getStandardTemplate.json?template_id=1001</templateUrl>
 </request>
+
+{
+    "cpCode":"POSTB",
+    "logisticsServices":"json串",
+    "sender":{
+        "phone":"057123222",
+        "mobile":"1326443654",
+        "name":"Bar"
+    },
+    "recipient":{
+        "address":{
+            "province":"北京",
+            "town":"望京街道",
+            "city":"北京市",
+            "district":"朝阳区",
+            "detail":"花家地社区卫生服务站"
+        },
+        "phone":"057123222",
+        "mobile":"1326443654",
+        "name":"Bar"
+    },
+    "waybillCode":"9890000160004",
+    "packageInfo":{
+        "volume":"1",
+        "weight":"1",
+        "items":[
+            {
+                "count":"1",
+                "name":"衣服"
+            }
+        ]
+    },
+    "objectId":"x",
+    "templateUrl":"http://cloudprint.cainiaoRL.com/cloudprint/template/getStandardTemplate.json?template_id=1001"
+}
  *
  */
 class TmsWayBillUpdate
@@ -61,7 +96,8 @@ class TmsWayBillUpdate
         $data = [
             'cpCode' => $express->eng,
             'waybillCode' => $assign->express_sn,
-            'packageInfo' => $this->getpackageInfo($assign->id, $order->goods),
+            'objectId' => $assign->id,
+            'packageInfo' => $assign->getPackageInfo(),
             'recipient'   => $order->getRecipient(),
             'sender'      => $express->getSend(),
             'templateUrl' => $express->getTemplateUrl()
@@ -70,19 +106,7 @@ class TmsWayBillUpdate
         $this->data = array_merge($this->data, $data);
     }
         
-    public function getpackageInfo($assignId, $goods)
-    {
-        $items = [];
-        foreach ($goods  as $item ){
-            $items[] = ['counte'=> $item->goods_number, 'name'=>$item->goods_name];
-        }
-        return [
-            'id'=>$assignId,
-            "items"=>$items,
-            "volume"=>"", //体积　非必填
-            "weight"=>"", //重量　非必填
-        ];
-    }
+    
         
     public function getContent($dataType)
     {
@@ -96,10 +120,21 @@ class TmsWayBillUpdate
     
     public function toXml($data)
     {
-        return '';
+        $xml = simplexml_load_string('<request></request>');
+        
+        $xml->addChild('cpCode', $data['cpCode']);
+        $xml->addChild('waybillCode', $data['waybillCode']);
+        $xml->addChild('objectId', $data['objectId']);
+        $xml->addChild('templateUrl', $data['templateUrl']);
+        
+        $this->setPackageInfo($xml, $data['packageInfo']);
+        $this->setRecipient($xml, $data['recipient']);
+        $this->setSender($xml, $data['sender']);
+        
+        
+        return html_entity_decode($xml->saveXML(), ENT_NOQUOTES, 'UTF-8');
     }
-    
-    
+
     
     public function getToCode()
     {
@@ -111,5 +146,54 @@ class TmsWayBillUpdate
         return 'TMS_WAYBILL_UPDATE';
     }
     
+    public function setPackageInfo($xml, $data)
+    {
+        $packageInfoxml = $xml->addChild('packageInfo');
+        $this->setPackageInfoItems($packageInfoxml, $data['items']);
+        if (isset($data['volume'])) {
+            $packageInfoxml->addChild('volume', $data['volume']);
+        }
+        
+        if (isset($data['weight'])) {
+            $packageInfoxml->addChild('weight', $data['weight']);
+        }
+    }
+    
+    public function setPackageInfoItems($xml, $data)
+    {
+        $items = $xml->addChild('items');
+        foreach ($data as $product) {
+            $item  = $items->addChild('item');
+            $item->addChild('count', $product['count']);
+            $item->addChild('name',  $product['name']);
+        }
+    }
+    
+    public function setRecipient($xml, $data)
+    {
+        $recipient= $xml->addChild('recipient');
+        $this->setAddress($recipient, $data['address']);
+        $recipient->addchild('phone', $data['phone']);
+        $recipient->addchild('mobile', $data['mobile']);
+        $recipient->addchild('name', $data['name']);
+    }
+    
+    public function setSender($xml, $data)
+    {
+        $sender = $xml->addChild('sender');
+        $sender->addchild('phone', $data['phone']);
+        $sender->addchild('mobile', $data['mobile']);
+        $sender->addchild('name', $data['name']);
+        $sender = null;
+    }
+    
+    public function setAddress($xml, $data)
+    {
+        $address = $xml->addChild('address');
+        foreach ($data as $key=>$item) {
+            $address->addChild($key, $item);
+        }
+        $address = null;
+    }
     
 }
