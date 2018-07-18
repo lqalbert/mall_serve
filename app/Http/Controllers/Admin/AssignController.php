@@ -264,7 +264,7 @@ class AssignController extends Controller
                    return $this->error([],'面单获取失败:数量为0');
                }
                foreach ($cainiodata as $item) {
-                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$expres->id, 'express_name'=>$express->name]);
+                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->name]);
                }
            } else {
                return $this->error([], '面单获取失败:'.$re['msg']);
