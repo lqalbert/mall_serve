@@ -13,6 +13,7 @@ use App\Services\Orderlist\OrderlistService;
 use App\Events\AddOrder;
 use App\Events\OrderPass;
 use App\Events\OrderCancel;
+use App\Events\AddOrderOperationLog;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\FieldLike;
 use App\Models\User;
@@ -69,7 +70,7 @@ class OrderBasicController extends Controller
      */
     public function store(Request $request)
     {
-        // var_dump($request->all());die;
+        // var_dump(auth()->user());die;
         DB::beginTransaction();
         try {
             $allData = $request->all();
@@ -114,8 +115,13 @@ class OrderBasicController extends Controller
                 $orderModel->save();
             }
             event( new AddOrder($orderModel) );
-            //添加下单操作记录事件
-            
+            //添加订单操作记录事件
+            $dataLog = [
+                'order_id'=>$orderModel->id,
+                'action'=>'add',
+                'remark'=>$orderModel->order_sn
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -170,6 +176,13 @@ class OrderBasicController extends Controller
         ); */
         $re = $this->repository->update($request->all(), $id);
         if ($re) {
+            //添加订单操作记录事件
+            $dataLog = [
+                'order_id'=>$request->input('id'),
+                'action'=>'edit',
+                'remark'=>$request->input('order_sn')
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
             return $this->success($re);
             //return 1;
         } else {
@@ -206,8 +219,21 @@ class OrderBasicController extends Controller
      */
     public function destroy(OrderBasic $orderBasic,$id)
     {
-        $this->model->destroy($id);
-        return $this->success([]);
+        $count = $this->model->destroy($id);
+        if($count != 0){
+            //添加订单操作记录事件
+            $order_sn = $orderBasic::withTrashed()->where('id',$id)->value('order_sn');
+            $dataLog = [
+                'order_id'=>$id,
+                'action'=>'delete',
+                'remark'=>$order_sn
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
+            return $this->success([]);
+        }else{
+            return $this->error([]);
+        }
+        
     }
 
     public function updateCheckStatus(Request $request , $id)
@@ -226,10 +252,15 @@ class OrderBasicController extends Controller
                     DB::rollback();
                     return $this->error([], $e->getMessage());
                 }
-            } else {
-
             }
-
+            //添加订单操作记录事件
+            $dataLog = [
+                'order_id'=>$id,
+                'action'=>'check',
+                'remark'=>$data['order_sn']
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
+            
             return $this->success([]);
         } else {
             return $this->error([]);
@@ -247,6 +278,14 @@ class OrderBasicController extends Controller
 
             $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
             event(new OrderCancel($model));
+            //添加订单操作记录事件
+            $order_sn = $this->model->where('id',$id)->value('order_sn');
+            $dataLog = [
+                'order_id'=>$id,
+                'action'=>'cancel',
+                'remark'=>$order_sn
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
