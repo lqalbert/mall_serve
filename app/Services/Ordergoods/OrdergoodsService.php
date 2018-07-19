@@ -101,9 +101,8 @@ class OrdergoodsService
             foreach ($weights as $v){
                 $total_weight += $v;
             }
-            $input_data['goods_id']='汇总';
-            $input_data['price']='汇总';
-            $input_data['assign_fee']='汇总';
+            $input_data['goods_id']='';
+            $input_data['price']='';
             $input_data['goods_name'] = $assign_data ? $assign_data['express_name'].':运单号'.$assign_data['express_sn'] : '汇总';
             $input_data['goods_number']=$total_goods_number;
             $input_data['weight']=$total_weight;
