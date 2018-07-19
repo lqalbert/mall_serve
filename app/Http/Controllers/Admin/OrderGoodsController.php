@@ -69,7 +69,7 @@ class OrderGoodsController extends Controller
             }
             
             if ($model->remark != $data['remark']) {
-                $model->remark == $data['remark'];
+                $model->remark = $data['remark'];
             }
             $model->save();
         } catch (\Exception $e) {

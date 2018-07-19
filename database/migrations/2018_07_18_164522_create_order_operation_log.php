@@ -15,9 +15,10 @@ class CreateOrderOperationLog extends Migration
     {
         Schema::create('order_operation_log', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('order_id')->comment('订单ID');
             $table->unsignedInteger('operator_id')->comment('操作员ID');
             $table->string('operator',20)->nullable()->comment('操作员姓名');
-            $table->string('action')->nullable()->comment('操作动作');
+            $table->string('action',20)->nullable()->comment('操作动作');
             $table->string('remark')->nullable()->comment('操作备注');
             $table->timestamps();
             $table->softDeletes();

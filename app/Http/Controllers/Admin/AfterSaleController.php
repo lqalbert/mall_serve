@@ -83,7 +83,6 @@ class AfterSaleController extends Controller
     public function store(Request $request)
     {
         //加验证
-        
         DB::beginTransaction();
         try {
             
@@ -100,7 +99,14 @@ class AfterSaleController extends Controller
                     
             }
             
-       
+            //添加订单操作记录事件
+            $dataLog = [
+                'order_id'=>$request->order_id,
+                'action'=>'after-sale',
+                'remark'=>$request->order_sn
+            ];
+            event(new AddOrderOperationLog(auth()->user(),$dataLog));
+            
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
