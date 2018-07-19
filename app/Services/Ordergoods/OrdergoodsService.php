@@ -8,6 +8,7 @@ use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\Ordergoods\Enterpot;
 use App\Repositories\Criteria\Ordergoods\DateRange;
 use App\Alg\ModelCollection;
+use App\Models\Assign;
 class OrdergoodsService
 {
     /**
@@ -85,10 +86,35 @@ class OrdergoodsService
             
         }
         
-        
+        $items = $collection->toArray();
+
+        if($this->request->has('assign_id')){
+            $assign_data = Assign::find($this->request->assign_id)->toArray();
+            $goods_numbers= array_column($items,'goods_number');
+            $weights= array_column($items,'weight');
+            $input_data = [];
+            $total_goods_number =0;
+            $total_weight =0;
+            foreach ($goods_numbers as $v){
+                $total_goods_number += $v;
+            }
+            foreach ($weights as $v){
+                $total_weight += $v;
+            }
+            $input_data['goods_id']='汇总';
+            $input_data['price']='汇总';
+            $input_data['assign_fee']='汇总';
+            $input_data['goods_name'] = $assign_data ? $assign_data['express_name'].':运单号'.$assign_data['express_sn'] : '汇总';
+            $input_data['goods_number']=$total_goods_number;
+            $input_data['weight']=$total_weight;
+            array_unshift($items,$input_data);
+
+        }
+
+
 
         return [
-            'items'=> $collection->toArray(),
+            'items'=> $items,
             'total'=> $result->total()
         ];
     }
