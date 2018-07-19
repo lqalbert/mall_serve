@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\OrderOperate;
+use App\Models\OrderOperationLog;
 
 class OrderOperateController extends Controller
 {
@@ -14,16 +14,16 @@ class OrderOperateController extends Controller
      */
     public function index(Request $request)
     {
-        $where = [];
+        $model = new OrderOperationLog;
         if ($request->has('order_id')) {
-            $where[] = ['order_id', $request->input('order_id')];
+            $model = $model->where('order_id',$request->input('order_id'));
         }
         
-        $result = OrderOperate::where($where)->paginate($request->input('pageSize', 20));
+        $result = $model->get();
         
         return [
-            'items' => $result->items(),
-            'total' => $result->total()
+            'items' => $result,
+            'total' => $result->count()
         ];
     }
 
