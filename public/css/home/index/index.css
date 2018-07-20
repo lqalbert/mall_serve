@@ -554,12 +554,13 @@
 
 /*----------------金色套装------------------*/
 
-.goldSuit{
+.goldSuit {
     margin-top: 15px;
     height: auto;
     padding: 0;
     margin-bottom: 15px;
 }
+
 
 .goldSuit img{
     display: block;
@@ -761,37 +762,11 @@
         position: absolute;
         top: -34px;
     }
-    #banner{
-        margin-top: 0;
-    }
 
     #saleProduct .saleContent .right{
         height: auto;
     }
 
-    .contentBox .contentCls .right .proBox{
-        width: 50%;
-    }
-
-    #minBanner .imgBox{
-        padding: 0 15px 0 15px;
-    }
-
-    #minBanner .imgBox:first-child{
-        padding: 0 15px 0 15px;
-    }
-
-    #minBanner .imgBox:last-child{
-        padding: 0 15px 0 15px;
-    }
-
-    #productList .list:first-child{
-        padding:0 15px 0 15px;
-    }
-
-    #productList .list:last-child{
-        padding:0 15px 0 15px;
-    }
 
     #banner .swiper-pagination-bullet {
         width: 50%;
