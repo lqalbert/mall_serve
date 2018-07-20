@@ -1,13 +1,12 @@
 *{
     padding: 0;
     margin: 0;
-    font-family: 微软雅黑;
 }
 
 .headBar{
     max-height: 123px;
-    padding: 0;
-    background: #DF385F;
+    padding: 0 0 2px 0;
+    background: #000;
 }
 
 .headBar div{
@@ -37,7 +36,7 @@
 }
 
 #navbar a{
-    color: #333;
+    color: #fff;
 }
 
 #nav{
@@ -438,202 +437,171 @@
     width: 100%;
     height: 100%;
 }
-/*----------minBanner-------------------*/
-#minBanner{
-    margin-top: 10px;
-    margin-left:-9px;
-    margin-right: -9px;
-}
 
-#minBanner div{
+#banner .paginationBox{
+    min-height: 40px;
+    background: #000;
     padding: 0;
 }
 
-#minBanner .imgBox{
-    padding: 0 10px 0 10px;
-    margin-bottom: 15px;
-}
-
-#minBanner .imgBox img:hover{
-    box-shadow: 0 0 3px #bf9d63,
-    0 0 5px #bf9d63;
-}
-
-
-/*----------------productList----------------------*/
-#productList{
+#banner .paginationBox div{
     padding: 0;
-    margin: 0px -10px;
-}
-
-
-#productList .list{
-    margin-top: 10px;
-}
-
-#productList .list{
-    padding: 0px 10px 0px 10px;
-}
-
-#productList .list img{
-    width: 100%;
-}
-
-/*-------------------------------------------*/
-/*-------------------------内容区域---------------------*/
-
-#content{
-    padding: 0;
-}
-
-/*------------------新品首发------------------*/
-
-.newProduct{
-    margin-top: 40px;
-    padding: 0;
-    height: auto;
-}
-
-.newProduct div{
-    padding: 0;
-}
-
-#content .newT{
     line-height: 40px;
+    text-align: center;
 }
 
-#content .newT .left span{
+#banner .paginationBox .bbx{
+    border: 1px solid #e8e8e8;
+    position: absolute;
+    top: -15px;
+    left: 0;
+    z-index: 1111;
+}
+
+#banner .paginationBox .bbx div{
+    border-right: 1px solid #e8e8e8;
+}
+
+#banner .swiper-pagination-bullet {
     display: block;
-    float: left;
+    width: 25%;
+    height: auto;
+    border-radius: 0;
     font-size: 16px;
-    margin-right: 10px;
-    font-weight: bold;
-}
-
-#content .newT .left .line{
-    height: 20px;
-    width: 5px;
-    background: #7ACDEC;
-    margin-top: 10px;
-}
-
-#content .newT .right{
-    text-align: right;
-}
-
-#content .newT .right a{
-    color: #666;
-    text-decoration: none;
-}
-
-.newProduct .newC{
-    padding: 0;
+    color:#000;
+    opacity: 1;
     background: #fff;
 }
 
-.newProduct .newC .left{
-    height: 440px;
+#banner .swiper-pagination-bullet-active {
+    color:#fff;
+    background: #FF0000;
 }
-
-.newProduct .newC .left img{
-    width: 100%;
-    height: 100%;
-}
-
-.newProduct .newC .right{
-    height: 440px;
-    overflow: hidden;
-    position: relative;
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
-
-.newProduct .newC .right .imgBox a{
-    color: #333;
-    display: block;
-    width: 100%;
-}
-
-.newProduct .newC .right .imgBox {
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    text-align:center;
-}
-
-.newProduct .newC .right .imgBox img{
-    display: block;
-    max-width: 100%;
-    max-height: 140px;
-    margin: 0 auto;
-}
-
-.newProduct .newC .right .imgBox .msg{
-    line-height: 20px;
-    float: left;
-    width: 100%;
-}
-
-.newProduct .newC .right .imgBox .msg div{
-    width: 100%;
+/*-------------------------------------------*/
+/*-------------------------产品轮播---------------------*/
+.proTab{
+    line-height: 50px;
     text-align: center;
-    height: 20px;
+    font-size: 18px;
+    margin: 30px 0;
 }
 
-.newProduct .newC .right .imgBox .msg .goodsName{
+.proTab span{
+    padding: 0 15px 11px 15px;
+    border-bottom: 2px solid #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.proTab span.activeSpan{
+    border-bottom: 2px solid #666;
+}
+
+.indexBox {
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 0 10px 0 10px;
+    min-height: 100px;
+    margin-bottom: 15px;
+}
+
+.indexBox .indexList{
+    width: 100%;
+}
+
+.indexBox .indexList img{
+    display: block;
+    max-width:310px;
+    height: 310px;
+    margin: 0 auto;
+    background: #2ab27b;
+    border-radius: 2px;
+}
+
+.indexBox .indexList div{
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    margin-top: 15px;
     font-size: 16px;
 }
 
-.newProduct .newC .right .imgBox .msg .brief{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 0 10px;
-    font-size: 12px;
-    height: 30px;
-    line-height: 30px;
-    color: #999;
+.indexBox .indexList div span{
+    padding: 10px 15px;
+    border: 1px solid #888888;
+}
+
+.swiper-button-next{
+    top: 150px;
+    right: -20px;
+}
+
+.swiper-button-prev{
+    top: 150px;
+    left: -20px;
+}
+
+.indexNew{
+    display: none;
+}
+
+.indexHot{
+    display: none;
+}
+
+.swiper-pagination-bullets{
     text-align: center;
+    border-bottom: -10px;
 }
 
-.newProduct .newC .right .imgBox .msg .price{
-    color: red;
+/*----------------金色套装------------------*/
+
+.goldSuit{
+    margin-top: 15px;
+    height: auto;
+    padding: 0;
+    margin-bottom: 15px;
 }
 
-.newProduct .newC .right .swiper-button-prev{
-    background: #ccc;
-    font-size: 30px;
-    color: #fff;
-    line-height: 44px;
+.goldSuit img{
+    display: block;
+    width: 100%;
+    height: 700px;
+    background: #2ab27b;
+}
+
+/*----------------pulata面膜系列-----------*/
+
+.facialMask{
+    margin-top: 15px;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.facialMask .title{
+    font-size: 22px;
+    font-weight: bold;
     text-align: center;
+    line-height: 60px;
+    letter-spacing: 5px;
 }
 
-.newProduct .newC .right .swiper-button-next{
-    background: #ccc;
-    font-size: 30px;
-    color: #fff;
-    line-height: 44px;
-    text-align: center;
+.facialMask .facialList img{
+    width: 100%;
+    height: 300px;
+    display: block;
+    background: #FF0EA7;
+    border-radius: 3px;
 }
-
-/*------------------------*/
 
 
 /*------------------------------------navBottom---------------------------------*/
 
 .navBottom{
-    background: #fff;
-    color: #333;
+    margin-top: 10px;
+    background: #000;
+    color: #fff;
     line-height: 40px;
     padding: 0;
+    text-align: center;
 }
 
 
@@ -650,14 +618,9 @@
     min-height: 160px;
 }
 
-.navBottom .navBot {
-    margin-top: 50px;
-    border-top: 2px solid #DF385F;
-}
-
 .navBottom .navBot div div a{
     text-decoration: none;
-    color: #333;
+    color: #fff;
 }
 
 
@@ -672,7 +635,6 @@
     color: #fff;
     line-height: 50px;
     text-align: center;
-    background: #F5C3CF;
     position: relative;
 }
 
@@ -829,6 +791,10 @@
 
     #productList .list:last-child{
         padding:0 15px 0 15px;
+    }
+
+    #banner .swiper-pagination-bullet {
+        width: 50%;
     }
 }
 @media (max-width: 1170px) {
