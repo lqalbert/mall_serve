@@ -126,6 +126,7 @@ class SalesPerformanceController extends Controller
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
+                ['db.type','<>', 1] //内部订单不统计在里面
             ])
             ->paginate($pageSize);
         return [
