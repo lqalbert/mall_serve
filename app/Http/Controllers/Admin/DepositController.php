@@ -78,7 +78,7 @@ class DepositController extends Controller
             }
 //             $this->checkOrder($model->department_id);
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());
         }
@@ -149,9 +149,45 @@ class DepositController extends Controller
                 event(new OrderPass($value, $value->auditor));
             }
             DB::commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], '有部分订单扣款失败，请联系开发人员');
         }
     }
+
+    /**
+     * [revoke 保证金撤销]
+     * @param  Request $request [description]
+     * @param  [type]  $id      [description]
+     * @return [type]           [description]
+     */
+    public function revoke(Request $request,$id){
+        DB::beginTransaction();
+        try {
+            $model = Deposit::find($id);
+            $result = $model->increment('revoke_status');
+            if(!$result){
+                throw new \Exception("撤销失败");
+            }
+
+            $department = $model->department;
+            $department->subDeposit($request->money);
+            $re = $department->save();
+            if (!$re) {
+                throw new \Exception('更新部门保证金失败');
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
+
+
+
+
+
+
+
 }
