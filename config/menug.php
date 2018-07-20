@@ -37,7 +37,7 @@ return [
 		[
 				'text' => '配送管理',
 				'icon' => null,
-				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement','Mail']
+				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement']
 		    //'ExpressInfo',
 		],
 		[
