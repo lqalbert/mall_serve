@@ -249,6 +249,11 @@ return [
             'text' => '销售量化',
             'icon' => null,
             'index' => 'SalesQuantization'
+        ] ,
+        [
+            'text' => '寄件',
+            'icon' => null,
+            'index' => 'Mail'
         ]
 
 		
