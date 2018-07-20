@@ -19,7 +19,7 @@
     <div id="app">
     </div>
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static1.1.58/js/manifest.4dfa75a3b56087bafac2.js"></script>
+    <script type="text/javascript" src="/admin/static1.1.58/js/manifest.69d62d0c8b5649368c5e.js"></script>
     <script type="text/javascript" src="/admin/static1.1.58/js/vendor.39759d5a2894adc547cd.js"></script>
     <script type="text/javascript" src="/admin/static1.1.58/js/babel-polyfill.b70aa46778028066d797.js"></script>
     <script type="text/javascript" src="/admin/static1.1.58/js/app.4508bcdbd950525e0fee.js"></script>
