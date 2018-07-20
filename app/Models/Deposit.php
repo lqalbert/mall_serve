@@ -41,6 +41,7 @@ class Deposit extends Model
     		'charge_type',
     		'charge_time',
     		'remark',
+            'revoke_status'
     ];
     
     
