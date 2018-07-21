@@ -20,8 +20,14 @@ class FreightExtraController extends Controller
      */
     public function index(Request $request)
     {
+        if ($request->has('fr_id')) {
+            $this->model = $this->model->where('fr_id',$request->input('fr_id'));
+        }
         
-        $this->model = $this->model->where('fr_id',$request->input('fr_id'));
+        if ($request->has('province_id')) {
+            $this->model = $this->model->where('province_id',$request->input('province_id'));
+        }
+        
         if ($request->has('with')) {
             $this->model = $this->model->with($request->input('with'));
         }
