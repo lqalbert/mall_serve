@@ -180,6 +180,9 @@ Route::group($adminGroup, function(){
     Route::get('/salesperformance',  'SalesPerformanceController@index');
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
 
+    Route::resource('/freight-template',  'FreightTemplateController');
+    Route::resource('/freight-extra',  'FreightExtraController');
+    
 });
 
 
