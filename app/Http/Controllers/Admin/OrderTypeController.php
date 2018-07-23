@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\FreightTemplate;
-use Illuminate\Support\Facades\DB;
+use App\Models\OrderType;
+use App\Alg\ModelCollection;
 
-class FreightTemplateController extends Controller
+class OrderTypeController extends Controller
 {
     private $model = null;
-    public function __construct(FreightTemplate $modle)
+    public function __construct(OrderType $model)
     {
-        $this->model = $modle;
+        $this->model = $model;
     }
     /**
      * Display a listing of the resource.
@@ -23,9 +23,15 @@ class FreightTemplateController extends Controller
     {
         $result = $this->model->paginate($request->input('pageSize', 10));
         
+        $collection = $result->getCollection();
+        if ($request->has('appends')) {
+            ModelCollection::setAppends($collection, $request->input('appends'));
+        }
+        
+        
         return [
-            'items'=>$result->items(),
-            'total'=>$result->total()
+            'items'=> $collection,
+            'total'=> $result->total()
         ];
     }
 
@@ -47,24 +53,11 @@ class FreightTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        
-        DB::beginTransaction();
-        try {
-            $data = $request->all();
-            if ($data['is_default'] == 1) {
-                $this->updateUnDefault();
-            }
-            $re = $this->model->create($data);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return $this->error([], $e->getMessage());
-        }
-        DB::commit();
-        
+        $re = $this->model->create($request->all());
         if ($re) {
             return $this->success([]);
         } else {
-            return $this->error([]);
+            return $this->error();
         }
     }
 
@@ -99,20 +92,8 @@ class FreightTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        DB::beginTransaction();
-        try {
-            $data = $request->all();
-            if ($data['is_default'] == 1) {
-                $this->updateUnDefault();
-            }
-            unset($data['id']);
-            $re = $this->model->where('id', $id)->update($data);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return $this->error([], $e->getMessage());
-        }
-        DB::commit();
-        
+        //update 返回 bool
+        $re = $this->model->where('id', $id)->update($request->all());
         if ($re) {
             return $this->success([]);
         } else {
@@ -134,10 +115,5 @@ class FreightTemplateController extends Controller
         } else {
             return $this->error([]);
         }
-    }
-    
-    private function updateUnDefault()
-    {
-        $this->model->update(['is_default'=>0]);
     }
 }

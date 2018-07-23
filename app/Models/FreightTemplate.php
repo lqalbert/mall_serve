@@ -19,7 +19,8 @@ class FreightTemplate extends Model
         'is_include',
         'stand_fee',
         'stand_extra',
-        'basic_fee'
+        'basic_fee',
+        'is_default'
     ];
     
     protected $hidden = ['created_at', 'updated_at'];

@@ -25,6 +25,7 @@ class CreateFreightTemplate extends Migration
             $table->decimal('stand_fee')->default('0.00')->comment('包邮 条件 满多少才包 单位元');
             $table->decimal('stand_extra')->default('0.00')->comment('包邮 额外的费用 例如 顺丰 要加12元');
             $table->decimal('basic_fee')->default('0.00')->comment('不包邮的 基本邮费 物殊地区的邮费在另一个表里');
+            $table->unsignedTinyInteger('is_default')->default(0)->comment('是否默认选中 0否 1是');
         });
     }
 
