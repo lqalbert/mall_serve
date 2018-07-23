@@ -85,7 +85,13 @@ class FreightTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //update 返回 bool
+        $re = $this->model->where('id', $id)->update($request->all());
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
 
     /**
@@ -96,6 +102,11 @@ class FreightTemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $re = $this->model->destroy($id);
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
     }
 }
