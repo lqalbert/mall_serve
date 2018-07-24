@@ -260,7 +260,7 @@ class OrderBasicController extends Controller
                 'remark'=>$data['order_sn']
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
-            
+
             return $this->success([]);
         } else {
             return $this->error([]);
