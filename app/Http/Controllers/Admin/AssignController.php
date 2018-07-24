@@ -396,7 +396,15 @@ class AssignController extends Controller
         DB::beginTransaction();
         try {
             $assign = Assign::find($id);
-            $assign->load('goods');//
+            if($assign->is_stop > 0){
+                throw new \Exception("订单已拦截");
+            }
+
+            if($assign->is_repeat > 0){
+                throw new \Exception("订单已返单");
+            }
+
+            $assign->load('goods');
             $goodsArr = collect($assign->toArray())->get('goods');
             $goodsVolume = 0;
             $goodsWeight = 0;
@@ -410,7 +418,7 @@ class AssignController extends Controller
             if(!$per){
                 throw new  \Exception('纸箱获取失败,未设置纸箱比例');
             }
-            $carton = CartonManagement::where([ 
+            $carton = CartonManagement::where([
                 ['carton_volume','>=',$goodsVolume/$per->volume_ratio * 100]           
             ])
                                         ->orderBy('carton_volume')->first();
@@ -500,8 +508,15 @@ class AssignController extends Controller
     public function weightGoods(Request $request, $id)
     {
         //减库存
-        // var_dump($request->all());die();
         $assign = Assign::find($id);
+        if($assign->is_stop > 0){
+            return $this->error([],"订单已拦截");
+        }
+
+        if($assign->is_repeat > 0){
+            return $this->error([],"订单已返单");
+        }
+
         $real_weigth = $request->input('real_weigth');
         $express_fee = $request->input('express_fee',0);
         $assign->weightGoods($real_weigth,$express_fee,auth()->user());
