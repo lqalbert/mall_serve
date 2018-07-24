@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund'] // 'Refund'
+		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType'] // 'Refund'
 		],
 		[
 				'text' => '库存管理',
@@ -37,7 +37,7 @@ return [
 		[
 				'text' => '配送管理',
 				'icon' => null,
-				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement']
+				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement','FreightTemplate']
 		    //'ExpressInfo',
 		],
 		[

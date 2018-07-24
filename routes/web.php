@@ -181,6 +181,10 @@ Route::group($adminGroup, function(){
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
     Route::put('/deposit-revoke/{id}','DepositController@revoke');
 
+    Route::resource('/freight-template',  'FreightTemplateController');
+    Route::resource('/freight-extra',  'FreightExtraController');
+    Route::resource('/order-type',  'OrderTypeController');
+    
 });
 
 

@@ -254,6 +254,16 @@ return [
             'text' => '寄件',
             'icon' => null,
             'index' => 'Mail'
+        ],
+        [
+            'text' => '运费模板',
+            'icon' => null,
+            'index'=> 'FreightTemplate'
+        ],
+        [
+            'text' => '订单类型',
+            'icon' => null,
+            'index' => 'OrderType'
         ]
 
 		

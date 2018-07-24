@@ -56,6 +56,8 @@ class OrderBasic extends Model
         'user_name',
         'group_name',
         'department_name',
+        'include_freight',
+        'freight'
     ];
     
     /**
