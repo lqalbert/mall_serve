@@ -179,6 +179,7 @@ Route::group($adminGroup, function(){
 	Route::get('/sale-quan', 'SaleQuanController@index');
     Route::get('/salesperformance',  'SalesPerformanceController@index');
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
+    Route::put('/deposit-revoke/{id}','DepositController@revoke');
 
 });
 
