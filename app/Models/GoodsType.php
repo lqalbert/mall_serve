@@ -23,4 +23,9 @@ class GoodsType extends Model
     public function specs(){
     	return $this->belongsToMany('App\Models\GoodsSpecs', 'spec_type', 'type_id', 'spec_id');
     }
+    
+    public function cate()
+    {
+        return $this->hasOne('App\Models\Category','type_id')->where('level',1)->select('id','label');
+    }
 }

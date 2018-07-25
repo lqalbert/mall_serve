@@ -15,15 +15,19 @@ class ProductController extends CommonController
         static::$bar['line2']='line';
         
         $subNav = [
-            '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>''],
-            '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>''],
-            '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>''],
-            '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'']
+//             '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>''],
+//             '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>''],
+//             '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>''],
+//             '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'']
         ];
         $name='';
-        $goodsTypeName=GoodsType::all();
+        $goodsTypeName=GoodsType::with('cate')->all();
         foreach ($goodsTypeName as $k=>$v){
-            $subNav[$v['id']]['name']=$v['name'];
+            $subNav[$v['id']] = [
+                'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
+                'isactive'=>"",
+                'name' =>$v['name'],
+            ]   ;//             ['name']=$v['name'];
         }
         if($request->has('cate_id')){
             $subNav[$request->input('cate_id')]['isactive'] ='actionBar';
