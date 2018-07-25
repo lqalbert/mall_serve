@@ -39,7 +39,7 @@ class InventoryService
     /**
      * 销售锁定
      * @param unknown $entrepot
-     * @param unknown $products
+     * @param array $products
      * @param unknown $user
      * @throws Exception
      */

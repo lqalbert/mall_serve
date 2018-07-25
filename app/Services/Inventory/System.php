@@ -25,10 +25,10 @@ class System
     /**
      * 入库
      * @param unknown $entrepot_id
-     * @param array $products
+     * @param array|collection $products
      * @return number
      */
-    public function entryUpdate($entrepot_id, array $products)
+    public function entryUpdate($entrepot_id,  $products)
     {
         $affectedRows = 0;
         
@@ -71,7 +71,7 @@ class System
     /**
      * 出库 生产出库/损坏出库
      */
-    public function outUpdate($entrepot_id, array $products)
+    public function outUpdate($entrepot_id,  $products)
     {
         $affectedRows = 0;
 //         DB::beginTransaction();
@@ -94,7 +94,7 @@ class System
      * 销售锁定/解锁
      * 
      */
-    public function saleLock($entrepot_id, array $products, $on = true)
+    public function saleLock($entrepot_id,  $products, $on = true)
     {
         $affectedRows = 0;
 //         DB::beginTransaction();
@@ -126,7 +126,7 @@ class System
      * @param string $on
      * @return number
      */
-    public function assignLock($entrepot_id, array $products, $on = true)
+    public function assignLock($entrepot_id,  $products, $on = true)
     {
         $affectedRows = 0;
 //         DB::beginTransaction();
@@ -152,7 +152,7 @@ class System
     /**
      * 退换货入库
      */
-    public function rxUpdate($entrepot_id, array $products)
+    public function rxUpdate($entrepot_id,  $products)
     {
         $affectedRows = 0;
 //         DB::beginTransaction();
@@ -174,7 +174,7 @@ class System
     /**
      * 退换货出库 先暂时这么写　以后可能会改
      */
-    public function rxUpdateout($entrepot_id, array $products)
+    public function rxUpdateout($entrepot_id,  $products)
     {
         $affectedRows = 0;
 //         DB::beginTransaction();
@@ -200,7 +200,7 @@ class System
      * @param unknown $entrepot_id
      * @param array $products
      */
-    public function stockCheck($entrepot_id ,array $products)
+    public function stockCheck($entrepot_id , $products)
     {
         $affectedRows = 0;
         //         DB::beginTransaction();
@@ -223,7 +223,7 @@ class System
      * 换货锁定/解锁
      *
      */
-    public function exLock($entrepot_id, array $products, $on = true)
+    public function exLock($entrepot_id,  $products, $on = true)
     {
         $affectedRows = 0;
         //         DB::beginTransaction();

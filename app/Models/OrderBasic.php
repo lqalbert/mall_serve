@@ -39,6 +39,7 @@ class OrderBasic extends Model
 //         'exchange',
 //         'order_goods',
         'order_all_money',
+        'discounted_goods_money',
         'order_pay_money',
         'check_status',
         'order_sn',
