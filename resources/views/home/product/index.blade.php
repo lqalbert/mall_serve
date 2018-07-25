@@ -26,7 +26,7 @@
                     </a>
                 </div>--}}
                 @foreach($subNav as $key => $nav)
-                <div class="btnBox col-lg-3 col-md-3 col-sm-4 col-xs-6">
+                <div class="btnBox col-lg-2 col-md-2 col-sm-4 col-xs-6">
                     <a href="{{$nav['url']}}">
                         <div class=" col-lg-12 col-md-12 col-sm-12 col-xs-12 {{$nav['isactive']}}">
                             {{ $nav['name'] }}
