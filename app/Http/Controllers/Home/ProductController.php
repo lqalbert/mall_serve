@@ -22,7 +22,7 @@ class ProductController extends CommonController
         ];
         $name='';
         //还是有问题 的 如果 type 有多个非一级分类就会出错
-        $goodsTypeName=GoodsType::with('cate')->all();
+        $goodsTypeName=GoodsType::with('cate')->get();
         foreach ($goodsTypeName as $k=>$v){
             $subNav[$v['id']] = [
                 'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
