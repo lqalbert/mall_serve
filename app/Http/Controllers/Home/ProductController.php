@@ -21,6 +21,7 @@ class ProductController extends CommonController
 //             '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'']
         ];
         $name='';
+        //还是有问题 的 如果 type 有多个非一级分类就会出错
         $goodsTypeName=GoodsType::with('cate')->all();
         foreach ($goodsTypeName as $k=>$v){
             $subNav[$v['id']] = [
