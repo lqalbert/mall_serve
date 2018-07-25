@@ -266,4 +266,9 @@ class OrderBasic extends Model
         $map = ['销售订单','内部订单','商城订单'];
         return $map[$this->type];
     }
+    
+    public function orderType()
+    {
+        return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name');
+    }
 }
