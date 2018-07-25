@@ -145,7 +145,7 @@ class OrderBasic extends Model
     
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'deal_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     
     //auditor_id

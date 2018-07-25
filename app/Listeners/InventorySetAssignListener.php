@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderPass;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Http\Controllers\Inventory;
+use App\Services\Inventory\InventoryService;
 
 class InventorySetAssignListener
 {
@@ -16,9 +16,9 @@ class InventorySetAssignListener
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(InventoryService $inventory)
     {
-        $this->inventorySys = new Inventory();
+        $this->inventorySys = $inventory;
     }
 
     /**
@@ -30,6 +30,6 @@ class InventorySetAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
-        $this->inventorySys->setOrderAssign($order->entrepot_id, $order->getGoods());
+        $this->inventorySys->assignLock($order->entrepot, $event->getGoods(), $event->getUser());
     }
 }

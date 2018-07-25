@@ -7,7 +7,7 @@ namespace App\Listeners;
 use App\Events\AddOrder;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Http\Controllers\Inventory;
+use App\Services\Inventory\InventoryService;
 
 
 class AddOrderListener
@@ -18,7 +18,7 @@ class AddOrderListener
      *
      * @return void
      */
-    public function __construct(Inventory $inventory)
+    public function __construct(InventoryService $inventory)
     {
         $this->inventorySys = $inventory;
     }
@@ -32,7 +32,7 @@ class AddOrderListener
     public function handle(AddOrder $event)
     {
         $order = $event->getOrder();
-        $this->inventorySys->AddOrder($order->entrepot_id, $order->goods);
+        $this->inventorySys->saleLock($order->entrepot, $order->goods, $order->user);
         
     }
 }
