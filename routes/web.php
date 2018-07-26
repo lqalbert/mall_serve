@@ -184,6 +184,8 @@ Route::group($adminGroup, function(){
     Route::resource('/freight-template',  'FreightTemplateController');
     Route::resource('/freight-extra',  'FreightExtraController');
     Route::resource('/order-type',  'OrderTypeController');
+
+    Route::get('/assign-operate-records', 'AssignOperationController@index');
     
 });
 

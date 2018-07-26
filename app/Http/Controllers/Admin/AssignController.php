@@ -8,6 +8,7 @@ use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\FieldLike;
 use App\Alg\ModelCollection;
 use App\Events\Signatured;
+use App\Events\AddAssignOperationLog;
 use App\Models\Assign;
 use App\Models\Communicate;
 use App\Repositories\Criteria\Ordergoods\DateRange;
@@ -244,13 +245,25 @@ class AssignController extends Controller
         $data['check_status'] = 1;
         $data['status'] = 1;
         unset($data['ids']);
+        unset($data['assign_sns']);
         
         $ids = $request->input('ids', []);
         $re = Assign::whereIn('id', $ids)->update($data);
         if ($re) {
+            //添加发货单操作记录
+            $assign_sns = $request->input('assign_sns');
+            foreach ((array)$ids as $key => &$value) {
+                $dataLog = [
+                    'assign_id'=>$value,
+                    'action'=>'check',
+                    'remark'=>$assign_sns[$key]
+                ];
+                event(new AddAssignOperationLog(auth()->user(),$dataLog));
+                $dataLog = [];
+                unset($value);
+            }
             //处理面单请求
             //直接申请新的吧
-            
             $express = ExpressCompany::find($data['express_id']);
             $assigns = Assign::find($ids);
             $cmd = new TmsWayBillGet();
@@ -258,7 +271,7 @@ class AssignController extends Controller
             $re =  $service->send($cmd);
             //根据返回的re 来处理
             //成功要保存数据
-           if ($re['status'] == 1) { //成功
+            if ($re['status'] == 1) { //成功
                $cainiodata = $re['data'];
                if (count($cainiodata) == 0) {
                    return $this->error([],'面单获取失败:数量为0');
@@ -266,11 +279,11 @@ class AssignController extends Controller
                foreach ($cainiodata as $item) {
                    Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->name]);
                }
-           } else {
+            } else {
                return $this->error([], '面单获取失败:'.$re['msg']);
-           }
+            }
             
-//            Storage::disk('local')->put('waybill.json', json_encode($re));
+            // Storage::disk('local')->put('waybill.json', json_encode($re));
             return $this->success([]);
         } else {
             return $this->error([],'aa');
@@ -322,6 +335,13 @@ class AssignController extends Controller
         }
 
         if ($re) {
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'repeat',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success([]);
         } else {
             return $this->error([]);
@@ -343,6 +363,13 @@ class AssignController extends Controller
         $assign->stop_mark = $request->input('stop_mark');
         $re = $assign->save();
         if ($re) {
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'stop',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success([]);
         } else {
             return $this->error([]);
@@ -362,6 +389,13 @@ class AssignController extends Controller
         $re = $assign->save();
         $express = $assign->express;
         if ($re) {
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'express-print',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success(['express_sn'=>$assign->express_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
         } else {
             return $this->error([]);
@@ -380,6 +414,13 @@ class AssignController extends Controller
         $goods  = $assign->goods;
         $re = $assign->save();
         if ($re) {
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'assign-print',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success($goods);
         } else {
             return $this->error([]);
@@ -439,6 +480,13 @@ class AssignController extends Controller
             // $cartonModel = CartonManagement::find($carton->id);
             // $cartonModel->minusCartonNumber($carton->carton_number);
             // $cartonModel->save();
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'goods-inspect',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -522,6 +570,13 @@ class AssignController extends Controller
         $assign->weightGoods($real_weigth,$express_fee,auth()->user());
         $re = $assign->save();
         if ($re) {
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'goods-delivery',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success([]);
         } else {
             return $this->error([]);
@@ -543,7 +598,15 @@ class AssignController extends Controller
 //          $service->send($cmd);
 
 //         logger("[waybillupdate]", $re);
+//        
         if ($re['status'] == 1) { //成功
+            //添加发货单操作记录
+            $dataLog = [
+                'assign_id'=>$id,
+                'action'=>'update-waybill',
+                'remark'=>$assign->assign_sn
+            ];
+            event(new AddAssignOperationLog(auth()->user(),$dataLog));
 //             logger("[printDate]", [gettype($re['data']['printDate'])]);
             $updateRe = Assign::where('id', $id)->update(['express_sn'=> $re['data']['waybillCode'], 'print_data'=> $re['data']['printDate']]);
             if (!$updateRe) {
