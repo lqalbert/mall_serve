@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Models\OrderAddress;
-use App\Events\AddAssignOperationLog;
+use App\Models\AssignOperationLog;
 
-class OrderAddressController extends Controller
+class AssignOperationController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -16,14 +14,17 @@ class OrderAddressController extends Controller
      */
     public function index(Request $request)
     {
-        $where = [];
-        if($request->has('order_id')){
-            $where[] = ['order_id','=',$request->order_id];
+        $model = new AssignOperationLog;
+        if ($request->has('assign_id')) {
+            $model = $model->where('assign_id',$request->input('assign_id'));
         }
-        $result = OrderAddress::where($where)->get();
-
-        return ['items'=>$result,'total'=>count($result)];
         
+        $result = $model->get();
+        
+        return [
+            'items' => $result,
+            'total' => $result->count()
+        ];
     }
 
     /**
@@ -78,20 +79,7 @@ class OrderAddressController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->except(['id','assign_id','assign_sn']);
-        $re = OrderAddress::where('id', $id)->update($data);
-        if ($re) {
-            //添加发货单操作记录
-            $dataLog = [
-                'assign_id'=>$request->input('assign_id'),
-                'action'=>'edit-address',
-                'remark'=>$request->input('assign_sn')
-            ];
-            event(new AddAssignOperationLog(auth()->user(),$dataLog));
-            return $this->success([]);
-        } else {
-            return $this->error([]);
-        }
+        //
     }
 
     /**

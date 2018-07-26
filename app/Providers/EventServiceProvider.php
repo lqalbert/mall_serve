@@ -126,6 +126,10 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\AddOrderOperationLog' => [
             'App\Listeners\AddOrderOperationLogListener'
+        ],
+
+        'App\Events\AddAssignOperationLog' => [
+            'App\Listeners\AddAssignOperationLogListener'
         ]
         
     ];
