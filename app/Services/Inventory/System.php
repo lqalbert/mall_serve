@@ -134,7 +134,7 @@ class System
         $assignoper = $on ? '+' : '-' ;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set  sale_lock = sale_lock '.$oper.' ? , assign_lock = assign_lock '.$assignoper.' ?',
+                $affectedRows += $this->updates('set  sale_lock = sale_lock '.$saleoper.' ? , assign_lock = assign_lock '.$assignoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
             $this->updateIsSuccess($affectedRows);
