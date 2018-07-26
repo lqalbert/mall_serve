@@ -105,6 +105,7 @@ class DeliveryAddressController extends Controller
             $this->model->where('cus_id',$request->cus_id)->update(['default_address' => 0]);
         }
         $this->model->where('id','=',$id)->update($request->all());
+        return $this->success([]);
     }
 
     /**
