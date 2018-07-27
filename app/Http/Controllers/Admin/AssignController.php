@@ -212,12 +212,31 @@ class AssignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $re = $this->repository->update($request->all(), $id);
 //         if ($request->has('sign_at')) {
 //             event(new Signatured(Assign::find($id)));
 //         }
         if($re){
+            return $this->success($re);
+        }else{
+            return $this->error($re);
+        }
+
+    }
+
+
+    public function editExpressFee(Request $request, $id)
+    {
+        $re = $this->repository->update($request->all(), $id);
+        if($re){
+            //添加发货单操作记录
+//            $dataLog = [
+//                'assign_id'=>$id,
+//                'action'=>'edit-express-fee',
+//                'remark'=>$request->input('assign_sn')
+//            ];
+//            event(new AddAssignOperationLog(auth()->user(),$dataLog));
             return $this->success($re);
         }else{
             return $this->error($re);
