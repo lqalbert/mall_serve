@@ -187,7 +187,9 @@ Route::group($adminGroup, function(){
 
     Route::get('/assign-operate-records', 'AssignOperationController@index');
     Route::put('/order-assign-editexpressfee/{id}', 'AssignController@editExpressFee');//发货单修改实付运费
-    
+    Route::resource('/logisticsinformation',  'LogisticsInformationController');
+
+
 });
 
 
