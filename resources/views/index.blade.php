@@ -22,17 +22,22 @@
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <a href="{{ route('product/index', ['cate_id'=>'3'])  }}">
-                        <img class="imgs" src="images/home/index/banner1.jpg" alt="">
+                        <img class="imgs" src="images/home/index/minBanner.gif" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="{{ route('product/index', ['cate_id'=>'4'])  }}">
-                        <img class="imgs" src="images/home/index/banner2.jpg" alt="">
+                        <img class="imgs" src="images/home/index/minBanner0.jpg" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
                     <a href="{{ route('product/index', ['cate_id'=>'1'])  }}">
-                        <img class="imgs" src="images/home/index/banner3.jpg" alt="">
+                        <img class="imgs" src="images/home/index/minBanner1.jpg" alt="">
+                    </a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="{{ route('product/index', ['cate_id'=>'2'])  }}">
+                        <img class="imgs" src="images/home/index/minBanner2.jpg" alt="">
                     </a>
                 </div>
             </div>
@@ -48,268 +53,329 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 proTab">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                    <span class="proAction activeSpan">畅销单品</span>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                    <span class="proAction">最新产品</span>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                    <span class="proAction">爆款系列</span>
+                <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1 col-xs-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="proAction activeSpan">重磅新品</span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                        <span class="proAction">口碑之选</span>
+                    </div>
+                    {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <span class="proAction">爆款系列</span>
+                    </div>--}}
                 </div>
             </div>
         </div>
         {{--产品列表--}}
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale" style="padding: 0">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
-                <div class="swiper-container swiper-container1" style="width: 100%">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>VC匀净面膜</span>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexPro indexSaleL" style="padding: 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
+                    <div class="swiper-container swiper-container1" style="width: 100%">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>VC匀净面膜</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>美白舒缓 提亮肤色</span>
+                                    </div>
                                 </div>
-                                <div class="describe">
-                                    <span>美白舒缓 提亮肤色</span>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>净透焕颜黑面膜</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>净透舒缓 细致润泽</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>蓝铜胜肽水光面膜</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>莹亮水润 宛如新生</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿水</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>水嫩补水 唤醒活力</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>净透焕颜黑面膜</span>
-                                </div>
-                                <div class="describe">
-                                    <span>净透舒缓 细致润泽</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>蓝铜胜肽水光面膜</span>
-                                </div>
-                                <div class="describe">
-                                    <span>莹亮水润 宛如新生</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿水</span>
-                                </div>
-                                <div class="describe">
-                                    <span>水嫩补水 唤醒活力</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Add Arrows -->
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination1"></div>
                     </div>
-                    <!-- Add Arrows -->
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination1"></div>
                 </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexNew" style="padding: 0">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
-                <div class="swiper-container swiper-container3" style="width: 100%">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌洁颜乳</span>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexPro indexNew" style="padding: 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
+                    <div class="swiper-container swiper-container3" style="width: 100%">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌洁颜乳</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>洁净奢养 净肤养肤</span>
+                                    </div>
                                 </div>
-                                <div class="describe">
-                                    <span>洁净奢养 净肤养肤</span>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌精华乳</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>奢华能量 紧致塑颜</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌精华水</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>唤醒年轻态肌肤</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌修护精华液</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>一瓶多效 奢养肌底</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌修护精华液</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>一瓶多效 奢养肌底</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>金致焕肌修护精华液</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>一瓶多效 奢养肌底</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌精华乳</span>
-                                </div>
-                                <div class="describe">
-                                    <span>奢华能量 紧致塑颜</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌精华水</span>
-                                </div>
-                                <div class="describe">
-                                    <span>唤醒年轻态肌肤</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌修护精华液</span>
-                                </div>
-                                <div class="describe">
-                                    <span>一瓶多效 奢养肌底</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌修护精华液</span>
-                                </div>
-                                <div class="describe">
-                                    <span>一瓶多效 奢养肌底</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>金致焕肌修护精华液</span>
-                                </div>
-                                <div class="describe">
-                                    <span>一瓶多效 奢养肌底</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Add Arrows -->
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination3"></div>
                     </div>
-                    <!-- Add Arrows -->
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination3"></div>
                 </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexHot" style="padding: 0">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
-                <div class="swiper-container swiper-container4" style="width: 100%">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿洁面乳</span>
+            {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexPro indexHot" style="padding: 0">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
+                    <div class="swiper-container swiper-container4" style="width: 100%">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿洁面乳</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>温和亲肤 深透清洁</span>
+                                    </div>
                                 </div>
-                                <div class="describe">
-                                    <span>温和亲肤 深透清洁</span>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿精华液</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>烟酰胺 邂逅润、透、白</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿乳</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>深入补水 清澈美肌</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿水</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>深入补水 光彩活力</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿水</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>深入补水 光彩活力</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="indexList">
+                                    <img src="" alt="">
+                                    <div class="title">
+                                        <span>水嫩保湿水</span>
+                                    </div>
+                                    <div class="describe">
+                                        <span>深入补水 光彩活力</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿精华液</span>
-                                </div>
-                                <div class="describe">
-                                    <span>烟酰胺 邂逅润、透、白</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿乳</span>
-                                </div>
-                                <div class="describe">
-                                    <span>深入补水 清澈美肌</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿水</span>
-                                </div>
-                                <div class="describe">
-                                    <span>深入补水 光彩活力</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿水</span>
-                                </div>
-                                <div class="describe">
-                                    <span>深入补水 光彩活力</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="indexList">
-                                <img src="" alt="">
-                                <div class="title">
-                                    <span>水嫩保湿水</span>
-                                </div>
-                                <div class="describe">
-                                    <span>深入补水 光彩活力</span>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Add Arrows -->
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination4"></div>
                     </div>
-                    <!-- Add Arrows -->
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination4"></div>
                 </div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>--}}
         </div>
     </div>
 </div>
 <div class="container-fluid" style="padding: 0;">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit">
-        <img src="" alt="">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
+        <img src="images/home/index/maxBanner0.jpg" alt="">
     </div>
 </div>
-<div class="container-fluid">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 facialMask">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-            pulata面膜系列
+<div class="container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+            <img src="images/home/index/pro1.jpg" alt="">
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 facialList">
-            <img src="" alt="">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    深层清洁&nbsp;开启净透肌肤
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                    <span>
+                        水嫩保湿洁面乳 100g
+                    </span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">查看详情</div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 facialList">
-            <img src="" alt="">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    洁净奢养&nbsp;重塑年轻源动力
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                    <span>
+                        金致焕肌洁颜乳 100g
+                    </span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">查看详情</div>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 facialList">
-            <img src="" alt="">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+            <img src="images/home/index/pro2.jpg" alt="">
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 facialList">
-            <img src="" alt="">
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+            <img src="images/home/index/pro3.jpg" alt="">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    蓝铜胜肽&nbsp;绽现年轻水润肌
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                    <span>
+                        蓝铜胜肽水光面膜 26mlx5片
+                    </span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">查看详情</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    烟酰胺&nbsp;&nbsp;透光焕亮VC面膜
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                    <span>
+                        VC匀净面膜 26mlx5片
+                    </span>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">查看详情</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+            <img src="images/home/index/pro4.jpg" alt="">
         </div>
     </div>
 </div>
-
 <div class="container-fluid" style="padding: 0;">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit">
-        <img src="" alt="">
-    </div>
-</div>
-<div class="container-fluid" style="padding: 0;">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit">
-        <img src="" alt="">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
+        <img src="images/home/index/maxBanner.jpg" alt="">
     </div>
 </div>
  @include("home.sidetool")
@@ -339,7 +405,7 @@
             num=1
         }
         /*----轮播插件----*/
-        let text=['夏日美肌 润泽透亮','夏日福利 水嫩保湿','洁净奢养 金致焕肌','时光流转 美是永恒'];
+        let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
         let mySwiper=new Swiper('#banner .swiper-container2',{
             direction:'horizontal',
             loop:true,
@@ -361,8 +427,8 @@
 		    slidesPerView: 4,
 		    spaceBetween: 20,
 		    navigation: {
-			    nextEl: '.indexSale .swiper-button-next',
-			    prevEl: '.indexSale .swiper-button-prev',
+			    nextEl: '.indexSaleL .swiper-button-next',
+			    prevEl: '.indexSaleL .swiper-button-prev',
 		    },
 		    pagination: {
 			    el: '.swiper-pagination1',
@@ -401,22 +467,11 @@
 	    });
 	    /*----------产品切换效果---------*/
         $('.proTab .proAction').on('click',function () {
-            let con=$(this).text();
+        	let num=$(this).parent().index();
             $('.proTab .proAction').removeClass('activeSpan');
             $(this).addClass('activeSpan');
-            if(con == "畅销单品"){
-                $('.indexSale').show();
-                $('.indexNew').hide();
-                $('.indexHot').hide();
-            }else if(con == '最新产品'){
-	            $('.indexSale').hide();
-	            $('.indexNew').show();
-	            $('.indexHot').hide();
-            }else{
-	            $('.indexSale').hide();
-	            $('.indexNew').hide();
-	            $('.indexHot').show();
-            }
+            $('.indexPro').hide();
+	        $('.indexPro:eq('+num+')').show();
         });
         /*---------------*/
         var flg=true

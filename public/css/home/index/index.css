@@ -440,26 +440,21 @@
 
 #banner .paginationBox{
     min-height: 40px;
-    background: #000;
+    background: #fff;
     padding: 0;
 }
 
 #banner .paginationBox div{
     padding: 0;
-    line-height: 40px;
+    line-height: 60px;
     text-align: center;
 }
 
 #banner .paginationBox .bbx{
-    border: 1px solid #e8e8e8;
     position: absolute;
-    top: -15px;
+    top: -20px;
     left: 0;
     z-index: 1111;
-}
-
-#banner .paginationBox .bbx div{
-    border-right: 1px solid #e8e8e8;
 }
 
 #banner .swiper-pagination-bullet {
@@ -468,14 +463,14 @@
     height: auto;
     border-radius: 0;
     font-size: 16px;
-    color:#000;
+    color:#999;
     opacity: 1;
-    background: #fff;
+    background: #000;
 }
 
 #banner .swiper-pagination-bullet-active {
     color:#fff;
-    background: #FF0000;
+    background: #D61B52;
 }
 /*-------------------------------------------*/
 /*-------------------------产品轮播---------------------*/
@@ -518,15 +513,20 @@
 
 .indexBox .indexList div{
     width: 100%;
-    line-height: 40px;
+    line-height: 30px;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 16px;
 }
 
 .indexBox .indexList div span{
-    padding: 10px 15px;
-    border: 1px solid #888888;
+    padding: 5px 15px;
+}
+
+.indexBox .indexList .describe{
+    font-size: 14px;
+    color: #999;
+    margin-top: 0;
 }
 
 .swiper-button-next{
@@ -539,17 +539,16 @@
     left: -20px;
 }
 
-.indexNew{
+.indexPro{
     display: none;
 }
 
-.indexHot{
-    display: none;
+.indexPro:first-child{
+    display: block;
 }
 
 .swiper-pagination-bullets{
     text-align: center;
-    border-bottom: -10px;
 }
 
 /*----------------金色套装------------------*/
@@ -570,28 +569,80 @@
 
 /*----------------pulata面膜系列-----------*/
 
-.facialMask{
-    margin-top: 15px;
+.indexSale{
     padding: 0;
-    margin-bottom: 15px;
 }
 
-.facialMask .title{
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 60px;
-    letter-spacing: 5px;
+.indexSale div{
+    padding: 0;
 }
 
-.facialMask .facialList img{
+.indexSale .saleImg img{
+    max-width: 530px;
     width: 100%;
-    height: 300px;
-    display: block;
-    background: #FF0EA7;
-    border-radius: 3px;
+    height: auto;
+    float: right;
 }
 
+.indexSale .saleImgs img{
+    float: left;
+}
+
+.indexSale .saleCont{
+    position: relative;
+    height: 100%;
+}
+
+.indexSale .saleCont .box{
+    position: absolute;
+    top: 50%;
+    margin-top: 167px;
+}
+
+.indexSale .saleCont .box div{
+    padding-left: 50px;
+}
+
+.indexSale .saleConts .box div{
+    padding-right: 50px;
+    padding-left: 0;
+    text-align: right;
+}
+
+.indexSale .saleCont .title{
+    line-height: 50px;
+    font-size: 36px;
+    font-family: SimSun-ExtB;
+}
+
+.indexSale .saleCont .describe{
+    line-height: 30px;
+    font-size: 24px;
+    color: #666;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.indexSale .saleCont .describe span{
+    padding: 5px 0;
+    border-bottom: 1px solid #999;
+}
+
+.indexSale .saleCont .box .checkout{
+    line-height: 42px;
+    text-align: center;
+    width: 160px;
+    background: #000;
+    color: #fff;
+    font-family: 微软雅黑;
+    padding: 0;
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+.indexSale .saleConts .checkout{
+    float: right;
+}
 
 /*------------------------------------navBottom---------------------------------*/
 
