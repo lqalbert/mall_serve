@@ -192,7 +192,7 @@ class OrderBasic extends Model
     
     public function isSetExpress()
     {
-        return $this->express_delivery == 1 && is_numeric($this->express_id);
+        return $this->express_delivery ? $this->express_delivery : false ;
     }
     
     

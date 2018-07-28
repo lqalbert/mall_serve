@@ -146,7 +146,7 @@ class TmsWayBillGet
     }
     
     public function setAddress($xml, $data)
-    {
+    {   
         $address = $xml->addChild('address');
         foreach ($data as $key=>$item) {
             $address->addChild($key, $item);
