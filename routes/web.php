@@ -181,6 +181,7 @@ Route::group($adminGroup, function(){
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
     Route::resource('/mail',  'MailController');
     Route::put('/order-assign-editexpressfee/{id}', 'AssignController@editExpressFee');//发货单修改实付运费
+    Route::resource('/logisticsinformation',  'LogisticsInformationController');
 
 
 });
