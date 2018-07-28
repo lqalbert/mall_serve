@@ -378,7 +378,7 @@
         <img src="images/home/index/maxBanner.jpg" alt="">
     </div>
 </div>
- @include("home.sidetool")
+@include("home.sidetool")
 @include("home.navBottom")
 
 
@@ -386,172 +386,172 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/swiper.min.js"></script>
 <script>
-    $(document).ready(function () {
-        var flag = true;
-        function IsPC() {
-            var userAgentInfo = navigator.userAgent;
-            var Agents = ["Android", "iPhone",
-                "SymbianOS", "Windows Phone"];
-            for (var v = 0; v < Agents.length; v++) {
-                if (userAgentInfo.indexOf(Agents[v]) > 0) {
-                    flag = false;
-                    break;
-                }
-            }
-        }
-        var num=5;
-        IsPC();
-        if(!flag){
-            num=1
-        }
-        /*----轮播插件----*/
-        let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
-        let mySwiper=new Swiper('#banner .swiper-container2',{
-            direction:'horizontal',
-            loop:true,
-            //分页器
-	        pagination: {
-		        el: '.bbx',
-		        clickable: true,
-		        renderBullet: function (index, className) {
-			        return '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 ' + className + '">' + text[index] + '</div>';
-		        },
-	        },
-            autoplay:{
-                delay:5000,
-                stopOnLastSlide:false,
-                disableOnInteraction:true
-            }
-        });
-	    let swiper = new Swiper('.swiper-container1', {
-		    slidesPerView: 4,
-		    spaceBetween: 20,
-		    navigation: {
-			    nextEl: '.indexSaleL .swiper-button-next',
-			    prevEl: '.indexSaleL .swiper-button-prev',
-		    },
-		    pagination: {
-			    el: '.swiper-pagination1',
-			    clickable: true,
-		    },
-		    observer:true,
-		    observeParents:true
-	    });
-	    let swiper3 = new Swiper('.swiper-container3', {
-		    slidesPerView: 4,
-		    spaceBetween: 20,
-		    navigation: {
-			    nextEl: '.indexNew .swiper-button-next',
-			    prevEl: '.indexNew .swiper-button-prev',
-		    },
-		    pagination: {
-			    el: '.swiper-pagination3',
-			    clickable: true,
-		    },
-		    observer:true,
-		    observeParents:true
-	    });
-	    let swiper4 = new Swiper('.swiper-container4', {
-		    slidesPerView: 4,
-		    spaceBetween: 20,
-		    navigation: {
-			    nextEl: '.indexHot .swiper-button-next',
-			    prevEl: '.indexHot .swiper-button-prev',
-		    },
-		    pagination: {
-			    el: '.swiper-pagination4',
-			    clickable: true,
-		    },
-            observer:true,
-            observeParents:true
-	    });
-	    /*----------产品切换效果---------*/
-        $('.proTab .proAction').on('click',function () {
-        	let num=$(this).parent().index();
-            $('.proTab .proAction').removeClass('activeSpan');
-            $(this).addClass('activeSpan');
-            $('.indexPro').hide();
-	        $('.indexPro:eq('+num+')').show();
-        });
-        /*---------------*/
-        var flg=true
-        /*$('#navBut').on('touchend',function () {
+	$(document).ready(function () {
+		var flag = true;
+		function IsPC() {
+			var userAgentInfo = navigator.userAgent;
+			var Agents = ["Android", "iPhone",
+				"SymbianOS", "Windows Phone"];
+			for (var v = 0; v < Agents.length; v++) {
+				if (userAgentInfo.indexOf(Agents[v]) > 0) {
+					flag = false;
+					break;
+				}
+			}
+		}
+		var num=5;
+		IsPC();
+		if(!flag){
+			num=1
+		}
+		/*----轮播插件----*/
+		let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
+		let mySwiper=new Swiper('#banner .swiper-container2',{
+			direction:'horizontal',
+			loop:true,
+			//分页器
+			pagination: {
+				el: '.bbx',
+				clickable: true,
+				renderBullet: function (index, className) {
+					return '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 ' + className + '">' + text[index] + '</div>';
+				},
+			},
+			autoplay:{
+				delay:5000,
+				stopOnLastSlide:false,
+				disableOnInteraction:true
+			}
+		});
+		let swiper = new Swiper('.swiper-container1', {
+			slidesPerView: 4,
+			spaceBetween: 20,
+			navigation: {
+				nextEl: '.indexSaleL .swiper-button-next',
+				prevEl: '.indexSaleL .swiper-button-prev',
+			},
+			pagination: {
+				el: '.swiper-pagination1',
+				clickable: true,
+			},
+			observer:true,
+			observeParents:true
+		});
+		let swiper3 = new Swiper('.swiper-container3', {
+			slidesPerView: 4,
+			spaceBetween: 20,
+			navigation: {
+				nextEl: '.indexNew .swiper-button-next',
+				prevEl: '.indexNew .swiper-button-prev',
+			},
+			pagination: {
+				el: '.swiper-pagination3',
+				clickable: true,
+			},
+			observer:true,
+			observeParents:true
+		});
+		let swiper4 = new Swiper('.swiper-container4', {
+			slidesPerView: 4,
+			spaceBetween: 20,
+			navigation: {
+				nextEl: '.indexHot .swiper-button-next',
+				prevEl: '.indexHot .swiper-button-prev',
+			},
+			pagination: {
+				el: '.swiper-pagination4',
+				clickable: true,
+			},
+			observer:true,
+			observeParents:true
+		});
+		/*----------产品切换效果---------*/
+		$('.proTab .proAction').on('click',function () {
+			let num=$(this).parent().index();
+			$('.proTab .proAction').removeClass('activeSpan');
+			$(this).addClass('activeSpan');
+			$('.indexPro').hide();
+			$('.indexPro:eq('+num+')').show();
+		});
+		/*---------------*/
+		var flg=true
+		/*$('#navBut').on('touchend',function () {
             $('#ul li a').addClass('navC')
         })
         $('#ul li a').on('click',function () {
             $('#ul li a').removeClass('sta')
             $(this).addClass('sta')
         })*/
-        /*---------------菜单鼠标事件*/
-        $('#ul li a').hover(function () {
-            $('#ul li a div').removeClass('line')
-            $(this).children('div').addClass('line')
-        })
-        $('#ul').mouseleave(function () {
-            var flg=true
-            $('#ul li a').each(function () {
-                if($(this).hasClass('sta')){
-                    $('#ul li a div').removeClass('line')
-                    $(this).children('div').addClass('line')
-                    flg=false
-                }
-            })
-            if(flg){
-                $('#ul li a div').removeClass('line')
-            }
-        })
-        $('#buyC').click(function (e) {
-            flg=true
-            if($('#buyCar').css('display')=='none'){
-                $('#buyCar').fadeIn(100);
-                $('#myCenter').fadeOut(10)
-            }else{
-                $('#buyCar').fadeOut(10)
-            }
-        })
-        $('#loginBar .countP').click(function (e) {
-            if($('#myCenter').css('display')=='none'){
-                $('#myCenter').fadeIn(100);
-                $('#buyCar').fadeOut(10)
-            }else{
-                $('#myCenter').fadeOut(10)
-            }
-        })
-        $('#goTo').click(function () {
-            window.location.href="{{URL('car/index')}}"
-        })
-        $('.buyList .del').click(function () {
-            flg=false
-        })
-        $(document.body).click(function (e) {
-            var ee=e.srcElement?e.srcElement:e.target
-            if(ee.id!='countP'){
-                $('#myCenter').fadeOut(10)
-            }
-            if(ee.id!='buyC'&&flg){
-                $('#buyCar').fadeOut(10)
-            }
-        });
-        //监听滚动条
-        $(window).scroll(function () {
-            var top=$(document).scrollTop();
-            if(top>=200){
-                $('.personBar').fadeOut('slow');
-            }else{
-                $('.personBar').fadeIn('fast')
-            }
-        });
-        $('#scrollTop').on('click',function () {
-            $(document).scrollTop(0);
-        })
-        //搜索点击事件
-        $('#souI').click(function(event) {
-            var seachText = $('#searchB').val();
-            if(seachText){
-                window.location.href="{{URL('product/index?seachText=')}}"+seachText;
-            }
-        });
-    })
+		/*---------------菜单鼠标事件*/
+		$('#ul li a').hover(function () {
+			$('#ul li a div').removeClass('line')
+			$(this).children('div').addClass('line')
+		})
+		$('#ul').mouseleave(function () {
+			var flg=true
+			$('#ul li a').each(function () {
+				if($(this).hasClass('sta')){
+					$('#ul li a div').removeClass('line')
+					$(this).children('div').addClass('line')
+					flg=false
+				}
+			})
+			if(flg){
+				$('#ul li a div').removeClass('line')
+			}
+		})
+		$('#buyC').click(function (e) {
+			flg=true
+			if($('#buyCar').css('display')=='none'){
+				$('#buyCar').fadeIn(100);
+				$('#myCenter').fadeOut(10)
+			}else{
+				$('#buyCar').fadeOut(10)
+			}
+		})
+		$('#loginBar .countP').click(function (e) {
+			if($('#myCenter').css('display')=='none'){
+				$('#myCenter').fadeIn(100);
+				$('#buyCar').fadeOut(10)
+			}else{
+				$('#myCenter').fadeOut(10)
+			}
+		})
+		$('#goTo').click(function () {
+			window.location.href="{{URL('car/index')}}"
+		})
+		$('.buyList .del').click(function () {
+			flg=false
+		})
+		$(document.body).click(function (e) {
+			var ee=e.srcElement?e.srcElement:e.target
+			if(ee.id!='countP'){
+				$('#myCenter').fadeOut(10)
+			}
+			if(ee.id!='buyC'&&flg){
+				$('#buyCar').fadeOut(10)
+			}
+		});
+		//监听滚动条
+		$(window).scroll(function () {
+			var top=$(document).scrollTop();
+			if(top>=200){
+				$('.personBar').fadeOut('slow');
+			}else{
+				$('.personBar').fadeIn('fast')
+			}
+		});
+		$('#scrollTop').on('click',function () {
+			$(document).scrollTop(0);
+		})
+		//搜索点击事件
+		$('#souI').click(function(event) {
+			var seachText = $('#searchB').val();
+			if(seachText){
+				window.location.href="{{URL('product/index?seachText=')}}"+seachText;
+			}
+		});
+	})
 </script>
 </body>
 </html>
