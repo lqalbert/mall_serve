@@ -5,13 +5,13 @@
     padding: 0;
 }
 
-.newsContent   .leftContent{
+.newsContent .leftContent{
     margin-top: 20px;
     background: #fff;
     /*padding-right: 20px;*/
 }
 
-.newsContent   .leftContent .contentShow{
+.newsContent .leftContent .contentShow{
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
@@ -19,52 +19,52 @@
     padding: 15px;
 }
 
-.newsContent   .leftContent .contentShow .bigTitle{
+.newsContent .leftContent .contentShow .bigTitle{
     line-height: 50px;
     font-weight: bold;
     font-size: 24px;
     text-align: center;
 }
 
-.newsContent   .leftContent .contentShow .timeZone{
+.newsContent .leftContent .contentShow .timeZone{
     color: #999;
     font-size: 12px;
     text-align: center;
     line-height: 25px;
 }
 
-.newsContent   .leftContent .contentShow .timeZone span{
+.newsContent .leftContent .contentShow .timeZone span{
     margin-right: 10px;
 }
 
-.newsContent   .leftContent .contentShow .content{
+.newsContent .leftContent .contentShow .content{
     margin-top: 10px;
     line-height: 25px;
 }
 
-.newsContent   .leftContent .contentShow .content .daodu{
+.newsContent .leftContent .contentShow .content .daodu{
     font-weight: bold;
 }
 
-.newsContent .  .leftContent .contentShow .content .con{
+.newsContent .leftContent .contentShow .content .con{
     text-indent: 2em;
 }
 
-.newsContent   .leftContent .contentShow .content img{
+.newsContent .leftContent .contentShow .content img{
     width: 100%;
     margin: 15px auto;
 }
 
-.newsContent   .leftContent .proNext{
+.newsContent .leftContent .proNext{
     line-height: 40px;
     margin-top: 10px;
 }
 
-.newsContent   .leftContent .proNext .next{
+.newsContent .leftContent .proNext .next{
     text-align: right;
 }
 
-.newsContent   .leftContent .proNext a{
+.newsContent .leftContent .proNext a{
     color: #999;
 }
 
@@ -78,7 +78,7 @@
 	background: #fafafa;
 }
 
-.newsContent   .rightContent .rightTit{
+.newsContent .rightContent .rightTit{
     margin-top: 20px;
     line-height: 30px;
     padding-left: 15px;
@@ -99,10 +99,10 @@
     overflow:hidden;
 }
 
-.newsContent   .rightContent .rightList .imgBox img{
+.newsContent .rightContent .rightList .imgBox img{
     width: 100%;
 }
 
-.newsContent   .rightContent .rightList .msgBox{
+.newsContent .rightContent .rightList .msgBox{
     padding-left: 10px;
 }

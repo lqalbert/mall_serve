@@ -1,7 +1,6 @@
 <div class=" navBottom">
     <div class="container">
     	<div class="row navBot">
-            
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">关于普拉她</div>
                     <div class="">
