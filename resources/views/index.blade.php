@@ -54,7 +54,7 @@
                 </a>
             </div>
             <div class="imgBox col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <a href="{{ route('product/index', ['cate_id'=>'2']) }}">
+                <a href="{{ route('product/index', ['cate_id'=>'25']) }}">
                     <img width="100%" src="images/2018-06-27/2.png" alt="">
                 </a>
             </div>
