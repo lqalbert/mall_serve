@@ -26,6 +26,6 @@ class GoodsType extends Model
     
     public function cate()
     {
-        return $this->hasOne('App\Models\Category','type_id')->where('level',1)->select('id','label');
+        return $this->hasOne('App\Models\Category','type_id')->where('level',1)->select('id','label','type_id');
     }
 }
