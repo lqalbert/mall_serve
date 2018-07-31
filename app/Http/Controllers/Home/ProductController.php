@@ -26,6 +26,7 @@ class ProductController extends CommonController
         $goodsTypeName->load('cate');
         logger("[dd]", $goodsTypeName->toArray());
         foreach ($goodsTypeName as $k=>$v){
+            logger("[dd2]", [$v->cate]);
             $subNav[$v->cate->id] = [
                 'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
                 'isactive'=>"",
