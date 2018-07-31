@@ -14,7 +14,7 @@
 }
 
 .indexContent{
-    padding-top: 109px;
+    padding-top: 62px;
     background: #fff ;
 
 }
@@ -27,20 +27,77 @@
     background-size: 100% 100%;*/
 }
 
+.logoImg img{
+    max-width: 156px;
+}
+
+.searchBox{
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 0;
+    top: 15px;
+}
+
+.searchBox input{
+    width: 100%;
+    line-height: 30px;
+    border-radius: 30px;
+    color: #fff;
+    background: #D51B51;
+    font-size: 14px;
+    margin: 0;
+    padding: 0 30px 0 10px;
+    border: none;
+    outline: none;
+}
+
+.searchBox #souI{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #ccc;font-size:14px;
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+    color:#ccc;font-size:14px;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color:#ccc;font-size:14px;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color:#ccc;font-size:14px;
+}
+
 /*---------------------导航栏---------------------*/
 #navbar{
     color: #777;
-    background: rgba(255,255,255,0.9);
+    background: #000;
     height: auto;
+    z-index: 99999;
     /*background-image: url("../../../images/home/index/nav.png");*/
+}
+
+#navbar .row{
+    margin: 0;
 }
 
 #navbar a{
     color: #fff;
+    padding: 0;
+    line-height: 40px;
 }
 
 #nav{
-    height: 50px;
     font-size: 16px;
 }
 
@@ -51,6 +108,7 @@
 }*/
 
 #ul{
+    margin: 10px 0;
 }
 
 #ul .m-drop li a{
@@ -110,320 +168,11 @@
     background: #666;
 }
 
-#logo{
-    font-size: 26px;
-    width: 200px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
-    float: left;
-}
-
-#logo img{
-    width: 100%;
-    height: 100%;
-}
-
-.searchBar{
-    padding: 0;
-}
-
-#searchBar{
-    width: 100%;
-    height: 40px;
-    padding: 0;
-    position: relative;
-}
-#searchB{
-    width: 100%;
-    height: 40px;/*2F9F6D*/
-    border: none;
-    border-bottom: 2px solid #666;
-    outline: none;
-    padding: 0 50px 0 15px;
-}
-#searchB:focus{
-    border-bottom:2px solid #DF385F;
-}
-
-#souI{
-    position: absolute;
-    top:5px;
-    right: 10px;
-    color: #666;
-    font-size: 30px;
-    display: block;
-    width: 40px;
-    text-align: center;
-    line-height: 30px;
-    cursor: pointer;
-}
-
-#souI:hover{
-    color: #2F9F6D;
-}
-
-/*--------------------------------登录购物车--------------------*/
-
-.personBar{
-    height: 68px;
-    background: #ffffff;
-}
-
-.personBar div{
-    padding: 0;
-}
-
-.loginActionBars{
-    height: 40px;
-    z-index: 9999;
-    margin-top: 22px;
-}
-
-#loginBar{
-    height: 40px;
-    padding: 0;
-}
-#loginBar div{
-    padding: 0;
-}
-#loginBar a{
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-#loginBar .barL{
-    height: 40px;
-}
-#loginBar div {
-    position: relative;
-}
-#loginBar div img{
-    cursor: pointer;
-    width: 40px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin: 0 0 0 -20px;
-}
-#loginBar div img:hover{
-    box-shadow: 0 0 3px #DF385F;
-}
-
-#loginBar #buyNumber{
-    position: absolute;
-    color: #fff;
-    padding: 3px;
-    font-size: 12px;
-    line-height: 14px;
-    text-align: center;
-    background: red;
-    border-radius: 50%;
-    right: 5px;
-    top:10px;
-}
-
-.loginB{
-    top:-50px;
-    right: 100px;
-}
-
-/*-----------------------------购物车------------------*/
-
-#buyCar{
-    display: none;
-    position: relative;
-    float: right;
-    width: 100%;
-    margin-top: 25px;
-    box-shadow: 0 0 5px #999;
-    height: auto;
-    background: #fff;
-    border-radius: 10px;
-    padding-top:5px;
-    padding-bottom: 15px;
-}
-#buyCar .tangleBox{
-    position: absolute;
-    right: 0;
-    top: -16px;
-    height: 16px;
-    width: 70px;
-}
-#buyCar .tangle{
-    position: absolute;
-    right:7%;
-    top: -16px;
-    width: 0;
-    height: 0;
-    border-bottom: 16px solid #ccc;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-}
-#buyCar .header{
-    padding-left: 15px;
-    padding-right: 15px;
-    border-bottom: 1px solid #ccc;
-}
-#buyCar .header .left{
-    line-height: 40px;
-}
-#buyCar .header .totalBuy{
-    height: 20px;
-    background: #AFDB99;
-    color: #fff;
-    text-align: center;
-    line-height: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-#buyCar .bottom{
-    padding-left: 15px;
-    padding-right: 15px;
-}
-#buyCar .bottom div{
-    padding: 0;
-}
-#buyCar .bottom .line{
-    height: 1px;
-    background: #ccc;
-    margin-top: 5px;
-}
-#buyCar .bottom .buyLists{
-    max-height: 300px;
-    min-height: 100px;
-    overflow-y: scroll;
-}
-#buyCar .bottom .buyList{
-    margin-top: 10px;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #ccc;
-}
-#buyCar .bottom .buyList .listL img{
-    width: 100%;
-    height: 65px;
-}
-#buyCar .bottom .buyList .listM .listName{
-    line-height: 30px;
-    color: #0256D5;
-    font-size: 16px;
-    padding: 0 10px 0 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-#buyCar .bottom .buyList .listM .listV{
-    line-height: 20px;
-    color: #999;
-    padding: 0 10px 0 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-#buyCar .bottom .buyList .listR .price{
-    line-height: 35px;
-    text-align: center;
-    color: red;
-}
-#buyCar .bottom .buyList .listR .del{
-    line-height: 30px;
-    font-size: 16px;
-    text-align: center;
-    color: red;
-    cursor: pointer;
-}
-#buyCar .bottom .goBuy{
-    border-top: 1px solid #2F9F6D;
-    line-height: 50px;
-}
-#buyCar .bottom .goBuy .goB{
-    height: 50px;
-}
-#buyCar .bottom .goBuy #goTo{
-    position: absolute;
-    right: 0;
-    top:10px;
-    width: 120px;
-    height: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    background: #30B16A;
-    text-align: center;
-    line-height: 30px;
-    color: #fff;
-}
-
-/*--------------------------个人中心-------------------------*/
-
-#loginBar #myCenter{
-    display: none;
-    min-width: 140px;
-    height: auto;
-    box-shadow: 0 0 5px #666;
-    background: #fff;
-    border-radius: 5px;
-    margin-top: 25px;
-    padding: 10px;
-}
-
-#myCenter .tangle{
-    width: 0;
-    height: 0;
-    border-bottom: 16px solid #ccc;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    position: absolute;
-    top:-16px;
-    left: 17%;
-}
-
-#myCenter .userImg img{
-    display: block;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: #2ca02c;
-    margin: 10px auto;
-}
-
-#myCenter .username{
-    line-height: 30px;
-    text-align: center;
-    -ms-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-    overflow: hidden;
-}
-
-#myCenter .barList{
-    line-height: 30px;
-    margin-top: 10px;
-    border-radius: 3px;
-    color: #999;
-    cursor: pointer;
-}
-
-#myCenter .barList div:nth-child(1){
-    text-align: right;
-}
-
-#myCenter .barList:hover{
-    background: #eeeeee;
-}
-
-#myCenter .barList span{
-    margin-right: 10px;
-}
-
 /*-------------------banner-----------------*/
 #banner{
     padding: 0;
     height: auto;
-    margin-top: 109px;
+    margin-top: 63px;
 }
 #banner img{
     width: 100%;
@@ -504,8 +253,8 @@
 
 .indexBox .indexList img{
     display: block;
-    max-width:310px;
-    height: 310px;
+    max-width:100%;
+    height: auto;
     margin: 0 auto;
     background: #2ab27b;
     border-radius: 2px;
