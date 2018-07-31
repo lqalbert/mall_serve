@@ -21,22 +21,22 @@
         <div class="swiper-container2" style="width: 100%;height: 100%">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'3'])  }}">
+                    <a href="{{ url('/product/6')  }}">
                         <img class="imgs" src="images/home/index/minBanner.gif" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'4'])  }}">
+                    <a href="{{ url('/product/6')  }}">
                         <img class="imgs" src="images/home/index/minBanner0.jpg" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'1'])  }}">
+                    <a href="{{ url('/product/6')  }}">
                         <img class="imgs" src="images/home/index/minBanner1.jpg" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'2'])  }}">
+                    <a href="{{ url('/product/6')  }}">
                         <img class="imgs" src="images/home/index/minBanner2.jpg" alt="">
                     </a>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="swiper-container swiper-container1" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new1.jpg" alt="">
                                         <div class="title">
@@ -86,7 +86,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new2.jpg" alt="">
                                         <div class="title">
@@ -99,7 +99,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new3.jpg" alt="">
                                         <div class="title">
@@ -112,7 +112,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new4.jpg" alt="">
                                         <div class="title">
@@ -138,7 +138,7 @@
                     <div class="swiper-container swiper-container3" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel1.jpg" alt="">
                                         <div class="title">
@@ -151,7 +151,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel2.jpg" alt="">
                                         <div class="title">
@@ -164,7 +164,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel3.jpg" alt="">
                                         <div class="title">
@@ -177,7 +177,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="#">
+                                <a href="{{ url('/product/6') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel4.jpg" alt="">
                                         <div class="title">
@@ -225,7 +225,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkout">
-                        <a href="#">
+                        <a href="{{ url('/product/6') }}">
                             查看详情
                         </a>
                     </div>
@@ -246,7 +246,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkout">
-                        <a href="#">
+                        <a href="{{ url('/product/6') }}">
                             查看详情
                         </a>
                     </div>
@@ -273,7 +273,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkout">
-                        <a href="#">
+                        <a href="{{ url('/product/6') }}">
                             查看详情
                         </a>
                     </div>
@@ -294,7 +294,7 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkout">
-                        <a href="#">
+                        <a href="{{ url('/product/6') }}">
                             查看详情
                         </a>
                     </div>
