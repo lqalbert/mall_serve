@@ -73,48 +73,56 @@
                     <div class="swiper-container swiper-container1" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/new1.jpg" alt="">
-                                    <div class="title">
-                                        <span>美肌滤镜水精华粉底液</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/new1.jpg" alt="">
+                                        <div class="title">
+                                            <span>美肌滤镜水精华粉底液</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>一滴入底 缔造无暇丝缎肌</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>一滴入底 缔造无暇丝缎肌</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/new2.jpg" alt="">
-                                    <div class="title">
-                                        <span>美肌滤镜气垫霜</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/new2.jpg" alt="">
+                                        <div class="title">
+                                            <span>美肌滤镜气垫霜</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>打造女神透光感肌</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>打造女神透光感肌</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/new3.jpg" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿水</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/new3.jpg" alt="">
+                                        <div class="title">
+                                            <span>水嫩保湿水</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>打造水润鲜肌</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>打造水润鲜肌</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/new4.jpg" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿精华液</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/new4.jpg" alt="">
+                                        <div class="title">
+                                            <span>水嫩保湿精华液</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>水力充盈 就是玻尿酸</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>水力充盈 就是玻尿酸</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                         <!-- Add Arrows -->
@@ -130,48 +138,56 @@
                     <div class="swiper-container swiper-container3" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/sel1.jpg" alt="">
-                                    <div class="title">
-                                        <span>vc匀净面面膜</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/sel1.jpg" alt="">
+                                        <div class="title">
+                                            <span>vc匀净面面膜</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>匀净透光 光耀精华</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>匀净透光 光耀精华</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/sel2.jpg" alt="">
-                                    <div class="title">
-                                        <span>蓝铜胜肽水光面膜</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/sel2.jpg" alt="">
+                                        <div class="title">
+                                            <span>蓝铜胜肽水光面膜</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>密集保湿</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>密集保湿</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/sel3.jpg" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌修护精华液</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/sel3.jpg" alt="">
+                                        <div class="title">
+                                            <span>金致焕肌修护精华液</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>一瓶多效 奢养肌底</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>一瓶多效 奢养肌底</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="images/home/index/sel4.jpg" alt="">
-                                    <div class="title">
-                                        <span>水嫩洁面乳</span>
+                                <a href="#">
+                                    <div class="indexList">
+                                        <img src="images/home/index/sel4.jpg" alt="">
+                                        <div class="title">
+                                            <span>水嫩洁面乳</span>
+                                        </div>
+                                        <div class="describe">
+                                            <span>一瓶多效 奢养肌底</span>
+                                        </div>
                                     </div>
-                                    <div class="describe">
-                                        <span>一瓶多效 奢养肌底</span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                         </div>
                         <!-- Add Arrows -->
@@ -187,7 +203,9 @@
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
-        <img src="images/home/index/maxBanner0.jpg" alt="">
+        <a href="#">
+            <img src="images/home/index/maxBanner0.jpg" alt="">
+        </a>
     </div>
 </div>
 <div class="container">
@@ -206,7 +224,11 @@
                     </span>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
+                    <div class="checkout">
+                        <a href="#">
+                            查看详情
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,7 +245,11 @@
                     </span>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
+                    <div class="checkout">
+                        <a href="#">
+                            查看详情
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -246,7 +272,11 @@
                     </span>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
+                    <div class="checkout">
+                        <a href="#">
+                            查看详情
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -263,7 +293,11 @@
                     </span>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
+                    <div class="checkout">
+                        <a href="#">
+                            查看详情
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -274,7 +308,9 @@
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
-        <img src="images/home/index/maxBanner.jpg" alt="">
+        <a href="#">
+            <img src="images/home/index/maxBanner.jpg" alt="">
+        </a>
     </div>
 </div>
 @include("home.sidetool")
