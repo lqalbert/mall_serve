@@ -9,7 +9,7 @@ namespace App\Services\WayBill\MsgType;
  */
 class TmsWayBillGet 
 {
-    private $data = [
+    protected $data = [
         'cpCode'=>'',
         'sender'=>null,
         'tradeOrderInfoDtos'=>null

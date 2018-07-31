@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Mail;
 use Illuminate\Http\Request;
+use App\Services\WayBill\WayBillService;
+use App\Services\WayBill\MsgType\TmsWayBillGet;
 
 class MailController extends Controller
 {
@@ -120,6 +122,29 @@ class MailController extends Controller
             return $this->success ( [] );
         } else {
             return $this->error ( [] );
+        }
+    }
+    
+    public function getWaybillCode(Request $request, WayBillService $service)
+    {
+        //处理面单请求
+        //直接申请新的吧
+        $express = ExpressCompany::find($data['express_id']);
+        $assigns = Assign::find($ids);
+        $cmd = new TmsWayBillGet(); 
+        $cmd->setParam($assigns, $express, auth()->user()->id);
+        $re =  $service->send($cmd);
+        
+        if ($re['status'] == 1) { //成功
+            $cainiodata = $re['data'];
+            if (count($cainiodata) == 0) {
+                return $this->error([],'面单获取失败:数量为0');
+            }
+            foreach ($cainiodata as $item) {
+//                 Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->name]);
+            }
+        } else {
+            return $this->error([], '面单获取失败:'.$re['msg']);
         }
     }
 }
