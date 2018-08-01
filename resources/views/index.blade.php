@@ -21,17 +21,17 @@
         <div class="swiper-container2" style="width: 100%;height: 100%">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <a href="{{ url('/product/6')  }}">
+                    <a href="{{ url('/product/20')  }}">
                         <img class="imgs" src="images/home/index/minBanner.gif" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="{{ url('/product/6')  }}">
+                    <a href="{{ url('/product/34')  }}">
                         <img class="imgs" src="images/home/index/minBanner0.jpg" alt="">
                     </a>
                 </div>
                 <div class="swiper-slide">
-                    <a href="{{ url('/product/6')  }}">
+                    <a href="{{ url('/product/27')  }}">
                         <img class="imgs" src="images/home/index/minBanner1.jpg" alt="">
                     </a>
                 </div>
@@ -99,7 +99,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/32') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new3.jpg" alt="">
                                         <div class="title">
@@ -112,7 +112,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/29') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new4.jpg" alt="">
                                         <div class="title">
@@ -138,7 +138,7 @@
                     <div class="swiper-container swiper-container3" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/21') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel1.jpg" alt="">
                                         <div class="title">
@@ -151,7 +151,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/22') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel2.jpg" alt="">
                                         <div class="title">
@@ -164,7 +164,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/27') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel3.jpg" alt="">
                                         <div class="title">
@@ -177,7 +177,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/28') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/sel4.jpg" alt="">
                                         <div class="title">
@@ -210,113 +210,105 @@
 </div>
 <div class="container">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-        <a href="{{ url('/product/6') }}">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
-                <img src="images/home/index/pro1.jpg" alt="">
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                        深层清洁&nbsp;开启净透肌肤
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+            <img src="images/home/index/pro1.jpg" alt="">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    深层清洁&nbsp;开启净透肌肤
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
                         <span>
                             水嫩保湿洁面乳 100g
                         </span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="checkout">
-                            <a href="{{ url('/product/6') }}">
-                                查看详情
-                            </a>
-                        </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">
+                        <a href="{{ url('/product/28') }}">
+                            查看详情
+                        </a>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-    	<a href="{{ url('/product/6') }}">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                        洁净奢养&nbsp;重塑年轻源动力
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    洁净奢养&nbsp;重塑年轻源动力
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
                         <span>
                             金致焕肌洁颜乳 100g
                         </span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="checkout">
-                            <a href="{{ url('/product/6') }}">
-                                查看详情
-                            </a>
-                        </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">
+                        <a href="{{ url('/product/23') }}">
+                            查看详情
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
-                <img src="images/home/index/pro2.jpg" alt="">
-            </div>
-        </a>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+            <img src="images/home/index/pro2.jpg" alt="">
+        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-    	<a href="{{ url('/product/6') }}">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
-                <img src="images/home/index/pro3.jpg" alt="">
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                        蓝铜胜肽&nbsp;绽现年轻水润肌
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+            <img src="images/home/index/pro3.jpg" alt="">
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    蓝铜胜肽&nbsp;绽现年轻水润肌
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
                         <span>
                             蓝铜胜肽水光面膜 26mlx5片
                         </span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="checkout">
-                            <a href="{{ url('/product/6') }}">
-                                查看详情
-                            </a>
-                        </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">
+                        <a href="{{ url('/product/22') }}">
+                            查看详情
+                        </a>
                     </div>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-    	<a href="{{ url('/product/6') }}">
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                        烟酰胺&nbsp;&nbsp;透光焕亮VC面膜
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                    烟酰胺&nbsp;&nbsp;透光焕亮VC面膜
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
                         <span>
                             VC匀净面膜 26mlx5片
                         </span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="checkout">
-                            <a href="{{ url('/product/6') }}">
-                                查看详情
-                            </a>
-                        </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkout">
+                        <a href="{{ url('/product/21') }}">
+                            查看详情
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
-                <img src="images/home/index/pro4.jpg" alt="">
-            </div>
-        </a>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+            <img src="images/home/index/pro4.jpg" alt="">
+        </div>
     </div>
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
-        <a href="{{ url('/product/6') }}">
+        <a href="{{ url('/product/33') }}">
             <img src="images/home/index/maxBanner.jpg" alt="">
         </a>
     </div>
