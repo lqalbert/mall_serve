@@ -31,14 +31,14 @@ class DepositRefundListener
      */
     public function handle(OrderCancel $event)
     {
-        $order = $event->getOrder();
+        // $order = $event->getOrder();
         //暂时注释 后面逻辑确定了再开放
-        // $department = $order->department;
+        /*$department = $order->department;
         
-        // $department->addDeposit($order->order_pay_money);
-        // if (!$department->save()) {
-        //     throw new \Exception('退还保证金失败');
-        // }
+        $department->addDeposit($order->order_pay_money);
+        if (!$department->save()) {
+            throw new \Exception('退还保证金失败');
+        }*/
         
     }
 }

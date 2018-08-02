@@ -14,6 +14,7 @@ use App\Events\AddOrder;
 use App\Events\OrderPass;
 use App\Events\OrderCancel;
 use App\Events\AddOrderOperationLog;
+use App\Events\AddDepositOperationLog;
 use App\Repositories\Criteria\FieldEqual;
 use App\Repositories\Criteria\FieldLike;
 use App\Models\User;
@@ -247,6 +248,8 @@ class OrderBasicController extends Controller
             if ($data['status'] == 1) {
                 try {
                     event( new OrderPass($this->model, auth()->user()));
+                    //添加保证金日志
+                    event(new AddDepositOperationLog(auth()->user(),$this->model,'check'));
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();
@@ -260,7 +263,6 @@ class OrderBasicController extends Controller
                 'remark'=>$data['order_sn']
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
-
             return $this->success([]);
         } else {
             return $this->error([]);
@@ -278,6 +280,8 @@ class OrderBasicController extends Controller
 
             $re = $this->repository->update(['status'=> OrderBasic::CANCEL], $id);
             event(new OrderCancel($model));
+            //添加保证金日志 暂时注释 后面再开放
+            // event(new AddDepositOperationLog(auth()->user(),$model,'cancel'));
             //添加订单操作记录事件
             $order_sn = $this->model->where('id',$id)->value('order_sn');
             $dataLog = [
