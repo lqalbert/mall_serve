@@ -21,6 +21,7 @@ class CreateTableMailGoods extends Migration
             $table->unsignedInteger('sku_id')->comment('sku_id');
             $table->char('sku_sn',50)->comment('编号');
             $table->string('goods_name',50)->nullable()->comment('商品名称');
+            $table->unsignedSmallInteger('goods_number')->default(0)->comment('数量');
             $table->string('sku_name',50)->nullable()->comment('SKU名称');
             $table->decimal('price',8,2)->default('0.00')->comment('单价0.00');
             $table->string('remark',200)->nullable()->comment('备注');

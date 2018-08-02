@@ -41,7 +41,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                     ]
                 ],
                 "packageInfo"=> $item->getPackageInfo(),
-                'recipient'=> $item->address->getRecipient(),
+                'recipient'=> $item->getRecipient(),
                 'templateUrl'=>$templateUrl,//模板URL
                 'userId'=>$userId, //使用者ID
             ];

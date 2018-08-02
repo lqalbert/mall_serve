@@ -14,6 +14,7 @@ class MailGoods extends Model
         'sku_id',
         'sku_sn',
         'goods_name',
+        'goods_number',
         'sku_name',
         'price',
         'remark',

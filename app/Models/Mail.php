@@ -51,7 +51,7 @@ class Mail extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods','assign_id')->orderBy('sku_sn','asc');
+        return $this->hasMany('App\Models\MailGoods','mail_id');
     }
     
     
@@ -71,6 +71,31 @@ class Mail extends Model
             "items"=>$items,
             // "volume"=>"", //体积　非必填
             // "weight"=>"", //重量　非必填
+        ];
+    }
+    
+//     public function getRecipient()
+//     {
+        
+//     }
+    
+    /**
+     * 获取菜鸟接口规定的收货地址结构数据
+     */
+    public function getRecipient()
+    {
+
+        return [
+            'address'=>[
+                'province'=>$this->area_province_name,
+                'city'    =>$this->area_city_name,
+                'district'=>$this->area_district_name,
+                //                 'town'    =>"",
+                'detail'  =>$this->address
+            ],
+            "phone"=>$this->phone,
+            "mobile"=>"",
+            "name"=>$this->name
         ];
     }
 }

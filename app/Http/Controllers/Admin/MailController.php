@@ -6,6 +6,8 @@ use App\Models\Mail;
 use Illuminate\Http\Request;
 use App\Services\WayBill\WayBillService;
 use App\Services\WayBill\MsgType\TmsWayBillGet;
+use App\Services\WayBill\MsgType\TmsWayBillGet2;
+use App\Models\ExpressCompany;
 
 class MailController extends Controller
 {
@@ -127,12 +129,14 @@ class MailController extends Controller
     
     public function getWaybillCode(Request $request, WayBillService $service)
     {
-        //处理面单请求
-        //直接申请新的吧
-        $express = ExpressCompany::find($data['express_id']);
-        $assigns = Assign::find($ids);
-        $cmd = new TmsWayBillGet(); 
-        $cmd->setParam($assigns, $express, auth()->user()->id);
+        $ids = $request->input('ids');
+        $express_id = $request->input("express_id");
+        $mais = $this->model->whereIN('id', $ids)->get();
+        
+        $express = ExpressCompany::find($express_id);
+        
+        $cmd = new TmsWayBillGet2(); 
+        $cmd->setParam($mais, $express, auth()->user()->id);
         $re =  $service->send($cmd);
         
         if ($re['status'] == 1) { //成功
@@ -141,10 +145,29 @@ class MailController extends Controller
                 return $this->error([],'面单获取失败:数量为0');
             }
             foreach ($cainiodata as $item) {
-//                 Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->name]);
+                Mail::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->company_name]);
             }
+            
+            return $this->success();
         } else {
             return $this->error([], '面单获取失败:'.$re['msg']);
+        }
+    }
+    
+    /**
+     * 面单打印
+     * @todo 事件处理　操作记录
+     * 打印
+     */
+    public function waybillPrint(Request $request)
+    {
+        $mails = $this->model->whereIn('id', $request->input('ids'))->select('express_id','print_data')->get();
+        $mail = $mails->first();
+        $express = $mail->express;
+        if ($mails) {
+            return $this->success(['printer'=>$express->printer,'print_data'=>$mails->pluck('print_data')]);
+        } else {
+            return $this->error([]);
         }
     }
 }

@@ -180,7 +180,7 @@ Route::group($adminGroup, function(){
     Route::get('/salesperformance',  'SalesPerformanceController@index');
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
     Route::put('/deposit-revoke/{id}','DepositController@revoke');
-    Route::resource('/mail',  'MailController');
+    
     Route::resource('/freight-template',  'FreightTemplateController');
     Route::resource('/freight-extra',  'FreightExtraController');
     Route::resource('/order-type',  'OrderTypeController');
@@ -188,6 +188,10 @@ Route::group($adminGroup, function(){
     Route::get('/assign-operate-records', 'AssignOperationController@index');
     Route::put('/order-assign-editexpressfee/{id}', 'AssignController@editExpressFee');//发货单修改实付运费
     Route::resource('/logisticsinformation',  'LogisticsInformationController');
+    
+    Route::put('/mail/waybill',  'MailController@getWaybillCode');
+    Route::get('/mail/print',  'MailController@waybillPrint');
+    Route::resource('/mail',  'MailController');
     Route::resource('/mail-goods',  'MailGoodsController');
 
 

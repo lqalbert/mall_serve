@@ -26,10 +26,8 @@ class MailGoodsController extends Controller
         $data = $this->model->where($where)
         ->orderBy('created_at', 'desc')
         ->paginate($request->input('pageSize',10));
+        
         return ['items' => $data->items(), 'total' => $data->total()];
-        return [
-            'items'=>[]
-        ];
     }
     
     public function store(Request $request)
@@ -45,7 +43,7 @@ class MailGoodsController extends Controller
         
     }
     
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $re = $this->model->where('id','=',$id)->update($request->all());
         if ($re) {
@@ -55,7 +53,7 @@ class MailGoodsController extends Controller
         }
     }
     
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
         $re =  $this->model->destroy($id);
         if ($re) {

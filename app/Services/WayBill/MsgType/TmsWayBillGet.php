@@ -123,7 +123,7 @@ class TmsWayBillGet
     }
     
     public function toXml($data)
-    {
+    {   
         $xml = simplexml_load_string('<request></request>');
 
         $xml->addChild('cpCode', $data['cpCode']);
