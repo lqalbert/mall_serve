@@ -102,7 +102,7 @@ ET;
         inner join customer_user as cu on cb.id = cu.cus_id
         left join  (select count( distinct cus_id) as obcus_count, count(id) as ob_count , order_basic.{$groupBy}
                     from order_basic 
-                    where   order_basic.status>0 and order_basic.status<7 and order_basic.type <> 1
+                    where   order_basic.status>0 and order_basic.status<7 and order_basic.type <> 1 
                     group by order_basic.{$groupBy} ) as ob on cu.{$groupBy} = ob.{$groupBy}
         left join customer_basic as cba on cb.id = cba.id and cba.type = 'C'
         left join customer_basic as cbb on cb.id = cbb.id and cbb.type = 'B'
