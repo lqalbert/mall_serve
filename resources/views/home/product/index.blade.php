@@ -42,7 +42,9 @@
             <a href="{{URL('product', ['id'=>$item->id])}}">
                 <div class="productBox col-lg-3 col-md-3 col-sm-4 col-xs-12">
                     <div class="productList col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <img src="{{$item->cover_url}}" alt="">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgBox">
+                            <img src="{{$item->cover_url}}" alt="">
+                        </div>
                         <div class="msgPro col-lg-12 col-md-12 col-sm-12 col-xs12">
                             <div class="title col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 {{$item->goods_name}}&nbsp;

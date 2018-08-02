@@ -1,13 +1,12 @@
 *{
     padding: 0;
     margin: 0;
-    font-family: 微软雅黑;
 }
 
 .headBar{
     max-height: 123px;
-    padding: 0;
-    background: #DF385F;
+    padding: 0 0 2px 0;
+    background: #000;
 }
 
 .headBar div{
@@ -37,7 +36,7 @@
 }
 
 #navbar a{
-    color: #333;
+    color: #fff;
 }
 
 #nav{
@@ -438,202 +437,222 @@
     width: 100%;
     height: 100%;
 }
-/*----------minBanner-------------------*/
-#minBanner{
-    margin-top: 10px;
-    margin-left:-9px;
-    margin-right: -9px;
-}
 
-#minBanner div{
+#banner .paginationBox{
+    min-height: 40px;
+    background: #fff;
     padding: 0;
 }
 
-#minBanner .imgBox{
-    padding: 0 10px 0 10px;
+#banner .paginationBox div{
+    padding: 0;
+    line-height: 60px;
+    text-align: center;
+}
+
+#banner .paginationBox .bbx{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    z-index: 1111;
+}
+
+#banner .swiper-pagination-bullet {
+    display: block;
+    width: 25%;
+    height: auto;
+    border-radius: 0;
+    font-size: 16px;
+    color:#999;
+    opacity: 1;
+    background: #000;
+}
+
+#banner .swiper-pagination-bullet-active {
+    color:#fff;
+    background: #D61B52;
+}
+/*-------------------------------------------*/
+/*-------------------------产品轮播---------------------*/
+.proTab{
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+    margin: 30px 0;
+}
+
+.proTab span{
+    padding: 0 15px 11px 15px;
+    border-bottom: 2px solid #fff;
+    cursor: pointer;
+    user-select: none;
+}
+
+.proTab span.activeSpan{
+    border-bottom: 2px solid #666;
+}
+
+.indexBox {
+    overflow: hidden;
+    min-height: 100px;
     margin-bottom: 15px;
 }
 
-#minBanner .imgBox img:hover{
-    box-shadow: 0 0 3px #bf9d63,
-    0 0 5px #bf9d63;
-}
-
-
-/*----------------productList----------------------*/
-#productList{
-    padding: 0;
-    margin: 0px -10px;
-}
-
-
-#productList .list{
-    margin-top: 10px;
-}
-
-#productList .list{
-    padding: 0px 10px 0px 10px;
-}
-
-#productList .list img{
+.indexBox .indexList{
     width: 100%;
 }
 
-/*-------------------------------------------*/
-/*-------------------------内容区域---------------------*/
-
-#content{
-    padding: 0;
-}
-
-/*------------------新品首发------------------*/
-
-.newProduct{
-    margin-top: 40px;
-    padding: 0;
-    height: auto;
-}
-
-.newProduct div{
-    padding: 0;
-}
-
-#content .newT{
-    line-height: 40px;
-}
-
-#content .newT .left span{
+.indexBox .indexList img{
     display: block;
-    float: left;
-    font-size: 16px;
-    margin-right: 10px;
-    font-weight: bold;
+    max-width:310px;
+    height: 310px;
+    margin: 0 auto;
+    background: #2ab27b;
+    border-radius: 2px;
 }
 
-#content .newT .left .line{
-    height: 20px;
-    width: 5px;
-    background: #7ACDEC;
-    margin-top: 10px;
-}
-
-#content .newT .right{
-    text-align: right;
-}
-
-#content .newT .right a{
-    color: #666;
-    text-decoration: none;
-}
-
-.newProduct .newC{
-    padding: 0;
-    background: #fff;
-}
-
-.newProduct .newC .left{
-    height: 440px;
-}
-
-.newProduct .newC .left img{
+.indexBox .indexList div{
     width: 100%;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.indexBox .indexList div span{
+    padding: 5px 15px;
+}
+
+.indexBox .indexList .describe{
+    font-size: 14px;
+    color: #999;
+    margin-top: 0;
+}
+
+.swiper-button-next{
+    top: 150px;
+    right: -20px;
+}
+
+.swiper-button-prev{
+    top: 150px;
+    left: -20px;
+}
+
+.indexPro{
+    display: none;
+}
+
+.indexPro:first-child{
+    display: block;
+}
+
+.swiper-pagination-bullets{
+    text-align: center;
+}
+
+/*----------------金色套装------------------*/
+
+.goldSuit{
+    margin-top: 15px;
+    height: auto;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.goldSuit img{
+    display: block;
+    width: 100%;
+    height: 700px;
+    background: #2ab27b;
+}
+
+/*----------------pulata面膜系列-----------*/
+
+.indexSale{
+    padding: 0;
+}
+
+.indexSale div{
+    padding: 0;
+}
+
+.indexSale .saleImg img{
+    max-width: 530px;
+    width: 100%;
+    height: auto;
+    float: right;
+}
+
+.indexSale .saleImgs img{
+    float: left;
+}
+
+.indexSale .saleCont{
+    position: relative;
     height: 100%;
 }
 
-.newProduct .newC .right{
-    height: 440px;
-    overflow: hidden;
-    position: relative;
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+.indexSale .saleCont .box{
+    position: absolute;
+    top: 50%;
+    margin-top: 167px;
 }
 
-.newProduct .newC .right .imgBox a{
-    color: #333;
-    display: block;
-    width: 100%;
+.indexSale .saleCont .box div{
+    padding-left: 50px;
 }
 
-.newProduct .newC .right .imgBox {
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    text-align:center;
+.indexSale .saleConts .box div{
+    padding-right: 50px;
+    padding-left: 0;
+    text-align: right;
 }
 
-.newProduct .newC .right .imgBox img{
-    display: block;
-    max-width: 100%;
-    max-height: 140px;
-    margin: 0 auto;
+.indexSale .saleCont .title{
+    line-height: 50px;
+    font-size: 36px;
+    font-family: SimSun-ExtB;
 }
 
-.newProduct .newC .right .imgBox .msg{
-    line-height: 20px;
-    float: left;
-    width: 100%;
-}
-
-.newProduct .newC .right .imgBox .msg div{
-    width: 100%;
-    text-align: center;
-    height: 20px;
-}
-
-.newProduct .newC .right .imgBox .msg .goodsName{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 0 10px 0 10px;
-    font-size: 16px;
-}
-
-.newProduct .newC .right .imgBox .msg .brief{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 0 10px;
-    font-size: 12px;
-    height: 30px;
+.indexSale .saleCont .describe{
     line-height: 30px;
-    color: #999;
+    font-size: 24px;
+    color: #666;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.indexSale .saleCont .describe span{
+    padding: 5px 0;
+    border-bottom: 1px solid #999;
+}
+
+.indexSale .saleCont .box .checkout{
+    line-height: 42px;
     text-align: center;
-}
-
-.newProduct .newC .right .imgBox .msg .price{
-    color: red;
-}
-
-.newProduct .newC .right .swiper-button-prev{
-    background: #ccc;
-    font-size: 30px;
+    width: 160px;
+    background: #000;
     color: #fff;
-    line-height: 44px;
-    text-align: center;
+    font-family: 微软雅黑;
+    padding: 0;
+    font-size: 18px;
+    letter-spacing: 3px;
 }
 
-.newProduct .newC .right .swiper-button-next{
-    background: #ccc;
-    font-size: 30px;
-    color: #fff;
-    line-height: 44px;
-    text-align: center;
+.indexSale .saleConts .checkout{
+    float: right;
 }
-
-/*------------------------*/
-
 
 /*------------------------------------navBottom---------------------------------*/
 
 .navBottom{
-    background: #fff;
-    color: #333;
+    margin-top: 10px;
+    background: #000;
+    color: #fff;
     line-height: 40px;
     padding: 0;
+    text-align: center;
 }
 
 
@@ -650,14 +669,9 @@
     min-height: 160px;
 }
 
-.navBottom .navBot {
-    margin-top: 50px;
-    border-top: 2px solid #DF385F;
-}
-
 .navBottom .navBot div div a{
     text-decoration: none;
-    color: #333;
+    color: #fff;
 }
 
 
@@ -665,14 +679,13 @@
     padding-left: 44px;
 }
 .navNum a{
-	color: #fff;
+    color: #fff;
 }
 
 .navBottom .navNum{
     color: #fff;
     line-height: 50px;
     text-align: center;
-    background: #F5C3CF;
     position: relative;
 }
 
@@ -741,8 +754,8 @@
 }
 
 #scrollBox #fcode {
-	width: 100px;
-	height:100px;
+    width: 100px;
+    height:100px;
 }
 
 #qrcode{
@@ -829,6 +842,10 @@
 
     #productList .list:last-child{
         padding:0 15px 0 15px;
+    }
+
+    #banner .swiper-pagination-bullet {
+        width: 50%;
     }
 }
 @media (max-width: 1170px) {

@@ -264,6 +264,11 @@ return [
             'text' => '订单类型',
             'icon' => null,
             'index' => 'OrderType'
+        ],
+        [
+            'text' => '前端图片管理',
+            'icon' => null,
+            'index' => 'SlideManage'
         ]
 
 		
