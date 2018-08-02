@@ -190,6 +190,9 @@ Route::group($adminGroup, function(){
     Route::resource('/logisticsinformation',  'LogisticsInformationController');
 
 
+    Route::resource('/freight-template',  'FreightTemplateController');
+    Route::resource('/freight-extra',  'FreightExtraController');
+    
 });
 
 
