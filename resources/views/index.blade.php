@@ -15,7 +15,6 @@
 <!--导航-->
 @include("home.nav")
 <!--/ 导航-->
-
 <div id="banner" class="indexContent container-fluid">
     <div class=" bannerBox col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">
         <div class="swiper-container2" style="width: 100%;height: 100%">
@@ -40,15 +39,17 @@
                         <img class="imgs" src="images/home/index/minBanner2.jpg" alt="">
                     </a>
                 </div> --}}
-                
-                @foreach ($topImg as $img)
-                    <div class="swiper-slide">
-                        {{-- <a href="{{ route('product/index', ['id'=>$img->goods_id])  }}"> --}}
-                        <a href="{{ url($img->href_url) }}">
-                            <img class="imgs" src="{{ asset($img->cover_url) }}" alt="{{$img->name}}">
-                        </a>
-                    </div>
-                @endforeach
+                @if (isset($topImg))
+                    @foreach ($topImg as $img)
+                        <div class="swiper-slide">
+                            {{-- <a href="{{ route('product/index', ['id'=>$img->goods_id])  }}"> --}}
+
+                            <a href="{{ url($img->href_url) }}">
+                                <img class="imgs" src="{{ asset($img->cover_url) }}" alt="{{$img->name}}">
+                            </a>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>
@@ -125,21 +126,23 @@
                                     </div>
                                 </div>
                             </div> --}}
-                            @foreach ($importantGoods as $goods)
-                                <div class="swiper-slide">
-                                    <a href="{{ url($goods->href_url) }}">
-                                        <div class="indexList">
-                                            <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
-                                            <div class="title">
-                                                <span>{{ $goods->name }}</span>
+                            @if (isset($importantGoods))
+                                @foreach ($importantGoods as $goods)
+                                    <div class="swiper-slide">
+                                        <a href="{{ url($goods->href_url) }}">
+                                            <div class="indexList">
+                                                <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                                                <div class="title">
+                                                    <span>{{ $goods->name }}</span>
+                                                </div>
+                                                <div class="describe">
+                                                    <span>{{ $goods->description }}</span>
+                                                </div>
                                             </div>
-                                            <div class="describe">
-                                                <span>{{ $goods->description }}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         <!-- Add Arrows -->
                         <!-- Add Pagination -->
@@ -219,21 +222,23 @@
                                     </div>
                                 </div>
                             </div> -->
-                            @foreach ($goodGoods as $goods)
-                                <div class="swiper-slide">
-                                    <a href="{{ url($goods->href_url) }}">
-                                        <div class="indexList">
-                                            <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
-                                            <div class="title">
-                                                <span>{{ $goods->name }}</span>
+                            @if (isset($goodGoods))
+                                @foreach ($goodGoods as $goods)
+                                    <div class="swiper-slide">
+                                        <a href="{{ url($goods->href_url) }}">
+                                            <div class="indexList">
+                                                <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                                                <div class="title">
+                                                    <span>{{ $goods->name }}</span>
+                                                </div>
+                                                <div class="describe">
+                                                    <span>{{ $goods->description }}</span>
+                                                </div>
                                             </div>
-                                            <div class="describe">
-                                                <span>{{ $goods->description }}</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                                        </a>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         <!-- Add Arrows -->
                         <!-- Add Pagination -->
@@ -328,12 +333,13 @@
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
         {{-- <img src="images/home/index/maxBanner0.jpg" alt=""> --}}
-
-        <div class="swiper-slide">
-            <a href="{{ url($showMid->href_url) }}">
-                <img src="{{ asset($showMid->cover_url) }}" alt="{{$showMid->name}}">
-            </a>
-        </div>
+        @if (isset($showMid))
+            <div class="swiper-slide">
+                <a href="{{ url($showMid->href_url) }}">
+                    <img src="{{ asset($showMid->cover_url) }}" alt="{{$showMid->name}}">
+                </a>
+            </div>
+        @endif
 
     </div>
 </div>
@@ -358,57 +364,57 @@
             </div>
         </div>
     </div> --}}
-
-    @foreach ($imgText as $goods)
-        @if ($loop->index % 2 == 0)
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
-                    <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                            {{ $goods->name }}
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                            <span>
-                                {{ $goods->description }}
-                            </span>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <a href="{{ url($goods->href_url) }}">
-                                <div class="checkout">查看详情</div>
-                            </a>
+    @if (isset($imgText))
+        @foreach ($imgText as $goods)
+            @if ($loop->index % 2 == 0)
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+                        <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                                {{ $goods->name }}
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                                <span>
+                                    {{ $goods->description }}
+                                </span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <a href="{{ url($goods->href_url) }}">
+                                    <div class="checkout">查看详情</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        @else
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                            {{ $goods->name }}
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                            <span>
-                                {{ $goods->description }}
-                            </span>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <a href="{{ url($goods->href_url) }}">
-                                <div class="checkout">查看详情</div>
-                            </a>
+            @else
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                                {{ $goods->name }}
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                                <span>
+                                    {{ $goods->description }}
+                                </span>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <a href="{{ url($goods->href_url) }}">
+                                    <div class="checkout">查看详情</div>
+                                </a>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+                        <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                    </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
-                    <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
-                </div>
-            </div>
-        @endif
-    @endforeach
-
+            @endif
+        @endforeach
+    @endif
 
     {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
@@ -474,13 +480,14 @@
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
         {{-- <img src="images/home/index/maxBanner.jpg" alt=""> --}}
-
-        <div class="swiper-slide">
-            <a href="{{ url($showBottom->href_url) }}">
-                <img src="{{ asset($showBottom->cover_url) }}" alt="{{$showBottom->name}}">
-            </a>
-        </div>
-
+        @if (isset($showBottom))
+            <div class="swiper-slide">
+                <a href="{{ url($showBottom->href_url) }}">
+                    <img src="{{ asset($showBottom->cover_url) }}" alt="{{$showBottom->name}}">
+                </a>
+            </div>
+        @endif
+   
     </div>
 </div>
 @include("home.sidetool")
