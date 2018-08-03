@@ -222,12 +222,8 @@
 			num=1
 		}
 		/*----轮播插件----*/
-        // let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
-        let text = [];
-        @foreach ($topName as $v)
-            text.push('{{$v}}');
-        @endforeach
-       
+        let text = <?php echo json_encode($topName)?>;
+        console.log(text);
         // let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
 		let mySwiper=new Swiper('#banner .swiper-container2',{
 			direction:'horizontal',
