@@ -60,7 +60,7 @@
                             @if (isset($importantGoods))
                                 @foreach ($importantGoods as $goods)
                                     <div class="swiper-slide">
-                                        <a href="{{ url($goods->href_url) }}">
+                                        <a href="{{ url($goods->href_url) }}" style="color: #333;text-decoration: none;">
                                             <div class="indexList">
                                                 <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
                                                 <div class="title">
