@@ -30,6 +30,11 @@ class DepositOperationLog extends Model
 
     protected $appends = ['action_text'];
 
+    public function order()
+    {
+        return $this->belongsTo('App\Models\OrderBasic','order_id')->select(['id','order_sn']);
+    }
+
     public function getActionTextAttribute(){
         switch ($this->attributes['action']) {
             case 'cancel':
@@ -43,4 +48,9 @@ class DepositOperationLog extends Model
                 break;
         }
     }
+
+
+
+
+
 }

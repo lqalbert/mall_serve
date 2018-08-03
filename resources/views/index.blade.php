@@ -20,7 +20,7 @@
     <div class=" bannerBox col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">
         <div class="swiper-container2" style="width: 100%;height: 100%">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                {{-- <div class="swiper-slide">
                     <a href="{{ route('product/index', ['cate_id'=>'3'])  }}">
                         <img class="imgs" src="images/home/index/minBanner.gif" alt="">
                     </a>
@@ -39,7 +39,16 @@
                     <a href="{{ route('product/index', ['cate_id'=>'2'])  }}">
                         <img class="imgs" src="images/home/index/minBanner2.jpg" alt="">
                     </a>
-                </div>
+                </div> --}}
+                
+                @foreach ($topImg as $img)
+                    <div class="swiper-slide">
+                        {{-- <a href="{{ route('product/index', ['id'=>$img->goods_id])  }}"> --}}
+                        <a href="{{ url($img->href_url) }}">
+                            <img class="imgs" src="{{ asset($img->cover_url) }}" alt="{{$img->name}}">
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -72,7 +81,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
                     <div class="swiper-container swiper-container1" style="width: 100%">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
+{{--                             <div class="swiper-slide">
                                 <div class="indexList">
                                     <img src="" alt="">
                                     <div class="title">
@@ -115,7 +124,22 @@
                                         <span>水嫩补水 唤醒活力</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
+                            @foreach ($importantGoods as $goods)
+                                <div class="swiper-slide">
+                                    <a href="{{ url($goods->href_url) }}">
+                                        <div class="indexList">
+                                            <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                                            <div class="title">
+                                                <span>{{ $goods->name }}</span>
+                                            </div>
+                                            <div class="describe">
+                                                <span>{{ $goods->description }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <!-- Add Arrows -->
                         <!-- Add Pagination -->
@@ -129,7 +153,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
                     <div class="swiper-container swiper-container3" style="width: 100%">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
+                            <!-- <div class="swiper-slide">
                                 <div class="indexList">
                                     <img src="" alt="">
                                     <div class="title">
@@ -194,7 +218,22 @@
                                         <span>一瓶多效 奢养肌底</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            @foreach ($goodGoods as $goods)
+                                <div class="swiper-slide">
+                                    <a href="{{ url($goods->href_url) }}">
+                                        <div class="indexList">
+                                            <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                                            <div class="title">
+                                                <span>{{ $goods->name }}</span>
+                                            </div>
+                                            <div class="describe">
+                                                <span>{{ $goods->description }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
                         <!-- Add Arrows -->
                         <!-- Add Pagination -->
@@ -288,11 +327,18 @@
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
-        <img src="images/home/index/maxBanner0.jpg" alt="">
+        {{-- <img src="images/home/index/maxBanner0.jpg" alt=""> --}}
+
+        <div class="swiper-slide">
+            <a href="{{ url($showMid->href_url) }}">
+                <img src="{{ asset($showMid->cover_url) }}" alt="{{$showMid->name}}">
+            </a>
+        </div>
+
     </div>
 </div>
 <div class="container">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
             <img src="images/home/index/pro1.jpg" alt="">
         </div>
@@ -311,8 +357,60 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+    </div> --}}
+
+    @foreach ($imgText as $goods)
+        @if ($loop->index % 2 == 0)
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
+                    <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                            {{ $goods->name }}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                            <span>
+                                {{ $goods->description }}
+                            </span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a href="{{ url($goods->href_url) }}">
+                                <div class="checkout">查看详情</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
+                            {{ $goods->name }}
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
+                            <span>
+                                {{ $goods->description }}
+                            </span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a href="{{ url($goods->href_url) }}">
+                                <div class="checkout">查看详情</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
+                    <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
+                </div>
+            </div>
+        @endif
+    @endforeach
+
+
+    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
@@ -331,8 +429,8 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
             <img src="images/home/index/pro2.jpg" alt="">
         </div>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+    </div> --}}
+    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
             <img src="images/home/index/pro3.jpg" alt="">
         </div>
@@ -351,8 +449,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
+    </div> --}}
+    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
@@ -371,11 +469,18 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
             <img src="images/home/index/pro4.jpg" alt="">
         </div>
-    </div>
+    </div> --}}
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
-        <img src="images/home/index/maxBanner.jpg" alt="">
+        {{-- <img src="images/home/index/maxBanner.jpg" alt=""> --}}
+
+        <div class="swiper-slide">
+            <a href="{{ url($showBottom->href_url) }}">
+                <img src="{{ asset($showBottom->cover_url) }}" alt="{{$showBottom->name}}">
+            </a>
+        </div>
+
     </div>
 </div>
 @include("home.sidetool")
@@ -405,7 +510,13 @@
 			num=1
 		}
 		/*----轮播插件----*/
-		let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
+        // let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
+        let text = [];
+        @foreach ($topName as $v)
+            text.push('{{$v}}');
+        @endforeach
+        console.log(text);
+        // let text=['夏日美肌 以黑净肤','夏日福利 水嫩保湿','修护奢宠 金致焕肌','美肌滤镜 轻妆上阵'];
 		let mySwiper=new Swiper('#banner .swiper-container2',{
 			direction:'horizontal',
 			loop:true,

@@ -266,10 +266,14 @@ return [
             'index' => 'OrderType'
         ],
         [
-            'text' => '前端图片管理',
+            'text' => '前台图片管理',
             'icon' => null,
             'index' => 'SlideManage'
-        ]
-
+        ],
+        [
+            'text' => '保证金日志',
+            'icon' => null,
+            'index' => 'OrderDepositLog'
+        ],
 		
 ];

@@ -4,19 +4,19 @@ return [
         [
             'text'=>'工作台管理',
             'icon'=>null,
-            'subIndex'=>['Workbench','SysNotice','Contacts','Website']
+            'subIndex'=>['Workbench','SysNotice','Contacts','Website','SlideManage']
         ],
 
 
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
-				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType','SlideManage']
+				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType']
 		],
 		[
 				'text'=>'员工管理',
 				'icon'=>null,
-				'subIndex'=>['Department','Group','Employee','Deposit']
+				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog']
 		],
 // 		[
 // 				'text'=>'客户管理',

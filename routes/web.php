@@ -198,6 +198,8 @@ Route::group($adminGroup, function(){
 
     Route::resource('/freight-template',  'FreightTemplateController');
     Route::resource('/freight-extra',  'FreightExtraController');
+
+    Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
 });
 

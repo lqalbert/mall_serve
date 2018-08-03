@@ -41,6 +41,8 @@ class SlideManageController extends Controller
         $data['user_id'] = $this->request->input('user_id');
         $data['goods_id'] = $this->request->input('goods_id');
         $data['name'] = $this->request->input('name');
+        $data['href_url'] = $this->request->input('href_url');
+        $data['description'] = $this->request->input('description');
         $uploadId = SlideUploadPicture::create($data);
         $res = $this->model->where(['classify'=>$this->request->input('classify')])->first();
         if(!$res){

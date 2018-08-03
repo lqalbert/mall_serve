@@ -16,6 +16,13 @@ class SlideUploadPicture extends Model
 
     protected $table= 'slide_upload_picture';
 
+    CONST TOP_IMG =1;
+    CONST IMPORTANT_GOODS =2;
+    CONST GOOD_GOODS = 3;
+    CONST SHOW_MID = 4;
+    CONST IMG_TEXT = 5;
+    CONST SHOW_BOTTOM = 6;
+
     protected $dates=[
         'deleted_at'
     ];
@@ -29,7 +36,9 @@ class SlideUploadPicture extends Model
         'name',
         'picture_sort',
         'cover_url',
-        'classify'
+        'classify',
+        'href_url',
+        'description'
     ];
 
     protected  $hidden = ['updated_at', 'deleted_at','created_at'];
