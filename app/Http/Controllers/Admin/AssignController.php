@@ -228,7 +228,11 @@ class AssignController extends Controller
 
     public function editExpressFee(Request $request, $id)
     {
-        $re = $this->repository->update($request->all(), $id);
+//         $re = $this->repository->update($request->all(), $id);
+        $assign = $this->repository->find($id);
+        $order = $assign->order;
+        $order->updateFreight($request->input('express_fee'));
+        $re = $order->save();
         if($re){
             //添加发货单操作记录
 //            $dataLog = [
@@ -421,6 +425,33 @@ class AssignController extends Controller
         }
     }
     
+    
+    /**
+     * 批量面单打印
+     * @todo 事件处理　操作记录
+     * 打印
+     */
+    public function waybillPrints(Request $request)
+    {
+        $assigns = Assign::whereIn('id', $request->input("ids"))->select('express_id','print_data','id')->get();
+//         $assign->updateWaybillPrintStatus();
+//         $re = $assign->save();
+        $assign = $assigns->first();
+        $express = $assign->express;
+        if ($re) {
+            //添加发货单操作记录
+//             $dataLog = [
+//                 'assign_id'=>$id,
+//                 'action'=>'express-print',
+//                 'remark'=>$assign->assign_sn
+//             ];
+//             event(new AddAssignOperationLog(auth()->user(),$dataLog));
+            return $this->success(['printer'=>$express->printer,'print_data'=>$assigns->pluck('print_data')]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
     /**
      * @todo 事件处理　操作记录
      * @param Request $request
@@ -445,6 +476,47 @@ class AssignController extends Controller
             return $this->error([]);
         }
     }
+    
+    /**
+     * @todo 事件处理　操作记录
+     * @param Request $request
+     * @return number[]|string[]|NULL[]
+     */
+    public function goodsPrint2(Request $request)
+    {
+        
+        $assign = Assign::whereIN('id', $request->input('ids'))->with(['address','goods'])->get();
+        $result = [];
+        foreach ($assign as $item) {
+            $tmp  = [];
+            $tmp['documentID'] = $item->assign_sn;
+            $contents = [];
+            
+            $data = [
+                "tabletest"=> $item->goods->toArray(),
+                "address"=>$item->address->toArray(),
+                "assign_sn"=>$item->assign_sn,
+                "total"=>0
+            ];
+            $data['total'] = array_sum( array_column($data['tabletest'], 'goods_number')  );
+            $it = [];
+            $it['data'] = $data;
+            $it['templateURL'] = "http://cloudprint.cainiao.com/template/standard/251026";
+            
+            $contents[] = $it;
+            $tmp['contents'] = $contents;
+            $result[] = $tmp;
+        }
+        $re =  Assign::whereIn('id', $request->input('ids'))->update(['assign_print_status'=>1, 'assign_print_at'=> Carbon::now()]);
+        if ($re) {
+
+            return $this->success($result);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    
 
 
     /**

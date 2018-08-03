@@ -262,14 +262,25 @@ class OrderBasic extends Model
         return self::$afterSaleStatus["l".$this->attributes['after_sale_status']];
     }
     
+    /**
+     * 这个已经改成下面那个了
+     * @return string
+     */
     public function getTypeTextAttribute()
     {
-        $map = ['销售订单','内部订单','商城订单'];
-        return $map[$this->type];
+//         $map = ['销售订单','内部订单','商城订单'];
+        return '';
     }
     
     public function orderType()
     {
         return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name');
+    }
+    
+    public function updateFreight($newFreight)
+    {
+        $this->order_pay_money = $this->order_pay_money - $this->freight;
+        $this->freight = $newFreight;
+        $this->order_pay_money = $this->order_pay_money - $this->freight ;
     }
 }
