@@ -19,31 +19,9 @@
     <div class=" bannerBox col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">
         <div class="swiper-container2" style="width: 100%;height: 100%">
             <div class="swiper-wrapper">
-                {{-- <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'3'])  }}">
-                        <img class="imgs" src="images/home/index/minBanner.gif" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'4'])  }}">
-                        <img class="imgs" src="images/home/index/minBanner0.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'1'])  }}">
-                        <img class="imgs" src="images/home/index/minBanner1.jpg" alt="">
-                    </a>
-                </div>
-                <div class="swiper-slide">
-                    <a href="{{ route('product/index', ['cate_id'=>'2'])  }}">
-                        <img class="imgs" src="images/home/index/minBanner2.jpg" alt="">
-                    </a>
-                </div> --}}
                 @if (isset($topImg))
                     @foreach ($topImg as $img)
                         <div class="swiper-slide">
-                            {{-- <a href="{{ route('product/index', ['id'=>$img->goods_id])  }}"> --}}
-
                             <a href="{{ url($img->href_url) }}">
                                 <img class="imgs" src="{{ asset($img->cover_url) }}" alt="{{$img->name}}">
                             </a>
@@ -70,9 +48,6 @@
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                         <span class="proAction">口碑之选</span>
                     </div>
-                    {{--<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                        <span class="proAction">爆款系列</span>
-                    </div>--}}
                 </div>
             </div>
         </div>
@@ -82,50 +57,6 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
                     <div class="swiper-container swiper-container1" style="width: 100%">
                         <div class="swiper-wrapper">
-{{--                             <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>VC匀净面膜</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>美白舒缓 提亮肤色</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>净透焕颜黑面膜</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>净透舒缓 细致润泽</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>蓝铜胜肽水光面膜</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>莹亮水润 宛如新生</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿水</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>水嫩补水 唤醒活力</span>
-                                    </div>
-                                </div>
-                            </div> --}}
                             @if (isset($importantGoods))
                                 @foreach ($importantGoods as $goods)
                                     <div class="swiper-slide">
@@ -156,72 +87,6 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
                     <div class="swiper-container swiper-container3" style="width: 100%">
                         <div class="swiper-wrapper">
-                            <!-- <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌洁颜乳</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>洁净奢养 净肤养肤</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌精华乳</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>奢华能量 紧致塑颜</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌精华水</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>唤醒年轻态肌肤</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌修护精华液</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>一瓶多效 奢养肌底</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌修护精华液</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>一瓶多效 奢养肌底</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>金致焕肌修护精华液</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>一瓶多效 奢养肌底</span>
-                                    </div>
-                                </div>
-                            </div> -->
                             @if (isset($goodGoods))
                                 @foreach ($goodGoods as $goods)
                                     <div class="swiper-slide">
@@ -248,91 +113,12 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexPro indexHot" style="padding: 0">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexBox">
-                    <div class="swiper-container swiper-container4" style="width: 100%">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿洁面乳</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>温和亲肤 深透清洁</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿精华液</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>烟酰胺 邂逅润、透、白</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿乳</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>深入补水 清澈美肌</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿水</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>深入补水 光彩活力</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿水</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>深入补水 光彩活力</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="indexList">
-                                    <img src="" alt="">
-                                    <div class="title">
-                                        <span>水嫩保湿水</span>
-                                    </div>
-                                    <div class="describe">
-                                        <span>深入补水 光彩活力</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Add Arrows -->
-                        <!-- Add Pagination -->
-                        <div class="swiper-pagination4"></div>
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>--}}
+            
         </div>
     </div>
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
-        {{-- <img src="images/home/index/maxBanner0.jpg" alt=""> --}}
         @if (isset($showMid))
             <div class="swiper-slide">
                 <a href="{{ url($showMid->href_url) }}">
@@ -344,26 +130,6 @@
     </div>
 </div>
 <div class="container">
-    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
-            <img src="images/home/index/pro1.jpg" alt="">
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                    深层清洁&nbsp;开启净透肌肤
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                    <span>
-                        水嫩保湿洁面乳 100g
-                    </span>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     @if (isset($imgText))
         @foreach ($imgText as $goods)
             @if ($loop->index % 2 == 0)
@@ -416,70 +182,9 @@
         @endforeach
     @endif
 
-    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                    洁净奢养&nbsp;重塑年轻源动力
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                    <span>
-                        金致焕肌洁颜乳 100g
-                    </span>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
-            <img src="images/home/index/pro2.jpg" alt="">
-        </div>
-    </div> --}}
-    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg">
-            <img src="images/home/index/pro3.jpg" alt="">
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                    蓝铜胜肽&nbsp;绽现年轻水润肌
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                    <span>
-                        蓝铜胜肽水光面膜 26mlx5片
-                    </span>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 indexSale">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleCont saleConts">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                    烟酰胺&nbsp;&nbsp;透光焕亮VC面膜
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 describe">
-                    <span>
-                        VC匀净面膜 26mlx5片
-                    </span>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkout">查看详情</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 saleImg saleImgs">
-            <img src="images/home/index/pro4.jpg" alt="">
-        </div>
-    </div> --}}
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-top: 35px">
-        {{-- <img src="images/home/index/maxBanner.jpg" alt=""> --}}
         @if (isset($showBottom))
             <div class="swiper-slide">
                 <a href="{{ url($showBottom->href_url) }}">
