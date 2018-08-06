@@ -62,7 +62,8 @@ class LogisticsInformationService
             $resData = json_decode(curl_exec($curl));
             return get_object_vars($resData);
         }else{
-            $this->error([],'没有该快递公司');
+//             $this->error([],'没有该快递公司');
+            throw new \Exception("没有该快递公司");
         }
 
     }
