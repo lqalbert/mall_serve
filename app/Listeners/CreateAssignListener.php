@@ -35,34 +35,27 @@ class CreateAssignListener
     public function handle(OrderPass $event)
     {
         $order = $event->getOrder();
-//         logger("[debug]", ['not here']);
         $data = [
             'entrepot_id'=> $order->entrepot_id,
             'order_id'   => $order->id,
             'address_id' => $order->address_id,
         ];
         
-        if ($order->isSetExpress()) {
+        $express = $order->isSetExpress();
+        if ($express) {
             $data['set_express'] = 1;
-            $data['express_id'] = $order->express_id;
-            $data['express_name'] = $order->express_name;
+            $data['set_express_name'] = $express;
         }
-//         logger("[debug]", ['not here2']);
+
         $model = Assign::create($data);
         if ($model== false) {
             throw new \Exception('发货单创建失败');
         }
-//         logger("[debug]", ['not here3']);
+
         $goods = $order->getGoods();
         $goods->each(function ($item, $key) use($model){
                $item->assign_id = $model->id;
                $item->save();
         });
-        
-        //更新 order_goods 表 assign_lock_at 字段为当前时间
-//         $affectRows = OrderGoods::where('order_id', $order->id)->update(['assign_lock_at'=> Date('Y-m-d H:i:s')]);
-//         if ($affectRows == 0 ) {
-//             throw new \Exception('更新 assign_lock_at 失败');
-//         }
     }
 }

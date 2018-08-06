@@ -264,7 +264,16 @@ return [
             'text' => '订单类型',
             'icon' => null,
             'index' => 'OrderType'
-        ]
-
+        ],
+        [
+            'text' => '前台图片管理',
+            'icon' => null,
+            'index' => 'SlideManage'
+        ],
+        [
+            'text' => '保证金日志',
+            'icon' => null,
+            'index' => 'OrderDepositLog'
+        ],
 		
 ];

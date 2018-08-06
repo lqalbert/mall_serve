@@ -9,7 +9,7 @@ namespace App\Services\WayBill\MsgType;
  */
 class TmsWayBillGet 
 {
-    private $data = [
+    protected $data = [
         'cpCode'=>'',
         'sender'=>null,
         'tradeOrderInfoDtos'=>null
@@ -123,7 +123,7 @@ class TmsWayBillGet
     }
     
     public function toXml($data)
-    {
+    {   
         $xml = simplexml_load_string('<request></request>');
 
         $xml->addChild('cpCode', $data['cpCode']);
@@ -146,7 +146,7 @@ class TmsWayBillGet
     }
     
     public function setAddress($xml, $data)
-    {
+    {   
         $address = $xml->addChild('address');
         foreach ($data as $key=>$item) {
             $address->addChild($key, $item);
