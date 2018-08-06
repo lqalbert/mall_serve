@@ -19,7 +19,7 @@ class CategoryController extends Controller {
 
 
 	public function index() {
-		$service = app ('App\Services\Category\LogisticsInformationService');
+		$service = app ('App\Services\LogisticsInformation\LogisticsInformationService');
 		$result = $service->get ();
 		return $result;
 	}
