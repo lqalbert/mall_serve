@@ -73,7 +73,7 @@
                     <div class="swiper-container swiper-container1" style="width: 100%">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/37') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new1.jpg" alt="">
                                         <div class="title">
@@ -86,7 +86,7 @@
                                 </a>
                             </div>
                             <div class="swiper-slide">
-                                <a href="{{ url('/product/6') }}">
+                                <a href="{{ url('/product/39') }}">
                                     <div class="indexList">
                                         <img src="images/home/index/new2.jpg" alt="">
                                         <div class="title">
@@ -203,7 +203,7 @@
 </div>
 <div class="container-fluid" style="padding: 0;">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 goldSuit" style="margin-bottom: 35px">
-        <a href="{{ url('/product/6') }}">
+        <a href="{{ url('/product/40') }}">
             <img src="images/home/index/maxBanner0.jpg" alt="">
         </a>
     </div>
