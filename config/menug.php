@@ -4,7 +4,7 @@ return [
         [
             'text'=>'工作台管理',
             'icon'=>null,
-            'subIndex'=>['Workbench','SysNotice','Contacts','Website']
+            'subIndex'=>['Workbench','SysNotice','Contacts','Website','SlideManage']
         ],
 
 
@@ -16,7 +16,7 @@ return [
 		[
 				'text'=>'员工管理',
 				'icon'=>null,
-				'subIndex'=>['Department','Group','Employee','Deposit']
+				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog']
 		],
 // 		[
 // 				'text'=>'客户管理',
@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType'] // 'Refund'
+		        'subIndex'=>['CustomerInfo','OrderList', 'Refund', 'OrderType'] // 'Refund'
 		],
 		[
 				'text' => '库存管理',
@@ -37,7 +37,7 @@ return [
 		[
 				'text' => '配送管理',
 				'icon' => null,
-				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement','FreightTemplate']
+				'subIndex' => ['DistributionCenter','DistributionDelivery','GoodsInspect','DeliverGoods','ExpressReceive','ExpressCompany','ExpressCompensation','CartonManagement','FreightTemplate','Mail']
 		    //'ExpressInfo',
 		],
 		[

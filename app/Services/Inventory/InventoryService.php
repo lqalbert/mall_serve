@@ -2,6 +2,7 @@
 namespace App\Services\Inventory;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class InventoryService
 {
@@ -103,12 +104,12 @@ class InventoryService
      * @param unknown $user
      * @throws Exception
      */
-    public function rxUpdate($entrepot, $products, $user)
+    public function rxUpdate($entrepot, Collection $products, $user, $dan=null)
     {
         DB::beginTransaction();
         try {
             $this->inventory->rxUpdate($entrepot->id, $products);
-//             $this->log->assignLock($entrepot, $products, $user);
+            $this->log->rxUpdate($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

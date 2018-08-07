@@ -103,6 +103,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'fixed_telephone' => [
+            'unique' => '手机号已使用',
+        ],
     ],
 
     /*

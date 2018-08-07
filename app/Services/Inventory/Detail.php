@@ -112,6 +112,34 @@ class Detail
     }
     
     
+    /**
+     * 退换货入库
+     */
+    public function rxUpdate(DistributionCenter $entrepot, $products, User $user, $dan)
+    {
+        $returnProducts = [];
+        $exchangeProducts = [];
+        
+        foreach ($products as $product) {
+            if ($product->isExchange()) {
+                $exchangeProducts[] = $product;
+            } else if ($product->isReturn()) {
+                $returnProducts[] = $product;
+            } else {
+                throw new \Exception("退换货入库明细 商品退换类型错误");
+            }
+        }
+        
+        if (count($returnProducts) != 0) {
+            $this->save($entrepot, $returnProducts, $user, 'return_in', $dan);
+        }
+        
+        if (count($exchangeProducts) != 0) {
+            $this->save($entrepot, $exchangeProducts, $user, 'exchange_in', $dan);
+        }
+    }
+    
+    
     
     
 }

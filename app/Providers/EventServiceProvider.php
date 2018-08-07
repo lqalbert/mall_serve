@@ -124,12 +124,19 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\StockSnListener'
         ],
 
+        //添加订单操作记录
         'App\Events\AddOrderOperationLog' => [
             'App\Listeners\AddOrderOperationLogListener'
         ],
 
+        //添加发货单操作记录
         'App\Events\AddAssignOperationLog' => [
             'App\Listeners\AddAssignOperationLogListener'
+        ],
+
+        //添加保证金加扣记录
+        'App\Events\AddDepositOperationLog' => [
+            'App\Listeners\AddDepositOperationLogListener'
         ]
         
     ];

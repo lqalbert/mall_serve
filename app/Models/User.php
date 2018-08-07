@@ -75,6 +75,8 @@ class User extends Authenticatable
         'card_img',
         'card_front',
         'card_back',
+        'lg_time',
+        'out_time'
 
     ];
     protected $appends = [
@@ -92,14 +94,14 @@ class User extends Authenticatable
         'updated_at',
         'deleted_at'
     ];
-    public function getLgTimeAttribute()
-    {
-        return '2018-01-11';
-    }
-    public function getOutTimeAttribute()
-    {
-        return '2018-01-11';
-    }
+    // public function getLgTimeAttribute()
+    // {
+    //     return '2018-01-11';
+    // }
+    // public function getOutTimeAttribute()
+    // {
+    //     return '2018-01-11';
+    // }
     public function getRoleAttribute()
     {
         return '普通';

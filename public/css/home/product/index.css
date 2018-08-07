@@ -89,10 +89,22 @@
     border: 1px solid #FF0EA7;
 }
 
-#product .productLists .productList img{
-    width: 100%;
-    float: left;
-    height: auto;
+#product .productLists .productList .imgBox{
+    height: 280px;
+    padding: 0;
+}
+
+#product .productLists .productList .imgBox img{
+    max-width: 100%;
+    width: 200px;
+    margin: 0 auto;
+    display: block;
+    height: 200px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 #product .productLists .productList .msgPro{
@@ -122,6 +134,7 @@
     font-size: 12px;
     color: #999;
     line-height: 25px;
+    min-height: 25px;
 }
 
 #product .productLists .productList .msgPro .price{

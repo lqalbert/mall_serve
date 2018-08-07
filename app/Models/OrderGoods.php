@@ -77,6 +77,11 @@ class OrderGoods extends Model implements GoodsContracts
         return $this->status == self::STATUS_EXCHANGE;
     }
     
+    public function isReturn()
+    {
+        return $this->status == self::STATUS_RETURN;
+    }
+    
     public function setExchangeStatus()
     {
         $this->status = self::STATUS_EXCHANGE;
@@ -91,5 +96,15 @@ class OrderGoods extends Model implements GoodsContracts
     public function getCategoryAttribute()
     {
         return $this->goods->category;
+    }
+    
+    /**
+     * 退换货的
+     * @param unknown $query
+     * @return unknown
+     */
+    public function scopeAfter($query)
+    {
+        return $query->where('status', self::STATUS_RETURN)->orWhere('status', self::STATUS_EXCHANGE);
     }
 }

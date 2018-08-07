@@ -112,6 +112,7 @@ Route::group($adminGroup, function(){
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
+	Route::get('/assign-goods-prints', 'AssignController@goodsPrint2');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
 	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	Route::put('/assign-update-waybill/{id}', 'AssignController@updateWayBill');
@@ -180,7 +181,7 @@ Route::group($adminGroup, function(){
     Route::get('/salesperformance',  'SalesPerformanceController@index');
     Route::get('/salesperformance-selectorder',  'SalesPerformanceController@selectOrder');
     Route::put('/deposit-revoke/{id}','DepositController@revoke');
-    Route::resource('/mail',  'MailController');
+    
     Route::resource('/freight-template',  'FreightTemplateController');
     Route::resource('/freight-extra',  'FreightExtraController');
     Route::resource('/order-type',  'OrderTypeController');
@@ -188,8 +189,21 @@ Route::group($adminGroup, function(){
     Route::get('/assign-operate-records', 'AssignOperationController@index');
     Route::put('/order-assign-editexpressfee/{id}', 'AssignController@editExpressFee');//发货单修改实付运费
     Route::resource('/logisticsinformation',  'LogisticsInformationController');
+    Route::resource('/slidemanage',  'SlideManageController');
+    Route::resource('/slideuploadpicture',  'SlideUploadPictureController');
+    Route::post('/slide-upload',  'SlideManageController@slideUpload');
+    Route::put('/mail/waybill',  'MailController@getWaybillCode');
+    Route::get('/mail/print',  'MailController@waybillPrint');
+    Route::resource('/mail',  'MailController');
+    Route::resource('/mail-goods',  'MailGoodsController');
 
+    Route::resource('/freight-template',  'FreightTemplateController');
+    Route::resource('/freight-extra',  'FreightExtraController');
 
+    Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
+    
+    Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+    
 });
 
 

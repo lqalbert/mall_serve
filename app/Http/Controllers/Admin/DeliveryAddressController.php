@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\models\DeliveryAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\ContactConflict;
+use App\Models\CustomerTrackLog;
+use Illuminate\Validation\ValidationException;
 
 class DeliveryAddressController extends Controller
 {
@@ -58,16 +61,36 @@ class DeliveryAddressController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->default_address == 1){
-            $this->model->where('cus_id',$request->cus_id)->update(['default_address' => 0]);
+
+        $user = auth()->user();
+        try {
+            $this->validate($request, [
+                'fixed_telephone' => ['nullable', 'unique:delivery_addresses'],
+            ]);
+        } catch (ValidationException $e) {
+            $fixed_telephone = $request->input('fixed_telephone');
+            $data = [];
+            $data['cus_id'] = DB::table('delivery_addresses')->where('fixed_telephone', $fixed_telephone)->value('cus_id');
+            $data['cus_name'] = DB::table('customer_basic')->where('id', $data['cus_id'])->value('name');
+            $data['user_id'] = $user->toArray()['id'];
+            $data['user_name'] = $user->toArray()['realname'];
+            $data['content'] = '添加收货地址时与手机号码' . $fixed_telephone . '冲突';
+            $re = CustomerTrackLog::create($data);
+            if ($re) {
+//                event(new ContactConflict($e->validator->errors(), $request->only(['fixed_telephone'])));
+                throw $e;
+            }
         }
-       $re =  $this->model->create($request->all());
-       
-       if ($re) {
-           return $this->success([]);
-       } else {
-           return $this->error();
-       }
+        if ($request->default_address == 1) {
+            $this->model->where('cus_id', $request->cus_id)->update(['default_address' => 0]);
+        }
+        $re = $this->model->create($request->all());
+
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error();
+        }
     }
 
     /**
