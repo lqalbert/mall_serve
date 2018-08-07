@@ -82,7 +82,7 @@ class SalesPerformanceController extends Controller
                        ->select(
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
-                           DB::raw('IFNULL(sum(freight),0) as i_freight'),
+                           DB::raw('IFNULL(sum(freight), 0) as i_freight'),
                            "db2.{$groupBy}")
                        ->where($where2)
                        ->where([
