@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType'] // 'Refund'
+		        'subIndex'=>['CustomerInfo','OrderList', 'Refund', 'OrderType'] // 'Refund'
 		],
 		[
 				'text' => '库存管理',
