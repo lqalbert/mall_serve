@@ -44,7 +44,8 @@ return [
         'Contacts',
         'Website',
         'SalesPerformance',
-        'SalesQuantization'
+        'SalesQuantization',
+        
     ],
     'sale-staff' => [
         'GoodsDetails',
