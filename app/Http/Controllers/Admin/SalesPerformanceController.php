@@ -45,8 +45,9 @@ class SalesPerformanceController extends Controller
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
-                DB::raw('sum(order_all_money) as all_pay'),
+                DB::raw('sum(order_all_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
+                DB::raw('sum(freight) as s_freight'),
                 'db.user_name',
                 'db.group_name',
                 'db.department_name',
@@ -60,28 +61,46 @@ class SalesPerformanceController extends Controller
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 1]
+                ['db.type','<>', 1] //这种硬编码其实不好
             ])
-            ->groupBy('db.'.$groupBy)->orderBy($orderField, $orderWay);
+            ->groupBy('db.'.$groupBy);
 
         if ($groupBy == 'department_id') {
             $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
         }
-        $result = $builder->paginate($pageSize);
-
-
-
+        //生成内部订单的 内购单数 内购金额
+        $where2 = [];
+        $where2[]=['db2.created_at','>=', $start];
+        $where2[]=['db2.created_at','<=', $end];
+        if($request->has('department_id')){
+            $where2[]=['db2.department_id','=', $request->input('department_id')];
+        }
+        if($request->has('group_id')){
+            $where2[]=['db2.group_id','=', $request->input('group_id')];
+        }
+        $builder2 = DB::table('order_basic as db2')
+                       ->select(
+                           DB::raw('count(db2.id) as inner_count'), 
+                           DB::raw('sum(discounted_goods_money) as inner_sum'), 
+                           DB::raw('sum(freight) as i_freight'),
+                           "db2.{$groupBy}")
+                       ->where($where2)
+                       ->where([
+                           ['db2.status','>', OrderBasic::UN_CHECKED],
+                           ['db2.status','<', OrderBasic::ORDER_STATUS_7],
+                           ['db2.type','=', 1] //这种硬编码其实不好
+                       ])->groupBy('db2.'.$groupBy);
+                       
+        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))->select("*")
+                          ->mergeBindings($builder)
+                          ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
+                          ->mergeBindings($builder2)
+                          ->orderBy($orderField, $orderWay);
+        
+        
+        $result = $allBuilder->paginate($pageSize);
         $items = $result->getCollection();
-//         $key = $groupBy;
-//         if (!$items->isEmpty()) {
-//             $keyValue = $items->pluck($key);
-//         } else {
-//             $keyValue = [-1];
-//         }
-
-//         $this->setTrans($key, $keyValue, $start, $end, $items);
-
-
+        
         return [
             'items'=> $items,
             'total'=> $result->total()

@@ -14,6 +14,7 @@ use App\Models\CustomerBasic;
 use Carbon\Carbon;
 use App\Models\Assign;
 use App\Services\Inventory\InventoryService;
+use App\Events\AddOrderOperationLog;
 
 class AfterSaleController extends Controller
 {
