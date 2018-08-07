@@ -277,6 +277,22 @@ class AfterSaleController extends Controller
             'total'=> $result->count()
         ];
     }
+    
+    public function inventory(Request $request, InventoryService $serve, $id)
+    {
+//         $id = $request->input('id');
+        $after = AfterSale::find($id);
+        $goods = OrderGoods::where('order_id', $after->order_id)->after()->get();
+        //商品
+        try {
+            $serve->rxUpdate($after->entrepot, $goods, $request->user(), $after->return_sn);
+            $after->setInventoryed();
+            $after->save();
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
 
 
 

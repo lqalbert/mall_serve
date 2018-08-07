@@ -158,8 +158,17 @@ class System
 //         DB::beginTransaction();
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
-                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $str=null;
+                if ($product->isExchange()) {
+                    $str = " , exchange_in = exchange_in + ? ";
+                } else if($product->isReturn()) {
+                    $str = " , return_in = return_in + ? ";
+                } else {
+                    $str = "";
+                    throw new \Exception("退换货入库操作 商品退换类型错误 ");
+                }
+                $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ? ' . $str,
+                    [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
             $this->updateIsSuccess($affectedRows);
 //             DB::commit();
