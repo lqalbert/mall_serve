@@ -162,6 +162,11 @@ class OrderlistService
         //     $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
         //     $this->repository->pushCriteria($order_status);
         // }
+        
+        if ($this->request->has('with')) {
+            $this->repository->with($this->request->input('with'));
+        }
+        
         $result = $this->repository->paginate($this->request->input('pageSize', 20));
         
         $collection = $result->getCollection();
