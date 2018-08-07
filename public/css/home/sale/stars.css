@@ -1,6 +1,7 @@
 
 #stars{
     padding: 0 0 10px 0;
+    min-height: 600px;
 }
 
 #stars div{

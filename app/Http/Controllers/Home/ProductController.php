@@ -22,10 +22,11 @@ class ProductController extends CommonController
         ];
         $name='';
         //还是有问题 的 如果 type 有多个非一级分类就会出错
-        $goodsTypeName=GoodsType::all();
-//         $goodsTypeName->load('cate');
+        $goodsTypeName=GoodsType::has('cate')->get();
+        $goodsTypeName->load('cate');
         logger("[dd]", $goodsTypeName->toArray());
         foreach ($goodsTypeName as $k=>$v){
+            logger("[dd2]", [$v->cate]);
             $subNav[$v->cate->id] = [
                 'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
                 'isactive'=>"",
