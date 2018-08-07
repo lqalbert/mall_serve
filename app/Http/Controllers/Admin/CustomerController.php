@@ -7,8 +7,10 @@ use App\Models\CustomerUser;
 use App\Models\CustomerApp;
 use App\Models\User;
 use App\Events\SetCustomerUser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Events\ContactConflict;
+use App\Models\CustomerTrackLog;
 
 class CustomerController extends Controller
 {
@@ -84,9 +86,19 @@ class CustomerController extends Controller
 //                 'department_id' =>'required'
             ]);
         } catch (ValidationException $e) {
-            event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
-            throw $e;
-            
+            $phone = $request->input('phone');
+            $data = [];
+            $data['cus_id'] = DB::table('customer_contact')->where('phone',$phone)->value('cus_id');
+            $data['cus_name'] = DB::table('customer_basic')->where('id',$data['cus_id'])->value('name');
+            $data['user_id'] = $user->toArray()['id'];
+            $data['user_name'] = $user->toArray()['realname'];
+            $data['content'] = '添加客户时与手机号码'.$phone.'冲突';
+            $re = CustomerTrackLog::create($data);
+            if($re){
+                event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
+                throw $e;
+            }
+
         }
         
         
