@@ -20,6 +20,7 @@ class CategoryController extends Controller {
 
 	public function index() {
 	    $service = app ( 'App\Services\Category\CategoryService' );
+
 		$result = $service->get ();
 		return $result;
 	}
