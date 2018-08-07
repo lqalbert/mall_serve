@@ -114,6 +114,7 @@ class SalesPerformanceController extends Controller
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
+        $orderType = $request->input('orderType',2);//订单类型 1商城 2内部 3销售
         $pageSize = $request->input('pageSize', 15);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
@@ -131,6 +132,7 @@ class SalesPerformanceController extends Controller
         $result = DB::table('order_basic as db')
             ->select(
                 'db.order_all_money as trade_money',
+                'db.freight',
                 'db.user_name as track_name',
                 'db.created_at as traded_at',
                 'db.order_sn',
@@ -145,7 +147,7 @@ class SalesPerformanceController extends Controller
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 1] //内部订单不统计在里面
+                ['db.type','=', $orderType] //内部订单不统计在里面
             ])
             ->paginate($pageSize);
         return [
