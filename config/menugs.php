@@ -52,7 +52,7 @@ return [
 		[
 				'text'=>'客户资料',
 				'icon'=>null,
-				'index'=>'CustomerInfo'
+				'index'=>'Customer'
 		],
 		//9
 		[
