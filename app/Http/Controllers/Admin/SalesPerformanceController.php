@@ -120,15 +120,20 @@ class SalesPerformanceController extends Controller
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-        //        if($request->has('department_id')){
-        //            $where[]=['db.department_id','=', $request->input('department_id')];
-        //        }
-        //        if($request->has('group_id')){
-        //            $where[]=['db.group_id','=', $request->input('group_id')];
-        //        }
-        if($request->input($groupBy)){
-            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
+
+        if($request->has('department_id')){
+           $where[]=['db.department_id','=', $request->input('department_id')];
         }
+        if($request->has('group_id')){
+           $where[]=['db.group_id','=', $request->input('group_id')];
+        }
+        if($request->has('user_id')){
+           $where[]=['db.user_id','=', $request->input('user_id')];
+        }
+        // if($request->input($groupBy)){
+        //     $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
+        // }
+        
         $result = DB::table('order_basic as db')
         ->select(
             'db.order_all_money as trade_money',
@@ -148,8 +153,8 @@ class SalesPerformanceController extends Controller
             ['db.status','>', OrderBasic::UN_CHECKED],
             ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ['db.type','=', $orderType] //内部订单不统计在里面
-        ])
-        ->paginate($pageSize);
+        ])->paginate($pageSize);//->groupBy('db.'.$groupBy)
+
         return [
             'items'=>$result->getCollection(),
             'total'=>$result->total()
