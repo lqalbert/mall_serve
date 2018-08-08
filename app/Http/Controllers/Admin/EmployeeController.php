@@ -141,12 +141,15 @@ class EmployeeController extends Controller
             $data['head'] = '/storage/head.jpg';
         }
         $data['password'] = bcrypt($data['password']);
+        $res = User::where('account',$data['account'])->first();
+        if($res){
+            return $this->error([],'该登陆账号名已存在!');
+        }
         $re = DB::transaction(function()use($data, $request){
         	$re = $this->repository->create($data);
         	event(new AddEmployee($re, $request->input('role_ids',[])));
         	return $re;
         });
-        
         
         if ($re) {
 //             event(new AddEmployee($re));
