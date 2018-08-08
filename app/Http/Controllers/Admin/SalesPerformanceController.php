@@ -48,12 +48,12 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(order_all_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
-                'db.user_name',
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
                 'db.group_id',
-                'db.user_id'
+                'db.user_id',
+                'db.user_name'
             )
             //如果 一个订单有多个 order_after 就会造成 DB::raw(count, sum) 重复计算,而且也是不 时间段内的退款，而是指定时间段内订单的退款
             ->leftJoin(DB::raw("({$refundQuery->toSql()}) as oa"), "db.{$groupBy}",'=','oa.map_key')->mergeBindings($refundQuery)

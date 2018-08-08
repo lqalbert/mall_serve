@@ -136,17 +136,17 @@ class OrderGoodsController extends Controller
         //返回 int
         $orderModel = OrderGoods::where('id',$id)->select('order_id')->first();
         $orderCheck = OrderBasic::find($orderModel->order_id)->isPass();
-        if(!$orderCheck){
+        if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
 
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success([]);
+//             return 1;
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error();
+//             return 2;
         }
     }
     
@@ -160,7 +160,7 @@ class OrderGoodsController extends Controller
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
         $orderType = $orderModel->orderType;
         $orderModel->order_all_money = $money->m;
-        $orderModel->discounted_goods_money= $money->m * $orderType->discount;
+        $orderModel->discounted_goods_money=  $orderType->getDiscounted($money->m);
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
         $re = $orderModel->save();
         if (!$re) {
