@@ -152,7 +152,7 @@ class OrderGoodsController extends Controller
     }
     
     /**
-     * 
+     * 这里有点问题 
      * @param unknown $orderModel
      * @throws \Exception
      */
@@ -161,7 +161,7 @@ class OrderGoodsController extends Controller
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
         $orderType = $orderModel->orderType;
         $orderModel->order_all_money = $money->m;
-        $orderModel->discounted_goods_money=  $orderType->getDiscounted($money->m);
+        $orderModel->discounted_goods_money =  $orderType->getDiscounted($money->m);
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
         $re = $orderModel->save();
         if (!$re) {
