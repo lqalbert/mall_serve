@@ -74,6 +74,17 @@ class Detail
         $this->save($entrepot, $products, $user, 'assign_lock');
     }
     
+    /**
+     * 发货解锁
+     * @param DistributionCenter $entrepot
+     * @param unknown $products
+     * @param User $user
+     */
+    public function assignUnLock(DistributionCenter $entrepot, $products, User $user)
+    {
+        $this->save($entrepot, $products, $user, 'assign_unlock');
+    }
+    
     
     /**
      * 换货锁定
@@ -137,6 +148,15 @@ class Detail
         if (count($exchangeProducts) != 0) {
             $this->save($entrepot, $exchangeProducts, $user, 'exchange_in', $dan);
         }
+    }
+    
+    
+    /**
+     * 发货在途
+     */
+    public function sending(DistributionCenter $entrepot, $products, User $user, $dan)
+    {
+        $this->save($entrepot, $returnProducts, $user, 'send_ing', $dan);
     }
     
     

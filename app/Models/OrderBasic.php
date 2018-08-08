@@ -216,6 +216,11 @@ class OrderBasic extends Model
         }
     }
     
+    public function updateStatusToUnChecked()
+    {
+        $this->status = self::UN_CHECKED;
+    }
+    
     /**
      * 返回菜鸟接口要求的结构化的数据
      * @return unknown

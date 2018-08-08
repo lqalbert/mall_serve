@@ -24,6 +24,8 @@ use App\Models\CartonManagement;
 use App\Models\ExpressPrice;
 use App\Models\VolumeRatio;
 use Illuminate\Support\Facades\DB;
+use App\Services\Inventory\InventoryService;
+use App\Models\AfterSale;
 
 class AssignController extends Controller
 {
@@ -321,7 +323,7 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function repeatOrder(Request $request, $id)
+    public function repeatOrder(Request $request, InventoryService $serve ,$id)
     {
 //         {label:"导入状态", value:"1", sub:""},
 //         {label:"审核状态", value:"2", sub:""},　分配了快递公司　　快递号　快递号(面单可以更新)
@@ -350,7 +352,25 @@ class AssignController extends Controller
 //                 $assign->corrugated_case = '';
 //                 $assign->corrugated_id = 0;
 //                 $assign->express_sn = '';
-                $re = $assign->save();
+                DB::beginTransaction();
+                try {
+                    $re = $assign->save();
+                    //改库存 还要改保证金
+                    $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
+                    $order  = $assign->order;
+                    if (AfterSale::where('order_id', $order->id)->first()) {
+                        throw new \Exception('不能返单，因为是售后服务');
+                    }
+                    $order->updateStatusToUnChecked();
+                    $order->save();
+                    
+                } catch (\Exception $e) {
+                    DB::rollback();
+                    return $this->error([], $e->getMessage());
+                }
+                DB::commit();
+                
+                
                 break;
             default:
                 throw new \Exception('错误');
@@ -644,7 +664,7 @@ class AssignController extends Controller
      * 称重发货
      * @todo 事件处理　操作记录
      */
-    public function weightGoods(Request $request, $id)
+    public function weightGoods(Request $request, InventoryService $serve, $id)
     {
         //减库存
         $assign = Assign::find($id);
@@ -658,20 +678,32 @@ class AssignController extends Controller
 
         $real_weigth = $request->input('real_weigth');
         $express_fee = $request->input('express_fee',0);
-        $assign->weightGoods($real_weigth,$express_fee,auth()->user());
-        $re = $assign->save();
-        if ($re) {
-            //添加发货单操作记录
-            $dataLog = [
-                'assign_id'=>$id,
-                'action'=>'goods-delivery',
-                'remark'=>$assign->assign_sn
-            ];
-            event(new AddAssignOperationLog(auth()->user(),$dataLog));
-            return $this->success([]);
-        } else {
-            return $this->error([]);
+        
+        DB::beginTransaction();
+        try {
+            $assign->weightGoods($real_weigth,$express_fee,auth()->user());
+            $re = $assign->save();
+
+            if ($re) {
+                //添加发货单操作记录
+                $dataLog = [
+                    'assign_id'=>$id,
+                    'action'=>'goods-delivery',
+                    'remark'=>$assign->assign_sn
+                ];
+                event(new AddAssignOperationLog(auth()->user(),$dataLog));
+                $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn);   
+            } else {
+                throw new \Exception("更新失败");
+            }
+            
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
         }
+        
+        DB::commit();
+        return $this->success([]);
     }
 
     /**
