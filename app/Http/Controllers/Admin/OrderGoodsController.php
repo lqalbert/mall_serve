@@ -139,7 +139,8 @@ class OrderGoodsController extends Controller
         if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
-
+         
+        $this->updateOrderMoney($orderModel);
         $re = $this->repository->delete($id);
         if ($re) {
             return $this->success([]);
