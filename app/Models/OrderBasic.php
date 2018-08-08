@@ -274,7 +274,7 @@ class OrderBasic extends Model
     
     public function orderType()
     {
-        return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name');
+        return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name','discount');
     }
     
     public function updateFreight($newFreight)
