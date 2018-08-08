@@ -110,44 +110,46 @@ class SalesPerformanceController extends Controller
 
 
     public function selectOrder(Request $request){
-//        var_dump($request->all());die;
+        //        var_dump($request->all());die;
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
+        $orderType = $request->input('orderType',2);//订单类型 1商城 2内部 3销售
         $pageSize = $request->input('pageSize', 15);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-//        if($request->has('department_id')){
-//            $where[]=['db.department_id','=', $request->input('department_id')];
-//        }
-//        if($request->has('group_id')){
-//            $where[]=['db.group_id','=', $request->input('group_id')];
-//        }
+        //        if($request->has('department_id')){
+        //            $where[]=['db.department_id','=', $request->input('department_id')];
+        //        }
+        //        if($request->has('group_id')){
+        //            $where[]=['db.group_id','=', $request->input('group_id')];
+        //        }
         if($request->input($groupBy)){
             $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
         }
         $result = DB::table('order_basic as db')
-            ->select(
-                'db.order_all_money as trade_money',
-                'db.user_name as track_name',
-                'db.created_at as traded_at',
-                'db.order_sn',
-                'customer_basic.name as cus_name',
-                'order_address.phone as cus_phone'
+        ->select(
+            'db.order_all_money as trade_money',
+            'db.freight',
+            'db.user_name as track_name',
+            'db.created_at as traded_at',
+            'db.order_sn',
+            'customer_basic.name as cus_name',
+            'order_address.phone as cus_phone'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
-//            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
-            ->leftJoin('order_address','order_address.order_id','=','db.id')
-            ->where($where)
-            ->where([
-                ['db.status','>', OrderBasic::UN_CHECKED],
-                ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 1] //内部订单不统计在里面
-            ])
-            ->paginate($pageSize);
+            //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
+        ->leftJoin('order_address','order_address.order_id','=','db.id')
+        ->where($where)
+        ->where([
+            ['db.status','>', OrderBasic::UN_CHECKED],
+            ['db.status','<', OrderBasic::ORDER_STATUS_7],
+            ['db.type','=', $orderType] //内部订单不统计在里面
+        ])
+        ->paginate($pageSize);
         return [
             'items'=>$result->getCollection(),
             'total'=>$result->total()
