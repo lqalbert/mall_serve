@@ -91,7 +91,8 @@ class SalesPerformanceController extends Controller
                            ['db2.type','=', 1] //这种硬编码其实不好
                        ])->groupBy('db2.'.$groupBy);
                        
-        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))->select("*")
+       $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
+                       ->select(DB::raw("re1.*"), DB::raw('re2.inner_count'), DB::raw('re2.inner_sum'), DB::raw('re2.i_freight'))
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
                           ->mergeBindings($builder2)
