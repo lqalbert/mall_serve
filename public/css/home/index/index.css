@@ -197,6 +197,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     padding: 0;
     line-height: 60px;
     text-align: center;
+    outline: none;
 }
 
 #banner .paginationBox .bbx{
