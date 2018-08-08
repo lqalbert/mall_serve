@@ -35,6 +35,5 @@ class OrderType extends Model
     public function getDiscounted($money)
     {
         return $this->discount * $money / 100;
-
     }
 }
