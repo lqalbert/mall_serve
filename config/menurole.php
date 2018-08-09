@@ -13,7 +13,7 @@ return [
         'GoodsDetails',
         'Group',
         'Employee',
-        'CustomerInfo',
+        'Customer',
         'OrderList',
         'BuyOrders',
         'Refund',
@@ -37,7 +37,7 @@ return [
     'sale-captain' => [
         'GoodsDetails',
         'Employee',
-        'CustomerInfo',
+        'Customer',
         'OrderList',
         'Workbench',
         'SysNotice',
@@ -49,7 +49,7 @@ return [
     ],
     'sale-staff' => [
         'GoodsDetails',
-        'CustomerInfo',
+        'Customer',
         'OrderList',
         'Workbench',
         'SysNotice',
