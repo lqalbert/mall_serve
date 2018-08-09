@@ -102,7 +102,7 @@ class OrderBasic extends Model
     
     
     /**
-     * 售后状态
+     * 售后状态 停用
      * @var array
      */
     private static $afterSaleStatus = [
@@ -163,6 +163,11 @@ class OrderBasic extends Model
     public function department()
     {
         return $this->belongsTo('App\Models\Department', 'department_id');
+    }
+    
+    public function afterSale()
+    {
+        return $this->hasOne('App\Models\AfterSale', 'order_id');
     }
     
     public function getGoods()

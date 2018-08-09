@@ -12,6 +12,7 @@ use App\Repositories\Criteria\FieldLike;
 use App\Repositories\Criteria\NotEqual;
 use App\Repositories\Criteria\FieldEqualGreaterThan;
 use App\Repositories\Criteria\FieldEqualLessThan;
+use App\Repositories\Criteria\Orderlist\AfterSale;
 class OrderlistService
 {
     private $repository = null;
@@ -150,7 +151,8 @@ class OrderlistService
         }
         if ($this->request->has('after_sale_status')) {
             // $where[]=['after_sale_status','<>',0];
-            $this->repository->pushCriteria(new NotEqual('after_sale_status', $this->request->after_sale_status));
+//             $this->repository->pushCriteria(new NotEqual('after_sale_status', $this->request->after_sale_status));
+            $this->repository->pushCriteria(new AfterSale());
         }
         
         if (!$this->request->has('orderField')) {

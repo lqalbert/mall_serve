@@ -248,8 +248,7 @@ class OrderBasicController extends Controller
             if ($data['status'] == 1) {
                 try {
                     event( new OrderPass($this->model, auth()->user()));
-                    //添加保证金日志
-                    event(new AddDepositOperationLog(auth()->user(),$this->model,'check'));
+
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();
