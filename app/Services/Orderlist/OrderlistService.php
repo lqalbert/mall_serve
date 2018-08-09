@@ -109,11 +109,6 @@ class OrderlistService
             }
         }
         
-        if ($this->request->has('status')) {
-            // $where[]=['status',$this->request->input('status')];
-            $this->repository->pushCriteria(new FieldEqual('status', $this->request->status));
-        }
-        
         if ($this->request->has('deal_name')) {
             // $where[]=['deal_name','like',"%".$this->request->deal_name."%"];
             $this->repository->pushCriteria(new FieldLike('deal_name', $this->request->deal_name));
@@ -146,7 +141,10 @@ class OrderlistService
             // $where[]=['created_at','<=', $this->request->end];
             $this->repository->pushCriteria(new FieldEqualLessThan('created_at', $this->request->end));
         }
-        
+        if ($this->request->has('status')) {
+            // $where[]=['status',$this->request->input('status')];
+            $this->repository->pushCriteria(new FieldEqual('status', $this->request->status));
+        }
         if ($this->request->has('product_status')) {
             // $where[]=['product_status',$this->request->input('product_status')];
             $this->repository->pushCriteria(new FieldEqual('product_status', $this->request->product_status));
