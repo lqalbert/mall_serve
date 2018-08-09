@@ -132,8 +132,9 @@ class OrderGoodsController extends Controller
     public function destroy($id)
     {
         //返回 int
-        $orderModel = OrderGoods::where('id',$id)->select('order_id')->first();
-        $orderCheck = OrderBasic::find($orderModel->order_id)->isPass();
+        $goodsModel = OrderGoods::where('id',$id)->select('order_id')->first();
+        $orderModel = OrderBasic::find($goodsModel->order_id);
+        $orderCheck = $orderModel->isPass();
         if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
