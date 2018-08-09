@@ -48,12 +48,12 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(order_all_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
-                'db.user_name',
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
                 'db.group_id',
-                'db.user_id'
+                'db.user_id',
+                'db.user_name'
             )
             //如果 一个订单有多个 order_after 就会造成 DB::raw(count, sum) 重复计算,而且也是不 时间段内的退款，而是指定时间段内订单的退款
             ->leftJoin(DB::raw("({$refundQuery->toSql()}) as oa"), "db.{$groupBy}",'=','oa.map_key')->mergeBindings($refundQuery)
@@ -88,10 +88,11 @@ class SalesPerformanceController extends Controller
                        ->where([
                            ['db2.status','>', OrderBasic::UN_CHECKED],
                            ['db2.status','<', OrderBasic::ORDER_STATUS_7],
-                           ['db2.type','=', 1] //这种硬编码其实不好
+                           ['db2.type','=', 2] //这种硬编码其实不好
                        ])->groupBy('db2.'.$groupBy);
                        
-        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))->select("*")
+       $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
+                       ->select(DB::raw("re1.*"), DB::raw('re2.inner_count'), DB::raw('re2.inner_sum'), DB::raw('re2.i_freight'))
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
                           ->mergeBindings($builder2)
@@ -110,44 +111,51 @@ class SalesPerformanceController extends Controller
 
 
     public function selectOrder(Request $request){
-//        var_dump($request->all());die;
+        //        var_dump($request->all());die;
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
+        $orderType = $request->input('orderType',2);//订单类型 1商城 2内部 3销售
         $pageSize = $request->input('pageSize', 15);
         $offset = ($request->input('page',1) -1) * $pageSize;
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-//        if($request->has('department_id')){
-//            $where[]=['db.department_id','=', $request->input('department_id')];
-//        }
-//        if($request->has('group_id')){
-//            $where[]=['db.group_id','=', $request->input('group_id')];
-//        }
-        if($request->input($groupBy)){
-            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
+
+        if($request->has('department_id')){
+           $where[]=['db.department_id','=', $request->input('department_id')];
         }
+        if($request->has('group_id')){
+           $where[]=['db.group_id','=', $request->input('group_id')];
+        }
+        if($request->has('user_id')){
+           $where[]=['db.user_id','=', $request->input('user_id')];
+        }
+        // if($request->input($groupBy)){
+        //     $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
+        // }
+        
         $result = DB::table('order_basic as db')
-            ->select(
-                'db.order_all_money as trade_money',
-                'db.user_name as track_name',
-                'db.created_at as traded_at',
-                'db.order_sn',
-                'customer_basic.name as cus_name',
-                'order_address.phone as cus_phone'
+        ->select(
+            'db.discounted_goods_money as trade_money',
+            'db.freight',
+            'db.user_name as track_name',
+            'db.created_at as traded_at',
+            'db.order_sn',
+            'customer_basic.name as cus_name',
+            'order_address.phone as cus_phone'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')
-//            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
-            ->leftJoin('order_address','order_address.order_id','=','db.id')
-            ->where($where)
-            ->where([
-                ['db.status','>', OrderBasic::UN_CHECKED],
-                ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 1] //内部订单不统计在里面
-            ])
-            ->paginate($pageSize);
+            //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
+        ->leftJoin('order_address','order_address.order_id','=','db.id')
+        ->where($where)
+        ->where([
+            ['db.status','>', OrderBasic::UN_CHECKED],
+            ['db.status','<', OrderBasic::ORDER_STATUS_7],
+            ['db.type','=', $orderType] //内部订单不统计在里面
+        ])->paginate($pageSize);//->groupBy('db.'.$groupBy)
+
         return [
             'items'=>$result->getCollection(),
             'total'=>$result->total()

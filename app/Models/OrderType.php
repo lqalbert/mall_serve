@@ -31,4 +31,9 @@ class OrderType extends Model
         $map=['禁用','启用'];
         return $map[$this->status];
     }
+    
+    public function getDiscounted($money)
+    {
+        return $this->discount * $money / 100;
+    }
 }

@@ -101,8 +101,6 @@ class OrderGoodsController extends Controller
         try {
             $data = $request->all();
             $model = OrderGoods::create($data);
-
-            $deta_num = $model->getNum() - $data['goods_number'];
             $service->saleLock( $model->order->entrepot, [$model], $request->user());
             
             $this->updateOrderMoney(OrderBasic::find($request->input('order_id')));
@@ -113,7 +111,7 @@ class OrderGoodsController extends Controller
         }
         
         DB::commit();
-        return $this->success([]);
+        return $this->success($model);
     }
     /**
      * Display the specified resource.
@@ -136,22 +134,23 @@ class OrderGoodsController extends Controller
         //返回 int
         $orderModel = OrderGoods::where('id',$id)->select('order_id')->first();
         $orderCheck = OrderBasic::find($orderModel->order_id)->isPass();
-        if(!$orderCheck){
+        if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
-
+         
+        $this->updateOrderMoney($orderModel);
         $re = $this->repository->delete($id);
         if ($re) {
-            //return $this->success(1);
-            return 1;
+            return $this->success([]);
+//             return 1;
         } else {
-            //return $this->error();
-            return 2;
+            return $this->error();
+//             return 2;
         }
     }
     
     /**
-     * 
+     * 这里有点问题 
      * @param unknown $orderModel
      * @throws \Exception
      */
@@ -159,8 +158,9 @@ class OrderGoodsController extends Controller
     {
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
         $orderType = $orderModel->orderType;
+        logger("[dd]", [$orderType->toArray()]);
         $orderModel->order_all_money = $money->m;
-        $orderModel->discounted_goods_money= $money->m * $orderType->discount;
+        $orderModel->discounted_goods_money =  $orderType->getDiscounted($money->m);
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
         $re = $orderModel->save();
         if (!$re) {
