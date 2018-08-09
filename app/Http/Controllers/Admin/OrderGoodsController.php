@@ -101,8 +101,6 @@ class OrderGoodsController extends Controller
         try {
             $data = $request->all();
             $model = OrderGoods::create($data);
-
-            $deta_num = $model->getNum() - $data['goods_number'];
             $service->saleLock( $model->order->entrepot, [$model], $request->user());
             
             $this->updateOrderMoney(OrderBasic::find($request->input('order_id')));
@@ -113,7 +111,7 @@ class OrderGoodsController extends Controller
         }
         
         DB::commit();
-        return $this->success([]);
+        return $this->success($model);
     }
     /**
      * Display the specified resource.
