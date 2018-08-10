@@ -172,6 +172,11 @@ class GoodsDetailsController extends Controller
             $goodsModel->category()->sync($cates);
         }
         
+        $frontCates = $request->input('front_id', []);
+        if (!empty($frontCates)) {
+            $goodsModel->frontCategory()->sync($frontCates);
+        }
+        
         if(isset($data['merge_img'])){
             if (!empty($data['del_imgs'])) {
                 $goodsModel->imgs()->whereIn('id', $data['del_imgs'])->delete();
@@ -208,6 +213,18 @@ class GoodsDetailsController extends Controller
         } else {
             return $this->error($re);
         }
+    }
+    
+    
+    /**
+     * 卸载关联 frontCate
+     */
+    public function frontDetach($id)
+    {
+        $model  = $this->repository->find($id);
+        $model->frontCategory()->detach();
+        
+        return $this->success([]);
     }
 
 

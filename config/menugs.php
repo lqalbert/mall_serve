@@ -275,5 +275,10 @@ return [
             'icon' => null,
             'index' => 'OrderDepositLog'
         ],
+        [
+            'text' => '前台商品分类',
+            'icon' => null,
+            'index' => 'FrontCategory'
+        ]
 		
 ];

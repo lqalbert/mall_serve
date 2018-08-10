@@ -54,6 +54,17 @@ class Goods extends Model
     	return $this->hasMany('App\Models\GoodsCategory');
     }
     
+    //多对多
+    public function frontCategory()
+    {
+        //->withTimestamps()
+        return $this->belongsToMany('App\Models\CategoryFront', 'front_goods', 'goods_id', 'front_id');
+    }
+    
+    public function midFrontCate(){
+        return $this->hasMany('App\Models\GoodsFrontCategory');
+    }
+    
     //1对多
     public function imgs() 
     {
