@@ -20,7 +20,7 @@
                     </div>
                     <div class="">
                         {{--{{URL('connection/technology')}}--}}
-                        <a href="">
+                        <a href="{{URL('connection/index')}}">
                             技术咨询
                         </a>
                     </div>
@@ -30,7 +30,7 @@
                     <div class="title">客户服务</div>
                     <div class="">
                         {{--{{URL('question/index')}}--}}
-                        <a href="">
+                        <a href="{{URL('question/index')}}">
                             常见问题
                         </a>
                     </div>
