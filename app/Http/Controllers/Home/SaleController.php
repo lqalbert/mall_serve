@@ -11,8 +11,8 @@ class SaleController extends CommonController
 {
     //
     public  function index(){
-        static::$bar['bar4']='sta';
-        static::$bar['line4']='line';
+        static::$bar['bar3']='sta';
+        static::$bar['line3']='line';
         //hot_goods 应做成查询作用域
         $allgoods = Goods::active()->where('hot_goods',1)->get(['id','cover_url','goods_name','goods_price','new_goods','hot_goods','specifications','brief']);
         return view('home/sale/index',['bar'=>static::$bar, 'allGoods'=>$allgoods]);
@@ -31,8 +31,8 @@ class SaleController extends CommonController
 //         $yt=$request->input('type','wakeup');
         
         
-        static::$bar['bar6']='sta';
-        static::$bar['line6']='line';
+        static::$bar['bar4']='sta';
+        static::$bar['line4']='line';
         
         $cate =$label;
         

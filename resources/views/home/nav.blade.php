@@ -47,7 +47,7 @@
                                                 <div class="{{$bar['line5']}}"></div>
                                             </a>
                                         </li>
-                                        <li role="presentation"><a href="{{URL('connection/index')}}" class="{{$bar['bar6']}}">
+                                        <li role="presentation"><a href="{{URL('brand/index')}}" class="{{$bar['bar6']}}">
                                                 品牌故事
                                                 <div class="{{$bar['line6']}}"></div>
                                             </a>
