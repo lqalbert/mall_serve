@@ -58,7 +58,7 @@
                			 </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             <div class="searchBox">
-                                <input type="text" id="search" placeholder="寻找美丽新世界">
+                                <input type="text" id="search" placeholder="寻找美丽新世界" onfocus="this.placeholder=''" onblur="this.placeholder='寻找美丽新世界'">
                                 <span id="souI" class="glyphicon glyphicon-search" aria-hidden="true"></span>
                             </div>
                         </div>
