@@ -203,7 +203,9 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
-    
+    Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
+    Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
+
 });
 
 

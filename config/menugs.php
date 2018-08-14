@@ -275,5 +275,10 @@ return [
             'icon' => null,
             'index' => 'OrderDepositLog'
         ],
+        [
+            'text' => '问卷管理',
+            'icon' => null,
+            'index' => 'QuestionnaireManagement'
+        ],
 		
 ];
