@@ -7,8 +7,9 @@
 }
 
 #question .questionContent{
-    height: 1000px;
+    height: auto;
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #question .questionContent .left{
@@ -65,5 +66,27 @@
 #question .rightContent .questionList .answer{
     line-height: 25px;
     color: #999;
-    padding-left: 12px;
+    padding-left: 15px;
+}
+
+#question .rightContent .questionList .question {
+    padding-left: 15px;
+}
+
+.rightContent .questionList .question span{
+    background: #222222;
+    width: 10px;
+    height: 10px;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 10px;
+}
+
+.saleQuestion{
+}
+
+.returnGoods{
+    display: none;
 }
