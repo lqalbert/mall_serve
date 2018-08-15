@@ -207,7 +207,45 @@ class QuestionnaireSurveyResultsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $phone = $data['cus_phone'];
+        $user = DB::table('customer_contact')->where('phone',$phone)->first();
+        $answers = ['answer_a','answer_b','answer_c','answer_d','answer_e'];
+        if(!$user){
+            return $this->error([],'你还没有注册!',0);
+        }else {
+            $saveData = [];
+            $cus_id = $user->cus_id;
+            for($i=1;$i<=50;$i++){
+                $tmp = [];
+                if(in_array($i,array_keys($data))){
+                    $tmp['questionnaire_managements_id'] = (int)$data['questionnaire_managements_id'];
+                    $tmp['cus_id'] = $cus_id;
+                    $tmp['questionnaire_options_id'] = $i;
+                    $tmp['created_at'] = date('Y-m-d H:i:s',time());
+                    $tmp['updated_at'] = date('Y-m-d H:i:s',time());
+                    if(!in_array($data[$i],$answers)){
+                        $tmp['answer'] = $data[$i];
+                    }else{
+                        $tmp[$data[$i]] = 1;
+                    }
+                    $this->model->create($tmp);
+//                    array_push($saveData,$tmp);
+                }
+            }
+//            var_dump($saveData);
+//           $re = DB::table('questionnaire_survey_results')->insert($saveData);
+//            var_dump($re);die;
+            return $this->success([],'提交成功!',1);
+//            if($re){
+//                return $this->success([],'提交成功!',1);
+//            }else{
+//                return $this->error([],'保存失败!',0);
+//            }
+//
+
+        }
+
     }
 
     /**

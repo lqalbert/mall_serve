@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Home;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\QuestionnaireOptions;
+use App\Models\QuestionnaireManagement;
 
 
 class InformationController extends CommonController
@@ -12,8 +14,10 @@ class InformationController extends CommonController
     public function index(){
         static::$bar['bar5']='sta';
         static::$bar['line5']='line';
-
-        return view('home/information/index',['bar'=>static::$bar]);
+        $title = QuestionnaireManagement::orderBy('created_at','desc')->first()->toArray();
+        $questionnaires = QuestionnaireOptions::where('questionnaire_managements_id',$title['id'])->get()->toArray();
+//        var_dump($questionnaires);die;
+        return view('home/information/index',['bar'=>static::$bar,'questionnaires'=>$questionnaires,'title'=>$title]);
     }
     
     public function news(){

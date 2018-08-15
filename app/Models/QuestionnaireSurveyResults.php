@@ -18,8 +18,14 @@ class QuestionnaireSurveyResults extends Model
     protected $hidden = ['created_at', 'updated_at','deleted_at'];
     protected $fillable = [
         'cus_id',
+        'questionnaire_managements_id',
         'questionnaire_options_id',
         'answer',
+        'answer_a',
+        'answer_b',
+        'answer_c',
+        'answer_d',
+        'answer_e',
     ];
 
 
