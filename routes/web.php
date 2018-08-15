@@ -203,6 +203,8 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
     
 });
 
@@ -258,3 +260,7 @@ Route::get('/question/index', 'Home\QuestionController@index')->name('question/i
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
