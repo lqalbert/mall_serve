@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\MakeRole::class
+        Commands\MakeRole::class,
+        Commands\RestoreSending::class
     ];
 
     /**

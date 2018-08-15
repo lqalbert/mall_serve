@@ -112,7 +112,7 @@ class InventoryService
     {
         DB::beginTransaction();
         try {
-            $this->inventory->sending($entrepot->id, $products, $on);
+            $this->inventory->sending($entrepot->id, $products);
             $this->log->sending($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {

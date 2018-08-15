@@ -26,6 +26,7 @@ use App\Models\VolumeRatio;
 use Illuminate\Support\Facades\DB;
 use App\Services\Inventory\InventoryService;
 use App\Models\AfterSale;
+use App\Repositories\Criteria\Assign\PrintStatus;
 
 class AssignController extends Controller
 {
@@ -37,7 +38,8 @@ class AssignController extends Controller
         'status',//发货状态
         'corrugated_id',
         'express_sn', //物流揽件要用
-        'order_id', //订单下面查询要用
+        'order_id', //订单下面查询要用,
+        'is_stop'
 
     ];
     
@@ -114,6 +116,7 @@ class AssignController extends Controller
             $this->repository->pushCriteria(new DateRange($range, $field));
         } 
         
+        
 
         if (array_merge($order, $requestParams)) {
             $this->repository->pushCriteria(new Order($request));
@@ -123,9 +126,15 @@ class AssignController extends Controller
             $this->repository->pushCriteria(new Address($request));
         }
         
+        if ($request->has('print_status')) {
+            $this->repository->pushCriteria(new PrintStatus());
+        }
+        
         if ($request->has('with')) {
             $this->repository->with($request->input('with'));
         }
+        
+        
         
         $pager = $this->repository->paginate($request->input('pageSize', 30), $request->input('fields',['*']));
         

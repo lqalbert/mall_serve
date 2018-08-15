@@ -31,10 +31,10 @@ class Assign extends Model
         '未审核',
         '已审核',
         '审核未通过',
-       // '已拦截',
         '已发货',
-        //'已打印',
         '已验货'
+       // '已拦截',  另一个字段 is_stop
+        //'已打印', 
     ];
     
     protected $hidden = ['print_data'];
@@ -160,6 +160,17 @@ class Assign extends Model
     }
     
     
+    /**
+     * 已发货作用域
+     * @param unknown $query
+     * @return unknown
+     */
+    public function scopeSended($query)
+    {
+        return $query->where('status', '=', self::STATUS_WEIGHTGOODS);
+    }
+    
+    
     
     /**
      * 获取配货单数量
@@ -175,6 +186,7 @@ class Assign extends Model
         return self::withTrashed()->where('entrepot_id', $entrepot_id)
         ->lockForUpdate()->count();
     }
+    
     
     protected static function boot()
     {

@@ -253,7 +253,7 @@ class System
         return $affectedRows;
     }
     
-    public function sending($entrepot_id,  $products, $on)
+    public function sending($entrepot_id,  $products)
     {
         // send_ing
         $affectedRows = 0;
