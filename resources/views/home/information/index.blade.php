@@ -75,7 +75,7 @@
                         @endif
                         @if($questionnaire['problem_type']==2)
                             <div >
-                                <input type="text" name="{{$k+1}}" style="height: 150px" class="form-control"  placeholder="请填写">
+                                <textarea  name="{{$k+1}}" style="height: 100px" class="form-control"  placeholder="请填写"></textarea>
                             </div>
                         @endif
                     </div>
@@ -94,10 +94,12 @@
                             <label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12">验证码：</label>
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 codeBox">
-                            <input type="text" name="code" class="form-control" placeholder="验证码">
+                            <input type="text" name="code" class="form-control" placeholder="请输入验证码">
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 imgBox">
-                            <!--                         <img src="" alt=""> -->
+
+                            <img src="{{URL('/verification-code')}}" alt="" id="codeChange" onclick="againCode()">
+                            {{--<img src="{{captcha_src()}}" alt=""  onclick="this.src='{{captcha_src()}}'+Math.random()">--}}
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 butBox">
@@ -113,9 +115,23 @@
 @section('js')
     <script src=""></script>
     <script>
+        function againCode(){
+            $.ajax({
+                url: '/verification-code',
+                type: 'GET',
+                success: function(data){
+                    if(data){
+                        var urls =$('#codeChange').attr('src');
+                        $("#codeChange").attr('src', urls);
+                    }else{
+                        alert("刷新验证码失败！");
+                    }
+                }
+            })
+        }
         $("#but").click(function(){
             $.ajax({
-                url: '/admin/questionnairesurveyresults',
+                url: '/save-user-answers',
                 type: 'POST',
                 dataType: 'json',
                 data: $("form").serialize(),

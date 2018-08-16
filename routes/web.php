@@ -245,6 +245,14 @@ Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
 
+//生成验证码
+Route::get('/verification-code', 'Home\InformationController@verificationCode')->name('verification-code');
+//保存参与调查用户答案
+Route::post('/save-user-answers', 'Home\InformationController@saveUserAnswers')->name('save-user-answers');
+//用户调查问卷首页
+Route::get('/questionnaire', 'Home\LoginController@questionnaire')->name('questionnaire');
+//保存游客用户信息
+Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
 
 // Auth::routes();
 
