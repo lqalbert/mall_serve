@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class SalesGoodsStatisticsController extends Controller
 {
@@ -14,55 +15,29 @@ class SalesGoodsStatisticsController extends Controller
      */
     public function index(Request $request)
     {
+        $start = $request->input('start')." 00:00:00";
+        $end = $request->input('end')." 23:59:59";
+        $pageSize = $request->input('pageSize', 15);
+        $orderField = $request->input('orderField','produce_in_total');
+        $orderWay  = $request->input('orderWay','desc');
+        $where = [
+            // ['cb.created_at','>=',$start],
+            // ['cb.created_at','<=',$end],
+        ];
+        if($request->has('goods_name')){
+            $where[] = ['goods_name','like',$request->input('goods_name')."%"];
+        }
+
+        $result = DB::table('inventory_system as is')->select(
+                        'is.sku_sn','is.goods_name',
+                        DB::raw('is.produce_in as produce_in_total'),
+                        DB::raw('is.entrepot_count as saleable_count')
+                    )->where($where)->orderBy($orderField,$orderWay)
+                    ->paginate($pageSize);
+
         return [
-            'items'=>[
-                [
-                    'sku_sn'=>666666,
-                    'goods_name'=>'壮阳神丸',
-                    'produce_in_total'=>666666,
-                    'saleable_count'=>666666,
-                    'sales_count'=>666666,
-                    'return_count'=>666666,
-                    'destroy_count'=>666666
-                ],
-                [
-                    'sku_sn'=>666666,
-                    'goods_name'=>'壮阳神丸',
-                    'produce_in_total'=>666666,
-                    'saleable_count'=>666666,
-                    'sales_count'=>666666,
-                    'return_count'=>666666,
-                    'destroy_count'=>666666
-                ],
-                [
-                    'sku_sn'=>666666,
-                    'goods_name'=>'壮阳神丸',
-                    'produce_in_total'=>666666,
-                    'saleable_count'=>666666,
-                    'sales_count'=>666666,
-                    'return_count'=>666666,
-                    'destroy_count'=>666666
-                ],
-                [
-                    'sku_sn'=>666666,
-                    'goods_name'=>'壮阳神丸',
-                    'produce_in_total'=>666666,
-                    'saleable_count'=>666666,
-                    'sales_count'=>666666,
-                    'return_count'=>666666,
-                    'destroy_count'=>666666
-                ],
-                [
-                    'sku_sn'=>666666,
-                    'goods_name'=>'壮阳神丸',
-                    'produce_in_total'=>666666,
-                    'saleable_count'=>666666,
-                    'sales_count'=>666666,
-                    'return_count'=>666666,
-                    'destroy_count'=>666666
-                ],
-            ],
-            'total'=>888
+            'items'=>$result->items(),
+            'total'=>$result->count()
         ];
     }
 
