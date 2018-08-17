@@ -6,17 +6,12 @@ use App\Models\ExpressCompany;
 use App\Models\LogisticsInformation;
 class LogisticsInformationService
 {
-    private $request = null;
-    public function  __construct(Request $request)
-    {
-        $this->request = $request;
-    }
 
-    public function  get() 
+    public function  get($express_id,$express_sn)
     {
-        if($this->request->has('express_id')){
-            $express_id = $this->request->input('express_id');//快递公司ID
-            $express_sn = $this->request->input('express_sn');//快递单号
+
+//            $express_id = $this->request->input('express_id');//快递公司ID
+//            $express_sn = $this->request->input('express_sn');//快递单号
             $express_eng = ExpressCompany::where('id',$express_id)->value('eng');
             $code = LogisticsInformation::where('eng',$express_eng)->value('code');//快宝查询快递公司简称
             $host = "https://kop.kuaidihelp.com/api";
@@ -43,7 +38,6 @@ class LogisticsInformationService
                 "data"=>json_encode($data)
 //              "data"=>'{ "waybill_no":."800713030656648722", "exp_company_code":."yt","result_sort":"0"}'
             ];
-
             $bodys = http_build_query($bodys);
             $url = $host;
             $curl = curl_init();
@@ -60,11 +54,11 @@ class LogisticsInformationService
             }
             curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);
             $resData = json_decode(curl_exec($curl));
-            return get_object_vars($resData);
-        }else{
-//             $this->error([],'没有该快递公司');
-            throw new \Exception("没有该快递公司");
-        }
+            $returnData = get_object_vars($resData);
+            if(!$returnData['data']){
+                $returnData['data']=['data'];
+            }
+            return $returnData;
 
     }
 }
