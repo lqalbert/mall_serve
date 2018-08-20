@@ -126,6 +126,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'Mail'
     ],
     'assign-service'=>[
         'StockDetails',
