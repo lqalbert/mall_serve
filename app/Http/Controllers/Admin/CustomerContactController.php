@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\CustomerContact;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use App\Events\ContactConflict;
+use App\Models\CustomerTrackLog;
 
 class CustomerContactController extends Controller
 {
@@ -49,6 +51,7 @@ class CustomerContactController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         try {
             $this->validate($request, [
                 'phone' => ['nullable','unique:customer_contact'],
@@ -56,9 +59,19 @@ class CustomerContactController extends Controller
                 'weixin' => ['nullable','unique:customer_contact'],
             ]);
         } catch (ValidationException $e) {
-//             logger('[message]', $e->toArray());
-            event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
-            throw $e;
+            $phone = $request->input('phone');
+            $data = [];
+            $data['cus_id'] = DB::table('customer_contact')->where('phone',$phone)->value('cus_id');
+            $data['cus_name'] = DB::table('customer_basic')->where('id',$data['cus_id'])->value('name');
+            $data['user_id'] = $user->toArray()['id'];
+            $data['user_name'] = $user->toArray()['realname'];
+            $data['content'] = '添加联系方式时与手机号码'.$phone.'冲突';
+            $re = CustomerTrackLog::create($data);
+            if($re){
+                event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
+                throw $e;
+            }
+
         }
         
         

@@ -279,6 +279,11 @@ return [
             'text' => '前台商品分类',
             'icon' => null,
             'index' => 'FrontCategory'
-        ]
+        ],
+	[
+            'text' => '问卷管理',
+            'icon' => null,
+            'index' => 'QuestionnaireManagement'
+        ],
 		
 ];
