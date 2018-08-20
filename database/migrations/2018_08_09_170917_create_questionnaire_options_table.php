@@ -16,7 +16,7 @@ class CreateQuestionnaireOptionsTable extends Migration
         Schema::create('questionnaire_options', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('questionnaire_managements_id')->nullable()->comment('问卷表ID');
-            $table->unsignedInteger('problem_type')->nullable()->comment('题目类型 1 选择题 2 填空题');
+            $table->unsignedInteger('problem_type')->nullable()->comment('题目类型 1 单项选择型 2 多项选择型 3 文字填写型');
             $table->string('topic_name',100)->nullable()->comment('问卷题目');
             $table->string('option_a',100)->nullable()->comment('选项A');
             $table->string('option_b',100)->nullable()->comment('选项B');
