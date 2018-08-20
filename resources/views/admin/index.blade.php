@@ -20,10 +20,10 @@
        
     </div>
     <!-- Scripts -->
-   	<script type="text/javascript" src="/admin/static1.1.86/js/manifest.82b4702d80d71905048d.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.86/js/vendor.2e9faf073105a6547a32.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.86/js/app.36a20abe883d7e21ca7b.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.86/js/babel-polyfill.b6308668f8ef0b05b10d.js"></script>
+   	<script type="text/javascript" src="/admin/static1.2.0/js/manifest.11902f6abc3ead7ef54c.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.0/js/vendor.14779316b1e85b9bfcb5.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.0/js/babel-polyfill.cc8797398d2b1444be81.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.0/js/app.b2b1da171aad39945c29.js"></script>
     
     
     <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
