@@ -82,6 +82,7 @@ class QuestionnaireSurveyResultsController extends Controller
             ->where($where)
             ->where('r.questionnaire_managements_id',$questionnaire_managements_id)
             ->groupBy('r.cus_id')
+            ->orderBy('c.created_at','desc')
             ->paginate($this->request->input('pageSize'));
         return ['users'=>$data->items(),'total'=>$data->total()];
 
@@ -149,7 +150,7 @@ class QuestionnaireSurveyResultsController extends Controller
         $problem_type = $this->request->input('problem_type');
         $info = [];
         $options = [];
-        if($problem_type==2){
+        if($problem_type==3){
             $info = DB::table('questionnaire_survey_results as r')
                 ->select('q.topic_name','r.answer','r.id')
                 ->join('questionnaire_options as q','q.id','=','r.questionnaire_options_id')
@@ -158,7 +159,7 @@ class QuestionnaireSurveyResultsController extends Controller
                 ->get()
                 ->toArray();
         }
-        if($problem_type==1){
+        if($problem_type==1 || $problem_type==2){
             $option = DB::table('questionnaire_options')
                 ->select('option_a as A','option_b as B','option_c as C','option_d as D','option_e as E')
                 ->where('questionnaire_managements_id',$questionnaire_managements_id)

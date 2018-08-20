@@ -70,22 +70,25 @@ class InformationController extends CommonController
             $cus_id = $user->cus_id;
             for($i=1;$i<=50;$i++){
                 $tmp = [];
-                if(in_array($i,array_keys($data))){
+                $tmp_name = 'question_'.$i;
+                if(in_array($tmp_name,array_keys($data))){
                     $tmp['questionnaire_managements_id'] = (int)$data['questionnaire_managements_id'];
                     $tmp['cus_id'] = $cus_id;
                     $tmp['questionnaire_options_id'] = $i;
                     $tmp['created_at'] = date('Y-m-d H:i:s',time());
                     $tmp['updated_at'] = date('Y-m-d H:i:s',time());
-                    if(!in_array($data[$i],$answers)){
-                        $tmp['answer'] = $data[$i];
-                    }else{
-                        $tmp[$data[$i]] = 1;
+                    $values = explode(',',$data[$tmp_name]);
+                    foreach ($values as $k=>$v){
+                        if(in_array($v,$answers)){
+                            $tmp[$v] = 1;
+                        }else{
+                            $tmp['answer'] = $data[$tmp_name];
+                        }
                     }
                     $this->model->create($tmp);
                 }
             }
             return $this->success([],'提交成功，谢谢你的参与!',1);
-
         }
 
     }
