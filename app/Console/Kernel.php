@@ -14,7 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\MakeRole::class,
-        Commands\RestoreSending::class
+        Commands\RestoreSending::class,
+        Commands\PaddTypeObject::class,
+        Commands\UpgradeOne::class
     ];
 
     /**

@@ -117,7 +117,6 @@ class AssignController extends Controller
         } 
         
         
-
         if (array_merge($order, $requestParams)) {
             $this->repository->pushCriteria(new Order($request));
         }
@@ -351,6 +350,7 @@ class AssignController extends Controller
                 }
                 $assign->corrugated_case = '';
                 $assign->corrugated_id = 0;
+                $assign->status = 0;
                 $re = $assign->save();
                 break;
             case 2:
@@ -378,8 +378,6 @@ class AssignController extends Controller
                     return $this->error([], $e->getMessage());
                 }
                 DB::commit();
-                
-                
                 break;
             default:
                 throw new \Exception('错误');

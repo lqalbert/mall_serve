@@ -174,6 +174,9 @@ class StockCheckGoodsController extends Controller
     public function updateEntrepot(Request $request, InventoryService $service,  $id)
     {
         $model = StockCheckGoods::find($id);
+        if (!$model) {
+            return $this->error([], '商品不存在，查看是不是ID对不上');
+        }
         $checkModel = $model->check;
         $entrepot = $checkModel->entrepot;
         if ($model->isFixed()) {

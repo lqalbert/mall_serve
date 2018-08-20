@@ -29,6 +29,7 @@ class OrderBasic extends Model
         'deleted_at'
     ];
     protected $hidden = [ 'updated_at','deleted_at'];
+    protected $casts = [ 'type_object'=> 'object'];
     protected $fillable = [
         'deal_id',
         'deal_name',
@@ -286,6 +287,17 @@ class OrderBasic extends Model
     {
         return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name','discount');
     }
+    
+    public function typeToPlanObject()
+    {
+        $this->type_object = $this->orderType->toPlan();
+    }
+    
+    public function typeObjecToOrderType()
+    {
+        return OrderType::make((array) $this->type_object );
+    }
+    
     
     public function updateFreight($newFreight)
     {

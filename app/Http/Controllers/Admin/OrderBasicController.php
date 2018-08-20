@@ -91,6 +91,7 @@ class OrderBasicController extends Controller
             $allData['department_name'] = $department->name;
 
             $orderModel = OrderBasic::make($allData);
+            $orderModel->typeToPlanObject();
             $re = $orderModel->save();
             if (!$re) {
                 throw new  \Exception('订单创建失败');

@@ -9,6 +9,7 @@ use App\Repositories\OrdergoodsRepository;
 use App\Repositories\Criteria\Ordergoods\Ordergoods as OrdergoodsC;
 use Illuminate\Support\Facades\DB;
 use App\Services\Inventory\InventoryService;
+use App\Models\OrderType;
 class OrderGoodsController extends Controller
 {
     //
@@ -158,7 +159,7 @@ class OrderGoodsController extends Controller
     private function updateOrderMoney($orderModel)
     {
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
-        $orderType = $orderModel->orderType;
+        $orderType = $orderModel->typeObjecToOrderType();
 //         logger("[dd]", [$orderType->toArray()]);
         $orderModel->order_all_money = $money->m;
         $orderModel->discounted_goods_money =  $orderType->getDiscounted($money->m);

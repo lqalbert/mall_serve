@@ -98,6 +98,12 @@ class OrderGoods extends Model implements GoodsContracts
         return $this->goods->category;
     }
     
+    public function getSaledPriceAttribute()
+    {
+        $orderType = $this->order->typeObjecToOrderType();
+        return $orderType->getDiscounted($this->price);
+    }
+    
     /**
      * 退换货的
      * @param unknown $query
