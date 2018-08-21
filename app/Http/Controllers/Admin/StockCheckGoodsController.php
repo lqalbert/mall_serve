@@ -173,7 +173,7 @@ class StockCheckGoodsController extends Controller
     
     public function updateEntrepot(Request $request, InventoryService $service,  $id)
     {
-        $model = StockCheckGoods::find($id);
+        $model = StockCheckGoods::findOrFail($id);
         $checkModel = $model->check;
         $entrepot = $checkModel->entrepot;
         if ($model->isFixed()) {
