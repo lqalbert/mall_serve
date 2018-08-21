@@ -22,7 +22,11 @@ class QuestionnaireManagementController extends Controller
      */
     public function index(Request $request)
     {
-       $data = $this->model->orderBy('created_at','desc')->paginate($request->input('pageSize'));
+        $where = [];
+        if($request->has('title')){
+            $where[] = ['title','=',$request->input('title')];
+        }
+       $data = $this->model->where($where)->orderBy('created_at','desc')->paginate($request->input('pageSize'));
         return ['items'=>$data->items(),'total'=>$data->total()];
     }
 
