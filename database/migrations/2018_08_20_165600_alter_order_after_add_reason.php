@@ -15,6 +15,7 @@ class AlterOrderAfterAddReason extends Migration
     {
         Schema::table('order_after', function (Blueprint $table) {
             $table->string('reason')->nullable()->comment('退货原因');
+            $table->string('check_mark')->nullable()->comment('审核备注');
         });
     }
 
@@ -26,7 +27,7 @@ class AlterOrderAfterAddReason extends Migration
     public function down()
     {
         Schema::table('order_after', function (Blueprint $table) {
-            $table->dropColumn('reason');
+            $table->dropColumn(['reason','check_mark']);
         });
     }
 }
