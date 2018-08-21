@@ -29,7 +29,7 @@
                         @if($questionnaire['option_a'])
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                <input type="radio" name="question_{{$k+1}}"  class="question1" value="answer_a">
+                                <input type="radio" name="question_{{$questionnaire['id']}}"  class="question1" value="answer_a">
                             </div>
                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                 {{$questionnaire['option_a']}}
@@ -39,7 +39,7 @@
                         @if($questionnaire['option_b'])
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                <input type="radio" name="question_{{$k+1}}" class="question1" value="answer_b">
+                                <input type="radio" name="question_{{$questionnaire['id']}}" class="question1" value="answer_b">
                             </div>
                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                 {{$questionnaire['option_b']}}
@@ -49,7 +49,7 @@
                         @if($questionnaire['option_c'])
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                <input type="radio" name="question_{{$k+1}}" class="question1" value="answer_c">
+                                <input type="radio" name="question_{{$questionnaire['id']}}" class="question1" value="answer_c">
                             </div>
                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                 {{$questionnaire['option_c']}}
@@ -59,7 +59,7 @@
                         @if($questionnaire['option_d'])
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                <input type="radio" name="question_{{$k+1}}" class="question1" value="answer_d">
+                                <input type="radio" name="question_{{$questionnaire['id']}}" class="question1" value="answer_d">
                             </div>
                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                 {{$questionnaire['option_d']}}
@@ -69,7 +69,7 @@
                         @if($questionnaire['option_e'])
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                             <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                <input type="radio" name="question_{{$k+1}}" class="question1" value="answer_e">
+                                <input type="radio" name="question_{{$questionnaire['id']}}" class="question1" value="answer_e">
                             </div>
                             <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                 {{$questionnaire['option_e']}}
@@ -83,7 +83,7 @@
                             @if($questionnaire['option_a'])
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                        <input type="checkbox" name="question_{{$k+1}}"  class="question1 'question_'+{{$k+1}}" value="answer_a">
+                                        <input type="checkbox" name="question_{{$questionnaire['id']}}"  class="question1 'question_'+{{$k+1}}" value="answer_a">
                                     </div>
                                     <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                         {{$questionnaire['option_a']}}
@@ -93,7 +93,7 @@
                             @if($questionnaire['option_b'])
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                        <input type="checkbox" name="question_{{$k+1}}" class="question1 'question_'+{{$k+1}}" value="answer_b">
+                                        <input type="checkbox" name="question_{{$questionnaire['id']}}" class="question1 'question_'+{{$k+1}}" value="answer_b">
                                     </div>
                                     <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                         {{$questionnaire['option_b']}}
@@ -103,7 +103,7 @@
                             @if($questionnaire['option_c'])
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                        <input type="checkbox" name="question_{{$k+1}}" class="question1 'question_'+{{$k+1}}" value="answer_c">
+                                        <input type="checkbox" name="question_{{$questionnaire['id']}}" class="question1 'question_'+{{$k+1}}" value="answer_c">
                                     </div>
                                     <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                         {{$questionnaire['option_c']}}
@@ -113,7 +113,7 @@
                             @if($questionnaire['option_d'])
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                        <input type="checkbox" name="question_{{$k+1}}" class="question1 'question_'+{{$k+1}}" value="answer_d">
+                                        <input type="checkbox" name="question_{{$questionnaire['id']}}" class="question1 'question_'+{{$k+1}}" value="answer_d">
                                     </div>
                                     <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                         {{$questionnaire['option_d']}}
@@ -123,7 +123,7 @@
                             @if($questionnaire['option_e'])
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 questionL">
                                     <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2">
-                                        <input type="checkbox" name="question_{{$k+1}}" class="question1 'question_'+{{$k+1}}" value="answer_e">
+                                        <input type="checkbox" name="question_{{$questionnaire['id']}}" class="question1 'question_'+{{$k+1}}" value="answer_e">
                                     </div>
                                     <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10">
                                         {{$questionnaire['option_e']}}
@@ -134,7 +134,7 @@
                         {{--文字填写型--}}
                         @else
                             <div >
-                                <textarea  name="question_{{$k+1}}" style="height: 100px" class="form-control"  placeholder="请填写"></textarea>
+                                <textarea  name="question_{{$questionnaire['id']}}" style="height: 100px" class="form-control"  placeholder="请填写"></textarea>
                             </div>
                         @endif
                     </div>
@@ -203,16 +203,15 @@
                 url: '/save-user-answers',
                 type: 'POST',
                 dataType: 'json',
-                // data: $("form").serialize(),
                 data: formData,
                 success:function(response){
                     if(response.status){
                         $('form')[0].reset();
                         alert(response.msg);
                     }else{
+                        $('form')[0].reset();
                         alert(response.msg);
                     }
-                    console.log(response);
                 },
                 error:function(response){
                     alert("联系我们！");

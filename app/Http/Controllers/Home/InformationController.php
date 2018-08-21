@@ -27,8 +27,10 @@ class InformationController extends CommonController
     public function index(){
         static::$bar['bar5']='sta';
         static::$bar['line5']='line';
-        $title = QuestionnaireManagement::orderBy('created_at','desc')->first()->toArray();
+        $title = QuestionnaireManagement::where('id',$this->request->input('id'))->first()->toArray();
         $questionnaires = QuestionnaireOptions::where('questionnaire_managements_id',$title['id'])->get()->toArray();
+        $ids = array_column($questionnaires,'id');
+        $this->request->session()->put(['questionnaires_ids'=>$ids]);
         return view('home/information/index',['bar'=>static::$bar,'questionnaires'=>$questionnaires,'title'=>$title]);
     }
     //生成验证码
@@ -61,6 +63,7 @@ class InformationController extends CommonController
             return $this->error([],'验证码输入不正确!',0);
         }
         $data = $this->request->all();
+        $questionnaires_ids = $this->request->session()->get('questionnaires_ids');
         $phone = $data['cus_phone'];
         $user = DB::table('customer_contact')->where('phone',$phone)->first();
         $answers = ['answer_a','answer_b','answer_c','answer_d','answer_e'];
@@ -68,27 +71,34 @@ class InformationController extends CommonController
             return $this->error([],'你还没有注册!',0);
         }else {
             $cus_id = $user->cus_id;
-            for($i=1;$i<=50;$i++){
-                $tmp = [];
-                $tmp_name = 'question_'.$i;
-                if(in_array($tmp_name,array_keys($data))){
-                    $tmp['questionnaire_managements_id'] = (int)$data['questionnaire_managements_id'];
-                    $tmp['cus_id'] = $cus_id;
-                    $tmp['questionnaire_options_id'] = $i;
-                    $tmp['created_at'] = date('Y-m-d H:i:s',time());
-                    $tmp['updated_at'] = date('Y-m-d H:i:s',time());
-                    $values = explode(',',$data[$tmp_name]);
-                    foreach ($values as $k=>$v){
-                        if(in_array($v,$answers)){
-                            $tmp[$v] = 1;
-                        }else{
-                            $tmp['answer'] = $data[$tmp_name];
+            $has_user = DB::table('questionnaire_survey_results')->where('cus_id',$cus_id)->first();
+            if(!$has_user){
+                foreach ($questionnaires_ids as $k1 =>$v1){
+                    $tmp = [];
+                    $tmp_name = 'question_'.$v1;
+                    if(in_array($tmp_name,array_keys($data))){
+                        $tmp['questionnaire_managements_id'] = (int)$data['questionnaire_managements_id'];
+                        $tmp['cus_id'] = $cus_id;
+                        $tmp['questionnaire_options_id'] = $v1;
+                        $tmp['created_at'] = date('Y-m-d H:i:s',time());
+                        $tmp['updated_at'] = date('Y-m-d H:i:s',time());
+                        $values = explode(',',$data[$tmp_name]);
+                        foreach ($values as $k=>$v){
+                            if(in_array($v,$answers)){
+                                $tmp[$v] = 1;
+                            }else{
+                                $tmp['answer'] = $data[$tmp_name];
+                            }
                         }
+                        $this->model->create($tmp);
                     }
-                    $this->model->create($tmp);
                 }
+                return $this->success([],'提交成功，谢谢你的参与!',1);
             }
-            return $this->success([],'提交成功，谢谢你的参与!',1);
+            else{
+                return $this->error([],'你已提交过答案，请不要重复提交！',0);
+            }
+
         }
 
     }

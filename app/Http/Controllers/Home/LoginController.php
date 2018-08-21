@@ -23,8 +23,8 @@ class LoginController extends CommonController
         return view('home/login/register',['bar'=>static::$bar]);
     }
     //问卷用户信息收集页面
-    public function questionnaire (){
-    return view('home/questionnaire/register',['bar'=>static::$bar]);
+    public function questionnaire (Request $request){
+    return view('home/questionnaire/register',['bar'=>static::$bar,'id'=>$request->input('id')]);
 }
     //问卷用户信息保存
     public function registerAction(Request $request){

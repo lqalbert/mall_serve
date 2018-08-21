@@ -50,6 +50,8 @@ class QuestionnaireSurveyResultsController extends Controller
             ->groupBy('r.questionnaire_options_id')
             ->get()
             ->toArray();
+//        var_dump($data);die;
+
         foreach($data as $k=>$v){
             $data[$k]->a_ratio =($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total) ? round( ($v->a_total / ($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total)),4) * 100 .'%' : '';
             $data[$k]->b_ratio =($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total) ? round( ($v->b_total / ($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total)),4) * 100 .'%' : '';
