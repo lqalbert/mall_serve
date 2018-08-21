@@ -294,7 +294,14 @@ class AfterSaleController extends Controller
         return $this->success([]);
     }
 
-
+    /**
+     * 库存操作要分成入库和出库 感觉可以合二为一
+     * 这是入库 分为 退货入库 和 换货入库
+     */
+    public function rxInventory(Request $request) 
+    {
+        
+    }
 
 
 }

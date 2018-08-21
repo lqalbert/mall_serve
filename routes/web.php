@@ -204,6 +204,10 @@ Route::group($adminGroup, function(){
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
     
+    Route::get("/front-question/{id}", function($request){
+        return redirect()->route('product/index');
+    });
+    
 });
 
 
