@@ -225,7 +225,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::post('/connection/store', 'Home\ConnectionController@store');
@@ -250,7 +250,7 @@ Route::get('/verification-code', 'Home\InformationController@verificationCode')-
 //保存参与调查用户答案
 Route::post('/save-user-answers', 'Home\InformationController@saveUserAnswers')->name('save-user-answers');
 //用户调查问卷首页
-Route::get('/questionnaire', 'Home\LoginController@questionnaire')->name('questionnaire');
+Route::get('/questionnaire/{id}', 'Home\LoginController@questionnaire')->name('questionnaire');
 //保存游客用户信息
 Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
 

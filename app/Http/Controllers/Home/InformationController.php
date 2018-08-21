@@ -24,10 +24,11 @@ class InformationController extends CommonController
         $this->model = $QuestionnaireSurveyResults;
 
     }
-    public function index(){
+    public function index($id){
         static::$bar['bar5']='sta';
         static::$bar['line5']='line';
-        $title = QuestionnaireManagement::where('id',$this->request->input('id'))->first()->toArray();
+        $title = QuestionnaireManagement::where('id',$id)->first()->toArray();
+//        $title = QuestionnaireManagement::where('id',$this->request->input('id'))->first()->toArray();
         $questionnaires = QuestionnaireOptions::where('questionnaire_managements_id',$title['id'])->get()->toArray();
         $ids = array_column($questionnaires,'id');
         $this->request->session()->put(['questionnaires_ids'=>$ids]);
