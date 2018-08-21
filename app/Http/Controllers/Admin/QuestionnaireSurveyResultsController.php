@@ -35,6 +35,9 @@ class QuestionnaireSurveyResultsController extends Controller
             case 'info':
                 return $this->getInfo();
                 break;
+            default:
+                $questionnaire_url = env('QUESTIONNAIRE_URL');
+                return ['questionnaire_url'=>$questionnaire_url];
         }
 
 

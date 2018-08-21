@@ -118,7 +118,7 @@
                         success:function (res) {
                             if(res['status']== 1){
                                 $('form')[0].reset();
-                                window.location.href="/information/index"+'?id='+{{$id}};
+                                window.location.href="/information/index/"+{{$id}};
                             }else{
                                 $('#register').siblings('.message').text(res['msg'])
                             }

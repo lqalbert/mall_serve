@@ -23,15 +23,15 @@ class LoginController extends CommonController
         return view('home/login/register',['bar'=>static::$bar]);
     }
     //问卷用户信息收集页面
-    public function questionnaire (Request $request){
-    return view('home/questionnaire/register',['bar'=>static::$bar,'id'=>$request->input('id')]);
+    public function questionnaire ($id){
+    return view('home/questionnaire/register',['bar'=>static::$bar,'id'=>$id]);
 }
     //问卷用户信息保存
     public function registerAction(Request $request){
         $has = CustomerContact::where('phone',$request->input('phone'))->first();
 
         if($has){
-            return $this->success([],'保存成功',1);
+            return $this->success([],'该用户信息已保存',1);
         }else{
             DB::beginTransaction();
             try{
