@@ -203,10 +203,7 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
-    
-    Route::get("/front-question/{id}", function($request){
-        return redirect()->route('product/index');
-    });
+    Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
     
 });
 

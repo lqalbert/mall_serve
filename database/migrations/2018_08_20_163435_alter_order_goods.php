@@ -15,6 +15,9 @@ class AlterOrderGoods extends Migration
     {
         Schema::table('order_goods', function (Blueprint $table) {
             $table->decimal('refund_price',8,2)->nullable()->comment('退款金额');
+            $table->unsignedInteger('return_inventory')->nullable()->comment('退换货入库数量');
+            $table->unsignedInteger('destroy_num')->nullable()->comment('退换货出库数量');
+            
         });
     }
 
@@ -26,7 +29,7 @@ class AlterOrderGoods extends Migration
     public function down()
     {
         Schema::table('order_goods', function (Blueprint $table) {
-            $table->dropColumn('refund_price');
+            $table->dropColumn(['refund_price', 'return_inventory', 'destroy_num']);
         });
     }
 }
