@@ -37,7 +37,7 @@
                                             </a>
                                         </li>
                                         
-                                        <li role="presentation"><a href="{{URL('sale/stars')}}" class="{{$bar['bar4']}}">
+                                        <li role="presentation"><a href="{{route('product/index', ['cate_id'=>1])}}" class="{{$bar['bar4']}}">
                                                 护肤
                                                 <div class="{{$bar['line4']}}"></div>
                                             </a>
