@@ -11,9 +11,6 @@
 |
 */
 //[ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')
-
-
-
 if (env('APP_ENV') != "production") {
     $logGroup = ['prefix'=>'admin', 'namespace' => 'Admin'];
     $adminGroup = ['prefix'=>'admin', 'namespace' => 'Admin', 'middleware'=>'auth'];
@@ -21,9 +18,6 @@ if (env('APP_ENV') != "production") {
     $logGroup = [ 'namespace' => 'Admin','domain' => env('ADMIN_DOMAIN', 'admin.mall')];
     $adminGroup = ['namespace' => 'Admin', 'middleware'=>'auth', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ];
 }
-
-
-
 Route::group($logGroup, function(){
     Route::get('/', 'IndexController@index');
     //登录 退出
@@ -31,7 +25,6 @@ Route::group($logGroup, function(){
     Route::post('/logout', 'LoginController@out');
     Route::get('/set-sender', 'WayBillController@setSender');
 });
-
     //['namespace' => 'Admin', 'middleware'=>'auth.basic', 'domain' => env('ADMIN_DOMAIN', 'admin.mall') ]
 Route::group($adminGroup, function(){
 
@@ -210,17 +203,11 @@ Route::group($adminGroup, function(){
     
     
 });
-
-
-	
 // Route::get('/', function () {
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
-
 Route::get('/', 'Home\IndexController@index');
-
-
 Route::get('/product/index', 'Home\ProductController@index')->name('product/index');
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
 Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product');
@@ -230,6 +217,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
 Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
+Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::post('/connection/store', 'Home\ConnectionController@store');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
@@ -247,7 +235,6 @@ Route::post('/person/personChange', 'Home\PersonController@personChange')->name(
 Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
-
 
 // Auth::routes();
 

@@ -34,4 +34,7 @@ class InformationController extends CommonController
         $next = Article::where('id','>',$id)->select(['id','title'])->first();
         return view('home/information/newshow', ['article'=>$article, 'articles'=>$articles2, 'bar'=>static::$bar, 'prev'=>$prev, 'next'=>$next]);
     }
+    public function company(){
+        return  view('home/information/company',['bar'=>static::$bar]);
+    }
 }
