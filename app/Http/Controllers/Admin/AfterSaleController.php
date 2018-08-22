@@ -331,6 +331,40 @@ class AfterSaleController extends Controller
         DB::commit();
         return $this->success([]);
     }
+    
+    public function outInventory(Request $request, InventoryService $serve, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $after = AfterSale::findOrFail($id);
+            $after->out_inventory=1;
+            $re = $after->save();
+            if (!$re) {
+                throw new \Exception('保存失败');
+            }
+            $products = $request->input('goods');
+            $productModels = [];
+            foreach ($products as $product) {
+                $tmpModel = OrderGoods::find($product['id']);
+                $tmpModel->return_inventory = $product['return_inventory'];
+                $tmpModel->destroy_num = $product['destroy_num'];
+                $re2 = $tmpModel->save();
+                
+                if (!$re2) {
+                    throw new \Exception('保存失败');
+                }
+                
+                $tmpModel->goods_number = $tmpModel->destroy_num;
+                $productModels[] = $tmpModel;
+            }
+            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        return $this->success([]);
+    }
 
 
 }

@@ -204,6 +204,7 @@ Route::group($adminGroup, function(){
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
     Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
+    Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
     
 });
 
