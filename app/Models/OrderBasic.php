@@ -286,6 +286,6 @@ class OrderBasic extends Model
     {
         $this->order_pay_money = $this->order_pay_money - $this->freight;
         $this->freight = $newFreight;
-        $this->order_pay_money = $this->order_pay_money - $this->freight ;
+        $this->order_pay_money = $this->order_pay_money + $this->freight ;
     }
 }
