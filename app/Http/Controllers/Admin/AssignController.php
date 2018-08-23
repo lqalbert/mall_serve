@@ -748,6 +748,94 @@ class AssignController extends Controller
         return $this->success([]);
     }
     
+    /**
+     * 设为已揽件，并更新库存（发货锁定=> 发货在途）
+     * 
+     * 
+     */
+    public function parcelOn(Request $request, InventoryService $service, $id)
+    {
+        $assign = Assign::findOrFail($id);
+        if ($assign->isParcel()) {
+            return $this->success([], '已揽件');
+        }
+        
+        $order = $assign->order;
+        if ($order->isFinish()) {
+            throw new \Exception('已经签收');;
+        }
+        
+        DB::beginTransaction();
+        try {
+            $assign->updateParcelStatus();
+            $re = $assign->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            }
+            
+            $goods = $assign->goods;
+            
+            $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
+            
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        
+        return $this->success([]);
+        
+    }
+    
+    /**
+     * 直接设为已签收，并更新库存 
+     * @todo 添加操作记录
+     *
+     */
+    public function orderSign(Request $request, InventoryService $service, $id)
+    {
+        $assign = Assign::findOrFail($id);
+        DB::beginTransaction();
+        try {
+            $order = $assign->order;
+            if ($order->isFinish()) {
+                throw new \Exception('已经签收');;
+            }
+            
+
+            $order->updateStatusToFinish();
+            $re = $order->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            }
+            $goods = $assign->goods;
+            
+            //处于揽件
+            if (!$assign->isParcel()) {
+                $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
+            } 
+            
+            $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
+            
+            $assign->updateParcelStatus();
+            $assign->fill($request->all());
+            $re = $assign->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            }
+            //这里要加 操作记录
+               
+            
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        
+        return $this->success([]);
+        
+    }
+    
 
 
     /**

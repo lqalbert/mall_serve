@@ -15,6 +15,7 @@ class Assign extends Model
     const STATUS_DONE = 1;
     const STATUS_CHECKEDGOODS = 4;
     const STATUS_WEIGHTGOODS = 3;
+    const STATUS_PARCEL = 5;
     protected $table = 'assign_basic';
     
     
@@ -32,7 +33,8 @@ class Assign extends Model
         '已审核',
         '审核未通过',
         '已发货',
-        '已验货'
+        '已验货',
+        '已揽件'
        // '已拦截',  另一个字段 is_stop
         //'已打印', 
     ];
@@ -126,6 +128,14 @@ class Assign extends Model
         return $this->attributes['set_express'] == null ? false : true;
     }
     
+    /**
+     * 是不是 处理 已揽件
+     */
+    public function isParcel()
+    {
+        return $this->status == self::STATUS_PARCEL;
+    }
+    
     public function updateWaybillPrintStatus()
     {
         $this->express_print_status = 1;
@@ -157,6 +167,11 @@ class Assign extends Model
     public function getPrintDataAttribute($value)
     {
         return json_decode($value, true);
+    }
+    
+    public function updateParcelStatus()
+    {
+        $this->status = self::STATUS_PARCEL;// 已揽件
     }
     
     

@@ -156,7 +156,7 @@ class Detail
      */
     public function sending(DistributionCenter $entrepot, $products, User $user, $dan)
     {
-        $this->save($entrepot, $returnProducts, $user, 'send_ing', $dan);
+        $this->save($entrepot, $products, $user, 'send_ing', $dan);
     }
     
     

@@ -199,5 +199,25 @@ class InventoryService
         }
     }
     
+    /**
+     * 签收
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     * @param unknown $dan
+     */
+    public function sign($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sign($entrepot->id, $products);
+//             $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     
 }

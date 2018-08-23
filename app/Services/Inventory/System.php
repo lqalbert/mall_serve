@@ -271,6 +271,27 @@ class System
     }
     
     /**
+     * 签收
+     * @param unknown $entrepot_id
+     * @param unknown $products
+     */
+    public function sign($entrepot_id, $products)
+    {
+        // send_ing
+        $affectedRows = 0;
+        try{
+            foreach ($products as $product) {
+                $affectedRows += $this->updates('set send_ing = send_ing - ? ',
+                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+            }
+            $this->updateIsSuccess($affectedRows);
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return $affectedRows;
+    }
+    
+    /**
      * 
      * @param unknown $affectedRows
      * @throws \Exception
