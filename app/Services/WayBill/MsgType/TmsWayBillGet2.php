@@ -46,7 +46,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                 'userId'=>$userId, //使用者ID
             ];
         }
-        
+        logger("[testresult]", [$result]);
         return $result;
     }
 }
