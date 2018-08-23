@@ -67,7 +67,7 @@ class Request
     }
     
     public function getContent()
-    {logger('[testway]',[$this->content]);
+    { logger('[testway]',[$this->content]);
         return $this->content;
     }
     
