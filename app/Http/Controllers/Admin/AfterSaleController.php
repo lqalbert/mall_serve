@@ -211,7 +211,7 @@ class AfterSaleController extends Controller
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function sureStatus(Request $request,$id){
+    public function sureStatus(Request $request, $id){
 //         $data = $request->all();
 //         $data['sure_at'] = Carbon::now();
 

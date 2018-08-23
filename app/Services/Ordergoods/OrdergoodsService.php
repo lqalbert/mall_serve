@@ -31,7 +31,7 @@ class OrdergoodsService
     {
         $where = array();
         $whereIn = array();
-        if ($this->request->has('goods_id')&&$this->request->has('order_id')) {
+        if ($this->request->has('goods_id') && $this->request->has('order_id')) {
             $goods_id = explode(',',$this->request->goods_id);
             $where[] = ['order_id','=',$this->request->order_id];
             $whereIn[]=$goods_id;
