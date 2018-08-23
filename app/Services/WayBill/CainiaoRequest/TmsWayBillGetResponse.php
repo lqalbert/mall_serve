@@ -53,7 +53,7 @@ class TmsWayBillGetResponse extends MsgResponse
     
     public function jsonSetData($arr)
     {
-        $this->data= $arr['waybillCloudPrintResponseList'];
+        $this->data = $arr['waybillCloudPrintResponseList'];
     }    
     
 }
