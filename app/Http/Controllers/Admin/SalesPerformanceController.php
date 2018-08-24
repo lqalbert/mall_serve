@@ -61,7 +61,7 @@ class SalesPerformanceController extends Controller
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 2]
+//                 ['db.type','<>', 2]
             ])
             ->groupBy('db.'.$groupBy);
 
