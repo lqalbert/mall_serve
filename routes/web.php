@@ -208,7 +208,7 @@ Route::group($adminGroup, function(){
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
-    
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
     
     
 });
@@ -274,3 +274,7 @@ Route::post('/register-action', 'Home\LoginController@registerAction')->name('re
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
+
+//Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

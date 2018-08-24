@@ -285,5 +285,10 @@ return [
             'icon' => null,
             'index' => 'QuestionnaireManagement'
         ],
+	[
+            'text' => '商品销售统计',
+            'icon' => null,
+            'index' => 'SalesGoodsStatistics'
+        ],
 		
 ];
