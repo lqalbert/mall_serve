@@ -24,7 +24,7 @@ class QuestionnaireManagementController extends Controller
     {
         $where = [];
         if($request->has('title')){
-            $where[] = ['title','=',$request->input('title')];
+            $where[] = ['title','like',$request->input('title').'%'];
         }
        $data = $this->model->where($where)->orderBy('created_at','desc')->paginate($request->input('pageSize'));
         return ['items'=>$data->items(),'total'=>$data->total()];
