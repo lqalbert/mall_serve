@@ -101,7 +101,7 @@ class SalesPerformanceController extends Controller
                                 DB::raw('(re1.s_freight-IFNULL(re2.i_freight,0)) as i_freight '),
                                 DB::raw('re2.inner_cus_count'),
                                 DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
-                                DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count),0) as out_cus_cout'),
+                                DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count ,0)) as out_cus_cout'),
                                 DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
                                 DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
                            )
