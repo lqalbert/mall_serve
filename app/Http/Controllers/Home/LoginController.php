@@ -28,8 +28,10 @@ class LoginController extends CommonController
 }
     //问卷用户信息保存
     public function registerAction(Request $request){
-        $has = CustomerContact::where('phone',$request->input('phone'))->first();
+//        var_dump($request->all());die;
 
+        $has = CustomerContact::where('phone',$request->input('phone'))->first();
+        $request->session()->put(['user_login_phone'=>$request->input('phone')]);
         if($has){
             return $this->success([],'该用户信息已保存',1);
         }else{

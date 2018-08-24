@@ -12,8 +12,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 protectContent">
 
         <div class="col-lg-6 col-lg-offset-3 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 lle">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 protectForm">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 formTitle">
+            <div class="col-lg-16 col-md-16 col-sm-16 col-xs-16 protectForm">
+                <div class="col-lg-16 col-md-16 col-sm-16 col-xs-16 formTitle">
                     {{$title['title']}}:
                 </div>
                 <form action="">
@@ -140,14 +140,14 @@
                     </div>
                     @endforeach
 
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userPhone">
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                            <label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12" for="inputSuccess2">联系方式:</label>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-                            <input type="number" name="cus_phone" class="form-control" id="inputSuccess2" placeholder="手机号">
-                        </div>
-                    </div>
+                    {{--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userPhone">--}}
+                        {{--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">--}}
+                            {{--<label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12" for="inputSuccess2">联系方式:</label>--}}
+                        {{--</div>--}}
+                        {{--<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">--}}
+                            {{--<input type="number" name="cus_phone" class="form-control" id="inputSuccess2" placeholder="手机号">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 userPhone">
                         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                             <label class="control-label col-lg-12 col-md-12 col-sm-12 col-xs-12">验证码：</label>

@@ -65,7 +65,8 @@ class InformationController extends CommonController
         }
         $data = $this->request->all();
         $questionnaires_ids = $this->request->session()->get('questionnaires_ids');
-        $phone = $data['cus_phone'];
+//        $phone = $data['cus_phone'];
+        $phone = $this->request->session()->get('user_login_phone');
         $user = DB::table('customer_contact')->where('phone',$phone)->first();
         $answers = ['answer_a','answer_b','answer_c','answer_d','answer_e'];
         if(!$user){
