@@ -85,7 +85,8 @@ class SalesPerformanceController extends Controller
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
                            "db2.{$groupBy}",
                            DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
-                           DB::raw('sum(oba.fee) as inner_refund'))
+                           DB::raw('sum(order_after.fee) as inner_refund'))
+                        ->leftJoin('order_after', 'db2.id', '=', 'order_after.order_id')
                        ->where($where2)
                        ->where([
                            ['db2.status','>', OrderBasic::UN_CHECKED],
