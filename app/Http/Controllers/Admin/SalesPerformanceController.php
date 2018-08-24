@@ -95,8 +95,8 @@ class SalesPerformanceController extends Controller
                        ->select(DB::raw("re1.*"), 
                                 DB::raw('re2.inner_count'), 
                                 DB::raw('re2.inner_sum'), 
-                                DB::raw('re2.i_freight'),
-                                DB::raw('(re1.c_cus_count-re1 - re2.inner_count) as all_dan_count')
+                                DB::raw('re2.i_freight')
+                               
                            )
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
