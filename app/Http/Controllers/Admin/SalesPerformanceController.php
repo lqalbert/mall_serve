@@ -48,6 +48,7 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(order_all_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
+               
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
@@ -83,7 +84,9 @@ class SalesPerformanceController extends Controller
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
+                           DB::raw('sum(oba.fee) as inner_refund'),
                            "db2.{$groupBy}")
+                       ->leftJoin('order_after','db2.id','=','order_after.order_id')
                        ->where($where2)
                        ->where([
                            ['db2.status','>', OrderBasic::UN_CHECKED],
@@ -92,7 +95,13 @@ class SalesPerformanceController extends Controller
                        ])->groupBy('db2.'.$groupBy);
                        
        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
-                       ->select(DB::raw("re1.*"), DB::raw('re2.inner_count'), DB::raw('re2.inner_sum'), DB::raw('re2.i_freight'))
+                       ->select(DB::raw("re1.*"), 
+                           DB::raw('re2.inner_count'), 
+                           DB::raw('re2.inner_sum'), 
+                           DB::raw('re2.i_freight'), 
+                           DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
+                           DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
+                           )
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
                           ->mergeBindings($builder2)
