@@ -205,9 +205,12 @@ Route::group($adminGroup, function(){
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
     Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
     Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
-    
+    //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
+    
+    
+    
 });
 
 
@@ -229,6 +232,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
 Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
+Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::post('/connection/store', 'Home\ConnectionController@store');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
