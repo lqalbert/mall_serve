@@ -47,7 +47,7 @@ class SalesPerformanceController extends Controller
                 DB::raw('count(db.id) as c_cus_count'),
                 DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
-                DB::raw('IFNULL(sum(freight),0) as s_freight'),
+                DB::raw('IFNULL(sum(freight),0) as i_freight'),
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
@@ -98,7 +98,7 @@ class SalesPerformanceController extends Controller
                        ->select(DB::raw("re1.*"), 
                                 DB::raw('re2.inner_count'), 
                                 DB::raw('re2.inner_sum'), 
-                                DB::raw('re2.i_freight'),
+//                                 DB::raw('re2.i_freight'),
                                 DB::raw('re2.inner_cus_count'),
                                 DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
                                 DB::raw('IFNULL((re1.cus_count - re2.inner_cus_count),re1.cus_count) as out_cus_cout'),
