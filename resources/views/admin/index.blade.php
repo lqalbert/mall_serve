@@ -20,7 +20,7 @@
        
     </div>
     <!-- Scripts -->
-   	<script type="text/javascript" src="/admin/static1.2.5/js/manifest.f1de1fa784aa48ae5ff5.js"></script>
+   	<script type="text/javascript" src="/admin/static1.2.5/js/manifest.752b24479a5cd9bc569c.js"></script>
     <script type="text/javascript" src="/admin/static1.2.5/js/vendor.9315f2ec5bf95fe631f1.js"></script>
     <script type="text/javascript" src="/admin/static1.2.5/js/app.b4e590ad02e4b059b15d.js"></script>
     <script type="text/javascript" src="/admin/static1.2.5/js/babel-polyfill.0afc47187e9f29e3a217.js"></script>
