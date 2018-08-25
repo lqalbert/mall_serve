@@ -428,6 +428,7 @@ class AssignController extends Controller
     
     /**
      * 批量面单打印
+     * 
      * @todo 事件处理　操作记录
      * 打印
      */
