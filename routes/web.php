@@ -111,6 +111,7 @@ Route::group($adminGroup, function(){
 	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+	Route::post('/assign-waybill-prints', 'AssignController@waybillPrints');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::get('/assign-goods-prints', 'AssignController@goodsPrint2');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
