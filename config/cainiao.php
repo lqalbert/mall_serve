@@ -7,7 +7,7 @@ return [
     
    'api_url'=>"http://link.cainiao.com/gateway/link.do",
    'test_url'=>"https://linkdaily.tbsandbox.com/gateway/link.do",
-    
+   'test_url2' => "https://linkdaily.tbsandbox.com/gateway/pac_message_receiver.do?spm=a21da.7629140.0.0.SXcdwl&file=pac_message_receiver.do",
     
     
     'test'=>[
