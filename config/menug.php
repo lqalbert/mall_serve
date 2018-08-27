@@ -68,6 +68,6 @@ return [
 		[
 			    'text' => '统计报表',
 			    'icon' => null,
-			    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics']
+		    'subIndex'=>['SalesPerformance','SalesQuantization'] //'SalesGoodsStatistics'
 		]
 ];

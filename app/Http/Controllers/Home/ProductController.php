@@ -50,6 +50,7 @@ class ProductController extends CommonController
             });
         }else{
             $name='全部';
+            $goodsModel = $goodsModel->isCombo(false);
         }
         
         $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url','brief','specifications'])->active()->get();
