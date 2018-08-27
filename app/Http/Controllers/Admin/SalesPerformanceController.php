@@ -84,7 +84,7 @@ class SalesPerformanceController extends Controller
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
-                           DB::raw('sum(oba.fee) as inner_refund'),
+//                            DB::raw('sum(oba.fee) as inner_refund'),
                            "db2.{$groupBy}")
                        ->leftJoin('order_after','db2.id','=','order_after.order_id')
                        ->where($where2)
