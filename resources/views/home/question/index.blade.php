@@ -184,4 +184,11 @@
         })
       })
     </script>
+    <script>
+	@if($current == 'exaq')
+		$(document).ready(function(){
+			$('#question .left .listBar:last-child').trigger("click");
+		})
+	@endif
+    </script>
 @endsection
