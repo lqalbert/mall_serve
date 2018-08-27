@@ -15,6 +15,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
             'sender' => $express->getSend(),
             'tradeOrderInfoDtos'=> $this->getOrderInfo($assign, $express->getTemplateUrl(), $userId)
         ];
+//         logger("[sender]", $data);
         
         $this->data = array_merge($this->data, $data);
         
@@ -46,7 +47,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                 'userId'=>$userId, //使用者ID
             ];
         }
-        logger("[testresult]", [$result]);
+//         logger('[get2]', $result);
         return $result;
     }
 }

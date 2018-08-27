@@ -300,7 +300,7 @@ class AssignController extends Controller
                    return $this->error([],'面单获取失败:数量为0');
                }
                foreach ($cainiodata as $item) {
-                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->name]);
+                   Assign::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->company_name]);
                }
             } else {
                return $this->error([], '面单获取失败:'.$re['msg']);
@@ -428,6 +428,7 @@ class AssignController extends Controller
     
     /**
      * 批量面单打印
+     * 需要更新面单的打印状态和时间
      * @todo 事件处理　操作记录
      * 打印
      */
@@ -438,7 +439,7 @@ class AssignController extends Controller
 //         $re = $assign->save();
         $assign = $assigns->first();
         $express = $assign->express;
-        if ($re) {
+        if ($assigns) {
             //添加发货单操作记录
 //             $dataLog = [
 //                 'assign_id'=>$id,

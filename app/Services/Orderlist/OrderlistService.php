@@ -159,12 +159,6 @@ class OrderlistService
             $this->repository->pushCriteria(new OrderByIdDesc());
         }
         
-        // if(count($where)>0 || count($whereIn>0))
-        // {
-        //     $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
-        //     $this->repository->pushCriteria($order_status);
-        // }
-        
         if ($this->request->has('with')) {
             $this->repository->with($this->request->input('with'));
         }

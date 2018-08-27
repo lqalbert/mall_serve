@@ -111,6 +111,7 @@ Route::group($adminGroup, function(){
 	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+	Route::post('/assign-waybill-prints', 'AssignController@waybillPrints');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::get('/assign-goods-prints', 'AssignController@goodsPrint2');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
@@ -203,6 +204,13 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+    Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
+    Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
+    //前台分类
+    Route::resource('/front-category', 'CategoryFrontController');
+    Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    
     
 });
 
@@ -223,8 +231,9 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
+Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::post('/connection/store', 'Home\ConnectionController@store');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
@@ -243,6 +252,14 @@ Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
 
+//生成验证码
+Route::get('/verification-code', 'Home\InformationController@verificationCode')->name('verification-code');
+//保存参与调查用户答案
+Route::post('/save-user-answers', 'Home\InformationController@saveUserAnswers')->name('save-user-answers');
+//用户调查问卷首页
+Route::get('/questionnaire/{id}', 'Home\LoginController@questionnaire')->name('questionnaire');
+//保存游客用户信息
+Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
 
 // Auth::routes();
 
@@ -258,3 +275,7 @@ Route::get('/question/index', 'Home\QuestionController@index')->name('question/i
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
+
+//Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

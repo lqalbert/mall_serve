@@ -41,6 +41,7 @@ class Goods extends Model
         'weight',
         'bubble_bag',
         'specifications',
+        'combo'
     ];
     
     //多对多
@@ -52,6 +53,17 @@ class Goods extends Model
     
     public function midCate(){
     	return $this->hasMany('App\Models\GoodsCategory');
+    }
+    
+    //多对多
+    public function frontCategory()
+    {
+        //->withTimestamps()
+        return $this->belongsToMany('App\Models\CategoryFront', 'front_goods', 'goods_id', 'front_id');
+    }
+    
+    public function midFrontCate(){
+        return $this->hasMany('App\Models\GoodsFrontCategory');
     }
     
     //1对多
@@ -125,5 +137,10 @@ class Goods extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+    
+    public function scopeIsCombo($query, $include = false)
+    {
+        return $query->where('combo', $include ? 1 : 0);
     }
 }

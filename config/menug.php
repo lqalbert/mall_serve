@@ -11,7 +11,7 @@ return [
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
-				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType']
+				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType','FrontCategory']
 		],
 		[
 				'text'=>'员工管理',
@@ -68,6 +68,6 @@ return [
 		[
 			    'text' => '统计报表',
 			    'icon' => null,
-			    'subIndex'=>['SalesPerformance','SalesQuantization']
+		    'subIndex'=>['SalesPerformance','SalesQuantization'] //'SalesGoodsStatistics'
 		]
 ];

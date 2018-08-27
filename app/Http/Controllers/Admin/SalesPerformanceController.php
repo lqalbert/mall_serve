@@ -155,7 +155,8 @@ class SalesPerformanceController extends Controller
             'db.created_at as traded_at',
             'db.order_sn',
             'customer_basic.name as cus_name',
-            'order_address.phone as cus_phone'
+            'order_address.phone as cus_phone',
+            'order_address.fixed_telephone as telephone'
             )
             ->leftJoin('order_after','db.id','=','order_after.order_id')
             ->leftJoin('customer_basic','customer_basic.id','=','db.cus_id')

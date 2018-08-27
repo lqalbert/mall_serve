@@ -275,5 +275,20 @@ return [
             'icon' => null,
             'index' => 'OrderDepositLog'
         ],
+        [
+            'text' => '前台商品分类',
+            'icon' => null,
+            'index' => 'FrontCategory'
+        ],
+	[
+            'text' => '问卷管理',
+            'icon' => null,
+            'index' => 'QuestionnaireManagement'
+        ],
+	[
+            'text' => '商品销售统计',
+            'icon' => null,
+            'index' => 'SalesGoodsStatistics'
+        ],
 		
 ];

@@ -24,9 +24,9 @@ class ProductController extends CommonController
         //还是有问题 的 如果 type 有多个非一级分类就会出错
         $goodsTypeName=GoodsType::has('cate')->get();
         $goodsTypeName->load('cate');
-        logger("[dd]", $goodsTypeName->toArray());
+//         logger("[dd]", $goodsTypeName->toArray());
         foreach ($goodsTypeName as $k=>$v){
-            logger("[dd2]", [$v->cate]);
+//             logger("[dd2]", [$v->cate]);
             $subNav[$v->cate->id] = [
                 'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
                 'isactive'=>"",
@@ -50,6 +50,7 @@ class ProductController extends CommonController
             });
         }else{
             $name='全部';
+            $goodsModel = $goodsModel->isCombo(false);
         }
         
         $goods = $goodsModel->select(['id','goods_name','goods_price','del_price','new_goods','cover_url','brief','specifications'])->active()->get();

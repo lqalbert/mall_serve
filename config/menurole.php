@@ -90,6 +90,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'OrderList'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -145,6 +146,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'OrderList'
     ],
     'finance'=>[
         'SalesPerformance',
