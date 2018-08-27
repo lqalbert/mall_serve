@@ -205,6 +205,9 @@ Route::group($adminGroup, function(){
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
     Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
     Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
+
 
 });
 

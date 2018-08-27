@@ -280,5 +280,10 @@ return [
             'icon' => null,
             'index' => 'QuestionnaireManagement'
         ],
+        [
+            'text' => '导入账号设置',
+            'icon' => null,
+            'index' => 'AccountSettings'
+        ],
 		
 ];

@@ -73,6 +73,6 @@ return [
         [
 			    'text' => '问卷管理',
 			    'icon' => null,
-			    'subIndex'=>['QuestionnaireManagement']
+			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
 		]
 ];

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\CustomerBasic;
 use App\Models\CustomerContact;
 use App\Models\CustomerUser;
+use App\Models\AccountSettings;
 
 class LoginController extends CommonController
 {
@@ -37,7 +38,8 @@ class LoginController extends CommonController
         }else{
             DB::beginTransaction();
             try{
-
+                $account = AccountSettings::where('status',1)->orderBy('created_at','desc')->first();
+                $now_number = $account->now_number + 1;
                 $data = [];
                 $data['name'] = $request->input('name');
                 $data['age'] = $request->input('age');
@@ -49,14 +51,15 @@ class LoginController extends CommonController
                 $data1['cus_id'] = $re->id;
                 $res = CustomerContact::create($data1);
                 $data2['cus_id'] = $re->id;
-                $data2['user_id'] = 251;
-                $data2['department_id'] = 20;
-                $data2['department_name'] = '电商技术组';
-                $data2['group_id'] = 53;
-                $data2['group_name'] = '技术组';
-                $data2['user_name'] = '接收专用';
+                $data2['user_id'] = $account->user_id;
+                $data2['user_name'] = $account->user_name;
+                $data2['department_id'] = $account->department_id;
+                $data2['department_name'] = $account->department_name;
+                $data2['group_id'] = $account->group_id;
+                $data2['group_name'] = $account->group_name;
                 $res2 = CustomerUser::create($data2);
                 if ($re && $res && $res2){
+                    AccountSettings::where('id',$account->id)->update(['now_number'=>$now_number]);
                     DB::commit();
                     return $this->success([],'保存成功',1);
                 }
