@@ -262,7 +262,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     max-width:100%;
     height: auto;
     margin: 0 auto;
-    background: #2ab27b;
     border-radius: 2px;
 }
 
@@ -319,7 +318,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     display: block;
     width: 100%;
     height: 700px;
-    background: #2ab27b;
 }
 
 /*----------------pulata面膜系列-----------*/
