@@ -262,7 +262,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     max-width:100%;
     height: auto;
     margin: 0 auto;
-    background: #2ab27b;
     border-radius: 2px;
 }
 
@@ -319,7 +318,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     display: block;
     width: 100%;
     height: 700px;
-    background: #2ab27b;
 }
 
 /*----------------pulata面膜系列-----------*/
@@ -466,6 +464,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     margin-top: 0px;
 }
 
+.navBottom .navBot{
+    position: relative;
+}
+
 #scrollBox{
     position:fixed;
     width: 50px;
@@ -531,6 +533,34 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     top: -29px;
     background: #fff;
     box-shadow: 0 0 3px #666;
+}
+
+#weiCode{
+    position: absolute;
+    right: -10px;
+    top: 75px;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+#weiCode img{
+    width: 100%;
+}
+
+#weiCode .minCode{
+    position: absolute;
+    top: -200px;
+    left: -60px;
+    width: 200px;
+    height: 200px;
+    display: none;
+    opacity: 0;
+}
+
+#weiCode:hover .minCode{
+    display: block;
+    opacity: 1;
 }
 
 /*-----------------------手机样式调整----------------------*/
