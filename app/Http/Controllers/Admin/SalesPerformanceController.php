@@ -99,8 +99,8 @@ class SalesPerformanceController extends Controller
                            DB::raw('re2.inner_count'), 
                            DB::raw('re2.inner_sum'), 
                            DB::raw('re2.i_freight'), 
-                           DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
-                           DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
+//                            DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
+//                            DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
                            )
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
