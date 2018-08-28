@@ -205,6 +205,7 @@ Route::group($adminGroup, function(){
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
 
     Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::resource('/sample-application','SampleApplicationController');
     
 });
 

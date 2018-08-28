@@ -280,5 +280,10 @@ return [
             'icon' => null,
             'index' => 'SalesGoodsStatistics'
         ],
+        [
+            'text' => '样品申请',
+            'icon' => null,
+            'index' => 'SampleApplication'
+        ],
 		
 ];
