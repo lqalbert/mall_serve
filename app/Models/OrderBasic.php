@@ -22,6 +22,7 @@ class OrderBasic extends Model
     CONST AFTER_SALE_EXCHANGE_DONE = 23;
     CONST ORDER_STATUS_7 = 7;
     CONST ORDER_STATUS_8 = 8;
+    CONST ORDER_FINISH = 6;
 
     
     protected $table = 'order_basic';
@@ -29,6 +30,7 @@ class OrderBasic extends Model
         'deleted_at'
     ];
     protected $hidden = [ 'updated_at','deleted_at'];
+    protected $casts = [ 'type_object'=> 'object'];
     protected $fillable = [
         'deal_id',
         'deal_name',
@@ -80,11 +82,11 @@ class OrderBasic extends Model
     private static $status = [
         "待审核",
         "审核通过",
-        "发货中",
-        "已发货",
-        "已揽件",
+        "发货中",// 审核通过
+        "已发货", // 称重发货
+        "已揽件", // 已揽件
         "运输中",
-        "订单完成",
+        "订单完成", //签收
         "订单取消",
         "审核未通过"
     ];
@@ -200,6 +202,12 @@ class OrderBasic extends Model
         return $this->express_delivery ? $this->express_delivery : false ;
     }
     
+    public function isFinish()
+    {
+        return $this->status == self::ORDER_FINISH;
+    }
+    
+    
     
     public function updateStatusToWaitCharge()
     {
@@ -215,6 +223,18 @@ class OrderBasic extends Model
             $this->after_sale_status = self::AFTER_SALE_EXCHANGE_DONE;
         }
     }
+    
+    public function updateStatusToUnChecked()
+    {
+        $this->status = self::UN_CHECKED;
+    }
+    
+    public function updateStatusToFinish()
+    {
+        $this->status = self::ORDER_FINISH; //完成 后期要改成 self:xxx的形式
+    }
+    
+    
     
     /**
      * 返回菜鸟接口要求的结构化的数据
@@ -281,6 +301,17 @@ class OrderBasic extends Model
     {
         return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name','discount');
     }
+    
+    public function typeToPlanObject()
+    {
+        $this->type_object = $this->orderType->toPlan();
+    }
+    
+    public function typeObjecToOrderType()
+    {
+        return OrderType::make((array) $this->type_object );
+    }
+    
     
     public function updateFreight($newFreight)
     {

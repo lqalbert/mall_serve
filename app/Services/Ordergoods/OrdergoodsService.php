@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Ordergoods\Enterpot;
 use App\Repositories\Criteria\Ordergoods\DateRange;
 use App\Alg\ModelCollection;
 use App\Models\Assign;
+use App\Repositories\Criteria\Ordergoods\AfterCondition;
 class OrdergoodsService
 {
     /**
@@ -30,7 +31,7 @@ class OrdergoodsService
     {
         $where = array();
         $whereIn = array();
-        if ($this->request->has('goods_id')&&$this->request->has('order_id')) {
+        if ($this->request->has('goods_id') && $this->request->has('order_id')) {
             $goods_id = explode(',',$this->request->goods_id);
             $where[] = ['order_id','=',$this->request->order_id];
             $whereIn[]=$goods_id;
@@ -66,6 +67,10 @@ class OrdergoodsService
         
         if ($this->request->has('with')) {
             $this->repository->with($this->request->input('with'));
+        }
+        
+        if ($this->request->has('after')) {
+            $this->repository->pushCriteria(new AfterCondition());
         }
         
         $result = $this->repository->paginate();

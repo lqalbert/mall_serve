@@ -91,6 +91,7 @@ class OrderBasicController extends Controller
             $allData['department_name'] = $department->name;
 
             $orderModel = OrderBasic::make($allData);
+            $orderModel->typeToPlanObject();
             $re = $orderModel->save();
             if (!$re) {
                 throw new  \Exception('订单创建失败');
@@ -135,12 +136,20 @@ class OrderBasicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\OrderBasic  $orderBasic
+     * @param  \Illuminate\Http\Request  $request
+     * @param int
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderBasic $orderBasic)
+    public function show(Request $request, $id)
     {
-        //
+        $model = $this->model->findOrFail($id);
+        if ($request->has('with')) {
+            $with = $request->input('with');
+            foreach ($with as $item) {
+                $model->{$item};
+            }
+        }
+        return $model;
     }
 
     /**
