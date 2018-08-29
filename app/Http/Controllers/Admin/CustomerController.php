@@ -166,7 +166,7 @@ class CustomerController extends Controller
     
     /**
      * 转让
-     * @todo 转移代码到 service 层
+     * @todo  20 多个就GG了 
      */
     public function transfer(Request $request)
     {

@@ -11,6 +11,7 @@ use App\Models\Goods;
 use App\Models\Sku;
 use App\Alg\Sn;
 use Illuminate\Support\Facades\DB;
+use App\Models\GoodsCombo;
 
 class GoodsDetailsController extends Controller
 {
@@ -115,6 +116,15 @@ class GoodsDetailsController extends Controller
                     
                     $skModel->attr()->attach($attachArr);
                 }
+            }
+            //套餐
+            if ($goodsModel->isThisACombo()) {
+                $combogoods = $request->input('combogoods');
+                $comboGoodsModels = [];
+                foreach ( $combogoods as $goods) {
+                    $comboGoodsModels[] = GoodsCombo::make($goods);
+                }
+                $goodsModel->combos()->saveMany($comboGoodsModels);
             }
             DB::commit();
         }catch(\Error $e) {

@@ -37,7 +37,7 @@ class UpgradeOne extends Command
      */
     public function handle()
     {
-        $this->call('store:sending');
+//         $this->call('store:sending');
         $this->call('order:type_object');
     }
 }

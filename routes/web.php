@@ -214,6 +214,8 @@ Route::group($adminGroup, function(){
     Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
     Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
+    //套餐
+    Route::resource('/goods-combo', 'ComboController');
     
     
 });
