@@ -536,11 +536,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 #weiCode{
-    position: absolute;
-    right: -10px;
-    top: 75px;
+    position: relative;
     width: 80px;
     height: 80px;
+    margin: 0 auto;
     cursor: pointer;
 }
 

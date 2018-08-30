@@ -37,14 +37,14 @@
                     <div class=""><a href="{{ action('Home\QuestionController@index') }}?{{ http_build_query(['exchange'=>1])}}">退换货问题</a></div>
                 </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
-                    <div class="title">联系我们</div>
-                    <div class="">微商城</div>
-                    <div class="">公众号</div>
-                </div>
-            <div id="weiCode">
-                <img src="/images/code.jpg" alt="">
-                <div class="minCode">
-                    <img src="/images/code.jpg" alt="">
+                <div class="title">联系我们</div>
+                <div class="" style="height: 80px">
+                    <div id="weiCode">
+                        <img src="/images/code.jpg" alt="">
+                        <div class="minCode">
+                            <img src="/images/code.jpg" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
