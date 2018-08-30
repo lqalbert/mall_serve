@@ -38,15 +38,16 @@
                 </div>
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 box">
                     <div class="title">联系我们</div>
-                    <div class="">微商城</div>
-                    <div class="">公众号</div>
-                </div>
-            <div id="weiCode">
-                <img src="/images/code.jpg" alt="">
-                <div class="minCode">
+                    <div class="" style="margin-left: 67px;width: 50px;">微商城</div>
+                    <div class="" style="margin-left: 67px;width: 50px;">公众号</div>
+                <div id="weiCode">
                     <img src="/images/code.jpg" alt="">
+                    <div class="minCode">
+                        <img src="/images/code.jpg" alt="">
+                    </div>
                 </div>
-            </div>
+                </div>
+
         </div>
         
     </div>
