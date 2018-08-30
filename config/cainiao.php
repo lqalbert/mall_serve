@@ -48,7 +48,7 @@ return [
         'YTO' => 'http://cloudprint.cainiao.com/template/standard/101/572',
         // 天天
         'TTKDEX' => 'http://cloudprint.cainiao.com/template/standard/601/136',
-        // 百世快递
+        // 百世汇通
         'HTKY' => 'http://cloudprint.cainiao.com/template/standard/501/130',
         // 快捷快递
         'FAST' => 'http://cloudprint.cainiao.com/template/standard/1201/98',

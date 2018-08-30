@@ -37,10 +37,10 @@ class EntrepotProductController extends Controller
             return ['num'=>$re];
         } else {
             //是
-            logger("[xx]",['aaa']);
+//             logger("[xx]",['aaa']);
             $combos = $goodsModels->combos;
             $combos->load('goods');
-            logger("[xx]",$combos->toArray());
+//             logger("[xx]",$combos->toArray());
             foreach ($combos as &$item) {
                 $re = $inventorySystem->getProductCount($user->department->entrepot_id, $item->goods->sku_sn);
                 if ($re == 0) {
