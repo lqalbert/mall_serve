@@ -12,7 +12,7 @@ class OrderBasic extends Model
     use SoftDeletes;
     
     CONST UN_CHECKED =0;
-    CONST WATI_TO_CHANGR =2;
+    CONST ASIGNING =2;
     CONST CANCEL = 7;
     
     CONST AFTER_SALE_TYPE_RETURN = 0;
@@ -109,18 +109,18 @@ class OrderBasic extends Model
      */
     private static $afterSaleStatus = [
         "l0"=>"无",
-        "l10"=>"申请退货",
+        "l10"=>"申请售后",
         //"l11"=>"退货审核通过",
-        "l11"=>"退货不通过",
-        "l12"=>"退货中",
-        "l13"=>"退货完成",
+        "l11"=>"申请不通过",
+        "l12"=>"售后中",
+        "l13"=>"售后完成",
         
         
-        "l20"=>"申请换货",
+//         "l20"=>"申请换货",
         //"l21"=>"换货审核通过",
-        "l21"=>"换货不通过",
-        "l22"=>"换货中",
-        "l23"=>"换货完成"
+//         "l21"=>"换货不通过",
+//         "l22"=>"换货中",
+//         "l23"=>"换货完成"
                        
     ];
     
@@ -207,12 +207,18 @@ class OrderBasic extends Model
         return $this->status == self::ORDER_FINISH;
     }
     
-    
-    
-    public function updateStatusToWaitCharge()
+    public function isInAfterSale()
     {
-        $this->status = 2;
-        return $this->save();
+        return $this->after_sale_status > 0;
+    }
+    
+    
+    
+    public function updateStatusToAssigning()
+    {
+        $this->status = self::ASIGNING;
+        return $this;
+//         return $this->save();
     }
     
     public function updateAfterSaleDone($type) 
@@ -232,6 +238,13 @@ class OrderBasic extends Model
     public function updateStatusToFinish()
     {
         $this->status = self::ORDER_FINISH; //完成 后期要改成 self:xxx的形式
+    }
+    
+    public function updateAfterStatusToStart()
+    {
+        //申请 10 可以改成常量
+        $this->after_sale_status = 10;
+        return $this;
     }
     
     

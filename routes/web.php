@@ -211,7 +211,7 @@ Route::group($adminGroup, function(){
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
-    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
     Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
     //套餐

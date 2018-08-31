@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Models\Assign;
 use App\Services\Inventory\InventoryService;
 use App\Events\AddOrderOperationLog;
+use App\Models\OrderBasic;
 
 class AfterSaleController extends Controller
 {
@@ -44,6 +45,18 @@ class AfterSaleController extends Controller
         
         if ($request->has('type')) {
             $builder = $builder->where('type', $request->input('type'));
+        }
+        
+        if ($request->has('value7')) {
+            $timesValue = $request->input('value7');
+            
+//             $tmp = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $timesValue[0])->toDateTimeString();
+            $start = Date("Y-m-d H:i:s", strtotime($timesValue[0]));
+            $end = Date("Y-m-d H:i:s", strtotime($timesValue[1] )+ (24*60*60-1));
+            $builder = $builder->where([
+                ['created_at','>=',$start],
+                ['created_at','<=',$end]
+            ]);
         }
         
         $result = $builder->paginate($request->input('pageSize', 20));
@@ -88,7 +101,14 @@ class AfterSaleController extends Controller
         try {
             
             $model = AfterSale::create($request->all());
+            $orderModel = OrderBasic::findOrFail($request->input('order_id'));
             
+            if ($orderModel->isInAfterSale()) {
+                throw new \Exception('已经处于售后服务中');
+            }
+            
+            $orderModel->updateAfterStatusToStart();
+            $orderModel->save();
             $goods =  [];
             foreach ($request->input('goods', []) as $product) {
 //                 $goods[] = AfterSaleGoods::make($product);
