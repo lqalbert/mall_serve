@@ -118,8 +118,8 @@ class OrderlistService
             $this->repository->pushCriteria(new FieldEqual('deal_id', $this->request->deal_id));
         }
         if ($this->request->has('department_id')) {
-            // $where[]=['department_id','=',$this->request->department_id];
-            $this->repository->pushCriteria(new FieldEqual('department_id', $this->request->department_id));
+            logger("[department_id]",[$this->request->input('department_id')]);
+            $this->repository->pushCriteria(new FieldEqual('department_id', $this->request->input('department_id')));
         }
         if ($this->request->has('group_id')) {
             // $where[]=['group_id','=',$this->request->group_id];
@@ -170,7 +170,7 @@ class OrderlistService
             ModelCollection::setAppends($collection, $this->request->input('appends'));
         }
         
-        logger("[debug]", $collection->toArray());
+//         logger("[debug]", $collection->toArray());
         
         return [
             'items'=> $collection,

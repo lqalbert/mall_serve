@@ -211,7 +211,7 @@ class AfterSaleController extends Controller
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function sureStatus(Request $request,$id){
+    public function sureStatus(Request $request, $id){
 //         $data = $request->all();
 //         $data['sure_at'] = Carbon::now();
 
@@ -294,7 +294,77 @@ class AfterSaleController extends Controller
         return $this->success([]);
     }
 
-
+    /**
+     * 库存操作要分成入库和出库 感觉可以合二为一
+     * 这是入库 分为 退货入库 和 换货入库
+     */
+    public function rxInventory(Request $request, InventoryService $serve, $id) 
+    {
+        DB::beginTransaction();
+        try {
+            $after = AfterSale::findOrFail($id);
+            $after->in_inventory=1;
+            $re = $after->save();
+            if (!$re) {
+                throw new \Exception('保存失败');
+            }
+            $products = $request->input('goods');
+            $productModels = [];
+            foreach ($products as $product) {
+                $tmpModel = OrderGoods::find($product['id']);
+                $tmpModel->return_inventory = $product['return_inventory'];
+                $tmpModel->destroy_num = $product['destroy_num'];
+                $re2 = $tmpModel->save();
+                
+                if (!$re2) {
+                    throw new \Exception('保存失败');
+                }
+                
+                $tmpModel->goods_number = $tmpModel->return_inventory ;
+                $productModels[] = $tmpModel;
+            }
+            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        return $this->success([]);
+    }
+    
+    public function outInventory(Request $request, InventoryService $serve, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $after = AfterSale::findOrFail($id);
+            $after->out_inventory=1;
+            $re = $after->save();
+            if (!$re) {
+                throw new \Exception('保存失败');
+            }
+            $products = $request->input('goods');
+            $productModels = [];
+            foreach ($products as $product) {
+                $tmpModel = OrderGoods::find($product['id']);
+                $tmpModel->return_inventory = $product['return_inventory'];
+                $tmpModel->destroy_num = $product['destroy_num'];
+                $re2 = $tmpModel->save();
+                
+                if (!$re2) {
+                    throw new \Exception('保存失败');
+                }
+                
+                $tmpModel->goods_number = $tmpModel->destroy_num;
+                $productModels[] = $tmpModel;
+            }
+            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        return $this->success([]);
+    }
 
 
 }

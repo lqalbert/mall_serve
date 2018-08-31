@@ -37,17 +37,17 @@
                                             </a>
                                         </li>
                                         
-                                        <li role="presentation"><a href="{{URL('sale/stars')}}" class="{{$bar['bar4']}}">
+                                        <li role="presentation"><a href="{{route('product/index', ['cate_id'=>1])}}" class="{{$bar['bar4']}}">
                                                 护肤
                                                 <div class="{{$bar['line4']}}"></div>
                                             </a>
                                         </li>
-                                        <li role="presentation"><a href="{{URL('connection/index')}}" class="{{$bar['bar5']}}">
+                                        <li role="presentation"><a href="{{route('product/index', ['cate_id'=>2])}}" class="{{$bar['bar5']}}">
                                                 彩妆
                                                 <div class="{{$bar['line5']}}"></div>
                                             </a>
                                         </li>
-                                        <li role="presentation"><a href="{{URL('connection/index')}}" class="{{$bar['bar6']}}">
+                                        <li role="presentation"><a href="{{URL('brand/index')}}" class="{{$bar['bar6']}}">
                                                 品牌故事
                                                 <div class="{{$bar['line6']}}"></div>
                                             </a>

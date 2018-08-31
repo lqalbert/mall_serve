@@ -105,9 +105,11 @@ ET;
                     where   order_basic.status>0 and order_basic.status<7   and order_basic.created_at >= '{$start}'
                             and order_basic.created_at <= '{$end}'
                     group by order_basic.{$groupBy} ) as ob on cu.{$groupBy} = ob.{$groupBy}
+        
         left join  (select count( distinct cus_id) as obcus_count,  order_basic.{$groupBy}
-                    from order_basic 
-                    where   order_basic.status>0 and order_basic.status<7   
+                    from order_basic inner join customer_basic on order_basic.cus_id = customer_basic.id  
+                    where   order_basic.status>0 and order_basic.status<7   and customer_basic.created_at >= '{$start}'
+                            and customer_basic.created_at <= '{$end}'
                     group by order_basic.{$groupBy} ) as ob2 on cu.{$groupBy} = ob2.{$groupBy}
         left join  (select  sum(assign_basic.express_fee) as sum_freight ,order_basic.{$groupBy}
                     from order_basic  inner join assign_basic on order_basic.id = assign_basic.order_id

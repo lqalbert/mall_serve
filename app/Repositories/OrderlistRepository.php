@@ -5,8 +5,8 @@ use Bosnadev\Repositories\Eloquent\Repository;
 
 class OrderlistRepository extends Repository
 {
-    protected $preventCriteriaOverwriting = false;
     
+    protected $preventCriteriaOverwriting = false;
     public function  model()
     {
 //         return 'App\Models\Orderlist';

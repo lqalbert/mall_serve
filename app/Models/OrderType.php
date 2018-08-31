@@ -36,4 +36,13 @@ class OrderType extends Model
     {
         return $this->discount * $money / 100;
     }
+    
+    public function toPlan()
+    {
+        $tmp = new \stdClass;
+        $tmp->name = $this->name;
+        $tmp->is_include = $this->is_include;
+        $tmp->discount = $this->discount;
+        return $tmp;
+    }
 }

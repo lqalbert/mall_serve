@@ -45,10 +45,9 @@ class SalesPerformanceController extends Controller
             ->select(
                 DB::raw('count(distinct db.cus_id) as cus_count'),
                 DB::raw('count(db.id) as c_cus_count'),
-                DB::raw('sum(order_all_money) as all_pay'), //排除了 内部订单就正确
+                DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
-               
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
@@ -62,7 +61,7 @@ class SalesPerformanceController extends Controller
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
-                ['db.type','<>', 2]
+//                 ['db.type','<>', 2]
             ])
             ->groupBy('db.'.$groupBy);
 
@@ -84,9 +83,10 @@ class SalesPerformanceController extends Controller
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
-//                            DB::raw('sum(oba.fee) as inner_refund'),
-                           "db2.{$groupBy}")
-                       ->leftJoin('order_after','db2.id','=','order_after.order_id')
+                           "db2.{$groupBy}",
+                           DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
+                           DB::raw('sum(order_after.fee) as inner_refund'))
+                        ->leftJoin('order_after', 'db2.id', '=', 'order_after.order_id')
                        ->where($where2)
                        ->where([
                            ['db2.status','>', OrderBasic::UN_CHECKED],
@@ -96,11 +96,14 @@ class SalesPerformanceController extends Controller
                        
        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
                        ->select(DB::raw("re1.*"), 
-                           DB::raw('re2.inner_count'), 
-                           DB::raw('re2.inner_sum'), 
-                           DB::raw('re2.i_freight')
-//                            DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
-//                            DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
+                                DB::raw('re2.inner_count'), 
+                                DB::raw('re2.inner_sum'), 
+                                DB::raw('(re1.s_freight-IFNULL(re2.i_freight,0)) as i_freight '),
+                                DB::raw('re2.inner_cus_count'),
+                                DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
+                                DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count ,0)) as out_cus_cout'),
+                                DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
+                                DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
                            )
                           ->mergeBindings($builder)
                           ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")

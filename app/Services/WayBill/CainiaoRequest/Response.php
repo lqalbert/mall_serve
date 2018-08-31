@@ -59,12 +59,14 @@ class Response
         * １判断一下返回的数组格式 json 还是 xml
         *   
         **/
-       Storage::disk('local')->put('waybill.xml', $str);
+       
        
        if ($this->dataType == 'json') {
            $result = json_decode($str, true);
+           Storage::disk('local')->put('waybillresponse.json', $str);
            $this->msg->setParam($result, $this->dataType);
        } else {
+           Storage::disk('local')->put('waybillresponse.xml', $str);
            $xml = simplexml_load_string($str);
            if ($xml === false) {
                return [

@@ -41,6 +41,7 @@ class Goods extends Model
         'weight',
         'bubble_bag',
         'specifications',
+        'combo'
     ];
     
     //多对多
@@ -136,5 +137,10 @@ class Goods extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+    
+    public function scopeIsCombo($query, $include = false)
+    {
+        return $query->where('combo', $include ? 1 : 0);
     }
 }

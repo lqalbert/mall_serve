@@ -60,7 +60,7 @@ abstract  class MsgResponse
     public function jsonSetStatus($arr)
     {
         $successs = $arr['success'];
-        $this->status= $successs == "false" ? 0 : 1;
+        $this->status= $successs == false ? 0 : 1;
     }
     
     public function setReturnMsg()
