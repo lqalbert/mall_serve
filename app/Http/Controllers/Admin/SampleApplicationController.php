@@ -40,7 +40,7 @@ class SampleApplicationController extends Controller
         $result = $model->paginate($request->input('pageSize', 15));
         $collection = $result->getCollection();
         $collection->load('goods'); //'goods',
-        
+
         $re = $collection->toArray();
         
         return [
@@ -146,6 +146,8 @@ class SampleApplicationController extends Controller
                     throw new  \Exception('删除商品失败');
                 }
             }
+
+            //以下扣库存 商品数量可以从$request->goods里面获得
 
             DB::commit();
         } catch (\Exception $e) {
