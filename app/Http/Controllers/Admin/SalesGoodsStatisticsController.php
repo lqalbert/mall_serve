@@ -97,16 +97,16 @@ class SalesGoodsStatisticsController extends Controller
     
     private function refundNum($start, $end)
     {
-        return DB::table('order_basic')->select(
+        return DB::table('order_after')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
             )
-            ->join('order_goods','order_basic.id','=','order_goods.order_id')
+            ->join('order_goods','order_after.order_id','=','order_goods.order_id')
             ->where([
 //                 ['order_basic.status','>=',1],
 //                 ['order_basic.status','<=',6],
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
+                ['order_after.created_at',">=", $start],
+                ['order_after.created_at',"<=", $end],
                 ['order_goods.status','=',2]
             ])->groupBy('sku_sn');
     }
