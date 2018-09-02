@@ -62,7 +62,7 @@ class SalesGoodsStatisticsController extends Controller
     private function inInventory($start, $end)
     {
         return DB::table('purchase_order_goods')->select(
-            DB::raw("sum('goods_purchase_num') as goods_num"),
+            DB::raw("sum(`goods_purchase_num`) as goods_num"),
             'sku_sn')
         ->where([
             ['created_at',">=", $start],
@@ -82,7 +82,7 @@ class SalesGoodsStatisticsController extends Controller
     private function saleNUm($start, $end)
     {
         return DB::table('order_basic')->select(
-            DB::raw("sum('goods_number') as goods_num"),
+            DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
             )
         ->join('order_goods','order_basic.id','=','order_goods.order_id')
@@ -98,13 +98,13 @@ class SalesGoodsStatisticsController extends Controller
     private function refundNum($start, $end)
     {
         return DB::table('order_basic')->select(
-            DB::raw("sum('goods_number') as goods_num"),
+            DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
             )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
+//                 ['order_basic.status','>=',1],
+//                 ['order_basic.status','<=',6],
                 ['order_basic.created_at',">=", $start],
                 ['order_basic.created_at',"<=", $end],
                 ['order_goods.status','=',2]
