@@ -818,7 +818,7 @@ class AssignController extends Controller
             
             $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             
-            $assign->updateParcelStatus();
+            $assign->updateSignStatus();
             $assign->fill($request->all());
             $re = $assign->save();
             if (!$re) {

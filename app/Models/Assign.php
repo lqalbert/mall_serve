@@ -174,6 +174,15 @@ class Assign extends Model
         $this->status = self::STATUS_PARCEL;// 已揽件
     }
     
+    /**
+     * 保持名称上的统一
+     */
+    public function updateSignStatus()
+    {
+        $this->updateParcelStatus();
+        $this->sign_at = Carbon::now();
+    }
+    
     
     /**
      * 已发货作用域
