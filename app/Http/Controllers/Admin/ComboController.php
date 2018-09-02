@@ -55,7 +55,7 @@ class ComboController extends Controller
     
     public function destroy(Request $request, $id)
     {
-        $re = $this->model->delete($id);
+        $re = $this->model->destroy($id);
         if ($re) {
             return $this->success([]);
         } else {

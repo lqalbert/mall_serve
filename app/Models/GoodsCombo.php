@@ -11,6 +11,8 @@ class GoodsCombo extends Model
     
     protected $table = 'goods_combo';
     
+    protected $dates = ['deleted_at'];
+    
     protected $fillable = [
         'combo_id',
         'goods_id',
