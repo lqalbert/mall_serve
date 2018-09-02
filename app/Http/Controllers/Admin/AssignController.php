@@ -724,7 +724,7 @@ class AssignController extends Controller
     public function updateWayBill(Request $request, WayBillService $service, $id)
     {
         $assign = Assign::find($id);
-        logger('[d]',[$assign, $assign->express, $assign->order]);
+//         logger('[d]',[$assign, $assign->express, $assign->order]);
         $re =  $service->updateWayBill($assign, $assign->express, $assign->order);
 //          $service->send($cmd);
 
@@ -811,8 +811,8 @@ class AssignController extends Controller
             }
             $goods = $assign->goods;
             
-            //处于揽件
-            if (!$assign->isParcel()) {
+            //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件
+            if (!$assign->isSended()) {
                 $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             } 
             

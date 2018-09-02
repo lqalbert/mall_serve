@@ -136,6 +136,18 @@ class Assign extends Model
         return $this->status == self::STATUS_PARCEL;
     }
     
+    /**
+     * 处理 已发货 这里处理有点问题
+     * 以前称重发货 已处理减库存了，
+     * 在揽件那里又减库存，就会重复减库存。
+     * 
+     * 所以不再处理 已揽件 
+     */
+    public function isSended()
+    {
+        return $this->status == self::STATUS_WEIGHTGOODS;
+    }
+    
     public function updateWaybillPrintStatus()
     {
         $this->express_print_status = 1;
