@@ -800,7 +800,7 @@ class AssignController extends Controller
         try {
             $order = $assign->order;
             if ($order->isFinish()) {
-                throw new \Exception('已经签收');;
+                throw new \Exception('已经签收');
             }
             
 

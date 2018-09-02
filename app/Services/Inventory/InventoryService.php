@@ -219,5 +219,18 @@ class InventoryService
         }
     }
     
+    public function sample($entrepot, $products, $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sample($entrepot->id, $products);
+            $this->log->sample($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     
 }

@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Models\SampleBasic;
 use App\Models\SampleGoods;
 use App\Models\GoodsDetails;
+use App\Services\Inventory\InventoryService;
+use App\Models\DistributionCenter;
 
 class SampleApplicationController extends Controller
 {
@@ -126,7 +128,7 @@ class SampleApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, InventoryService  $serve,  $id)
     { 
         DB::beginTransaction();
         try {
@@ -148,6 +150,13 @@ class SampleApplicationController extends Controller
             }
 
             //以下扣库存 商品数量可以从$request->goods里面获得
+            $goods = $request->goods;
+            $products = [];
+            foreach ($goods as $item) {
+                $products[] = SampleGoods::findOrFail($item->id);
+            }
+            
+            $serve->smaple(DistributionCenter::find(3), $products, auth()->user());
 
             DB::commit();
         } catch (\Exception $e) {
