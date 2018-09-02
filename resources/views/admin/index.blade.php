@@ -13,18 +13,17 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.2.11/css/app.538ca3de7f7c08f91dd5206d5592a17b.css" rel="stylesheet">
+    <link href="/admin/static1.2.12/css/app.6891203aa4951b0b6f0b99021fd5a27a.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
        
     </div>
     <!-- Scripts -->
-   	<script type="text/javascript" src="/admin/static1.2.11/js/manifest.7e08a06b8d20b20436fd.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.11/js/vendor.65d05dc61052b653a7c1.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.11/js/app.f2da7c6029629ba09290.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.11/js/babel-polyfill.d68a272d98d7d77b51aa.js"></script>
-    
+   	<script type="text/javascript" src="/admin/static1.2.12/js/manifest.a29db30f90d336dfc4bf.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.12/js/vendor.65d05dc61052b653a7c1.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.12/js/app.f2da7c6029629ba09290.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.12/js/babel-polyfill.d68a272d98d7d77b51aa.js"></script>
     
     <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>
