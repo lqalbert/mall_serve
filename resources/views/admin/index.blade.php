@@ -13,7 +13,7 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-    <link href="/admin/static1.2.12/css/app.6891203aa4951b0b6f0b99021fd5a27a.css" rel="stylesheet">
+   <link href="/admin/static1.2.12/css/app.6891203aa4951b0b6f0b99021fd5a27a.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
