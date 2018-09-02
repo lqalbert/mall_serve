@@ -33,19 +33,19 @@ class SalesGoodsStatisticsController extends Controller
         $saleBuilder = $this->saleNUm($start, $end);
         $refundBuilder = $this->refundNum($start, $end);
 
-        $result = DB::table('inventory_system as `is`')->select(
-                        '`is`.sku_sn','`is`.goods_name',
-                        DB::raw('`is`.produce_in as produce_in_total'),
-                        DB::raw('`is`.entrepot_count as saleable_count'),
+        $result = DB::table('inventory_system as iso')->select(
+                        'iso.sku_sn','iso.goods_name',
+                        DB::raw('iso.produce_in as produce_in_total'),
+                        DB::raw('iso.entrepot_count as saleable_count'),
                         DB::raw("inven.goods_num as invent_num"),
                         DB::raw('sale.goods_num as sale_num'),
                         DB::raw('refu.goods_num as ref_num')
                     )
-                    ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'`is`.sku_sn','=','inven.sku_sn')
+                    ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
-                    ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), '`is`.sku_sn','=','sale.sku_sn')
+                    ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
                     ->mergeBindings($saleBuilder)
-                    ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'`is`.sku_sn','=','refu.sku_sn')
+                    ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'iso.sku_sn','=','refu.sku_sn')
                     ->mergeBindings($refundBuilder)
                     ->where($where)->orderBy($orderField,$orderWay)
                     ->paginate($pageSize);
