@@ -4,7 +4,7 @@ return [
         [
             'text'=>'工作台管理',
             'icon'=>null,
-            'subIndex'=>['Workbench','SysNotice','Contacts','Website','SlideManage']
+            'subIndex'=>['Workbench','SysNotice','Contacts','Website','SlideManage','QuestionnaireManagement']
         ],
 
 
