@@ -78,6 +78,11 @@ class Goods extends Model
     	return $this->hasMany('App\Models\Sku', 'goods_id');
     }
     
+    public function combos()
+    {
+        return $this->hasMany('App\Models\GoodsCombo', 'combo_id');
+    }
+    
     //1对多
     public function attrs()
     {
@@ -107,6 +112,15 @@ class Goods extends Model
         } else {
             return $value;
         }
+    }
+    
+    /**
+     * 是不是 套餐
+     * @return boolean
+     */
+    public function isThisACombo()
+    {
+        return $this->combo == 1 ;
     }
     
     
@@ -139,6 +153,13 @@ class Goods extends Model
         return $query->where('status', 1);
     }
     
+    /**
+     * 这个名称写错了 不应该是 iscombo
+     * 而是 isincludecombo
+     * @param unknown $query
+     * @param string $include
+     * @return unknown
+     */
     public function scopeIsCombo($query, $include = false)
     {
         return $query->where('combo', $include ? 1 : 0);

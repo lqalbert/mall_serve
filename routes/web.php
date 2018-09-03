@@ -117,6 +117,8 @@ Route::group($adminGroup, function(){
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
 	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	Route::put('/assign-update-waybill/{id}', 'AssignController@updateWayBill');
+	Route::put('/assign-percelon/{id}', 'AssignController@parcelOn');
+	Route::put('/assign-sign/{id}', 'AssignController@orderSign');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
@@ -204,14 +206,21 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::resource('/sample-application','SampleApplicationController');
     Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
     Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
-    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
-    
-    
+    Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
+    Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
+    Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
+    //套餐
+    Route::resource('/goods-combo', 'ComboController');
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
 });
 
 
@@ -275,7 +284,3 @@ Route::post('/register-action', 'Home\LoginController@registerAction')->name('re
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
-
-//Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Models\Assign;
 use App\Services\Inventory\InventoryService;
 use App\Events\AddOrderOperationLog;
+use App\Models\OrderBasic;
 
 class AfterSaleController extends Controller
 {
@@ -44,6 +45,18 @@ class AfterSaleController extends Controller
         
         if ($request->has('type')) {
             $builder = $builder->where('type', $request->input('type'));
+        }
+        
+        if ($request->has('value7')) {
+            $timesValue = $request->input('value7');
+            
+//             $tmp = Carbon::createFromFormat('Y-m-d\TH:i:s.u\Z', $timesValue[0])->toDateTimeString();
+            $start = Date("Y-m-d H:i:s", strtotime($timesValue[0]));
+            $end = Date("Y-m-d H:i:s", strtotime($timesValue[1] )+ (24*60*60-1));
+            $builder = $builder->where([
+                ['created_at','>=',$start],
+                ['created_at','<=',$end]
+            ]);
         }
         
         $result = $builder->paginate($request->input('pageSize', 20));
@@ -88,7 +101,14 @@ class AfterSaleController extends Controller
         try {
             
             $model = AfterSale::create($request->all());
+            $orderModel = OrderBasic::findOrFail($request->input('order_id'));
             
+            if ($orderModel->isInAfterSale()) {
+                throw new \Exception('已经处于售后服务中');
+            }
+            
+            $orderModel->updateAfterStatusToStart();
+            $orderModel->save();
             $goods =  [];
             foreach ($request->input('goods', []) as $product) {
 //                 $goods[] = AfterSaleGoods::make($product);
@@ -211,7 +231,7 @@ class AfterSaleController extends Controller
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function sureStatus(Request $request,$id){
+    public function sureStatus(Request $request, $id){
 //         $data = $request->all();
 //         $data['sure_at'] = Carbon::now();
 
@@ -294,7 +314,77 @@ class AfterSaleController extends Controller
         return $this->success([]);
     }
 
-
+    /**
+     * 库存操作要分成入库和出库 感觉可以合二为一
+     * 这是入库 分为 退货入库 和 换货入库
+     */
+    public function rxInventory(Request $request, InventoryService $serve, $id) 
+    {
+        DB::beginTransaction();
+        try {
+            $after = AfterSale::findOrFail($id);
+            $after->in_inventory=1;
+            $re = $after->save();
+            if (!$re) {
+                throw new \Exception('保存失败');
+            }
+            $products = $request->input('goods');
+            $productModels = [];
+            foreach ($products as $product) {
+                $tmpModel = OrderGoods::find($product['id']);
+                $tmpModel->return_inventory = $product['return_inventory'];
+                $tmpModel->destroy_num = $product['destroy_num'];
+                $re2 = $tmpModel->save();
+                
+                if (!$re2) {
+                    throw new \Exception('保存失败');
+                }
+                
+                $tmpModel->goods_number = $tmpModel->return_inventory ;
+                $productModels[] = $tmpModel;
+            }
+            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        return $this->success([]);
+    }
+    
+    public function outInventory(Request $request, InventoryService $serve, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $after = AfterSale::findOrFail($id);
+            $after->out_inventory=1;
+            $re = $after->save();
+            if (!$re) {
+                throw new \Exception('保存失败');
+            }
+            $products = $request->input('goods');
+            $productModels = [];
+            foreach ($products as $product) {
+                $tmpModel = OrderGoods::find($product['id']);
+                $tmpModel->return_inventory = $product['return_inventory'];
+                $tmpModel->destroy_num = $product['destroy_num'];
+                $re2 = $tmpModel->save();
+                
+                if (!$re2) {
+                    throw new \Exception('保存失败');
+                }
+                
+                $tmpModel->goods_number = $tmpModel->destroy_num;
+                $productModels[] = $tmpModel;
+            }
+            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        DB::commit();
+        return $this->success([]);
+    }
 
 
 }

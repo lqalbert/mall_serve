@@ -51,10 +51,8 @@ class System
                     if ($re) {
                         $affectedRows += 1;
                     }
-                    
-                }
-                
-                
+                  
+                }    
             }
             $this->updateIsSuccess($affectedRows);
 //             DB::commit();
@@ -250,6 +248,62 @@ class System
             throw $e;
         }
         
+        return $affectedRows;
+    }
+    
+    public function sending($entrepot_id,  $products)
+    {
+        // send_ing
+        $affectedRows = 0;
+        try{
+            foreach ($products as $product) {
+                $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? ,  assign_lock = assign_lock - ? , send_ing = send_ing + ?',
+                    [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+            }
+            $this->updateIsSuccess($affectedRows);
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return $affectedRows;
+        
+    }
+    
+    /**
+     * 签收
+     * @param unknown $entrepot_id
+     * @param unknown $products
+     */
+    public function sign($entrepot_id, $products)
+    {
+        // send_ing
+        $affectedRows = 0;
+        try{
+            foreach ($products as $product) {
+                $affectedRows += $this->updates('set send_ing = send_ing - ? ',
+                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+            }
+            $this->updateIsSuccess($affectedRows);
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return $affectedRows;
+    }
+    
+    /**
+     * 
+     */
+    public function sample($entrepot_id, $products)
+    {
+        $affectedRows = 0;
+        try{
+            foreach ($products as $product) {
+                $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? ,  saleable_count = saleable_count - ? ',
+                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+            }
+            $this->updateIsSuccess($affectedRows);
+        } catch (\Exception $e ) {
+            throw $e;
+        }
         return $affectedRows;
     }
     

@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType'] // 'Refund'
+                'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType','SampleApplication'] // 'Refund'
 		],
 		[
 				'text' => '库存管理',
@@ -68,6 +68,11 @@ return [
 		[
 			    'text' => '统计报表',
 			    'icon' => null,
-		    'subIndex'=>['SalesPerformance','SalesQuantization'] //'SalesGoodsStatistics'
+			    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics']
+		]		,
+        [
+			    'text' => '问卷管理',
+			    'icon' => null,
+			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
 		]
 ];

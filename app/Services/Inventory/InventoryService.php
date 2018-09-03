@@ -78,18 +78,42 @@ class InventoryService
     }
     
     /**
-     * 发货锁定
+     * 发货锁定 解锁
      * @param unknown $entrepot
      * @param unknown $products
      * @param unknown $user
      * @throws Exception
      */
-    public function assignLock($entrepot, $products, $user)
+    public function assignLock($entrepot, $products, $user, $on=true)
     {
         DB::beginTransaction();
         try {
-            $this->inventory->assignLock($entrepot->id, $products);
-            $this->log->assignLock($entrepot, $products, $user);
+            $this->inventory->assignLock($entrepot->id, $products, $on);
+            if ($on) {
+                $this->log->assignLock($entrepot, $products, $user);
+            } else {
+                $this->log->assignUnLock($entrepot, $products, $user);
+            }
+            
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 发货在途
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     */
+    public function sending($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sending($entrepot->id, $products);
+            $this->log->sending($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -168,6 +192,39 @@ class InventoryService
         try {
             $this->inventory->exLock($entrepot->id, $products);
             $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 签收
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     * @param unknown $dan
+     */
+    public function sign($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sign($entrepot->id, $products);
+//             $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    public function sample($entrepot, $products, $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sample($entrepot->id, $products);
+            $this->log->sample($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

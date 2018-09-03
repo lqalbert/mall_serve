@@ -12,7 +12,7 @@ class OrderBasic extends Model
     use SoftDeletes;
     
     CONST UN_CHECKED =0;
-    CONST WATI_TO_CHANGR =2;
+    CONST ASIGNING =2;
     CONST CANCEL = 7;
     
     CONST AFTER_SALE_TYPE_RETURN = 0;
@@ -22,6 +22,7 @@ class OrderBasic extends Model
     CONST AFTER_SALE_EXCHANGE_DONE = 23;
     CONST ORDER_STATUS_7 = 7;
     CONST ORDER_STATUS_8 = 8;
+    CONST ORDER_FINISH = 6;
 
     
     protected $table = 'order_basic';
@@ -29,6 +30,7 @@ class OrderBasic extends Model
         'deleted_at'
     ];
     protected $hidden = [ 'updated_at','deleted_at'];
+    protected $casts = [ 'type_object'=> 'object'];
     protected $fillable = [
         'deal_id',
         'deal_name',
@@ -80,11 +82,11 @@ class OrderBasic extends Model
     private static $status = [
         "待审核",
         "审核通过",
-        "发货中",
-        "已发货",
-        "已揽件",
+        "发货中",// 审核通过
+        "已发货", // 称重发货
+        "已揽件", // 已揽件
         "运输中",
-        "订单完成",
+        "订单完成", //签收
         "订单取消",
         "审核未通过"
     ];
@@ -107,18 +109,18 @@ class OrderBasic extends Model
      */
     private static $afterSaleStatus = [
         "l0"=>"无",
-        "l10"=>"申请退货",
+        "l10"=>"申请售后",
         //"l11"=>"退货审核通过",
-        "l11"=>"退货不通过",
-        "l12"=>"退货中",
-        "l13"=>"退货完成",
+        "l11"=>"申请不通过",
+        "l12"=>"售后中",
+        "l13"=>"售后完成",
         
         
-        "l20"=>"申请换货",
+//         "l20"=>"申请换货",
         //"l21"=>"换货审核通过",
-        "l21"=>"换货不通过",
-        "l22"=>"换货中",
-        "l23"=>"换货完成"
+//         "l21"=>"换货不通过",
+//         "l22"=>"换货中",
+//         "l23"=>"换货完成"
                        
     ];
     
@@ -200,11 +202,23 @@ class OrderBasic extends Model
         return $this->express_delivery ? $this->express_delivery : false ;
     }
     
-    
-    public function updateStatusToWaitCharge()
+    public function isFinish()
     {
-        $this->status = 2;
-        return $this->save();
+        return $this->status == self::ORDER_FINISH;
+    }
+    
+    public function isInAfterSale()
+    {
+        return $this->after_sale_status > 0;
+    }
+    
+    
+    
+    public function updateStatusToAssigning()
+    {
+        $this->status = self::ASIGNING;
+        return $this;
+//         return $this->save();
     }
     
     public function updateAfterSaleDone($type) 
@@ -215,6 +229,25 @@ class OrderBasic extends Model
             $this->after_sale_status = self::AFTER_SALE_EXCHANGE_DONE;
         }
     }
+    
+    public function updateStatusToUnChecked()
+    {
+        $this->status = self::UN_CHECKED;
+    }
+    
+    public function updateStatusToFinish()
+    {
+        $this->status = self::ORDER_FINISH; //完成 后期要改成 self:xxx的形式
+    }
+    
+    public function updateAfterStatusToStart()
+    {
+        //申请 10 可以改成常量
+        $this->after_sale_status = 10;
+        return $this;
+    }
+    
+    
     
     /**
      * 返回菜鸟接口要求的结构化的数据
@@ -281,6 +314,17 @@ class OrderBasic extends Model
     {
         return $this->belongsTo('App\Models\OrderType' ,'type')->select('id','name','discount');
     }
+    
+    public function typeToPlanObject()
+    {
+        $this->type_object = $this->orderType->toPlan();
+    }
+    
+    public function typeObjecToOrderType()
+    {
+        return OrderType::make((array) $this->type_object );
+    }
+    
     
     public function updateFreight($newFreight)
     {
