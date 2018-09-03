@@ -326,8 +326,9 @@ class AssignController extends Controller
     
     
     /**
-     * 返单
-     * @todo 事件处理　操作记录
+     * 返单 
+     * 
+     * @todo  库存要加回去 好像只是删除需要（要仔细对照下）
      * @param Request $request
      * @param unknown $id
      */
@@ -339,18 +340,19 @@ class AssignController extends Controller
 //         注意这三个状态　需要改对应的字段　第三个暂时不需要改其它字段
         $assign = Assign::find($id);
         $is_repeat = $request->input('is_repeat');
-        $assign->is_repeat = $is_repeat;
+//         $assign->is_repeat = $is_repeat;
         $assign->repeat_mark = $request->input('repeat_mark');
         switch ($is_repeat) {
             case 1:
                 if (!$assign->isSetExpress()) {
                     $assign->express_id = 0;
-                    $assign->express_name = '';
+//                     $assign->express_name = '';
                     $assign->express_sn = '';
                 }
                 $assign->corrugated_case = '';
                 $assign->corrugated_id = 0;
                 $assign->status = 0;
+                $assign->check_status = 0;
                 $re = $assign->save();
                 break;
             case 2:
