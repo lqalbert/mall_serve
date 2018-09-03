@@ -285,7 +285,13 @@ return [
             'icon' => null,
             'index' => 'QuestionnaireManagement'
         ],
-	[
+    [
+        'text' => '导入账号设置',
+        'icon' => null,
+        'index' => 'AccountSettings'
+    ],
+
+    [
             'text' => '商品销售统计',
             'icon' => null,
             'index' => 'SalesGoodsStatistics'
