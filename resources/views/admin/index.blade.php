@@ -13,17 +13,17 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-   <link href="/admin/static1.2.14bbg/css/app.5730dcbd8d7e49b7aa3c8c00a1aee0eb.css" rel="stylesheet">
+   <link href="/admin/static1.2.14bbh/css/app.5b7599a8f8dd74eadf13961209ee23d5.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
        
     </div>
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static1.2.14bbg/js/manifest.a2af7799ea4274dda4a4.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.14bbg/js/vendor.65d05dc61052b653a7c1.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.14bbg/js/app.c5c1cc5db065b4ea3afd.js"></script>
-    <script type="text/javascript" src="/admin/static1.2.14bbg/js/babel-polyfill.d68a272d98d7d77b51aa.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.14bbh/js/manifest.c3c68dd44f649656372e.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.14bbh/js/vendor.081b43fa4ab6b55b5efc.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.14bbh/js/app.08c1237d471b39ab885a.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.14bbh/js/babel-polyfill.d5221a2aaf662c3a6b9a.js"></script>
     
     <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>
