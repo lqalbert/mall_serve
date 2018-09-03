@@ -219,6 +219,8 @@ Route::group($adminGroup, function(){
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
     //套餐
     Route::resource('/goods-combo', 'ComboController');
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
 });
 
 
@@ -238,7 +240,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
@@ -282,7 +284,3 @@ Route::post('/register-action', 'Home\LoginController@registerAction')->name('re
 // 	// return view('welcome');
 // 	return view('test/test');
 // });
-
-//Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

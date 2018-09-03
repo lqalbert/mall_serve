@@ -68,6 +68,11 @@ return [
 		[
 			    'text' => '统计报表',
 			    'icon' => null,
-		    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics'] //
+			    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics']
+		]		,
+        [
+			    'text' => '问卷管理',
+			    'icon' => null,
+			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
 		]
 ];
