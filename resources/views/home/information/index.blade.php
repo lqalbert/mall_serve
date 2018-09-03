@@ -209,7 +209,7 @@
                         $('form')[0].reset();
                         alert(response.msg);
                     }else{
-                        $('form')[0].reset();
+                        // $('form')[0].reset();
                         alert(response.msg);
                     }
                 },
