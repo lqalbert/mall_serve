@@ -43,8 +43,8 @@ class SalesGoodsStatisticsController extends Controller
                         DB::raw('sale.goods_num as sale_num'),
                         DB::raw('refu.goods_num as ref_num'),
                         DB::raw('inner_sale.goods_num as inner_num'),
-                        DB::raw('shop_sale.goods_num as shop_sale')
-                    )
+                        DB::raw('shop_sale.goods_num as shop_sale'),
+                        DB::raw('inven.goods_num as invent_num'))
                     ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
                     ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
@@ -72,10 +72,10 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('purchase_order_goods')->select(
             DB::raw("sum(`goods_purchase_num`) as goods_num"),
             'sku_sn')
-        ->where([
-            ['created_at',">=", $start],
-            ['created_at',"<=", $end]
-        ])
+//         ->where([
+//             ['created_at',">=", $start],
+//             ['created_at',"<=", $end]
+//         ])
         ->whereNotNull('deleted_at')
         ->groupBy('sku_sn'); 
     }
