@@ -76,7 +76,7 @@ class SalesGoodsStatisticsController extends Controller
 //             ['created_at',">=", $start],
 //             ['created_at',"<=", $end]
 //         ])
-        ->whereNotNull('deleted_at')
+        ->whereNull('deleted_at')
         ->groupBy('sku_sn'); 
     }
     
