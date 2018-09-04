@@ -18,7 +18,7 @@ class SalesGoodsStatisticsController extends Controller
     {
         $start = $request->input('start')." 00:00:00";
         $end = $request->input('end')." 23:59:59";
-        $pageSize = $request->input('pageSize', 15);
+        $pageSize = $request->input('pageSize', 30);
         $orderField = $request->input('orderField','produce_in_total');
         $orderWay  = $request->input('orderWay','desc');
         $where = [
