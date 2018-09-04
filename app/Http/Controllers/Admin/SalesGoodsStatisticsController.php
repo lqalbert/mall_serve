@@ -31,6 +31,8 @@ class SalesGoodsStatisticsController extends Controller
 
         $inventoryBuilder = $this->inInventory($start, $end);
         $saleBuilder = $this->saleNUm($start, $end);
+        $innerSaleBuilder = $this->innerSaleNum($start, $end);
+        $shopSaleBuilder = $this->shopSaleNum($start, $end);
         $refundBuilder = $this->refundNum($start, $end);
 
         $result = DB::table('inventory_system as iso')->select(
@@ -39,12 +41,18 @@ class SalesGoodsStatisticsController extends Controller
                         DB::raw('iso.entrepot_count as saleable_count'),
                         DB::raw("inven.goods_num as invent_num"),
                         DB::raw('sale.goods_num as sale_num'),
-                        DB::raw('refu.goods_num as ref_num')
+                        DB::raw('refu.goods_num as ref_num'),
+                        DB::raw('inner_sale.goods_num as inner_num'),
+                        DB::raw('shop_sale.goods_num as shop_sale')
                     )
                     ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
                     ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
                     ->mergeBindings($saleBuilder)
+                    ->leftJoin(DB::raw("({$innerSaleBuilder->toSql()}) as inner_sale"),'iso.sku_sn','=','inner_sale.sku_sn')
+                    ->mergeBindings($innerSaleBuilder)
+                    ->leftJoin(DB::raw("({$shopSaleBuilder->toSql()}) as shop_sale"),'iso.sku_sn','=','shop_sale.sku_sn')
+                    ->mergeBindings($shopSaleBuilder)
                     ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'iso.sku_sn','=','refu.sku_sn')
                     ->mergeBindings($refundBuilder)
                     ->where($where)->orderBy($orderField,$orderWay)
@@ -74,7 +82,7 @@ class SalesGoodsStatisticsController extends Controller
     
     
     /**
-     * 本次销售数量
+     * 本次销售数量 销售订单
      * @param unknown $start
      * @param unknown $end
      * @return unknown
@@ -89,11 +97,53 @@ class SalesGoodsStatisticsController extends Controller
         ->where([
             ['order_basic.status','>=',1],
             ['order_basic.status','<=',6],
+            ['order_basic.type','=',3], //不销售订单
             ['order_basic.created_at',">=", $start],
             ['order_basic.created_at',"<=", $end],
             ['order_goods.status','<>',3]
         ])->groupBy('sku_sn');
     }
+    
+    /**
+     * 内部订单
+     * @param unknown $start
+     * @param unknown $end
+     * @return unknown
+     */
+    private function innerSaleNum($start, $end)
+    {
+        return DB::table('order_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn'
+            )
+            ->join('order_goods','order_basic.id','=','order_goods.order_id')
+            ->where([
+                ['order_basic.status','>=',1],
+                ['order_basic.status','<=',6],
+                ['order_basic.type','=',2], // 内部的订单
+                ['order_basic.created_at',">=", $start],
+                ['order_basic.created_at',"<=", $end],
+                ['order_goods.status','<>',3]
+            ])->groupBy('sku_sn');
+    }
+    
+    private function shopSaleNum($start, $end)
+    {
+        return DB::table('order_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn'
+            )
+            ->join('order_goods','order_basic.id','=','order_goods.order_id')
+            ->where([
+                ['order_basic.status','>=',1],
+                ['order_basic.status','<=',6],
+                ['order_basic.type','=',1], //商城的订单
+                ['order_basic.created_at',">=", $start],
+                ['order_basic.created_at',"<=", $end],
+                ['order_goods.status','<>',3]
+            ])->groupBy('sku_sn');
+    }
+    
     
     private function refundNum($start, $end)
     {
