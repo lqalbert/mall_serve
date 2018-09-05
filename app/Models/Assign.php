@@ -34,9 +34,10 @@ class Assign extends Model
         '审核未通过',
         '已发货',
         '已验货',
-        '已揽件'
+        '已揽件',
        // '已拦截',  另一个字段 is_stop
         //'已打印', 
+        '已签收'
     ];
     
     protected $hidden = ['print_data'];
