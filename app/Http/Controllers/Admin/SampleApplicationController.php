@@ -128,13 +128,14 @@ class SampleApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InventoryService  $serve,  $id)
+    public function update(Request $request, InventoryService $serve, $id)
     { 
         DB::beginTransaction();
         try {
+            $checkStatus = $request->check_status;
             $data = [
                 'check_time'=>Carbon::now(),
-                'check_status'=>$request->check_status,
+                'check_status'=>$checkStatus,
                 'check_remark'=>$request->check_remark
             ];
             $re = SampleBasic::where('id',$id)->update($data);
@@ -150,13 +151,14 @@ class SampleApplicationController extends Controller
             }
 
             //以下扣库存 商品数量可以从$request->goods里面获得
-            $goods = $request->goods;
-            $products = [];
-            foreach ($goods as $item) {
-                $products[] = SampleGoods::findOrFail($item->id);
+            if($checkStatus == SampleBasic::CHECK_PASS){
+                $goods = $request->goods;
+                $products = [];
+                foreach ($goods as $item) {
+                    $products[] = SampleGoods::findOrFail($item['id']);
+                }
+                $serve->sample(DistributionCenter::find(3), $products, auth()->user());
             }
-            
-            $serve->smaple(DistributionCenter::find(3), $products, auth()->user());
 
             DB::commit();
         } catch (\Exception $e) {
