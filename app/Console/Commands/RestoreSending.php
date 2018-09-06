@@ -47,6 +47,7 @@ class RestoreSending extends Command
         try {
             foreach ($assigns as $item) {
                 $this->inventory->sending($item->entrepot_id, $item->goods);
+                Assign::where('id', $item->id)->update(['status', Assogn::STATUS_PARCEL]);
             }
         } catch (Exception $e) {
             DB::rollback();

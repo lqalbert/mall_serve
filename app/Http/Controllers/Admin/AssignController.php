@@ -326,8 +326,9 @@ class AssignController extends Controller
     
     
     /**
-     * 返单
-     * @todo 事件处理　操作记录
+     * 返单 
+     * 
+     * @todo  库存要加回去 好像只是删除需要（要仔细对照下）
      * @param Request $request
      * @param unknown $id
      */
@@ -339,18 +340,19 @@ class AssignController extends Controller
 //         注意这三个状态　需要改对应的字段　第三个暂时不需要改其它字段
         $assign = Assign::find($id);
         $is_repeat = $request->input('is_repeat');
-        $assign->is_repeat = $is_repeat;
+//         $assign->is_repeat = $is_repeat;
         $assign->repeat_mark = $request->input('repeat_mark');
         switch ($is_repeat) {
             case 1:
                 if (!$assign->isSetExpress()) {
                     $assign->express_id = 0;
-                    $assign->express_name = '';
+//                     $assign->express_name = '';
                     $assign->express_sn = '';
                 }
                 $assign->corrugated_case = '';
                 $assign->corrugated_id = 0;
                 $assign->status = 0;
+                $assign->check_status = 0;
                 $re = $assign->save();
                 break;
             case 2:
@@ -368,11 +370,14 @@ class AssignController extends Controller
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
-                        throw new \Exception('不能返单，因为是售后服务');
+                        throw new \Exception('不能删除，因为是售后服务');
                     }
                     $order->updateStatusToUnChecked();
                     $order->save();
-                    
+                    //保证金
+                    $department = $order->department;
+                    $department->addDeposit($order->discounted_goods_money);
+                    $department->save();
                 } catch (\Exception $e) {
                     DB::rollback();
                     return $this->error([], $e->getMessage());
@@ -724,7 +729,7 @@ class AssignController extends Controller
     public function updateWayBill(Request $request, WayBillService $service, $id)
     {
         $assign = Assign::find($id);
-        logger('[d]',[$assign, $assign->express, $assign->order]);
+//         logger('[d]',[$assign, $assign->express, $assign->order]);
         $re =  $service->updateWayBill($assign, $assign->express, $assign->order);
 //          $service->send($cmd);
 
@@ -800,7 +805,7 @@ class AssignController extends Controller
         try {
             $order = $assign->order;
             if ($order->isFinish()) {
-                throw new \Exception('已经签收');;
+                throw new \Exception('已经签收');
             }
             
 
@@ -811,14 +816,14 @@ class AssignController extends Controller
             }
             $goods = $assign->goods;
             
-            //处于揽件
-            if (!$assign->isParcel()) {
+            //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件
+            if (!$assign->isSended()) {
                 $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             } 
             
             $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             
-            $assign->updateParcelStatus();
+            $assign->updateSignStatus();
             $assign->fill($request->all());
             $re = $assign->save();
             if (!$re) {

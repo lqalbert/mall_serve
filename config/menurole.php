@@ -158,7 +158,8 @@ return [
         'Contacts',
         'Website',
         'WarehousingProcess',
-        'PurchaseList'
+        'PurchaseList',
+        'SalesGoodsStatistics'
     ],
     
     // 隐藏的角色

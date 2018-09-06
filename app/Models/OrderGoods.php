@@ -41,7 +41,8 @@ class OrderGoods extends Model implements GoodsContracts
         'inventory',
         'return_num',
         'specifications',
-        'assign_id'
+        'assign_id',
+        'destroy_num'
     ];
     
     public function productCategory()

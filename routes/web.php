@@ -206,16 +206,21 @@ Route::group($adminGroup, function(){
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
     Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::resource('/sample-application','SampleApplicationController');
     Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
     Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
-    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
     Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
-    
-    
+    //套餐
+    Route::resource('/goods-combo', 'ComboController');
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
 });
 
 
@@ -235,7 +240,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');

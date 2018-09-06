@@ -18,7 +18,7 @@
                         <span style="color: red">*</span>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-7 col-xs-8 rightBar">
-                        <input id="user" type="text" name="username" placeholder="用户名字母开头，4-20位">
+                        <input id="user" type="text" name="username" placeholder="请输入姓名">
                         <div class="message"></div>
                     </div>
                 </div>
@@ -72,12 +72,12 @@
                     $('#user').siblings('.message').text('用户名不能为空')
                     flg=false
                 }else{
-                    if(!userP.test(name)){
-                        $('#user').siblings('.message').text('用户名格式有误')
-                        flg=false
-                    }else{
-                        $('#user').siblings('.message').text('')
-                    }
+                    // if(!userP.test(name)){
+                    //     $('#user').siblings('.message').text('用户名格式有误')
+                    //     flg=false
+                    // }else{
+                    //     $('#user').siblings('.message').text('')
+                    // }
                 }
                 /*---------验证年龄---------*/
                 var ageP=/^[1-9][0-9]$/;

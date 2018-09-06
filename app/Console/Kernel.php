@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         Commands\MakeRole::class,
         Commands\RestoreSending::class,
         Commands\PaddTypeObject::class,
-        Commands\UpgradeOne::class
+        Commands\UpgradeOne::class,
+        Commands\ComboUpgrade::class
     ];
 
     /**

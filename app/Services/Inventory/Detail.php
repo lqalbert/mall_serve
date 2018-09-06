@@ -159,6 +159,11 @@ class Detail
         $this->save($entrepot, $products, $user, 'send_ing', $dan);
     }
     
+    public function sample(DistributionCenter $entrepot, $products, User $user)
+    {
+        $this->save($entrepot, $products, $user, 'sample');
+    }
+    
     
     
     
