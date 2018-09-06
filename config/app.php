@@ -180,7 +180,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         //rbac包需要 
-        Zizaco\Entrust\EntrustServiceProvider::class
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        //手机检测
+        Jenssegers\Agent\AgentServiceProvider::class,
 
 
     ],
@@ -235,6 +237,8 @@ return [
         //rbac 
         'Entrust' => Zizaco\Entrust\EntrustFacade::class,
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        //手机检测
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Jenssegers\Agent\Agent as Agent;
 
 class MobileDetected
 {
@@ -17,9 +18,13 @@ class MobileDetected
     {
         //return $next($request);
         
-        //         $response = 
-        //         $response->header('Access-Control-Allow-Origin', '*');
-        redirect('http://ws.pulata.com.cn');
+        
+        $agent=new Agent();
+        logger("[mobiledetected]", [$agent->isMobile()]);
+        if($agent->isMobile()){
+            return redirect('http://ws.pulata.com.cn');
+        }
+        
         return $next($request);
         
     }
