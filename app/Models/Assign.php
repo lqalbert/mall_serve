@@ -16,6 +16,8 @@ class Assign extends Model
     const STATUS_CHECKEDGOODS = 4;
     const STATUS_WEIGHTGOODS = 3;
     const STATUS_PARCEL = 5;
+    const STATUS_SIGNATURE = 6;
+    
     protected $table = 'assign_basic';
     
     
@@ -192,7 +194,7 @@ class Assign extends Model
      */
     public function updateSignStatus()
     {
-        $this->updateParcelStatus();
+        $this->status = self::STATUS_SIGNATURE;
         $this->sign_at = Carbon::now();
     }
     
