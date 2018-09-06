@@ -230,12 +230,15 @@ Route::group($adminGroup, function(){
 // 	return view('test/test');
 // });
 
-Route::get('/', 'Home\IndexController@index');
 
 
-Route::get('/product/index', 'Home\ProductController@index')->name('product/index');
-Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
-Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product');
+
+Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
+
+
+Route::get('/product/index', 'Home\ProductController@index')->name('product/index')->middleware('mobiledetected');
+Route::get('/product/product', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');
+Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');
 Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');

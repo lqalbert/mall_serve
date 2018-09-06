@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         //rbac
         'role' => \Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission' => \zizaco\Entrust\Middleware\EntrustPermission::class,
-        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class
+        'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'mobiledetected' => \App\Http\Middleware\MobileDetected::class
     ];
 }
