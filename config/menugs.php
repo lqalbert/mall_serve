@@ -300,6 +300,5 @@ return [
             'text' => '样品申请',
             'icon' => null,
             'index' => 'SampleApplication'
-        ],
-		
+        ]
 ];

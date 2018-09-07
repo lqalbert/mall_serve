@@ -211,6 +211,7 @@ Route::group($adminGroup, function(){
     Route::resource('/sample-application','SampleApplicationController');
     Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
     Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
+
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
@@ -219,6 +220,12 @@ Route::group($adminGroup, function(){
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
     //套餐
     Route::resource('/goods-combo', 'ComboController');
+
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
+
+
+
 });
 
 
