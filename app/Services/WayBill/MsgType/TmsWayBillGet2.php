@@ -38,7 +38,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                 "orderInfo"=>[
                     'orderChannelsType'=>'OTHERS', //订单渠道平台编码
                     'tradeOrderList' => [
-                        "$item->id"
+                        "$item->id" //这里必须是数字，否则要抱错
                     ]
                 ],
                 "packageInfo"=> $item->getPackageInfo(),

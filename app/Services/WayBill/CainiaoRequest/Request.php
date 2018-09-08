@@ -67,7 +67,7 @@ class Request
     }
     
     public function getContent()
-    {Storage::disk('local')->put("request_content.json", $this->content);
+    {//Storage::disk('local')->put("request_content.json", $this->content);
         return $this->content;
     }
     
