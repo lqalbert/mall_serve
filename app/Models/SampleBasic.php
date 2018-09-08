@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SampleBasic extends Model
 {
     use SoftDeletes;
+    const CHECK_PASS = 1;//审核通过
+    const CHECK_FAIL = 2;//审核不通过
     protected $table = 'sample_basic';
     protected $dates = [
         'deleted_at'
