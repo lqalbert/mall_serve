@@ -37,7 +37,7 @@ class Request
     
     public function setDataType($str)
     {
-        $this->dataType = $str;
+        $this->dataType = "json";//$str;
         return $this;
     }
     

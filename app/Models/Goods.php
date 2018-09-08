@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Contracts\Goods as GoodsContracts;
 
-class Goods extends Model
+class Goods extends Model implements GoodsContracts
 {
     use SoftDeletes;
     
@@ -112,6 +113,25 @@ class Goods extends Model
         } else {
             return $value;
         }
+    }
+
+    public function getSkuSn()
+    {
+        return $this->sku_sn;
+    }
+    
+    public function getName()
+    {
+        return $this->goods_name;
+    }
+    
+    /**
+     * 套装入库出库时需要
+     * @return int
+     */
+    public function getNum()
+    {
+        return $this->combo_num;
     }
     
     /**

@@ -232,5 +232,41 @@ class InventoryService
         }
     }
     
+    /**
+     * 套装 加 减 感觉就是入库和出库
+     */
+    public function combo($entrepot, $products, $user, $on)
+    {
+        DB::beginTransaction();
+        try {
+            if ($on) {
+                //入库有日志
+                $this->entryUpdate($entrepot, $products, $user);
+            } else {
+                $this->inventory->combo($entrepot->id, $products, false);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 套装对应的商品 加 减
+     */
+    public function comboGoods($entrepot, $products, $user, $on)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->comboGoods($entrepot->id, $products,$on);
+            //             $this->log->sample($entrepot, $products, $user, $on);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     
 }
