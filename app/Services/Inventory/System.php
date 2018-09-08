@@ -342,8 +342,8 @@ class System
         $countoper = $on ? '+' : '-';
         try{
             foreach ($products as $product) {
-                $affectedRows= $this->updates('set saleable_count = saleable_count '.$countoper.' ?',
-                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $affectedRows= $this->updates('set entrepot_count= entrepot_count '.$countoper.' ?, saleable_count = saleable_count '.$countoper.' ?',
+                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
                 $this->updateIsSuccess($affectedRows);
             }
             $this->updateIsSuccess($affectedRows);
