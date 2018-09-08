@@ -103,6 +103,8 @@ Route::group($adminGroup, function(){
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+	Route::get('/entrepot-combo-count/{sku_sn}', 'EntrepotProductController@ComboCount');
+	Route::put('/entrepot-combo-operat', 'EntrepotProductController@addCombo');
 	Route::put('/order-assign-check', 'AssignController@check');//----
 	Route::resource('/order-assign', 'AssignController');
 

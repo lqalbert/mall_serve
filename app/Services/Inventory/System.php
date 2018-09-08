@@ -36,8 +36,9 @@ class System
         try{
             foreach ($products as $product) {
                 if ($this->model->hasOneBySkuSn($entrepot_id, $product->getSkuSn())) {
-                    $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?, produce_in = produce_in + ?',
+                    $affectedRows = $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?, produce_in = produce_in + ?',
                         [ $product->getNum(), $product->getNum(),$product->getNum(),$entrepot_id, $product->getSkuSn() ]);
+                    $this->updateIsSuccess($affectedRows);
                 } else {
                     $re = $this->model->fill([
                         'entrepot_id'  => $entrepot_id,
@@ -50,6 +51,8 @@ class System
                     //模拟成功
                     if ($re) {
                         $affectedRows += 1;
+                    } else {
+                        $this->updateIsSuccess(0);
                     }
                   
                 }    
@@ -75,10 +78,10 @@ class System
 //         DB::beginTransaction();
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -100,11 +103,11 @@ class System
         $lockoper = $on ? '+' : '-' ;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , sale_lock = sale_lock '.$lockoper.' ?',
+                $affectedRows = $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , sale_lock = sale_lock '.$lockoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
 //             DB::commit();
-            $this->updateIsSuccess($affectedRows);
             
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -132,10 +135,10 @@ class System
         $assignoper = $on ? '+' : '-' ;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set  sale_lock = sale_lock '.$saleoper.' ? , assign_lock = assign_lock '.$assignoper.' ?',
+                $affectedRows = $this->updates('set  sale_lock = sale_lock '.$saleoper.' ? , assign_lock = assign_lock '.$assignoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -165,10 +168,10 @@ class System
                     $str = "";
                     throw new \Exception("退换货入库操作 商品退换类型错误 ");
                 }
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ? ' . $str,
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ? ' . $str,
                     [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -187,10 +190,10 @@ class System
 //         DB::beginTransaction();
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?',
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
 //             DB::commit();
         } catch (\Exception $e) {
 //             DB::rollBack();
@@ -216,7 +219,7 @@ class System
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
-            $this->updateIsSuccess($affectedRows);
+                $this->updateIsSuccess($affectedRows);
             //             DB::commit();
         } catch (\Exception $e) {
             //             DB::rollBack();
@@ -238,10 +241,10 @@ class System
         $lockoper = $on ? '+' : '-' ;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , exchange_lock = exchange_lock '.$lockoper.' ?',
+                $affectedRows = $this->updates('set  saleable_count = saleable_count '.$countoper.' ? , exchange_lock = exchange_lock '.$lockoper.' ?',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
             //             DB::commit();
         } catch (\Exception $e) {
             //             DB::rollBack();
@@ -259,8 +262,8 @@ class System
             foreach ($products as $product) {
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? ,  assign_lock = assign_lock - ? , send_ing = send_ing + ?',
                     [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
-            $this->updateIsSuccess($affectedRows);
         } catch (\Exception $e ) {
             throw $e;
         }
@@ -297,8 +300,51 @@ class System
         $affectedRows = 0;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? ,  saleable_count = saleable_count - ? ',
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count - ? ,  saleable_count = saleable_count - ? ',
                     [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
+            }
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return $affectedRows;
+    }
+    
+    
+    /**
+     * 套装 加 减
+     * 只扣可售数量
+     * @param unknown $entrepot_id
+     * @param unknown $products
+     * @throws Exception
+     * @return number
+     */
+    public function combo($entrepot_id,  $products , $on = true)
+    {
+        $affectedRows = 0;
+        $countoper = $on ? '+' : '-' ;
+        try{
+            foreach ($products as $product) {
+                $affectedRows = $this->updates('set saleable_count = saleable_count '.$countoper.' ?',
+                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
+            }
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return $affectedRows;
+        
+    }
+    
+    public function comboGoods($entrepot_id,  $products , $on = true)
+    {
+        $affectedRows = 0;
+        $countoper = $on ? '+' : '-';
+        try{
+            foreach ($products as $product) {
+                $affectedRows= $this->updates('set saleable_count = saleable_count '.$countoper.' ?',
+                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
             }
             $this->updateIsSuccess($affectedRows);
         } catch (\Exception $e ) {
@@ -314,6 +360,7 @@ class System
      */
     private function updateIsSuccess($affectedRows)
     {
+//         logger("[dg]", [$affectedRows]);
         if ($affectedRows == 0) {
             throw new \Exception('库存操作失败');
         }
