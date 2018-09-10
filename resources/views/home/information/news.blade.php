@@ -13,9 +13,7 @@
             <div class="col-l2 col-md-12 col-sm-12 col-xs-12 llf">
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftContent">
-						<div class="leftBanner col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							{{--<img src="/images/home/information/ml_banner.jpg" alt="">--}}
-						</div>
+
 						 @foreach ($articles as $article)
 
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 leftLists">
