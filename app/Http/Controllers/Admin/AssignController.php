@@ -370,11 +370,14 @@ class AssignController extends Controller
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
-                        throw new \Exception('不能返单，因为是售后服务');
+                        throw new \Exception('不能删除，因为是售后服务');
                     }
                     $order->updateStatusToUnChecked();
                     $order->save();
-                    
+                    //保证金
+                    $department = $order->department;
+                    $department->addDeposit($order->discounted_goods_money);
+                    $department->save();
                 } catch (\Exception $e) {
                     DB::rollback();
                     return $this->error([], $e->getMessage());
