@@ -47,7 +47,7 @@ class ComboUpgrade extends Command
         //仓库数量直接扣
         //仓库明细 要添加吗？
         $ids = $combos->pluck('id');
-        $ordergoods = OrderGoods::whereIn('goods_id', $ids)->get();
+        $ordergoods = OrderGoods::whereIn('goods_id', $ids)->where('created_at','<','2018-09-10 13:45:00')->get();
 //         $goods->load('combos');
 //         $allComboGoods = $goods->pluck('combos');
         DB::beginTransaction();
