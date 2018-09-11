@@ -41,7 +41,7 @@ class SampleApplicationController extends Controller
 
         $result = $model->paginate($request->input('pageSize', 15));
         $collection = $result->getCollection();
-        $collection->load('goods'); //'goods',
+        $collection->load('goods','entrepot'); //'goods', 'entrepot'
 
         $re = $collection->toArray();
         
