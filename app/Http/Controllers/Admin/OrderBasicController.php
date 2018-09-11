@@ -232,13 +232,16 @@ class OrderBasicController extends Controller
         $count = $this->model->destroy($id);
         if($count != 0){
             //添加订单操作记录事件
-            $order_sn = $orderBasic::withTrashed()->where('id',$id)->value('order_sn');
+            $order = $orderBasic::withTrashed()->where('id',$id)->first();
             $dataLog = [
                 'order_id'=>$id,
                 'action'=>'delete',
-                'remark'=>$order_sn
+                'remark'=>$order->order_sn
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
+            
+            event(new OrderCancel($order));
+            
             return $this->success([]);
         }else{
             return $this->error([]);

@@ -59,6 +59,15 @@ class AfterSaleController extends Controller
             ]);
         }
         
+        if ($request->has('department_id')) {
+            $department_id = $request->input('department_id');
+            $builder = $builder->whereExists(function($query) use($department_id) {
+                $query->select(DB::raw(1))->from('order_basic')
+                ->where('order_basic.department_id',$department_id)
+                ->whereColumn('order_basic.id','order_after.order_id');
+            });
+        }
+        
         $result = $builder->paginate($request->input('pageSize', 20));
         
         $collection = $result->getCollection();
