@@ -208,6 +208,7 @@
                     if(response.status){
                         $('form')[0].reset();
                         alert(response.msg);
+                        window.location.href="/questionnaire/"+{{$management_id}};
                     }else{
                         // $('form')[0].reset();
                         alert(response.msg);
