@@ -245,7 +245,7 @@ Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
 Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
