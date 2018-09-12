@@ -93,7 +93,7 @@
                     }
                 }
                 /*-------验证手机----*/
-                var phonePat=/^1[34578]\d{9}$/;
+                var phonePat=/^1[3456789]\d{9}$/;
                 if(phone==''){
                     $('#phone').siblings('.message').text('手机号不能为空')
                     flg=false

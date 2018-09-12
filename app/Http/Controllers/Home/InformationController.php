@@ -32,7 +32,7 @@ class InformationController extends CommonController
         $questionnaires = QuestionnaireOptions::where('questionnaire_managements_id',$title['id'])->get()->toArray();
         $ids = array_column($questionnaires,'id');
         $this->request->session()->put(['questionnaires_ids'=>$ids]);
-        return view('home/information/index',['bar'=>static::$bar,'questionnaires'=>$questionnaires,'title'=>$title]);
+        return view('home/information/index',['bar'=>static::$bar,'questionnaires'=>$questionnaires,'title'=>$title,'management_id'=>$id]);
     }
     //生成验证码
     public function verificationCode(Request $request) {
