@@ -91,7 +91,8 @@ return [
         'Contacts',
         'Website',
         'OrderList',
-        'Mail'
+        'Mail',
+        'SalesGoodsStatistics'
     ],
     'assign-captain'=>[
         'StockDetails',
