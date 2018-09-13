@@ -544,7 +544,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     width: 80px;
     height: 80px;
     cursor: pointer;
-    left: 160px;
+    /**left: 160px;*/
 }
 
 #weiCode img{

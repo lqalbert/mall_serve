@@ -45,11 +45,11 @@ return [
 				'icon' => null,
 				'subIndex' => ['Articles']
 		],
-		[
-				'text' => '护肤资讯',
-				'icon' => null,
-				'subIndex' => ['SkinCareInfo']
-		],
+// 		[
+// 				'text' => '护肤资讯',
+// 				'icon' => null,
+// 				'subIndex' => ['SkinCareInfo']
+// 		],
 		[
 				'text' => '留言管理',
 				'icon' => null,
