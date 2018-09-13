@@ -40,19 +40,19 @@ class StockCheckGoodsController extends Controller
             $model = $model->where('goods_name', 'like', $request->input('goods_name')."%");
         }
         
-/*        if($request->has('cate_type_id')) {
-            $cate_type_id = $request->input('cate_type_id');
-            $model = $model->wherehas('goods', function($query) use($cate_type_id) {
-                $query->where('cate_type_id', $cate_type_id);
-            });
-        }
+//         if($request->has('cate_type_id')) {
+//             $cate_type_id = $request->input('cate_type_id');
+//             $model = $model->wherehas('goods', function($query) use($cate_type_id) {
+//                 $query->where('cate_type_id', $cate_type_id);
+//             });
+//         }
 
-        if($request->has('cate_kind_id')) {
-            $cate_kind_id = $request->input('cate_kind_id');
-            $model = $model->wherehas('goods', function($query) use($cate_kind_id) {
-                $query->where('cate_kind_id', $cate_kind_id);
-            });
-        }*/
+//         if($request->has('cate_kind_id')) {
+//             $cate_kind_id = $request->input('cate_kind_id');
+//             $model = $model->wherehas('goods', function($query) use($cate_kind_id) {
+//                 $query->where('cate_kind_id', $cate_kind_id);
+//             });
+//         }
         
         $result = $model->select($fields)->get();
         

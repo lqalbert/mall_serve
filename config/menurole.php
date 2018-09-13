@@ -92,6 +92,7 @@ return [
         'Website',
         'OrderList',
         'Mail',
+        'SalesGoodsStatistics',
         'SampleApplication'
     ],
     'assign-captain'=>[

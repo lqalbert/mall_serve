@@ -543,7 +543,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     height: 80px;
     margin: 0 auto;
     cursor: pointer;
-    left: 160px;
+    /**left: 160px;*/
 }
 
 #weiCode img{

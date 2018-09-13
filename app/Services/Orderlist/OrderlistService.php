@@ -126,7 +126,6 @@ class OrderlistService
             $this->repository->pushCriteria(new FieldEqual('group_id', $this->request->group_id));
         }
         if ($this->request->has('type')) {
-            // $where[]=['order_status','=', $this->request->type];
             $this->repository->pushCriteria(new FieldEqual('order_status', $this->request->type));
         }
         if ($this->request->has('deliver')) {
