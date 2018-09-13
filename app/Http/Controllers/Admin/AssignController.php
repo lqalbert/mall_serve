@@ -451,7 +451,7 @@ class AssignController extends Controller
                 'remark'=>$assign->assign_sn
             ];
             event(new AddAssignOperationLog(auth()->user(),$dataLog));
-            return $this->success(['express_sn'=>$assign->express_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
+            return $this->success(['express_sn'=>$assign->express_sn,'assign_sn'=>$assign->assign_sn,'printer'=>$express->printer,'print_data'=>$assign->print_data]);
         } else {
             return $this->error([]);
         }

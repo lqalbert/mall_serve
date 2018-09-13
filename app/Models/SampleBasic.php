@@ -52,6 +52,6 @@ class SampleBasic extends Model
      */
     public function entrepot()
     {
-        return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name');
+        return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name')->withTrashed();
     }
 }
