@@ -268,6 +268,7 @@ class AfterSaleController extends Controller
                 foreach ($exchangeGoods as $xGoods){
                     $newModel = $xGoods->replicate();
                     $newModel->setExchangeStatus();
+                    $newModel->assign_id = $assignmodel->id;
                     $newModel->save();
                     $newGoods[]  = $newModel;
                 }
@@ -386,7 +387,7 @@ class AfterSaleController extends Controller
                 $tmpModel->goods_number = $tmpModel->destroy_num;
                 $productModels[] = $tmpModel;
             }
-            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+            $serve->rxUpdateout($after->entrepot, collect($productModels), $request->user());
         } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());
