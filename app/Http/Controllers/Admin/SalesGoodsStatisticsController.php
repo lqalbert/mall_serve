@@ -34,6 +34,7 @@ class SalesGoodsStatisticsController extends Controller
         $innerSaleBuilder = $this->innerSaleNum($start, $end);
         $shopSaleBuilder = $this->shopSaleNum($start, $end);
         $refundBuilder = $this->refundNum($start, $end);
+        $sampleBuilder = $this->sampleNum($start, $end);
 
         $result = DB::table('inventory_system as iso')->select(
                         'iso.sku_sn','iso.goods_name',
@@ -44,7 +45,8 @@ class SalesGoodsStatisticsController extends Controller
                         DB::raw('refu.goods_num as ref_num'),
                         DB::raw('inner_sale.goods_num as inner_num'),
                         DB::raw('shop_sale.goods_num as shop_sale'),
-                        DB::raw('inven.goods_num as invent_num'))
+                        DB::raw('inven.goods_num as invent_num'),
+                        DB::raw('sample.goods_num as sample_num'))
                     ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
                     ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
@@ -55,6 +57,8 @@ class SalesGoodsStatisticsController extends Controller
                     ->mergeBindings($shopSaleBuilder)
                     ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'iso.sku_sn','=','refu.sku_sn')
                     ->mergeBindings($refundBuilder)
+                    ->leftJoin(DB::raw("({$sampleBuilder->toSql()}) as sample"), 'iso.sku_sn','=','sample.sku_sn')
+                    ->mergeBindings($sampleBuilder)
                     ->where($where)->orderBy($orderField,$orderWay)
                     ->paginate($pageSize);
 
@@ -158,6 +162,25 @@ class SalesGoodsStatisticsController extends Controller
                 ['order_after.created_at',">=", $start],
                 ['order_after.created_at',"<=", $end],
                 ['order_goods.status','=',1]
+            ])->groupBy('sku_sn');
+    }
+    
+    /**
+     * 样品
+     * @param unknown $start
+     * @param unknown $end
+     */
+    private function sampleNum($start, $end) 
+    {
+        return DB::table('sample_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn'
+            )
+            ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            ->where([
+                ['sample_basic.check_status',1],
+                ['sample_basic.check_time',">=", $start],
+                ['sample_basic.check_time',"<=", $end],
             ])->groupBy('sku_sn');
     }
 

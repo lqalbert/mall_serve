@@ -59,6 +59,15 @@ class AfterSaleController extends Controller
             ]);
         }
         
+        if ($request->has('department_id')) {
+            $department_id = $request->input('department_id');
+            $builder = $builder->whereExists(function($query) use($department_id) {
+                $query->select(DB::raw(1))->from('order_basic')
+                ->where('order_basic.department_id',$department_id)
+                ->whereColumn('order_basic.id','order_after.order_id');
+            });
+        }
+        
         $result = $builder->paginate($request->input('pageSize', 20));
         
         $collection = $result->getCollection();
@@ -259,6 +268,7 @@ class AfterSaleController extends Controller
                 foreach ($exchangeGoods as $xGoods){
                     $newModel = $xGoods->replicate();
                     $newModel->setExchangeStatus();
+                    $newModel->assign_id = $assignmodel->id;
                     $newModel->save();
                     $newGoods[]  = $newModel;
                 }
@@ -377,7 +387,7 @@ class AfterSaleController extends Controller
                 $tmpModel->goods_number = $tmpModel->destroy_num;
                 $productModels[] = $tmpModel;
             }
-            $serve->rxUpdate($after->entrepot, collect($productModels), $request->user(), $after->return_sn);
+            $serve->rxUpdateout($after->entrepot, collect($productModels), $request->user());
         } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());

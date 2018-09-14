@@ -92,7 +92,8 @@ return [
         'Website',
         'OrderList',
         'Mail',
-        'SalesGoodsStatistics'
+        'SalesGoodsStatistics',
+        'SampleApplication'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -160,7 +161,8 @@ return [
         'Website',
         'WarehousingProcess',
         'PurchaseList',
-        'SalesGoodsStatistics'
+        'SalesGoodsStatistics',
+        'SampleApplication'
     ],
     
     // 隐藏的角色

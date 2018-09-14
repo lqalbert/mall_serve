@@ -41,7 +41,7 @@ class SampleApplicationController extends Controller
 
         $result = $model->paginate($request->input('pageSize', 15));
         $collection = $result->getCollection();
-        $collection->load('goods'); //'goods',
+        $collection->load('goods','entrepot'); //'goods', 'entrepot'
 
         $re = $collection->toArray();
         
@@ -152,12 +152,13 @@ class SampleApplicationController extends Controller
 
             //以下扣库存 商品数量可以从$request->goods里面获得
             if($checkStatus == SampleBasic::CHECK_PASS){
+                $sampeModel = SampleBasic::find($id);
                 $goods = $request->goods;
                 $products = [];
                 foreach ($goods as $item) {
                     $products[] = SampleGoods::findOrFail($item['id']);
                 }
-                $serve->sample(DistributionCenter::find(3), $products, auth()->user());
+                $serve->sample($sampeModel->entrepot, $products, auth()->user());
             }
 
             DB::commit();

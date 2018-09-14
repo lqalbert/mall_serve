@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Scopes\IdDesc;
 
 class SampleBasic extends Model
 {
@@ -17,12 +18,13 @@ class SampleBasic extends Model
     protected $hidden = ['deleted_at'];
     protected $fillable = [
         'check_status',
-				'applicant',
-				'operator',
-				'use_remark',
-				'check_remark',
-				'app_time',
-				'check_time'
+		'applicant',
+		'operator',
+		'use_remark',
+		'check_remark',
+		'app_time',
+		'check_time',
+        'entrepot_id'
     ];
 
         /**
@@ -45,5 +47,21 @@ class SampleBasic extends Model
         return $this->hasMany('App\Models\SampleGoods', 'sample_id');
     }
 
-
+    /**
+     * 关联的配送中心仓库
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name')->withTrashed();
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new IdDesc());
+    }
+    
+    
 }
