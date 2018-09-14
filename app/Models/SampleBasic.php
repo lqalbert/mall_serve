@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Scopes\IdDesc;
 
 class SampleBasic extends Model
 {
@@ -54,4 +55,13 @@ class SampleBasic extends Model
     {
         return $this->belongsTo('App\Models\DistributionCenter', 'entrepot_id')->select('id','name')->withTrashed();
     }
+    
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new IdDesc());
+    }
+    
+    
 }
