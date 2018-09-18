@@ -300,5 +300,5 @@ return [
             'icon' => null,
             'index' => 'SampleApplication'
         ],
-		
+
 ];
