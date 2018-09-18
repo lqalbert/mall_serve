@@ -143,18 +143,6 @@
         },
         {
             "name": "doctrine/annotations",
-<<<<<<< HEAD
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/annotations.git",
-                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/54cacc9b81758b14e3ce750f205a393d52339e97",
-                "reference": "54cacc9b81758b14e3ce750f205a393d52339e97",
-=======
             "version": "v1.6.0",
             "source": {
                 "type": "git",
@@ -165,33 +153,20 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/annotations/zipball/c7f2050c68a9ab0bdb0f98567ec08d80ea7d24d5",
                 "reference": "c7f2050c68a9ab0bdb0f98567ec08d80ea7d24d5",
->>>>>>> 20180903合并
                 "shasum": ""
             },
             "require": {
                 "doctrine/lexer": "1.*",
-<<<<<<< HEAD
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "doctrine/cache": "1.*",
-                "phpunit/phpunit": "^5.7"
-=======
                 "php": "^7.1"
             },
             "require-dev": {
                 "doctrine/cache": "1.*",
                 "phpunit/phpunit": "^6.4"
->>>>>>> 20180903合并
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.4.x-dev"
-=======
                     "dev-master": "1.6.x-dev"
->>>>>>> 20180903合并
                 }
             },
             "autoload": {
@@ -232,11 +207,7 @@
                 "docblock",
                 "parser"
             ],
-<<<<<<< HEAD
-            "time": "2017-02-24T16:22:25+00:00"
-=======
             "time": "2017-12-06T07:11:42+00:00"
->>>>>>> 20180903合并
         },
         {
             "name": "doctrine/cache",
@@ -310,26 +281,6 @@
         },
         {
             "name": "doctrine/collections",
-<<<<<<< HEAD
-            "version": "v1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/collections.git",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/1a4fb7e902202c33cce8c55989b945612943c2ba",
-                "reference": "1a4fb7e902202c33cce8c55989b945612943c2ba",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "~0.1@dev",
-                "phpunit/phpunit": "^5.7"
-=======
             "version": "v1.5.0",
             "source": {
                 "type": "git",
@@ -504,16 +455,11 @@
             },
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
->>>>>>> 20180903合并
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "1.3.x-dev"
-=======
                     "dev-master": "2.6.x-dev"
->>>>>>> 20180903合并
                 }
             },
             "autoload": {
@@ -554,11 +500,7 @@
                 "collections",
                 "iterator"
             ],
-<<<<<<< HEAD
-            "time": "2017-01-03T10:49:41+00:00"
-=======
             "time": "2017-11-19T13:38:54+00:00"
->>>>>>> 20180903合并
         },
         {
             "name": "doctrine/common",
