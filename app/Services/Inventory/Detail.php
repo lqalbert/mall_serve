@@ -109,13 +109,14 @@ class Detail
             if ($product->getNum() >= 0) {
                 $in[] = $product;
             } else {
-                $out = $product;
+                $out[] = $product;
             }
         }
+//         logger("[da-in]",$in);
         if (!empty($in)) {
             $this->save($entrepot, $in, $user, 'stock_in', $dan);
         }
-        
+//         logger("[da-out]",$out);
         if (!empty($out)) {
             $this->save($entrepot, $out, $user, 'stock_out', $dan);
         }

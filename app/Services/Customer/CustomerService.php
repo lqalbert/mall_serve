@@ -51,13 +51,13 @@ class CustomerService
     		$with = $this->request->input('with');
     		$nWith = [];
     		foreach ($with as $key => $item) {
-    			if ($item == 'midRelative') {
-    				$nWith[$item] = function($query){
-    					$query->with(['group','department']);
-    				};
-    			} else {
+//     			if ($item == 'midRelative') {
+//     				$nWith[$item] = function($query){
+//     					$query->with(['group','department']);
+//     				};
+//     			} else {
     				$nWith[] = $item;
-    			}
+//     			}
     		}
     		$this->repository->with($nWith);
     	}

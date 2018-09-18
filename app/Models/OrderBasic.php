@@ -212,6 +212,11 @@ class OrderBasic extends Model
         return $this->after_sale_status > 0;
     }
     
+    public function isCancel()
+    {
+        return $this->status == self::ORDER_STATUS_7;
+    }
+    
     
     
     public function updateStatusToAssigning()
