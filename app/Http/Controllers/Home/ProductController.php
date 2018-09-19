@@ -15,24 +15,25 @@ class ProductController extends CommonController
         static::$bar['line2']='line';
         
         $subNav = [
-//             '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>''],
-//             '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>''],
-//             '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>''],
-//             '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'']
+            '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>'护肤'],
+            '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>'彩妆'],
+            '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>'金致焕肌系列'],
+            '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'水嫩保湿系列'],
+            '25'=>['url'=>route('product/index', ['cate_id'=>'25']),'isactive'=>'','name'=>'营养'],
         ];
         $name='';
         //还是有问题 的 如果 type 有多个非一级分类就会出错
-        $goodsTypeName=GoodsType::has('cate')->get();
-        $goodsTypeName->load('cate');
-//         logger("[dd]", $goodsTypeName->toArray());
-        foreach ($goodsTypeName as $k=>$v){
-//             logger("[dd2]", [$v->cate]);
-            $subNav[$v->cate->id] = [
-                'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
-                'isactive'=>"",
-                'name' =>$v->name,
-            ]   ;//             ['name']=$v['name'];
-        }
+//         $goodsTypeName=GoodsType::has('cate')->get();
+//         $goodsTypeName->load('cate');
+// //         logger("[dd]", $goodsTypeName->toArray());
+//         foreach ($goodsTypeName as $k=>$v){
+// //             logger("[dd2]", [$v->cate]);
+//             $subNav[$v->cate->id] = [
+//                 'url'=>route('product/index', ['cate_id'=>$v->cate->id]),
+//                 'isactive'=>"",
+//                 'name' =>$v->name,
+//             ]   ;//             ['name']=$v['name'];
+//         }
         if($request->has('cate_id')){
             $subNav[$request->input('cate_id')]['isactive'] ='actionBar';
         }
