@@ -286,6 +286,14 @@ Route::post('/register-action', 'Home\LoginController@registerAction')->name('re
 // Route::resource('photo','PhotoController');
 		
 // Route::get('/', function () {
-// 	// return view('welcome');
-// 	return view('test/test');
+// 	$c = new JdClient();
+// 	$c->appKey = "2B8E53069FA43C654FCAC6D00569ECC3";
+// 	$c->appSecret = "37dccc2b43ac4f77a681fe9f56bd7d49";
+// 	$c->accessToken = "bbf4709d-c404-416f-9bd2-ee01b1b84424";
+// 	$c->serverUrl = "http://gw.api.360buy.net/routerjson";
+// 	$req = new PopOrderSearchRequest;
+// 	$req->setOrderState( "WAIT_SELLER_STOCK_OUT" ); $req->setOptionalFields( "venderId" );  $req->setPage( "1" ); $req->setPageSize( "12" ); 
+
+// 	$resp = $c->execute($req, $c->accessToken);
+// 	print(json_encode($resp));
 // });

@@ -13,7 +13,8 @@ class Category extends Model
         'label',
         'pid',
         'level',
-        'type_id'
+        'type_id',
+        'is_display'
     ];
     protected $hidden = [
         'created_at',
