@@ -368,6 +368,7 @@ class AssignController extends Controller
                 if ($assign->isSended()) {
                     $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
                 }
+                $assign->status = 1;
                 $re = $assign->save();
                 break;
             case 3:
