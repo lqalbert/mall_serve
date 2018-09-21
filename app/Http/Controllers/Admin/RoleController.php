@@ -29,7 +29,8 @@ class RoleController extends Controller
             'assign-staff',
             'assign-service',
             'assign-buyer',
-            'assign-buyer-manager'
+            'assign-buyer-manager',
+            'stration'
         ],
 //         'sale-manager' => [
 //             'sale-captain',
