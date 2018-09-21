@@ -164,6 +164,10 @@ return [
         'SalesGoodsStatistics',
         'SampleApplication'
     ],
+    'stration' => [
+       'QuestionnaireManagement',
+        'AccountSettings'
+    ],
     
     // 隐藏的角色
     'group-member' => [],
