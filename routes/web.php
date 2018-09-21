@@ -216,13 +216,15 @@ Route::group($adminGroup, function(){
     //前台分类
     Route::resource('/front-category', 'CategoryFrontController');
     Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
-    Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
+    // Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
     Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
     Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
     //套餐
     Route::resource('/goods-combo', 'ComboController');
     Route::resource('/accountsettings', 'AccountSettingsController');
     Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
+    //商品统计-部门
+    Route::put('/sales-goods-statistics-dep/{sku}','SalesGoodsStatisticsController@getDepSaleGoods');
 });
 
 
