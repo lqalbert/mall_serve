@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use App\Events\ContactConflict;
 use App\Models\CustomerTrackLog;
+use Illuminate\Support\Collection;
+use App\Models\AccountSettings;
+use App\Models\Department;
+use Symfony\Component\Console\Tests\CustomApplication;
 
 class CustomerController extends Controller
 {
@@ -242,5 +246,131 @@ class CustomerController extends Controller
     	}
     	
     	return $this->success(1);	
+    }
+    
+    /**
+     * 统计前台导入的用户数量
+     * 1 选出人 select user_id from account_settiongs
+     * 2 select count(distinct cus_id), user_name, department_id, department_name from customer_user where user_id in (上一步)
+     * 3 返回统计的结果
+     * 
+     * @return Collection || array
+     */
+    public function frontLedIn()
+    {
+        
+        $users = AccountSettings::pluck('user_id');
+        if ($users->isEmpty()) {
+            return [
+                'items'=>[],
+                'total'=>0
+            ];
+        }
+//         $re = CustomerUser::whereIn('user_id', $users)
+        $re = DB::table('customer_user')->select('user_name','user_id','department_id',
+            'department_name', 
+            DB::raw("count(distinct cus_id) as cus_count"))
+            ->whereIn("user_id", $users->all())
+            ->whereNull('deleted_at')
+            ->groupBy('user_id')
+            ->get();
+        return [
+            'items' =>   $re->all(),
+            'total' =>  $re->count()
+        ];
+    }
+    
+    /**
+     * allocate to department
+     * @param Request $request
+     * @return number[]|string[]|NULL[]
+     */
+    public function transferFrontLedIn(Request $request)
+    {
+        $max = 300;
+        
+        $department_id = $request->input('department_id');
+        $source_id = $request->input('source_id');
+        
+        $department = Department::find($department_id);
+        $cus = CustomerUser::whereIn('department_id', $source_id)->limit($max)->get();
+        //批量插入
+        $inserts = [];
+        $created_at = Date("Y-m-d H:i:s");
+        $transUserId = [];
+        foreach ($cus as $item){
+            $tmp = [
+                'user_id'=>0,
+                'cus_id' => $item->cus_id,
+                'type' => CustomerUser::ALLOCATE,
+                'group_id'=>0,
+                'department_id'=>$department_id,
+                'department_name'=>$department->name,
+                'user_name'=>'',
+                'created_at'=>$created_at,
+                'updated_at'=>$created_at
+            ];
+            $inserts[] = $tmp;
+            
+            $transUserId[] = $item->id;
+        }
+        $re =  DB::table('customer_user')->insert($inserts);
+        CustomerUser::destroy($transUserId);
+        if ($re) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    
+    /**
+     * 获取部门待分配下去总数
+     */
+    public function getNumAllowAllocat(Request $request)
+    {
+        $department_id = $request->input('department_id');
+        $re = CustomerUser::where('department_id', $department_id)->where('user_id',0)->count();
+        
+        return [
+            'total'=>$re
+        ];
+    }
+    
+    /**
+     * 
+     * @param Request $request
+     */
+    public function allocateToUser(Request $request)
+    {
+        $allocated = $request->input('allocated');
+        $department_id = $request->input('department_id');
+        
+        $allocated = collect($allocated);
+        $user = User::whereIn('id', $allocated->pluck('id'))->select('id','group_id')->with('group')->get();
+        $user = $user->keyBy('id');
+        
+        DB::beginTransaction();
+        foreach ($allocated as $item) {
+            $currentUser = $user->get($item->id);
+            $re = CustomerUser::where('department_id', $department_id)->where('user_id',0)
+            ->orderBy('id','asc')
+            ->limit($item->num)
+            ->update([
+                'user_id'=>$item->id,
+                'user_name'=>$item->realname,
+                'group_id'=>$currentUser->group_id,
+                'group_name'=>$currentUser->group->name
+            ]);
+            if ($re == 0) {
+                DB::rollback();
+                return $this->error([], '失败');
+            }
+        }
+        DB::commit();
+        
+        return $this->success([]);
+        
+        
     }
 }

@@ -13,6 +13,7 @@ class CustomerUser extends Model
     const ADD = 0;
     const TRANSFER = 1;
     const QUIT = 2;
+    const ALLOCATE = 3;
     
     protected $table = 'customer_user';
     
@@ -41,7 +42,8 @@ class CustomerUser extends Model
     private static $type = [
     		'创建', //0
     		'转让', //1
-    		'离职'  //2
+    		'离职',  //2,
+    		'分配', //3
     ];
     
     public function getTypeTextAttribute(){
