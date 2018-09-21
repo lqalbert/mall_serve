@@ -13,6 +13,7 @@ use App\Repositories\Criteria\NotEqual;
 use App\Repositories\Criteria\FieldEqualGreaterThan;
 use App\Repositories\Criteria\FieldEqualLessThan;
 use App\Repositories\Criteria\Orderlist\AfterSale;
+use App\Repositories\Criteria\Orderlist\ExsitsAssign;
 class OrderlistService
 {
     private $repository = null;
@@ -143,6 +144,10 @@ class OrderlistService
         if ($this->request->has('status')) {
             // $where[]=['status',$this->request->input('status')];
             $this->repository->pushCriteria(new FieldEqual('status', $this->request->status));
+        }
+        if ($this->request->has('assign_status')) {
+            // $where[]=['product_status',$this->request->input('product_status')];
+            $this->repository->pushCriteria(new ExsitsAssign());
         }
         if ($this->request->has('product_status')) {
             // $where[]=['product_status',$this->request->input('product_status')];
