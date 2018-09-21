@@ -35,7 +35,7 @@ class DepositDecrementListener
         //部门
         $department   =  $order->department ;
      
-        $department->subDeposit($order->order_pay_money);
+        $department->subDeposit($order->discounted_goods_money);
         $department->save();
 
         //扣钱成功 记录一下
