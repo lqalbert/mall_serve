@@ -63,7 +63,16 @@ class Role extends EntrustRole
         [
             'name' => 'sale-staff',
             'display_name' => '销售员工'
+        ],
+        [
+            'name' => 'stration',
+            'display_name' => '行政'
+        ],
+        [
+            'name' => 'finance',
+            'display_name' => '财务总监'
         ]
+        
     ];
     
     /**
