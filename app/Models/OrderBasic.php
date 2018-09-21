@@ -172,6 +172,12 @@ class OrderBasic extends Model
         return $this->hasOne('App\Models\AfterSale', 'order_id');
     }
     
+    public function assign()
+    {
+        return $this->hasMany('App\Models\Assign', 'order_id');
+    }
+    
+    
     public function getGoods()
     {
         return $this->goods;
