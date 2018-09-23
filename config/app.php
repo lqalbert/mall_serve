@@ -12,7 +12,8 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', '电商后台'),
+    'name' => env('APP_NAME', '普拉她-唤醒你的美'),
+    'back_end_title' => env('APP_BACK_END', 'PULATA 商城后台管理系统'),
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -163,7 +164,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Mews\Captcha\CaptchaServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -179,7 +180,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         //rbac包需要 
-        Zizaco\Entrust\EntrustServiceProvider::class
+        Zizaco\Entrust\EntrustServiceProvider::class,
+        //手机检测
+        Jenssegers\Agent\AgentServiceProvider::class,
 
 
     ],
@@ -232,7 +235,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         
         //rbac 
-        'Entrust' => Zizaco\Entrust\EntrustFacade::class
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
+        //手机检测
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

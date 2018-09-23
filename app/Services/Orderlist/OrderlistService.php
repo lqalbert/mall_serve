@@ -12,6 +12,7 @@ use App\Repositories\Criteria\FieldLike;
 use App\Repositories\Criteria\NotEqual;
 use App\Repositories\Criteria\FieldEqualGreaterThan;
 use App\Repositories\Criteria\FieldEqualLessThan;
+use App\Repositories\Criteria\Orderlist\AfterSale;
 class OrderlistService
 {
     private $repository = null;
@@ -117,15 +118,14 @@ class OrderlistService
             $this->repository->pushCriteria(new FieldEqual('deal_id', $this->request->deal_id));
         }
         if ($this->request->has('department_id')) {
-            // $where[]=['department_id','=',$this->request->department_id];
-            $this->repository->pushCriteria(new FieldEqual('department_id', $this->request->department_id));
+            logger("[department_id]",[$this->request->input('department_id')]);
+            $this->repository->pushCriteria(new FieldEqual('department_id', $this->request->input('department_id')));
         }
         if ($this->request->has('group_id')) {
             // $where[]=['group_id','=',$this->request->group_id];
             $this->repository->pushCriteria(new FieldEqual('group_id', $this->request->group_id));
         }
         if ($this->request->has('type')) {
-            // $where[]=['order_status','=', $this->request->type];
             $this->repository->pushCriteria(new FieldEqual('order_status', $this->request->type));
         }
         if ($this->request->has('deliver')) {
@@ -150,18 +150,18 @@ class OrderlistService
         }
         if ($this->request->has('after_sale_status')) {
             // $where[]=['after_sale_status','<>',0];
-            $this->repository->pushCriteria(new NotEqual('after_sale_status', $this->request->after_sale_status));
+//             $this->repository->pushCriteria(new NotEqual('after_sale_status', $this->request->after_sale_status));
+            $this->repository->pushCriteria(new AfterSale());
         }
         
         if (!$this->request->has('orderField')) {
             $this->repository->pushCriteria(new OrderByIdDesc());
         }
         
-        // if(count($where)>0 || count($whereIn>0))
-        // {
-        //     $order_status=  app()->makeWith('App\Repositories\Criteria\Orderlist\OrderStatus', ['where'=>$where,'whereIn'=>$whereIn]);
-        //     $this->repository->pushCriteria($order_status);
-        // }
+        if ($this->request->has('with')) {
+            $this->repository->with($this->request->input('with'));
+        }
+        
         $result = $this->repository->paginate($this->request->input('pageSize', 20));
         
         $collection = $result->getCollection();
@@ -169,7 +169,7 @@ class OrderlistService
             ModelCollection::setAppends($collection, $this->request->input('appends'));
         }
         
-        logger("[debug]", $collection->toArray());
+//         logger("[debug]", $collection->toArray());
         
         return [
             'items'=> $collection,

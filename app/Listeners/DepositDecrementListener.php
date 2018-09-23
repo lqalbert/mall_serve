@@ -6,6 +6,7 @@ use App\Events\OrderPass;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\DepositRecord;
+use App\Events\AddDepositOperationLog;
 
 class DepositDecrementListener
 {
@@ -45,5 +46,9 @@ class DepositDecrementListener
             'money' => -$order->discounted_goods_money,
             'brief' => '订单号：'.$order->order_sn
         ]);
+        
+        //添加保证金日志
+        event(new AddDepositOperationLog($operator,$order,'check'));
+        
     }
 }

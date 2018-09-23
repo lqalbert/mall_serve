@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -21,8 +23,11 @@ class LoginController extends Controller
             $user->roles = $user->roles()->withoutGlobalScope('hide')->get();
             $user->department = $user->department()->get();
             $user->group = $user->group()->get();
-//             Log::debug('[sp]',['分隔符===================================================']);
-//             $user->roles;
+            // Log::debug('[sp]',['分隔符===================================================']);
+            // $user->roles;
+            $lgTime = Carbon::now();
+            User::where('id',$user->id)->update(['lg_time'=>$lgTime]);
+            $user->lg_time = $lgTime->toDateTimeString();
             return $this->success($user, '登录成功');
         } else {
             return $this->error(null, '账号或密码错误');
@@ -31,6 +36,7 @@ class LoginController extends Controller
     
     public function out(Request $request) 
     {
+        User::where('id',Auth::user()->id)->update(['out_time'=>Carbon::now()]);
         Auth::logout();
         $request->session()->invalidate();
         return $this->success(null, '退出成功');

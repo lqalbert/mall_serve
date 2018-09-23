@@ -2,6 +2,7 @@
 namespace App\Services\Inventory;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class InventoryService
 {
@@ -77,18 +78,42 @@ class InventoryService
     }
     
     /**
-     * 发货锁定
+     * 发货锁定 解锁
      * @param unknown $entrepot
      * @param unknown $products
      * @param unknown $user
      * @throws Exception
      */
-    public function assignLock($entrepot, $products, $user)
+    public function assignLock($entrepot, $products, $user, $on=true)
     {
         DB::beginTransaction();
         try {
-            $this->inventory->assignLock($entrepot->id, $products);
-            $this->log->assignLock($entrepot, $products, $user);
+            $this->inventory->assignLock($entrepot->id, $products, $on);
+            if ($on) {
+                $this->log->assignLock($entrepot, $products, $user);
+            } else {
+                $this->log->assignUnLock($entrepot, $products, $user);
+            }
+            
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 发货在途
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     */
+    public function sending($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sending($entrepot->id, $products);
+            $this->log->sending($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -103,12 +128,12 @@ class InventoryService
      * @param unknown $user
      * @throws Exception
      */
-    public function rxUpdate($entrepot, $products, $user)
+    public function rxUpdate($entrepot, Collection $products, $user, $dan=null)
     {
         DB::beginTransaction();
         try {
             $this->inventory->rxUpdate($entrepot->id, $products);
-//             $this->log->assignLock($entrepot, $products, $user);
+            $this->log->rxUpdate($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -167,6 +192,75 @@ class InventoryService
         try {
             $this->inventory->exLock($entrepot->id, $products);
             $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 签收
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     * @param unknown $dan
+     */
+    public function sign($entrepot, $products, $user, $dan)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sign($entrepot->id, $products);
+//             $this->log->exchangeLock($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    public function sample($entrepot, $products, $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->sample($entrepot->id, $products);
+            $this->log->sample($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 套装 加 减 感觉就是入库和出库
+     */
+    public function combo($entrepot, $products, $user, $on)
+    {
+        DB::beginTransaction();
+        try {
+            if ($on) {
+                //入库有日志
+                $this->entryUpdate($entrepot, $products, $user);
+            } else {
+                $this->inventory->combo($entrepot->id, $products, false);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 套装对应的商品 加 减
+     */
+    public function comboGoods($entrepot, $products, $user, $on)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->comboGoods($entrepot->id, $products,$on);
+            //             $this->log->sample($entrepot, $products, $user, $on);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

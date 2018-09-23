@@ -15,6 +15,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
             'sender' => $express->getSend(),
             'tradeOrderInfoDtos'=> $this->getOrderInfo($assign, $express->getTemplateUrl(), $userId)
         ];
+//         logger("[sender]", $data);
         
         $this->data = array_merge($this->data, $data);
         
@@ -37,7 +38,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                 "orderInfo"=>[
                     'orderChannelsType'=>'OTHERS', //订单渠道平台编码
                     'tradeOrderList' => [
-                        $item->id
+                        "{$item->id}" //这里必须是数字，否则要抱错
                     ]
                 ],
                 "packageInfo"=> $item->getPackageInfo(),
@@ -46,7 +47,7 @@ class TmsWayBillGet2 extends TmsWayBillGet
                 'userId'=>$userId, //使用者ID
             ];
         }
-        
+//         logger('[get2]', $result);
         return $result;
     }
 }

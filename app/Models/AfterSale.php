@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Events\AfterCreated;
 use Carbon\Carbon;
+use App\Models\Scopes\IdDesc;
 
 class AfterSale extends Model
 {
@@ -46,7 +47,8 @@ class AfterSale extends Model
         'user_id',
         'remark',
         'resend_fee',
-        'reservice_fee'
+        'reservice_fee',
+        'inventory_state'
     ];
     
     protected $events = [
@@ -56,9 +58,7 @@ class AfterSale extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods', 'order_id')->where(function($query){
-            $query->where('status', OrderGoods::STATUS_RETURN)->orWhere('status', OrderGoods::STATUS_EXCHANGE);
-        });
+        return $this->hasMany('App\Models\OrderGoods', 'order_id')->after();
     }
     
     public function entrepot()
@@ -84,12 +84,30 @@ class AfterSale extends Model
         return $map[$this->attributes['type']];
     }
     
+    public function getInventoryStateTextAttribute()
+    {
+        $map = ['未操作', '已操作'];
+        return $map[$this->inventory_state];
+    }
+    
     public function setSure()
     {
 //         $data['sure_at'] = Carbon::now();
         $this->sure_at = Carbon::now();
         $this->status = 2;
         
+    }
+
+    public function setInventoryed()
+    {
+        $this->inventory_state = 1;
+    }
+    
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope(new IdDesc());
     }
 
 }

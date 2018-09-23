@@ -9,6 +9,7 @@ use App\Repositories\Criteria\Ordergoods\Enterpot;
 use App\Repositories\Criteria\Ordergoods\DateRange;
 use App\Alg\ModelCollection;
 use App\Models\Assign;
+use App\Repositories\Criteria\Ordergoods\AfterCondition;
 class OrdergoodsService
 {
     /**
@@ -30,7 +31,7 @@ class OrdergoodsService
     {
         $where = array();
         $whereIn = array();
-        if ($this->request->has('goods_id')&&$this->request->has('order_id')) {
+        if ($this->request->has('goods_id') && $this->request->has('order_id')) {
             $goods_id = explode(',',$this->request->goods_id);
             $where[] = ['order_id','=',$this->request->order_id];
             $whereIn[]=$goods_id;
@@ -68,6 +69,10 @@ class OrdergoodsService
             $this->repository->with($this->request->input('with'));
         }
         
+        if ($this->request->has('after')) {
+            $this->repository->pushCriteria(new AfterCondition());
+        }
+        
         $result = $this->repository->paginate();
         $collection = $result->getCollection();
         
@@ -103,7 +108,7 @@ class OrdergoodsService
             }
             $input_data['goods_id']='';
             $input_data['price']='';
-            $input_data['goods_name'] = $assign_data ? $assign_data['express_name'].':运单号'.$assign_data['express_sn'] : '汇总';
+            $input_data['goods_name'] = $assign_data ? $assign_data['express_name'].'运单号:'.$assign_data['express_sn'] : '汇总';
             $input_data['goods_number']=$total_goods_number;
             $input_data['weight']=$total_weight;
             array_unshift($items,$input_data);

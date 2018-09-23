@@ -44,7 +44,8 @@ return [
         'Contacts',
         'Website',
         'SalesPerformance',
-        'SalesQuantization'
+        'SalesQuantization',
+        
     ],
     'sale-staff' => [
         'GoodsDetails',
@@ -89,6 +90,10 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'OrderList',
+        'Mail',
+        'SalesGoodsStatistics',
+        'SampleApplication'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -107,6 +112,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'Mail'
     ],
     'assign-staff'=>[
         'StockDetails',
@@ -125,6 +131,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'Mail'
     ],
     'assign-service'=>[
         'StockDetails',
@@ -143,6 +150,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'OrderList'
     ],
     'finance'=>[
         'SalesPerformance',
@@ -152,7 +160,9 @@ return [
         'Contacts',
         'Website',
         'WarehousingProcess',
-        'PurchaseList'
+        'PurchaseList',
+        'SalesGoodsStatistics',
+        'SampleApplication'
     ],
     
     // 隐藏的角色

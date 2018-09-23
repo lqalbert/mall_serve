@@ -148,7 +148,7 @@ class MailController extends Controller
                 Mail::where('id', $item['objectId'])->update(['express_sn'=> $item['waybillCode'], 'print_data'=> $item['printData'],'express_id'=>$express->id, 'express_name'=>$express->company_name]);
             }
             
-            return $this->success();
+            return $this->success([]);
         } else {
             return $this->error([], '面单获取失败:'.$re['msg']);
         }

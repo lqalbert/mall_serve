@@ -103,6 +103,8 @@ Route::group($adminGroup, function(){
 	Route::resource('/produce-entry', 'ProduceEntryController');
 	Route::get('/getsalelockdata', 'ProduceEntryController@GetSaleLockData');
 	Route::get('/entrepot-product-count/{sku_sn}', 'EntrepotProductController@getEntrepotProductCount');
+	Route::get('/entrepot-combo-count/{sku_sn}', 'EntrepotProductController@ComboCount');
+	Route::put('/entrepot-combo-operat', 'EntrepotProductController@addCombo');
 	Route::put('/order-assign-check', 'AssignController@check');//----
 	Route::resource('/order-assign', 'AssignController');
 
@@ -111,11 +113,14 @@ Route::group($adminGroup, function(){
 	Route::put('/order-assign-repeat/{id}', 'AssignController@repeatOrder');
 	Route::put('/order-assign-stop/{id}',  'AssignController@stopOrder');
 	Route::post('/assign-waybill-print/{id}', 'AssignController@waybillPrint');
+	Route::post('/assign-waybill-prints', 'AssignController@waybillPrints');
 	Route::post('/assign-goods-print/{id}', 'AssignController@goodsPrint');
 	Route::get('/assign-goods-prints', 'AssignController@goodsPrint2');
 	Route::put('/assign-checkgoods/{id}', 'AssignController@checkGoods');
 	Route::put('/assign-weight/{id}', 'AssignController@weightGoods');
 	Route::put('/assign-update-waybill/{id}', 'AssignController@updateWayBill');
+	Route::put('/assign-percelon/{id}', 'AssignController@parcelOn');
+	Route::put('/assign-sign/{id}', 'AssignController@orderSign');
 	
 	Route::resource('/entrepot-badgoods', 'EntrepotBadgoodsController');
 	Route::resource('/inventory-exchange', 'InventoryExchangeController');
@@ -202,6 +207,24 @@ Route::group($adminGroup, function(){
 
     Route::resource('/order-deposit-log',  'OrderDepositLogController');//订单保证金日志
     
+    Route::put('/order-after-inventory/{id}', 'AfterSaleController@inventory');
+
+    Route::resource('/sales-goods-statistics','SalesGoodsStatisticsController');
+    Route::resource('/sample-application','SampleApplicationController');
+    Route::resource('/questionnairemanagement', 'QuestionnaireManagementController');
+    Route::resource('/questionnairesurveyresults', 'QuestionnaireSurveyResultsController');
+    //前台分类
+    Route::resource('/front-category', 'CategoryFrontController');
+    Route::put('/goodsdetails-front-detach/{id}', 'GoodsDetailsController@frontDetach');
+    // Route::get('/sales-goods-statistics','SalesGoodsStatisticsController@index');
+    Route::put('/order-after-in-inventory/{id}', 'AfterSaleController@rxInventory');
+    Route::put('/order-after-out-inventory/{id}', 'AfterSaleController@outInventory');
+    //套餐
+    Route::resource('/goods-combo', 'ComboController');
+    Route::resource('/accountsettings', 'AccountSettingsController');
+    Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
+    //商品统计-部门
+    Route::put('/sales-goods-statistics-dep/{sku}','SalesGoodsStatisticsController@getDepSaleGoods');
 });
 
 
@@ -211,18 +234,22 @@ Route::group($adminGroup, function(){
 // 	return view('test/test');
 // });
 
-Route::get('/', 'Home\IndexController@index');
 
 
-Route::get('/product/index', 'Home\ProductController@index')->name('product/index');
-Route::get('/product/product', 'Home\ProductController@product')->name('product/product');
-Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product');
+
+Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
+
+
+Route::get('/product/index', 'Home\ProductController@index')->name('product/index')->middleware('mobiledetected');
+Route::get('/product/product', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');
+Route::get('/product/{id}', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');
 Route::get('/brand/index', 'Home\BrandController@index')->name('brand/index');
 // Route::get('/login/index', 'Home\LoginController@index')->name('login/index');
 // Route::get('/login/loginOut', 'Home\LoginController@loginOut')->name('login/loginOut');
 // Route::get('/login/register', 'Home\LoginController@register')->name('login/register');
-Route::get('/information/index', 'Home\InformationController@index')->name('information/index');
+Route::get('/information/index/{id}', 'Home\InformationController@index')->name('information/index');
 Route::get('/information/news', 'Home\InformationController@news')->name('information/news');
+Route::get('/information/company', 'Home\InformationController@company');
 Route::get('/information/{id}', 'Home\InformationController@detail');
 Route::post('/connection/store', 'Home\ConnectionController@store');
 Route::get('/connection/index', 'Home\ConnectionController@index')->name('connection/index');
@@ -241,6 +268,14 @@ Route::get('/sale/index', 'Home\SaleController@index')->name('sale/index');
 Route::get('/sale/stars', 'Home\SaleController@stars')->name('sale/stars');
 Route::get('/question/index', 'Home\QuestionController@index')->name('question/index');
 
+//生成验证码
+Route::get('/verification-code', 'Home\InformationController@verificationCode')->name('verification-code');
+//保存参与调查用户答案
+Route::post('/save-user-answers', 'Home\InformationController@saveUserAnswers')->name('save-user-answers');
+//用户调查问卷首页
+Route::get('/questionnaire/{id}', 'Home\LoginController@questionnaire')->name('questionnaire');
+//保存游客用户信息
+Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
 
 // Auth::routes();
 
@@ -253,6 +288,14 @@ Route::get('/question/index', 'Home\QuestionController@index')->name('question/i
 // Route::resource('photo','PhotoController');
 		
 // Route::get('/', function () {
-// 	// return view('welcome');
-// 	return view('test/test');
+// 	$c = new JdClient();
+// 	$c->appKey = "2B8E53069FA43C654FCAC6D00569ECC3";
+// 	$c->appSecret = "37dccc2b43ac4f77a681fe9f56bd7d49";
+// 	$c->accessToken = "bbf4709d-c404-416f-9bd2-ee01b1b84424";
+// 	$c->serverUrl = "http://gw.api.360buy.net/routerjson";
+// 	$req = new PopOrderSearchRequest;
+// 	$req->setOrderState( "WAIT_SELLER_STOCK_OUT" ); $req->setOptionalFields( "venderId" );  $req->setPage( "1" ); $req->setPageSize( "12" ); 
+
+// 	$resp = $c->execute($req, $c->accessToken);
+// 	print(json_encode($resp));
 // });

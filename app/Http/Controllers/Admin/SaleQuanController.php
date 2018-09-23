@@ -94,7 +94,7 @@ ET;
         $sql=<<<ET
         select count(cb.id) as cus_count, count(cba.id) as c_cus_count, count(cbb.id) as b_cus_count, 
                IFNULL(ob.obcus_count, 0) as obcus_count, IFNULL(ob.ob_count,0) as ob_count, 
-               count(cus.id) as track_count, cu.{$groupBy}, ob.sum_freight, ob_freight.sum_freight as company_freight,
+               count(cus.id) as track_count, cu.{$groupBy}, ob.sum_freight, ob_freight.sum_freight as company_freight, ob2.obcus_count as sobcus_count,
                cu.department_name,
                cu.group_name,
                cu.user_name
@@ -105,6 +105,12 @@ ET;
                     where   order_basic.status>0 and order_basic.status<7   and order_basic.created_at >= '{$start}'
                             and order_basic.created_at <= '{$end}'
                     group by order_basic.{$groupBy} ) as ob on cu.{$groupBy} = ob.{$groupBy}
+        
+        left join  (select count( distinct cus_id) as obcus_count,  order_basic.{$groupBy}
+                    from order_basic inner join customer_basic on order_basic.cus_id = customer_basic.id  
+                    where   order_basic.status>0 and order_basic.status<7   and customer_basic.created_at >= '{$start}'
+                            and customer_basic.created_at <= '{$end}'
+                    group by order_basic.{$groupBy} ) as ob2 on cu.{$groupBy} = ob2.{$groupBy}
         left join  (select  sum(assign_basic.express_fee) as sum_freight ,order_basic.{$groupBy}
                     from order_basic  inner join assign_basic on order_basic.id = assign_basic.order_id
                     where   order_basic.status>0 and order_basic.status<7   and order_basic.created_at >= '{$start}'
@@ -115,7 +121,7 @@ ET;
         left join customer_user as cus on cus.id = cu.id  and cus.last_track is not null
         where cu.type = 0
         and   cb.created_at >= '{$start}'
-              and cb.created_at <= '$end'
+              and cb.created_at <= '{$end}'
               where_str_
               and cb.deleted_at is null
         group by cu.{$groupBy}
@@ -130,6 +136,10 @@ ET;
             $binds['maintable_group_id'] =  $request->input('group_id');
             $where_str_ .=" and cu.group_id = {$request->input('group_id')} ";
         }
+        
+//         if ($request->has('type')) {
+//             $where_str_ .= " and ";
+//         }
         
         $sql = str_replace('where_str_', $where_str_, $sql);
         

@@ -6,12 +6,16 @@ use App\Models\LogisticsInformation;
 use App\Models\ExpressCompany;
 use Illuminate\Http\Request;
 use App\Services\LogisticsInformation\LogisticsInformationService;
+use App\Models\Assign;
 class LogisticsInformationController extends Controller
 {
     public $model=null;
     private $service = null;
-    public function __construct(LogisticsInformation $logisticsInformation,LogisticsInformationService $logisticsInformationService)
+    private $request = null;
+
+    public function __construct(Request $request,LogisticsInformation $logisticsInformation,LogisticsInformationService $logisticsInformationService)
     {
+        $this->request = $request;
         $this->model = $logisticsInformation;
         $this->service = $logisticsInformationService;
     }
@@ -21,9 +25,29 @@ class LogisticsInformationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-       return  $this->service->get();
+        $express_id=null;
+        $express_sn=null;
+        if($this->request->has('express_id') && $this->request->has('express_sn')){
+            $express_id = $this->request->input('express_id');//快递公司ID
+            $express_sn = $this->request->input('express_sn');//快递单号
+        }else{
+            if($this->request->has('order_id')){
+                $res = Assign::where('order_id',$this->request->input('order_id'))->first();
+                if($res){
+                    $express_id = $res->express_id;
+                    $express_sn = $res->express_sn;
+                }
+            }
+        }
+
+        if($express_id && $express_sn){
+            return  $this->service->get($express_id,$express_sn);
+        }else{
+            return $this->error([['data']],'该订单还未审核');
+        }
+
     }
 
     /**

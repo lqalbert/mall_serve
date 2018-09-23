@@ -2,7 +2,7 @@
 /*---------------------banner--------------------*/
 .productBanner{
     padding: 0;
-    margin-top: -40px;
+    margin-top: 0px;
 }
 /*-------------------content--------------------*/
 
@@ -81,7 +81,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     box-sizing: border-box;
-    border: 1px solid #F5F5F5;
+    border: 1px solid #ffffff;
 
 }
 
@@ -100,7 +100,6 @@
     margin: 0 auto;
     display: block;
     height: 200px;
-    
     position: absolute;
     top: 50%;
     left: 50%;

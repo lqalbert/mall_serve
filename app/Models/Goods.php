@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Contracts\Goods as GoodsContracts;
 
-class Goods extends Model
+class Goods extends Model implements GoodsContracts
 {
     use SoftDeletes;
     
@@ -41,6 +42,7 @@ class Goods extends Model
         'weight',
         'bubble_bag',
         'specifications',
+        'combo'
     ];
     
     //多对多
@@ -54,6 +56,17 @@ class Goods extends Model
     	return $this->hasMany('App\Models\GoodsCategory');
     }
     
+    //多对多
+    public function frontCategory()
+    {
+        //->withTimestamps()
+        return $this->belongsToMany('App\Models\CategoryFront', 'front_goods', 'goods_id', 'front_id');
+    }
+    
+    public function midFrontCate(){
+        return $this->hasMany('App\Models\GoodsFrontCategory');
+    }
+    
     //1对多
     public function imgs() 
     {
@@ -64,6 +77,11 @@ class Goods extends Model
     public function skus()
     {
     	return $this->hasMany('App\Models\Sku', 'goods_id');
+    }
+    
+    public function combos()
+    {
+        return $this->hasMany('App\Models\GoodsCombo', 'combo_id');
     }
     
     //1对多
@@ -96,6 +114,34 @@ class Goods extends Model
             return $value;
         }
     }
+
+    public function getSkuSn()
+    {
+        return $this->sku_sn;
+    }
+    
+    public function getName()
+    {
+        return $this->goods_name;
+    }
+    
+    /**
+     * 套装入库出库时需要
+     * @return int
+     */
+    public function getNum()
+    {
+        return $this->combo_num;
+    }
+    
+    /**
+     * 是不是 套餐
+     * @return boolean
+     */
+    public function isThisACombo()
+    {
+        return $this->combo == 1 ;
+    }
     
     
     /**
@@ -125,5 +171,17 @@ class Goods extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+    
+    /**
+     * 这个名称写错了 不应该是 iscombo
+     * 而是 isincludecombo
+     * @param unknown $query
+     * @param string $include
+     * @return unknown
+     */
+    public function scopeIsCombo($query, $include = false)
+    {
+        return $query->where('combo', $include ? 1 : 0);
     }
 }

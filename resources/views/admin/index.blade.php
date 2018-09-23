@@ -8,22 +8,24 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}商城后台管理系统</title>
+    <title>{{ config('app.back_end_title', 'Laravel') }}</title>
 
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-   <link href="/admin/static1.1.72/css/app.f103b231e4e0e0ad4dd49514809e1e1c.css" rel="stylesheet">
+    <link href="/admin/static1.2.20ab1/css/app.d6b405fc98247a2ad2fb50ea363ece7a.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
        
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@1.4/lib/index.js"></script>
     <!-- Scripts -->
-    <script type="text/javascript" src="/admin/static1.1.72/js/manifest.32238ce02dfc7b54cfae.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.72/js/vendor.ce2612bf44e2ce9ea930.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.72/js/babel-polyfill.c973c152d3451c47c753.js"></script>
-    <script type="text/javascript" src="/admin/static1.1.72/js/app.c822eac649665669192a.js"></script>
+   <script type="text/javascript" src="/admin/static1.2.20ab1/js/manifest.1bc3d21af40ca30a2d96.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.20ab1/js/vendor.35d60a6166514a237ad7.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.20ab1/js/babel-polyfill.d5221a2aaf662c3a6b9a.js"></script>
+    <script type="text/javascript" src="/admin/static1.2.20ab1/js/app.5364463f95aad4fb8d05.js"></script>
     
     <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>

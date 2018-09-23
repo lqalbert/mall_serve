@@ -74,6 +74,17 @@ class Detail
         $this->save($entrepot, $products, $user, 'assign_lock');
     }
     
+    /**
+     * 发货解锁
+     * @param DistributionCenter $entrepot
+     * @param unknown $products
+     * @param User $user
+     */
+    public function assignUnLock(DistributionCenter $entrepot, $products, User $user)
+    {
+        $this->save($entrepot, $products, $user, 'assign_unlock');
+    }
+    
     
     /**
      * 换货锁定
@@ -109,6 +120,48 @@ class Detail
             $this->save($entrepot, $out, $user, 'stock_out', $dan);
         }
         
+    }
+    
+    
+    /**
+     * 退换货入库
+     */
+    public function rxUpdate(DistributionCenter $entrepot, $products, User $user, $dan)
+    {
+        $returnProducts = [];
+        $exchangeProducts = [];
+        
+        foreach ($products as $product) {
+            if ($product->isExchange()) {
+                $exchangeProducts[] = $product;
+            } else if ($product->isReturn()) {
+                $returnProducts[] = $product;
+            } else {
+                throw new \Exception("退换货入库明细 商品退换类型错误");
+            }
+        }
+        
+        if (count($returnProducts) != 0) {
+            $this->save($entrepot, $returnProducts, $user, 'return_in', $dan);
+        }
+        
+        if (count($exchangeProducts) != 0) {
+            $this->save($entrepot, $exchangeProducts, $user, 'exchange_in', $dan);
+        }
+    }
+    
+    
+    /**
+     * 发货在途
+     */
+    public function sending(DistributionCenter $entrepot, $products, User $user, $dan)
+    {
+        $this->save($entrepot, $products, $user, 'send_ing', $dan);
+    }
+    
+    public function sample(DistributionCenter $entrepot, $products, User $user)
+    {
+        $this->save($entrepot, $products, $user, 'sample');
     }
     
     

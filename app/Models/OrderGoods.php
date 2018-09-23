@@ -41,7 +41,8 @@ class OrderGoods extends Model implements GoodsContracts
         'inventory',
         'return_num',
         'specifications',
-        'assign_id'
+        'assign_id',
+        'destroy_num'
     ];
     
     public function productCategory()
@@ -77,6 +78,11 @@ class OrderGoods extends Model implements GoodsContracts
         return $this->status == self::STATUS_EXCHANGE;
     }
     
+    public function isReturn()
+    {
+        return $this->status == self::STATUS_RETURN;
+    }
+    
     public function setExchangeStatus()
     {
         $this->status = self::STATUS_EXCHANGE;
@@ -91,5 +97,27 @@ class OrderGoods extends Model implements GoodsContracts
     public function getCategoryAttribute()
     {
         return $this->goods->category;
+    }
+    
+    public function getStatusTextAttribute()
+    {
+        $map = ["正常", "退货", "换货", "换货重发"];
+        return $map[$this->status];
+    }
+    
+    public function getSaledPriceAttribute()
+    {
+        $orderType = $this->order->typeObjecToOrderType();
+        return $orderType->getDiscounted($this->price);
+    }
+    
+    /**
+     * 退换货的
+     * @param unknown $query
+     * @return unknown
+     */
+    public function scopeAfter($query)
+    {
+        return $query->where('status', self::STATUS_RETURN)->orWhere('status', self::STATUS_EXCHANGE);
     }
 }

@@ -11,7 +11,7 @@ return [
 		[
 				'text'=>'商品管理',
 				'icon'=>null,
-				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType']
+				'subIndex'=>['GoodsDetails','Category','GoodsSpecs','GoodsType','FrontCategory']
 		],
 		[
 				'text'=>'员工管理',
@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType'] // 'Refund'
+		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType', 'SampleApplication'] // 'Refund' ''
 		],
 		[
 				'text' => '库存管理',
@@ -45,11 +45,11 @@ return [
 				'icon' => null,
 				'subIndex' => ['Articles']
 		],
-		[
-				'text' => '护肤资讯',
-				'icon' => null,
-				'subIndex' => ['SkinCareInfo']
-		],
+// 		[
+// 				'text' => '护肤资讯',
+// 				'icon' => null,
+// 				'subIndex' => ['SkinCareInfo']
+// 		],
 		[
 				'text' => '留言管理',
 				'icon' => null,
@@ -68,6 +68,11 @@ return [
 		[
 			    'text' => '统计报表',
 			    'icon' => null,
-			    'subIndex'=>['SalesPerformance','SalesQuantization']
+			    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics']
+		]		,
+        [
+			    'text' => '问卷管理',
+			    'icon' => null,
+			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
 		]
 ];

@@ -15,6 +15,7 @@
 <!--导航-->
 @include("home.nav")
 <!--/ 导航-->
+
 <div id="banner" class="indexContent container-fluid">
     <div class=" bannerBox col-lg-12 col-md-12 col-sm-12 col-xs-12" style="height: 100%;padding: 0">
         <div class="swiper-container2" style="width: 100%;height: 100%">
@@ -113,7 +114,6 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            
         </div>
     </div>
 </div>
@@ -126,7 +126,6 @@
                 </a>
             </div>
         @endif
-
     </div>
 </div>
 <div class="container">
@@ -192,8 +191,8 @@
                 </a>
             </div>
         @endif
-   
     </div>
+   
 </div>
 @include("home.sidetool")
 @include("home.navBottom")
@@ -305,45 +304,28 @@
 		$('#ul li a').hover(function () {
 			$('#ul li a div').removeClass('line')
 			$(this).children('div').addClass('line')
-		})
+		});
 		$('#ul').mouseleave(function () {
-			var flg=true
+			var flg=true;
 			$('#ul li a').each(function () {
 				if($(this).hasClass('sta')){
 					$('#ul li a div').removeClass('line')
 					$(this).children('div').addClass('line')
 					flg=false
 				}
-			})
+			});
 			if(flg){
 				$('#ul li a div').removeClass('line')
 			}
-		})
-		$('#buyC').click(function (e) {
-			flg=true
-			if($('#buyCar').css('display')=='none'){
-				$('#buyCar').fadeIn(100);
-				$('#myCenter').fadeOut(10)
-			}else{
-				$('#buyCar').fadeOut(10)
-			}
-		})
-		$('#loginBar .countP').click(function (e) {
-			if($('#myCenter').css('display')=='none'){
-				$('#myCenter').fadeIn(100);
-				$('#buyCar').fadeOut(10)
-			}else{
-				$('#myCenter').fadeOut(10)
-			}
-		})
+		});
 		$('#goTo').click(function () {
 			window.location.href="{{URL('car/index')}}"
-		})
+		});
 		$('.buyList .del').click(function () {
 			flg=false
-		})
+		});
 		$(document.body).click(function (e) {
-			var ee=e.srcElement?e.srcElement:e.target
+			var ee=e.srcElement?e.srcElement:e.target;
 			if(ee.id!='countP'){
 				$('#myCenter').fadeOut(10)
 			}
@@ -352,17 +334,17 @@
 			}
 		});
 		//监听滚动条
-		$(window).scroll(function () {
+		/*$(window).scroll(function () {
 			var top=$(document).scrollTop();
 			if(top>=200){
 				$('.personBar').fadeOut('slow');
 			}else{
 				$('.personBar').fadeIn('fast')
 			}
-		});
+		});*/
 		$('#scrollTop').on('click',function () {
 			$(document).scrollTop(0);
-		})
+		});
 		//搜索点击事件
 		$('#souI').click(function(event) {
 			var seachText = $('#searchB').val();

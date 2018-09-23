@@ -91,6 +91,7 @@ class OrderBasicController extends Controller
             $allData['department_name'] = $department->name;
 
             $orderModel = OrderBasic::make($allData);
+            $orderModel->typeToPlanObject();
             $re = $orderModel->save();
             if (!$re) {
                 throw new  \Exception('订单创建失败');
@@ -135,12 +136,20 @@ class OrderBasicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\OrderBasic  $orderBasic
+     * @param  \Illuminate\Http\Request  $request
+     * @param int
      * @return \Illuminate\Http\Response
      */
-    public function show(OrderBasic $orderBasic)
+    public function show(Request $request, $id)
     {
-        //
+        $model = $this->model->findOrFail($id);
+        if ($request->has('with')) {
+            $with = $request->input('with');
+            foreach ($with as $item) {
+                $model->{$item};
+            }
+        }
+        return $model;
     }
 
     /**
@@ -223,13 +232,16 @@ class OrderBasicController extends Controller
         $count = $this->model->destroy($id);
         if($count != 0){
             //添加订单操作记录事件
-            $order_sn = $orderBasic::withTrashed()->where('id',$id)->value('order_sn');
+            $order = $orderBasic::withTrashed()->where('id',$id)->first();
             $dataLog = [
                 'order_id'=>$id,
                 'action'=>'delete',
-                'remark'=>$order_sn
+                'remark'=>$order->order_sn
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
+            
+            event(new OrderCancel($order));
+            
             return $this->success([]);
         }else{
             return $this->error([]);
@@ -248,8 +260,7 @@ class OrderBasicController extends Controller
             if ($data['status'] == 1) {
                 try {
                     event( new OrderPass($this->model, auth()->user()));
-                    //添加保证金日志
-                    event(new AddDepositOperationLog(auth()->user(),$this->model,'check'));
+
                     DB::commit();
                 } catch (Exception $e) {
                     DB::rollback();

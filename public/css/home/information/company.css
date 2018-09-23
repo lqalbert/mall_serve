@@ -1,0 +1,33 @@
+
+.companyContent{
+    padding: 15px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    min-height: 700px;
+}
+
+.companyContent .title{
+    line-height: 50px;
+    font-size: 18px;
+    text-align: center;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.companyContent .minTitle{
+    line-height: 40px;
+    font-size: 16px;
+    padding: 0;
+    font-weight: bold;
+}
+
+.companyContent .msgContent{
+    line-height: 25px;
+    text-indent: 2em;
+    font-size: 14px;
+    color: #666;
+    padding: 0;
+    margin-bottom: 20px;
+}

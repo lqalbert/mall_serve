@@ -37,7 +37,7 @@ class Request
     
     public function setDataType($str)
     {
-        $this->dataType = $str;
+        $this->dataType = "json";//$str;
         return $this;
     }
     
@@ -67,7 +67,7 @@ class Request
     }
     
     public function getContent()
-    {
+    {//Storage::disk('local')->put("request_content.json", $this->content);
         return $this->content;
     }
     

@@ -8,7 +8,7 @@ body{
 }
 
 #saleBest{
-
+    min-height: 600px;
 }
 
 #saleBest div{
@@ -35,7 +35,7 @@ body{
 
 #saleBest .saleLists .saleList{
     padding: 15px;
-    border: 1px solid #F5F5F5;
+    border: 1px solid #ffffff;
 }
 
 #saleBest .saleLists .saleList:hover{

@@ -7,7 +7,7 @@ return [
     
    'api_url'=>"http://link.cainiao.com/gateway/link.do",
    'test_url'=>"https://linkdaily.tbsandbox.com/gateway/link.do",
-    
+   'test_url2' => "https://linkdaily.tbsandbox.com/gateway/pac_message_receiver.do?spm=a21da.7629140.0.0.SXcdwl&file=pac_message_receiver.do",
     
     
     'test'=>[
@@ -48,7 +48,7 @@ return [
         'YTO' => 'http://cloudprint.cainiao.com/template/standard/101/572',
         // 天天
         'TTKDEX' => 'http://cloudprint.cainiao.com/template/standard/601/136',
-        // 百世快递
+        // 百世汇通
         'HTKY' => 'http://cloudprint.cainiao.com/template/standard/501/130',
         // 快捷快递
         'FAST' => 'http://cloudprint.cainiao.com/template/standard/1201/98',
