@@ -183,7 +183,8 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         //手机检测
         Jenssegers\Agent\AgentServiceProvider::class,
-
+        //excel
+        Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -239,6 +240,8 @@ return [
         'Captcha' => Mews\Captcha\Facades\Captcha::class,
         //手机检测
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        //excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
 
     ],
 

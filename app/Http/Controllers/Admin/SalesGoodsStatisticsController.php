@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\PurchaseOrderGoods;
+use Excel;
 
 class SalesGoodsStatisticsController extends Controller
 {
@@ -550,7 +552,35 @@ class SalesGoodsStatisticsController extends Controller
         //
     }
 
+    /**
+     * [downloadExcel 下载表格excel]
+     * @param  [type] $a [description]
+     * @param  [type] $b [description]
+     * @return [type]    [description]
+     */
+    public function downloadExcel(Request $request){
+        var_dump($request->all());die();
+        echo storage_path();die();
+        $cellData = [
+            ['学号','姓名','成绩'],
+            ['10001','AAAAA','99'],
+            ['10002','BBBBB','92'],
+            ['10003','CCCCC','95'],
+            ['10004','DDDDD','89'],
+            ['10005','EEEEE','96'],
+        ];
+        Excel::create('学生成绩',function($excel) use ($cellData){
+            $excel->sheet('score', function($sheet) use ($cellData){
+                $sheet->rows($cellData);
+            });
+        })->store('xls', public_path('excel/exports'));//export('csv');
 
+        $file = public_path('excel\exports\学生成绩.xls');
+        // echo $file;
+ 
+        return response()->download($file);
+
+    }
 
 
 

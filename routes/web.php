@@ -225,6 +225,7 @@ Route::group($adminGroup, function(){
     Route::match(['put','patch'], '/accountsettingsupdate', 'AccountSettingsController@updates');
     //商品统计-部门
     Route::put('/sales-goods-statistics-dep/{sku}','SalesGoodsStatisticsController@getDepSaleGoods');
+    Route::get('/sales-goods-statistics-download-excel','SalesGoodsStatisticsController@downloadExcel');
 });
 
 
