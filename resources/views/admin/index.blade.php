@@ -19,8 +19,8 @@
     <div id="app">
        
     </div>
-<!--     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
-<!--     <script src="https://unpkg.com/element-ui@1.4/lib/index.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui@1.4/lib/index.js"></script>
     <!-- Scripts -->
    	<script type="text/javascript" src="/admin/static1.2.22/js/manifest.066f7e8d5814383d5aa6.js"></script>
     <script type="text/javascript" src="/admin/static1.2.22/js/vendor.68e868ef3ba290f4db9a.js"></script>

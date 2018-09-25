@@ -91,18 +91,37 @@ class CustomerController extends Controller
             ]);
         } catch (ValidationException $e) {
             $phone = $request->input('phone');
+            $qq = $request->input('qq');
+            $weixin = $request->input('weixin');
             $data = [];
-            $data['cus_id'] = DB::table('customer_contact')->where('phone',$phone)->value('cus_id');
-            $data['cus_name'] = DB::table('customer_basic')->where('id',$data['cus_id'])->value('name');
+            $cus_id_by_qq = null;
             $data['user_id'] = $user->toArray()['id'];
             $data['user_name'] = $user->toArray()['realname'];
-            $data['content'] = '添加客户时与手机号码'.$phone.'冲突';
+            $cus_id_by_phone = DB::table('customer_contact')->where('phone',$phone)->value('cus_id');
+            if($qq){
+                $cus_id_by_qq = DB::table('customer_contact')->where('qq',$qq)->value('cus_id');
+            }
+            $cus_id_by_weixin = DB::table('customer_contact')->where('weixin',$weixin)->value('cus_id');
+            if($cus_id_by_qq){
+                $data['cus_id'] = $cus_id_by_qq;
+                $data['cus_name'] = DB::table('customer_basic')->where('id',$cus_id_by_qq)->value('name');
+                $data['content'] = '添加客户时与QQ号'.$qq.'冲突';
+            }
+            if($cus_id_by_weixin){
+                $data['cus_id'] = $cus_id_by_weixin;
+                $data['cus_name'] = DB::table('customer_basic')->where('id',$cus_id_by_weixin)->value('name');
+                $data['content'] = '添加客户时与微信号'.$weixin.'冲突';
+            }
+            if($cus_id_by_phone){
+                $data['cus_id'] = $cus_id_by_phone;
+                $data['cus_name'] = DB::table('customer_basic')->where('id',$cus_id_by_phone)->value('name');
+                $data['content'] = '添加客户时与手机号码'.$phone.'冲突';
+            }
             $re = CustomerTrackLog::create($data);
             if($re){
                 event( new ContactConflict($e->validator->errors(), $request->only(['phone','qq','weixin'])));
                 throw $e;
             }
-
         }
         
         

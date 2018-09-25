@@ -10,6 +10,8 @@ use App\Repositories\Criteria\Ordergoods\DateRange;
 use App\Alg\ModelCollection;
 use App\Models\Assign;
 use App\Repositories\Criteria\Ordergoods\AfterCondition;
+use Illuminate\Support\Facades\DB;
+
 class OrdergoodsService
 {
     /**
@@ -95,6 +97,12 @@ class OrdergoodsService
 
         if($this->request->has('assign_id')){
             $assign_data = Assign::find($this->request->assign_id)->toArray();
+            $data = DB::table('order_goods')
+                ->join('order_basic', 'order_basic.id', '=', 'order_goods.order_id')
+                ->join('customer_basic', 'order_basic.cus_id', '=', 'customer_basic.id')
+                ->select('customer_basic.name', 'order_basic.order_all_money')
+                ->where('order_goods.assign_id',$this->request->assign_id)
+                ->first();
             $goods_numbers= array_column($items,'goods_number');
             $weights= array_column($items,'weight');
             $input_data = [];
@@ -106,8 +114,8 @@ class OrdergoodsService
             foreach ($weights as $v){
                 $total_weight += $v;
             }
-            $input_data['goods_id']='';
-            $input_data['price']='';
+            $input_data['goods_id']=$data->name;
+            $input_data['price']=$data->order_all_money;
             $input_data['goods_name'] = $assign_data ? $assign_data['express_name'].'运单号:'.$assign_data['express_sn'] : '汇总';
             $input_data['goods_number']=$total_goods_number;
             $input_data['weight']=$total_weight;
