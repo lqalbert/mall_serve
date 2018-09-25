@@ -172,6 +172,12 @@ class OrderBasic extends Model
         return $this->hasOne('App\Models\AfterSale', 'order_id');
     }
     
+    public function assign()
+    {
+        return $this->hasMany('App\Models\Assign', 'order_id');
+    }
+    
+    
     public function getGoods()
     {
         return $this->goods;
@@ -186,7 +192,7 @@ class OrderBasic extends Model
      */
     public function isAssign()
     {
-        return Assign::where('order_id', $this->id)->select('id')->first();
+        return Assign::where('order_id', $this->id)->where('is_repeat','<>',3)->select('id')->first();
     }
     
     /**
@@ -210,6 +216,11 @@ class OrderBasic extends Model
     public function isInAfterSale()
     {
         return $this->after_sale_status > 0;
+    }
+    
+    public function isCancel()
+    {
+        return $this->status == self::ORDER_STATUS_7;
     }
     
     

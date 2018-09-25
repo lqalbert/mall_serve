@@ -108,12 +108,14 @@ class InventoryService
      * @param unknown $products
      * @param unknown $user
      */
-    public function sending($entrepot, $products, $user, $dan)
+    public function sending($entrepot, $products, $user, $dan, $on=true)
     {
         DB::beginTransaction();
         try {
-            $this->inventory->sending($entrepot->id, $products);
-            $this->log->sending($entrepot, $products, $user, $dan);
+            $this->inventory->sending($entrepot->id, $products, $on);
+            if ($on) {
+                $this->log->sending($entrepot, $products, $user, $dan);
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

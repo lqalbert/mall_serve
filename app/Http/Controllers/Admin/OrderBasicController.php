@@ -229,10 +229,18 @@ class OrderBasicController extends Controller
      */
     public function destroy(OrderBasic $orderBasic,$id)
     {
-        $count = $this->model->destroy($id);
-        if($count != 0){
+        
+//         
             //添加订单操作记录事件
-            $order = $orderBasic::withTrashed()->where('id',$id)->first();
+            $order = $orderBasic::where('id',$id)->first();
+            if (!$order->isCancel()) {
+//                 logger("[cancel]",[$order->isCancel()]);
+               return $this->error([],'要取消之后才能删除');
+            }
+            
+            //删除，什么情况下需要把保证金和 商品退回？
+            $count = $this->model->destroy($id);
+            if($count != 0){
             $dataLog = [
                 'order_id'=>$id,
                 'action'=>'delete',
@@ -240,7 +248,7 @@ class OrderBasicController extends Controller
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
             
-            event(new OrderCancel($order));
+//             event(new OrderCancel($order));
             
             return $this->success([]);
         }else{

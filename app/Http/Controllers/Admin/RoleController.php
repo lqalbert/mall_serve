@@ -29,7 +29,8 @@ class RoleController extends Controller
             'assign-staff',
             'assign-service',
             'assign-buyer',
-            'assign-buyer-manager'
+            'assign-buyer-manager',
+            'stration'
         ],
 //         'sale-manager' => [
 //             'sale-captain',
@@ -77,7 +78,7 @@ class RoleController extends Controller
          * 不是　按部门的
         */
         $user = Auth::user();
-        logger("[debug2]", [$user->isSuperAdmin() or $user->isAdministrator()]);
+//         logger("[debug2]", [$user->isSuperAdmin() or $user->isAdministrator()]);
         if ($user->isSuperAdmin() or $user->isAdministrator()) {
             $roles = $user->getRoles(false);
             

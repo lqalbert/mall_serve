@@ -46,6 +46,11 @@ Route::group($adminGroup, function(){
 	Route::resource('/customers','CustomerController');
 	Route::match(['put','patch','post'], '/customers-transfer', 'CustomerController@transfer');
 	Route::match(['put','patch','post'], '/customers-quit-transfer', 'CustomerController@quitTransfer');
+	Route::get('/customers-front-ledin', 'CustomerController@frontLedIn');
+	Route::put('/customers-transfer-front-ledin', 'CustomerController@transferFrontLedIn');
+	Route::get('/customers-get-allow', 'CustomerController@getNumAllowAllocat');
+	Route::get('/customers-allocate-user', 'CustomerController@allocateToUser');
+	
 	Route::get('/getUsersByGid/{gid}','EmployeeController@getUserByGId');
 	Route::get('/getGroupsByPid/{pid}','GroupController@getGroupsByPid');
 	Route::get('/getDepartmentByType/{type}','DepartmentController@getDepartmentByType');

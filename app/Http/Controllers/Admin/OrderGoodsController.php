@@ -152,7 +152,8 @@ class OrderGoodsController extends Controller
     }
     
     /**
-     * 这里有点问题 
+     * 这里有点问题 保证金？
+     *  没看出来什么问题 
      * @param unknown $orderModel
      * @throws \Exception
      */

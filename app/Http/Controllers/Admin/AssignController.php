@@ -342,6 +342,11 @@ class AssignController extends Controller
         $is_repeat = $request->input('is_repeat');
 //         $assign->is_repeat = $is_repeat;
         $assign->repeat_mark = $request->input('repeat_mark');
+        if ($assign->isSignature()) {
+            return $this->error([],'已签收，不能返单');
+        }
+        
+        
         switch ($is_repeat) {
             case 1:
                 if (!$assign->isSetExpress()) {
@@ -349,13 +354,21 @@ class AssignController extends Controller
 //                     $assign->express_name = '';
                     $assign->express_sn = '';
                 }
-                $assign->corrugated_case = '';
-                $assign->corrugated_id = 0;
+//                 $assign->corrugated_case = '';
+//                 $assign->corrugated_id = 0;
                 $assign->status = 0;
                 $assign->check_status = 0;
+                if ($assign->isSended()) {
+                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+                }
+                
                 $re = $assign->save();
                 break;
             case 2:
+                if ($assign->isSended()) {
+                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+                }
+                $assign->status = 1;
                 $re = $assign->save();
                 break;
             case 3:
@@ -365,8 +378,10 @@ class AssignController extends Controller
 //                 $assign->express_sn = '';
                 DB::beginTransaction();
                 try {
+                    $assign->is_repeat = $is_repeat;
                     $re = $assign->save();
                     //改库存 还要改保证金
+                    logger('[xxdebug]',['findout why three time']);
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {

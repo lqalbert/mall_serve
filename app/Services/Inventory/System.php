@@ -254,13 +254,15 @@ class System
         return $affectedRows;
     }
     
-    public function sending($entrepot_id,  $products)
+    public function sending($entrepot_id,  $products, $on = true)
     {
         // send_ing
         $affectedRows = 0;
+        $countoper = $on ? '-' : '+' ;
+        $sendoper = $on ? '+' :'-';
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count - ? ,  assign_lock = assign_lock - ? , send_ing = send_ing + ?',
+                $affectedRows += $this->updates('set entrepot_count = entrepot_count '.$countoper.' ? ,  assign_lock = assign_lock '.$countoper.' ? , send_ing = send_ing '.$sendoper.' ?',
                     [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
                 $this->updateIsSuccess($affectedRows);
             }
