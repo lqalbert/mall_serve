@@ -20,6 +20,7 @@ class ExpressPrice extends Model
         'time_limit',
         'first_weight',
         'first_price',
+        'second_price',
         'continued_weight',
         'continued_price',
         'start_time',
