@@ -69,7 +69,7 @@ class AfterSale extends Model
     
     public function order()
     {
-        return $this->belongsTo('App\Models\OrderBasic', 'order_id');
+        return $this->belongsTo('App\Models\OrderBasic', 'order_id')->withTrashed();
     }
     
     public function getCheckStatusTextAttribute()

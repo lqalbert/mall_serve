@@ -381,6 +381,7 @@ class AssignController extends Controller
                     $assign->is_repeat = $is_repeat;
                     $re = $assign->save();
                     //改库存 还要改保证金
+                    logger('[xxdebug]',['findout why three time']);
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
