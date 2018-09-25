@@ -184,7 +184,7 @@ return [
         //手机检测
         Jenssegers\Agent\AgentServiceProvider::class,
         //excel
-        Maatwebsite\Excel\ExcelServiceProvider::class
+//         Maatwebsite\Excel\ExcelServiceProvider::class
 
     ],
 
@@ -241,7 +241,7 @@ return [
         //手机检测
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         //excel
-        'Excel' => Maatwebsite\Excel\Facades\Excel::class
+//         'Excel' => Maatwebsite\Excel\Facades\Excel::class
 
     ],
 
