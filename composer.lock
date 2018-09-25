@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b912451f9d910604e3de20072df148c1",
+    "content-hash": "e627a53814e5a5317c19236dacc147d5",
     "packages": [
         {
             "name": "bosnadev/repositories",
