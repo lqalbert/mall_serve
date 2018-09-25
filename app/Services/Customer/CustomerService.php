@@ -83,7 +83,7 @@ class CustomerService
 //         if ($this->request->has('weixin')) {
 //             $this->repository->pushCriteria(new Weixin($this->request->input('weixin')));
 //         }
-
+        logger("[dd]",['aa']);
     	if ($this->request->has('phone') || $this->request->has('qq') || $this->request->has('weixin')) {
     	    $this->repository->pushCriteria(new Contact($this->request));
         }
