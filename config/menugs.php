@@ -280,17 +280,17 @@ return [
             'icon' => null,
             'index' => 'FrontCategory'
         ],
-	[
+        [
             'text' => '问卷管理',
             'icon' => null,
             'index' => 'QuestionnaireManagement'
         ],
-	[
+        [
             'text' => '导入账号设置',
             'icon' => null,
             'index' => 'AccountSettings'
         ],
-    [
+        [
             'text' => '商品销售统计',
             'icon' => null,
             'index' => 'SalesGoodsStatistics'
@@ -300,5 +300,10 @@ return [
             'icon' => null,
             'index' => 'SampleApplication'
         ],
+        [
+            'text' => '素材库',
+            'icon' => null,
+            'index' => 'http://ws.pulata.com.cn:8888/login'
+        ]
 
 ];

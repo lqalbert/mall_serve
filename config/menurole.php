@@ -22,7 +22,8 @@ return [
         'Contacts',
         'Website',
         'SalesPerformance',
-        'SalesQuantization'
+        'SalesQuantization',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'human-resources' => [
       
@@ -32,7 +33,8 @@ return [
         'Workbench',
         'SysNotice',
         'Contacts',
-        'Website'
+        'Website',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'sale-captain' => [
         'GoodsDetails',
@@ -45,7 +47,7 @@ return [
         'Website',
         'SalesPerformance',
         'SalesQuantization',
-        
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'sale-staff' => [
         'GoodsDetails',
@@ -54,7 +56,8 @@ return [
         'Workbench',
         'SysNotice',
         'Contacts',
-        'Website'
+        'Website',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'assign-buyer'=>[
         'Workbench',
@@ -62,7 +65,8 @@ return [
         'Contacts',
         'Website',
         'WarehousingProcess',
-        'PurchaseList'
+        'PurchaseList',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'assign-buyer-manager' => [
         'WarehousingProcess',
@@ -71,6 +75,7 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     
     'assign-manager'=>[
@@ -93,7 +98,8 @@ return [
         'OrderList',
         'Mail',
         'SalesGoodsStatistics',
-        'SampleApplication'
+        'SampleApplication',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -112,7 +118,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-        'Mail'
+        'Mail',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'assign-staff'=>[
         'StockDetails',
@@ -131,7 +138,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-        'Mail'
+        'Mail',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'assign-service'=>[
         'StockDetails',
@@ -150,7 +158,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-        'OrderList'
+        'OrderList',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'finance'=>[
         'SalesPerformance',
@@ -162,7 +171,8 @@ return [
         'WarehousingProcess',
         'PurchaseList',
         'SalesGoodsStatistics',
-        'SampleApplication'
+        'SampleApplication',
+        'http://ws.pulata.com.cn:8888/login'
     ],
     'stration' => [
        'QuestionnaireManagement',
