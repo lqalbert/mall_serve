@@ -540,8 +540,13 @@ class AssignController extends Controller
             $tmp['documentID'] = $item->assign_sn;
             $contents = [];
             
+            $tmpGoods = $item->goods()->get();
+            $tmpGoods = $tmpGoods->each(function($it){
+                $it->name = "[". $it->goods_number ."]" . "个  ". $it->sku_sn . "  " . $it->goods_name . "  " . $it->specifications;
+//                 logger('[a]', [$it->getNameAttribute()]);
+            });
             $data = [
-                "tabletest"=> $item->goods->toArray(),
+                "tabletest"=> $tmpGoods->toArray(),
                 "address"=>$item->address->toArray(),
                 "assign_sn"=>$item->assign_sn,
                 "total"=>0

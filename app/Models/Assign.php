@@ -213,7 +213,11 @@ class Assign extends Model
     {
         return $query->where('status', '=', self::STATUS_WEIGHTGOODS);
     }
-    
+    //getNameAttribute
+    public function getNameAttribute()
+    {
+        return "[". $this->goods_number ."]" . "个  ". $this->sku_sn . "  " . $this->goods_name . "  " . $this->specifications;
+    }
     
     
     /**
