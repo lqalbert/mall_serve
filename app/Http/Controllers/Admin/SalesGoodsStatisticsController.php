@@ -559,8 +559,8 @@ class SalesGoodsStatisticsController extends Controller
      * @return [type]    [description]
      */
     public function downloadExcel(Request $request){
-        var_dump($request->all());die();
-        echo storage_path();die();
+        // var_dump($request->all());die();
+        // echo storage_path();die();
         $cellData = [
             ['学号','姓名','成绩'],
             ['10001','AAAAA','99'],
