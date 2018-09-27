@@ -83,11 +83,11 @@ class CustomerService
 //         if ($this->request->has('weixin')) {
 //             $this->repository->pushCriteria(new Weixin($this->request->input('weixin')));
 //         }
-        logger("[dd]",['aa']);
+//         logger("[dd]",['aa']);
     	if ($this->request->has('phone') || $this->request->has('qq') || $this->request->has('weixin')) {
     	    $this->repository->pushCriteria(new Contact($this->request));
         }
-        logger("[dd]",['aafter']);
+//         logger("[dd]",['aafter']);
         if ($this->request->has('name')) {
             $this->repository->pushCriteria(new Name($this->request->input('name')));
         }
@@ -110,7 +110,7 @@ class CustomerService
     	$selectFields = $this->request->has('fields') ? $this->request->input('fields'): ['*'];
         $result = $this->repository
                        ->paginate($this->request->input('pageSize', 20),$selectFields);
-       logger("[dd]",['paginate']);
+//        logger("[dd]",['paginate']);
         $appends = [];
         if ($this->request->has('appends')) {
             $appends = $this->request->input('appends');
