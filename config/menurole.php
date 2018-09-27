@@ -183,5 +183,6 @@ return [
     'group-member' => [],
     'department-manager' => [],
     'group-captain' => [],
-    'sale-department-member' => []
+    'sale-department-member' => [],
+    'assign-department-member' => ['Refund']
 ];
