@@ -378,6 +378,7 @@ class AfterSaleController extends Controller
                 $tmpModel = OrderGoods::find($product['id']);
                 $tmpModel->return_inventory = $product['return_inventory'];
                 $tmpModel->destroy_num = $product['destroy_num'];
+                $tmpModel->destroy_time = Date('Y-m-d H:i:s');
                 $re2 = $tmpModel->save();
                 
                 if (!$re2) {
@@ -387,7 +388,8 @@ class AfterSaleController extends Controller
                 $tmpModel->goods_number = $tmpModel->destroy_num;
                 $productModels[] = $tmpModel;
             }
-            $serve->rxUpdateout($after->entrepot, collect($productModels), $request->user());
+            //坏货出库?
+            $serve->destroyUpdateOut($after->entrepot, collect($productModels), $request->user());
         } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());

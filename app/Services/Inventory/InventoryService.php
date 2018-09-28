@@ -164,6 +164,22 @@ class InventoryService
         }
     }
     
+    /**
+     * 损坏出库
+     */
+    public function destroyUpdateOut($entrepot, $products, $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->destroyUpdateOut($entrepot->id, $products);
+            $this->log->destroyNum($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     
     /**
      * 盘点
