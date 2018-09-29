@@ -240,7 +240,7 @@ class AfterSaleController extends Controller
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function sureStatus(Request $request, $id){
+    public function sureStatus(Request $request,InventoryService $serve, $id){
 //         $data = $request->all();
 //         $data['sure_at'] = Carbon::now();
 
@@ -249,11 +249,16 @@ class AfterSaleController extends Controller
             $model = AfterSale::find($id);
             $model->setSure();
             $re = $model->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            }
             
             $goods = $model->goods;
+            logger("[check_sure]", [$goods->count()]);
             $exchangeGoods = $goods->filter(function($value){
                 return $value->isExchange();
             });
+            logger("[check_sure]", [$exchangeGoods->count()]);
             if ($exchangeGoods->count() > 0) {
                 //生成发货单;
                 //库存修改
@@ -264,6 +269,9 @@ class AfterSaleController extends Controller
                     'address_id' => $model->order->address_id,
                 ];
                 $assignmodel = Assign::create($data);
+                if (!$assignmodel) {
+                    throw new \Exception('生成发货单失败');
+                }
                 $newGoods = [];
                 foreach ($exchangeGoods as $xGoods){
                     $newModel = $xGoods->replicate();
@@ -273,13 +281,13 @@ class AfterSaleController extends Controller
                     $newGoods[]  = $newModel;
                 }
 
-                $service = new InventoryService();
-                $service->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
+//                 $service = new InventoryService();
+                $serve->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->error($e->getMessage());
+            return $this->error([],$e->getMessage());
         }
         if($re){
             return $this->success([]);

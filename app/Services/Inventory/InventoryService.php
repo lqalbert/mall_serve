@@ -210,7 +210,8 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->exLock($entrepot->id, $products);
-            $this->log->exchangeLock($entrepot, $products, $user);
+            
+            $this->log->exchangeLock($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
