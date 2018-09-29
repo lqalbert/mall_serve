@@ -60,10 +60,11 @@ class OrderGoodsController extends Controller
             
             $deta_num = $model->getNum() - $data['goods_number'];
             if ($deta_num != 0) {
-                $model->goods_number = -$deta_num;
-                if ($model->goods_number > 0) {
+                $model->goods_number = $deta_num;
+                if ($deta_num> 0) {
                     $service->saleLock( $orderModel->entrepot, [$model], $request->user());;
                 } else {
+                    $model->goods_number = -$deta_num;
                     $service->saleUnLock( $orderModel->entrepot, [$model], $request->user());
                 }
                 
