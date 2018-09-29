@@ -254,11 +254,11 @@ class AfterSaleController extends Controller
             }
             
             $goods = $model->goods;
-            logger("[check_sure]", [$goods->count()]);
+            //logger("[check_sure]", [$goods->count()]);
             $exchangeGoods = $goods->filter(function($value){
                 return $value->isExchange();
             });
-            logger("[check_sure]", [$exchangeGoods->count()]);
+            //logger("[check_sure]", [$exchangeGoods->count()]);
             if ($exchangeGoods->count() > 0) {
                 //生成发货单;
                 //库存修改
@@ -275,9 +275,10 @@ class AfterSaleController extends Controller
                 $newGoods = [];
                 foreach ($exchangeGoods as $xGoods){
                     $newModel = $xGoods->replicate();
-                    $newModel->setExchangeStatus();
+                    $newModel->setResendSatus();
                     $newModel->assign_id = $assignmodel->id;
                     $newModel->save();
+                    $newModel->goods_number = $newModel->return_num;
                     $newGoods[]  = $newModel;
                 }
 
