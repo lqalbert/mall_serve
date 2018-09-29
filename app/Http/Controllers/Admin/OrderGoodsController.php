@@ -160,12 +160,19 @@ class OrderGoodsController extends Controller
     private function updateOrderMoney($orderModel)
     {
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
+//         logger("[da]", $money->toArray());
         $orderType = $orderModel->typeObjecToOrderType();
 //         logger("[dd]", [$orderType->toArray()]);
-        $orderModel->order_all_money = $money->m;
+        $orderModel->order_all_money = $money->m-0;
+//         logger("[order_all_money]", [$orderModel->order_all_money]);
         $orderModel->discounted_goods_money =  $orderType->getDiscounted($money->m);
+//         logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
+//         logger("[order_pay_money]", [$orderModel->order_pay_money]);
         $re = $orderModel->save();
+        logger("[order_all_money]", [$orderModel->order_all_money]);
+        logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
+        logger("[order_pay_money]", [$orderModel->order_pay_money]);
         if (!$re) {
             throw  new \Exception('更新订单失败');
         }

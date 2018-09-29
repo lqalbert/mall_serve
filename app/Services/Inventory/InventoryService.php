@@ -33,7 +33,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -53,7 +53,8 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+//             throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -73,7 +74,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -98,7 +99,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -119,7 +120,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -139,7 +140,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -160,7 +161,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -176,7 +177,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -193,7 +194,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -213,7 +214,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -233,7 +234,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -246,7 +247,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -266,7 +267,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -282,7 +283,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
