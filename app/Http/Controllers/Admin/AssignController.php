@@ -781,6 +781,7 @@ class AssignController extends Controller
      */
     public function parcelOn(Request $request, InventoryService $service, $id)
     {
+        return $this->error([], "请直接签收");
         $assign = Assign::findOrFail($id);
         if ($assign->isParcel()) {
             return $this->success([], '已揽件');
