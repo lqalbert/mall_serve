@@ -204,6 +204,29 @@ class System
         
     }
     
+    /**
+     *  损坏出库
+     */
+    public function destroyUpdateOut($entrepot_id,  $products)
+    {
+        $affectedRows = 0;
+        //         DB::beginTransaction();
+        try{
+            foreach ($products as $product) {
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?, return_in = return_in + ? ',
+                    [ $product->getNum(), $product->getNum(),$product->getNum(),$entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
+            }
+            //             DB::commit();
+        } catch (\Exception $e) {
+            //             DB::rollBack();
+            throw $e;
+        }
+        
+        return $affectedRows;
+        
+    }
+    
     
     /**
      * 盘点
@@ -217,7 +240,7 @@ class System
         try{
             foreach ($products as $product) {
                 $affectedRows += $this->updates('set entrepot_count = entrepot_count + ? , saleable_count = saleable_count + ?',
-                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                    [ $product->getNum(), $product->getNum(),  $entrepot_id, $product->getSkuSn() ]);
             }
                 $this->updateIsSuccess($affectedRows);
             //             DB::commit();
@@ -262,7 +285,12 @@ class System
         $sendoper = $on ? '+' :'-';
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set entrepot_count = entrepot_count '.$countoper.' ? ,  assign_lock = assign_lock '.$countoper.' ? , send_ing = send_ing '.$sendoper.' ?',
+                if ($product->isResend()) {
+                    $lockFiled = 'exchange_lock = exchange_lock '.$countoper.' ? ';
+                } else {
+                    $lockFiled = 'assign_lock = assign_lock '.$countoper.' ?';
+                }
+                $affectedRows += $this->updates('set entrepot_count = entrepot_count '.$countoper.' ? ,  '.$lockFiled.' , send_ing = send_ing '.$sendoper.' ?',
                     [ $product->getNum(), $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
                 $this->updateIsSuccess($affectedRows);
             }

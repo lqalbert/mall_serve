@@ -58,7 +58,7 @@ class AfterSale extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods', 'order_id')->after();
+        return $this->hasMany('App\Models\OrderGoods', 'order_id', 'order_id')->after();
     }
     
     public function entrepot()

@@ -60,10 +60,12 @@ class OrderGoodsController extends Controller
             
             $deta_num = $model->getNum() - $data['goods_number'];
             if ($deta_num != 0) {
-                $model->goods_number = -$deta_num;
-                if ($model->goods_number > 0) {
+                $model->goods_number = $deta_num;
+                if ($deta_num < 0) { //增加了
+                    $model->goods_number = -$deta_num;//减少库存
                     $service->saleLock( $orderModel->entrepot, [$model], $request->user());;
-                } else {
+                } else { // 减少了
+                    //增加库存
                     $service->saleUnLock( $orderModel->entrepot, [$model], $request->user());
                 }
                 
@@ -130,7 +132,7 @@ class OrderGoodsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(InventoryService $serve, $id)
     {
         //返回 int
         $goodsModel = OrderGoods::where('id',$id)->select('order_id')->first();
@@ -139,7 +141,8 @@ class OrderGoodsController extends Controller
         if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
-        
+        //把库存还回去
+        $serve->saleUnLock($orderModel->entrepot, [$goodsModel], auth()->user());
         $this->updateOrderMoney($orderModel);
         $re = $this->repository->delete($id);
         if ($re) {
@@ -160,12 +163,19 @@ class OrderGoodsController extends Controller
     private function updateOrderMoney($orderModel)
     {
         $money = OrderGoods::select(DB::raw(' sum( price * goods_number) as m'))->where('order_id', $orderModel->id)->first();
+//         logger("[da]", $money->toArray());
         $orderType = $orderModel->typeObjecToOrderType();
 //         logger("[dd]", [$orderType->toArray()]);
-        $orderModel->order_all_money = $money->m;
+        $orderModel->order_all_money = $money->m-0;
+//         logger("[order_all_money]", [$orderModel->order_all_money]);
         $orderModel->discounted_goods_money =  $orderType->getDiscounted($money->m);
+//         logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
+//         logger("[order_pay_money]", [$orderModel->order_pay_money]);
         $re = $orderModel->save();
+//         logger("[order_all_money]", [$orderModel->order_all_money]);
+//         logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
+//         logger("[order_pay_money]", [$orderModel->order_pay_money]);
         if (!$re) {
             throw  new \Exception('更新订单失败');
         }

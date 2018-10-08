@@ -825,7 +825,10 @@ class AssignController extends Controller
         try {
             $order = $assign->order;
             if ($order->isFinish()) {
-                throw new \Exception('已经签收');
+                $ass = Assign::where('order_id', $order->id)->count();
+                if ($ass <2) {
+                    throw new \Exception('已经签收');
+                } 
             }
             
 
@@ -837,7 +840,8 @@ class AssignController extends Controller
             $goods = $assign->goods;
             
             //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件
-            if (!$assign->isSended()) {
+            
+            if (!$assign->isSended() && !$assign->isParcel()) {
                 $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             } 
             

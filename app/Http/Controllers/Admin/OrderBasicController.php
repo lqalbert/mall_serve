@@ -184,8 +184,8 @@ class OrderBasicController extends Controller
             'check_status' => $request->input('check_status'),
             'order_status' => $request->input('order_status'),
         ); */
-        $re = $this->repository->update($request->all(), $id);
-        if ($re) {
+//         $re = $this->repository->update($request->all(), $id);
+        if (true) {
             //添加订单操作记录事件
             $dataLog = [
                 'order_id'=>$request->input('id'),
@@ -193,10 +193,10 @@ class OrderBasicController extends Controller
                 'remark'=>$request->input('order_sn')
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
-            return $this->success($re);
+            return $this->success([]);
             //return 1;
         } else {
-            return $this->error($re);
+            return $this->error([]);
             //return 2;
         }
     }

@@ -166,6 +166,15 @@ class Detail
     }
     
     
+    /**
+     * 损坏
+     */
+    public function destroyNum(DistributionCenter $entrepot, $products, User $user)
+    {
+        $this->save($entrepot, $products, $user, 'destroy_num');
+    }
+    
+    
     
     
 }

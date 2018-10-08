@@ -240,7 +240,7 @@ class AfterSaleController extends Controller
      * @param  [type]  $id      [description]
      * @return [type]           [description]
      */
-    public function sureStatus(Request $request, $id){
+    public function sureStatus(Request $request,InventoryService $serve, $id){
 //         $data = $request->all();
 //         $data['sure_at'] = Carbon::now();
 
@@ -249,11 +249,16 @@ class AfterSaleController extends Controller
             $model = AfterSale::find($id);
             $model->setSure();
             $re = $model->save();
+            if (!$re) {
+                throw new \Exception('更新失败');
+            }
             
             $goods = $model->goods;
+            //logger("[check_sure]", [$goods->count()]);
             $exchangeGoods = $goods->filter(function($value){
                 return $value->isExchange();
             });
+            //logger("[check_sure]", [$exchangeGoods->count()]);
             if ($exchangeGoods->count() > 0) {
                 //生成发货单;
                 //库存修改
@@ -264,22 +269,26 @@ class AfterSaleController extends Controller
                     'address_id' => $model->order->address_id,
                 ];
                 $assignmodel = Assign::create($data);
+                if (!$assignmodel) {
+                    throw new \Exception('生成发货单失败');
+                }
                 $newGoods = [];
                 foreach ($exchangeGoods as $xGoods){
                     $newModel = $xGoods->replicate();
-                    $newModel->setExchangeStatus();
+                    $newModel->setResendSatus();
                     $newModel->assign_id = $assignmodel->id;
                     $newModel->save();
+                    $newModel->goods_number = $newModel->return_num;
                     $newGoods[]  = $newModel;
                 }
 
-                $service = new InventoryService();
-                $service->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
+//                 $service = new InventoryService(); 生成换货锁定
+                $serve->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->error($e->getMessage());
+            return $this->error([],$e->getMessage());
         }
         if($re){
             return $this->success([]);
@@ -378,6 +387,7 @@ class AfterSaleController extends Controller
                 $tmpModel = OrderGoods::find($product['id']);
                 $tmpModel->return_inventory = $product['return_inventory'];
                 $tmpModel->destroy_num = $product['destroy_num'];
+                $tmpModel->destroy_time = Date('Y-m-d H:i:s');
                 $re2 = $tmpModel->save();
                 
                 if (!$re2) {
@@ -387,7 +397,8 @@ class AfterSaleController extends Controller
                 $tmpModel->goods_number = $tmpModel->destroy_num;
                 $productModels[] = $tmpModel;
             }
-            $serve->rxUpdateout($after->entrepot, collect($productModels), $request->user());
+            //坏货出库?
+            $serve->destroyUpdateOut($after->entrepot, collect($productModels), $request->user());
         } catch (\Exception $e) {
             DB::rollback();
             return $this->error([], $e->getMessage());
