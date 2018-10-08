@@ -282,7 +282,7 @@ class AfterSaleController extends Controller
                     $newGoods[]  = $newModel;
                 }
 
-//                 $service = new InventoryService();
+//                 $service = new InventoryService(); 生成换货锁定
                 $serve->exLock($model->order->entrepot, $newGoods, auth()->user(), $model->return_sn);
             }
             DB::commit();

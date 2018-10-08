@@ -83,6 +83,10 @@ class OrderGoods extends Model implements GoodsContracts
     {
         return $this->status == self::STATUS_RETURN;
     }
+    public function isResend()
+    {
+        $this->status = self::STATUS_EXCHANGE_SEND;
+    }
     
     public function setExchangeStatus()
     {

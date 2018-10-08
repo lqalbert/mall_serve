@@ -132,7 +132,7 @@ class OrderGoodsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(InventoryService $serve, $id)
     {
         //返回 int
         $goodsModel = OrderGoods::where('id',$id)->select('order_id')->first();
@@ -141,7 +141,8 @@ class OrderGoodsController extends Controller
         if($orderCheck){
             return $this->error([], "审核未通过或未审核不能删除");
         }
-        
+        //把库存还回去
+        $serve->saleUnLock($orderModel->entrepot, [$goodsModel], auth()->user());
         $this->updateOrderMoney($orderModel);
         $re = $this->repository->delete($id);
         if ($re) {
@@ -172,9 +173,9 @@ class OrderGoodsController extends Controller
         $orderModel->order_pay_money = $orderModel->discounted_goods_money + $orderModel->freight;
 //         logger("[order_pay_money]", [$orderModel->order_pay_money]);
         $re = $orderModel->save();
-        logger("[order_all_money]", [$orderModel->order_all_money]);
-        logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
-        logger("[order_pay_money]", [$orderModel->order_pay_money]);
+//         logger("[order_all_money]", [$orderModel->order_all_money]);
+//         logger("[discounted_goods_money]", [$orderModel->discounted_goods_money]);
+//         logger("[order_pay_money]", [$orderModel->order_pay_money]);
         if (!$re) {
             throw  new \Exception('更新订单失败');
         }
