@@ -42,6 +42,7 @@ class SalesGoodsStatisticsController extends Controller
         $innerSaleMoneyBuilder = $this->innerSaleMoney($start, $end);
         $shopSaleMoneyBuilder = $this->shopSaleMoney($start, $end);
         $sampleSaleMoneyBuilder = $this->sampleSaleMoney($start, $end);
+        $destroyCount = $this->destroyCount($start, $end);
 
         $result = DB::table('inventory_system as iso')->select(
                         'iso.sku_sn','iso.goods_name',
@@ -57,7 +58,8 @@ class SalesGoodsStatisticsController extends Controller
                         DB::raw('sm.money as sale_money'),
                         DB::raw('ism.money*0.6 as inner_sale_money'),
                         DB::raw('ssm.money as shop_sale_money'),
-                        DB::raw('spsm.money as sample_sale_money')
+                        DB::raw('spsm.money as sample_sale_money'),
+                        DB::raw('dc.destroyNum as destroy_count')
                     )
                     ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
@@ -79,6 +81,8 @@ class SalesGoodsStatisticsController extends Controller
                     ->mergeBindings($shopSaleMoneyBuilder)
                     ->leftJoin(DB::raw("({$sampleSaleMoneyBuilder->toSql()}) as spsm"),'iso.sku_sn','=','spsm.sku_sn')
                     ->mergeBindings($sampleSaleMoneyBuilder)
+                    ->leftJoin(DB::raw("({$destroyCount->toSql()}) as dc"),'iso.sku_sn','=','dc.sku_sn')
+                    ->mergeBindings($destroyCount)
                     ->where($where)->orderBy($orderField,$orderWay)
                     ->paginate($pageSize);
 
@@ -280,6 +284,20 @@ class SalesGoodsStatisticsController extends Controller
                 ['sample_basic.check_time',"<=", $end],
             ])->groupBy('sku_sn');
     }
+    /**
+     * [destroyCount 损坏数]
+     * @param  [type] $start [description]
+     * @param  [type] $end   [description]
+     * @return [type]        [description]
+     */
+    private function destroyCount($start,$end){
+        return DB::table('order_goods')->select(
+                DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn')
+            ->where([
+                ['order_goods.destroy_time',">=", $start],
+                ['order_goods.destroy_time',"<=", $end],
+            ])->groupBy('sku_sn');
+    }
 
 //******************************************以下为部门的**************************************************************
     public function getDepSaleGoods(Request $request, $sku){
@@ -297,6 +315,7 @@ class SalesGoodsStatisticsController extends Controller
         $depRefundBuilder = $this->depRefundNum($sku,$start, $end);
         $depSampleBuilder = $this->depSampleNum($sku,$start, $end);
         $depSampleMoneyBuilder = $this->depSampleMoney($sku,$start, $end);
+        $depDestroyCountBuilder = $this->depDestroyCount($sku,$start, $end);
 
         $result = DB::table('department_basic as db')->select(
                 'db.manager_id',
@@ -307,11 +326,12 @@ class SalesGoodsStatisticsController extends Controller
                 DB::raw('dss.goods_num as shop_num'),
                 DB::raw('dsp.goods_num as sample_num'),
                 DB::raw('drf.goods_num as ref_num'),
+                DB::raw('ddc.destroyNum as destroy_count'),
                 DB::raw('dsm.money as sale_money'),
                 DB::raw('dism.money*0.6 as inner_sale_money'),
                 DB::raw('dssm.money as shop_sale_money'),
                 DB::raw('dspm.money as sample_sale_money')
-                
+
             )->join('user_basic as ub','db.manager_id','=','ub.id')
             ->leftJoin(DB::raw("({$depSaleBuilder->toSql()}) as ds"),'db.id','=','ds.department_id')
             ->mergeBindings($depSaleBuilder)
@@ -331,6 +351,8 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depSampleBuilder)
             ->leftJoin(DB::raw("({$depSampleMoneyBuilder->toSql()}) as dspm"),'db.id','=','dspm.department_id')
             ->mergeBindings($depSampleMoneyBuilder)
+            ->leftJoin(DB::raw("({$depDestroyCountBuilder->toSql()}) as ddc"),'db.id','=','ddc.department_id')
+            ->mergeBindings($depDestroyCountBuilder)
             ->where([
                 ['db.type',0],
                 ['db.status',1],
@@ -572,7 +594,22 @@ class SalesGoodsStatisticsController extends Controller
             ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
             ->where($where)->groupBy('department_id');
     }
-
+    /**
+     * [destroyCount 损坏数]
+     * @param  [type] $start [description]
+     * @param  [type] $end   [description]
+     * @return [type]        [description]
+     */
+    private function depDestroyCount($sku,$start,$end){
+        return DB::table('order_goods')->select(
+            DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn','department_id')
+            ->join('order_basic','order_basic.id','=','order_goods.order_id')
+            ->where([
+                ['order_goods.destroy_time',">=", $start],
+                ['order_goods.destroy_time',"<=", $end],
+                ['order_goods.sku_sn',"=", $sku]
+            ])->groupBy('department_id');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -657,7 +694,7 @@ class SalesGoodsStatisticsController extends Controller
             $value = collect($value)->except([
                 'invent_num','sale_money','inner_sale_money',
                 'shop_sale_money','sample_sale_money','produce_in_total'])->toArray();
-            $value['destroy_count']="暂无";
+//            $value['destroy_count']="暂无";
             
             $sku = $value['sku_sn'];
             array_push($arr, $value);
@@ -670,7 +707,7 @@ class SalesGoodsStatisticsController extends Controller
 
                 array_unshift($v,'');
                 // array_splice($v,-1,0,['sample_num'=>"暂无"]);
-                $v['destroy_count']="暂无";
+//                $v['destroy_count']="暂无";
                 array_push($arr,$v);
             }
             
