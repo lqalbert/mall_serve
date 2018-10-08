@@ -49,6 +49,10 @@ class OrderlistService
             // $where[]=['order_sn','=',$this->request->order_sn];
             $this->repository->pushCriteria(new FieldEqual('order_sn', $this->request->order_sn));
         }
+        if ($this->request->has('order_pay_money')) {
+            // $where[]=['order_pay_money','=',$this->request->order_pay_money];
+            $this->repository->pushCriteria(new FieldEqual('order_pay_money', $this->request->order_pay_money));
+        }
         if ($this->request->has('goods_name')) {
             $goods = DB::table('goods_basic')
                 ->where('goods_name', 'like', $this->request->goods_name."%")
