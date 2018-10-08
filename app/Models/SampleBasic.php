@@ -24,10 +24,12 @@ class SampleBasic extends Model
 		'check_remark',
 		'app_time',
 		'check_time',
-        'entrepot_id'
+        'entrepot_id',
+        'department_id',
+        'department_name'
     ];
 
-        /**
+    /**
      * 审核状态
      * 索引
      * @var array

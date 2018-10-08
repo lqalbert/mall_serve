@@ -55,7 +55,7 @@ class SalesGoodsStatisticsController extends Controller
                         DB::raw('refu.goods_num as ref_num'),
                         // DB::raw('inven.goods_num as invent_num'),
                         DB::raw('sm.money as sale_money'),
-                        DB::raw('ism.money as inner_sale_money'),
+                        DB::raw('ism.money*0.6 as inner_sale_money'),
                         DB::raw('ssm.money as shop_sale_money'),
                         DB::raw('spsm.money as sample_sale_money')
                     )
@@ -295,6 +295,8 @@ class SalesGoodsStatisticsController extends Controller
         $depShopSaleBuilder = $this->depShopSaleNum($sku,$start, $end);
         $depShopSaleMoneyBuilder = $this->depShopSaleMoney($sku,$start, $end);
         $depRefundBuilder = $this->depRefundNum($sku,$start, $end);
+        $depSampleBuilder = $this->depSampleNum($sku,$start, $end);
+        $depSampleMoneyBuilder = $this->depSampleMoney($sku,$start, $end);
 
         $result = DB::table('department_basic as db')->select(
                 'db.manager_id',
@@ -303,10 +305,12 @@ class SalesGoodsStatisticsController extends Controller
                 DB::raw('ds.goods_num as sale_num'),
                 DB::raw('dis.goods_num as inner_num'),
                 DB::raw('dss.goods_num as shop_num'),
+                DB::raw('dsp.goods_num as sample_num'),
                 DB::raw('drf.goods_num as ref_num'),
                 DB::raw('dsm.money as sale_money'),
-                DB::raw('dism.money as inner_sale_money'),
-                DB::raw('dssm.money as shop_sale_money')
+                DB::raw('dism.money*0.6 as inner_sale_money'),
+                DB::raw('dssm.money as shop_sale_money'),
+                DB::raw('dspm.money as sample_sale_money')
                 
             )->join('user_basic as ub','db.manager_id','=','ub.id')
             ->leftJoin(DB::raw("({$depSaleBuilder->toSql()}) as ds"),'db.id','=','ds.department_id')
@@ -323,6 +327,10 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depShopSaleMoneyBuilder)
             ->leftJoin(DB::raw("({$depRefundBuilder->toSql()}) as drf"),'db.id','=','drf.department_id')
             ->mergeBindings($depRefundBuilder)
+            ->leftJoin(DB::raw("({$depSampleBuilder->toSql()}) as dsp"),'db.id','=','dsp.department_id')
+            ->mergeBindings($depSampleBuilder)
+            ->leftJoin(DB::raw("({$depSampleMoneyBuilder->toSql()}) as dspm"),'db.id','=','dspm.department_id')
+            ->mergeBindings($depSampleMoneyBuilder)
             ->where([
                 ['db.type',0],
                 ['db.status',1],
@@ -416,7 +424,7 @@ class SalesGoodsStatisticsController extends Controller
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)->groupBy('department_id');
     }
-    
+
     /**
      * [innerSaleMoney 内购金额]
      * @param  [type] $start [description]
@@ -518,6 +526,54 @@ class SalesGoodsStatisticsController extends Controller
     }
 
     /**
+     * 样品数量
+     * @param unknown $start
+     * @param unknown $end
+     */
+    private function depSampleNum($sku,$start, $end) 
+    {
+        $where = [
+            ['sample_basic.check_status',1],
+            ['sample_basic.check_time',">=", $start],
+            ['sample_basic.check_time',"<=", $end],
+            ['sample_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
+        return DB::table('sample_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn','department_id'
+            )
+            ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            ->where($where)->groupBy('department_id');
+    }
+
+    /**
+     * 样品金额
+     * @param unknown $start
+     * @param unknown $end
+     */
+    private function depSampleMoney($sku,$start, $end) 
+    {
+        $where = [
+            ['sample_basic.check_status',1],
+            ['sample_basic.check_time',">=", $start],
+            ['sample_basic.check_time',"<=", $end],
+            ['sample_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
+        return DB::table('sample_basic')->select(
+            DB::raw("sum(`goods_number`*`price`) as money"),
+            'sku_sn','department_id'
+            )
+            ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            ->where($where)->groupBy('department_id');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -610,10 +666,10 @@ class SalesGoodsStatisticsController extends Controller
                 $v = collect($v)->toArray();
                 $v = collect($v)->except([
                 'manager_id','department_manager','sale_money',
-                'inner_sale_money','shop_sale_money'])->toArray();
+                'inner_sale_money','shop_sale_money','sample_sale_money'])->toArray();
 
                 array_unshift($v,'');
-                array_splice($v,-1,0,['sample_num'=>"暂无"]);
+                // array_splice($v,-1,0,['sample_num'=>"暂无"]);
                 $v['destroy_count']="暂无";
                 array_push($arr,$v);
             }
@@ -666,7 +722,21 @@ class SalesGoodsStatisticsController extends Controller
 
     }
 
+    public function importOrder(){
+        $fileName = iconv('UTF-8', 'GBK//IGNORE', 'taskid').'.csv';//测试的文档
+        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
+        $content = file_get_contents($filePath);
+        $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
+        // echo $filePath;
+        $data = Excel::load($filePath,function($reader){
+            // $data = $reader->all();
+            // var_dump($reader->getTitle());
+            // $reader->getTitle();
+            // $reader->dump();
+        },$fileType)->toArray();
 
+        var_dump($data);
+    }
 
 
 
