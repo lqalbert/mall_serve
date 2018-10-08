@@ -35,7 +35,7 @@ class SysNotice extends Model
     
     public function getTypeTextAttribute()
     {
-        return isset($this->types[$this->type]) ? $this->types[$this->type]: '其它公告';
+        return isset($this->types[$this->type_id]) ? $this->types[$this->type_id]: '其它公告';
     }
     
     public function getShortContentAttribute()

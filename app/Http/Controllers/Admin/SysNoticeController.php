@@ -26,7 +26,7 @@ class SysNoticeController extends Controller
         $where=[];
         if ($request->has('title')){
 //            $where['sys_notices.title']=$request->input('title');
-            $where[]=['sys_notices.title','like',$request->input('title')."%"];
+            $where[]=['title','like',$request->input('title')."%"];
         }
 //         $data = $this->model
 //             ->join('user_basic','user_basic.id','=','sys_notices.user_id')
@@ -37,7 +37,7 @@ class SysNoticeController extends Controller
         
         $this->model = $this->model->with('user')->orderBy('id','desc');
        
-       $result = $this->model->paginate($request->input('pageSize'));
+       $result = $this->model->where($where)->paginate($request->input('pageSize'));
        
        $collection = $result->getCollection();
        
