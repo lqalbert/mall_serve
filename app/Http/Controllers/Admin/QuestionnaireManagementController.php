@@ -126,9 +126,38 @@ class QuestionnaireManagementController extends Controller
      * @param  \App\Models\QuestionnaireManagement  $questionnaireManagement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, QuestionnaireManagement $questionnaireManagement)
+    public function update(Request $request,$id)
     {
-        //
+        $user = auth()->user();
+        $data = $request->except('optionsData');
+        $data['user_id'] = $user->id;
+        $data['user_name'] = $user->realname;
+        $optionsData = $request->input('optionsData');
+        DB::beginTransaction();
+        try{
+            $res =   $this->model->where('id',$id)->update($data);
+            if($optionsData){
+                foreach ($optionsData as $k=>$v){
+                    $optionsData[$k]['questionnaire_managements_id'] = $id;
+                    $optionsData[$k]['created_at'] =  Carbon::now();
+                    $optionsData[$k]['updated_at'] =  Carbon::now();
+                }
+                $re = QuestionnaireOptions::insert($optionsData);
+                if($res && $re){
+                    DB::commit();
+                }
+            }else{
+                if($res){
+                    DB::commit();
+                }
+            }
+
+        }catch (\Error $e){
+            DB::rollback();
+            throw $e;
+        }
+        return $this->success([]);
+
     }
 
     /**
@@ -137,8 +166,13 @@ class QuestionnaireManagementController extends Controller
      * @param  \App\Models\QuestionnaireManagement  $questionnaireManagement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(QuestionnaireManagement $questionnaireManagement)
+    public function destroy($id)
     {
-        //
+        $res = $this->model->destroy($id);
+       if($res){
+           return $this->success([]);
+       }else{
+           return $this->error([]);
+       }
     }
 }

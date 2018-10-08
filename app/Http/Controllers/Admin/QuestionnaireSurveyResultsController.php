@@ -6,6 +6,8 @@ use App\Models\QuestionnaireSurveyResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\QuestionnaireOptions;
+use App\Models\QuestionnaireManagement;
+use Carbon\Carbon;
 class QuestionnaireSurveyResultsController extends Controller
 {
     public $model = null;
@@ -35,6 +37,9 @@ class QuestionnaireSurveyResultsController extends Controller
             case 'info':
                 return $this->getInfo();
                 break;
+            case 'copy':
+                return $this->copyQuestionnaire();
+                break;
             default:
                 $questionnaire_url = env('QUESTIONNAIRE_URL');
                 return ['questionnaire_url'=>$questionnaire_url];
@@ -42,7 +47,31 @@ class QuestionnaireSurveyResultsController extends Controller
 
 
     }
-
+    public function copyQuestionnaire(){
+        $questionnaire_managements_id = $this->request->input('questionnaire_managements_id');
+        $management_data = QuestionnaireManagement::where('id',$questionnaire_managements_id)->select(['title','start_time','end_time'])->first()->toArray();
+        $option_data = QuestionnaireOptions::where('questionnaire_managements_id',$questionnaire_managements_id)->select(['problem_type','topic_name','option_a','option_b','option_c','option_d','option_e'])->get()->toArray();
+        $user = auth()->user();
+        $management_data['user_id'] = $user->id;
+        $management_data['user_name'] = $user->realname;
+        DB::beginTransaction();
+        try{
+            $res = QuestionnaireManagement::create($management_data);
+            foreach ($option_data as $k=>$v){
+                $option_data[$k]['questionnaire_managements_id'] = $res->id;
+                $option_data[$k]['created_at'] =  Carbon::now();
+                $option_data[$k]['updated_at'] =  Carbon::now();
+            }
+            $re = QuestionnaireOptions::insert($option_data);
+            if($res && $re){
+                DB::commit();
+            }
+        }catch (\Error $e){
+            DB::rollback();
+            throw $e;
+        }
+        return $this->success([]);
+    }
     public function getSurveyResults()
     {
         $questionnaire_managements_id = $this->request->input('questionnaire_managements_id');
@@ -54,7 +83,9 @@ class QuestionnaireSurveyResultsController extends Controller
             ->get()
             ->toArray();
 //        var_dump($data);die;
-
+        if(!$data){
+            $data = QuestionnaireOptions::where('questionnaire_managements_id',$questionnaire_managements_id)->select(['id as questionnaire_options_id','questionnaire_managements_id','problem_type','topic_name','option_a','option_b','option_c','option_d','option_e'])->get();
+        }
         foreach($data as $k=>$v){
             $data[$k]->a_ratio =($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total) ? round( ($v->a_total / ($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total)),4) * 100 .'%' : '';
             $data[$k]->b_ratio =($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total) ? round( ($v->b_total / ($v->a_total+$v->b_total+$v->c_total+$v->d_total+$v->e_total)),4) * 100 .'%' : '';

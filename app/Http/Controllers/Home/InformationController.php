@@ -73,7 +73,11 @@ class InformationController extends CommonController
             return $this->error([],'你还没有注册!',0);
         }else {
             $cus_id = $user->cus_id;
-            $has_user = DB::table('questionnaire_survey_results')->where('cus_id',$cus_id)->first();
+            $questionnaire_managements_id = $this->request->input('questionnaire_managements_id');
+            $where = [];
+            $where[] = ['cus_id','=',$cus_id];
+            $where[] = ['questionnaire_managements_id','=',$questionnaire_managements_id];
+            $has_user = DB::table('questionnaire_survey_results')->where($where)->first();
             if(!$has_user){
                 foreach ($questionnaires_ids as $k1 =>$v1){
                     $tmp = [];
