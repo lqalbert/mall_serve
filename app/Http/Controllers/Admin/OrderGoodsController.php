@@ -135,16 +135,26 @@ class OrderGoodsController extends Controller
     public function destroy(InventoryService $serve, $id)
     {
         //返回 int
-        $goodsModel = OrderGoods::where('id',$id)->select('order_id')->first();
-        $orderModel = OrderBasic::find($goodsModel->order_id);
-        $orderCheck = $orderModel->isPass();
-        if($orderCheck){
-            return $this->error([], "审核未通过或未审核不能删除");
+        DB::beginTransaction();
+        try {
+            $goodsModel = OrderGoods::find($id); // where('id',$id)->select('order_id')->first();
+            $orderModel = OrderBasic::find($goodsModel->order_id);
+            $orderCheck = $orderModel->isPass();
+            if($orderCheck){
+                //                 return $this->error([], "审核未通过或未审核不能删除");
+                throw new \Exception("审核未通过或未审核不能删除");
+            }
+            //把库存还回去
+            $serve->saleUnLock($orderModel->entrepot, [$goodsModel], auth()->user());
+            $this->updateOrderMoney($orderModel);
+            $re = $this->repository->delete($id);
+            
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+//             throw $e;
         }
-        //把库存还回去
-        $serve->saleUnLock($orderModel->entrepot, [$goodsModel], auth()->user());
-        $this->updateOrderMoney($orderModel);
-        $re = $this->repository->delete($id);
+        DB::commit();
         if ($re) {
             return $this->success([]);
 //             return 1;
