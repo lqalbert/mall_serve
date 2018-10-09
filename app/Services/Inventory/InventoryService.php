@@ -70,6 +70,9 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->saleLock($entrepot->id, $products, false);
+//             foreach ($products as &$item) {
+//                 $item->goods_number = - $item->goods_number;
+//             }
 //             $this->log->saleLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
