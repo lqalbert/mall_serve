@@ -146,8 +146,8 @@ class OrderGoodsController extends Controller
             }
             //把库存还回去
             $serve->saleUnLock($orderModel->entrepot, [$goodsModel], auth()->user());
-            $this->updateOrderMoney($orderModel);
             $re = $this->repository->delete($id);
+            $this->updateOrderMoney($orderModel);
             
         } catch (\Exception $e) {
             DB::rollback();

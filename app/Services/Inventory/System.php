@@ -213,7 +213,7 @@ class System
         //         DB::beginTransaction();
         try{
             foreach ($products as $product) {
-                $affectedRows = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?, return_in = return_in + ? ',
+                $affectedRows = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?, destroy_count = destroy_count + ? ',
                     [ $product->getNum(), $product->getNum(),$product->getNum(),$entrepot_id, $product->getSkuSn() ]);
                 $this->updateIsSuccess($affectedRows);
             }
