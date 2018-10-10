@@ -769,7 +769,7 @@ class SalesGoodsStatisticsController extends Controller
             $csvArr[] = user_str_getcsv($convertString,",",'"');
         }
         
-        
+        //1111
         
 //         $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
         // echo $filePath;
