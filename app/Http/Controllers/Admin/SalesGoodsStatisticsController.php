@@ -760,19 +760,27 @@ class SalesGoodsStatisticsController extends Controller
     }
 
     public function importOrder(){
-        $fileName = iconv('UTF-8', 'GBK//IGNORE', 'taskid').'.csv';//测试的文档
+        $fileName = iconv('UTF-8', 'GBK//IGNORE', '19453840').'.csv';//测试的文档
         $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
-        $content = file_get_contents($filePath);
-        $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
+        $contentArr = file($filePath);
+        $csvArr = [];
+        foreach ($contentArr as $line) {
+            $convertString = iconv('GB2312','UTF-8//IGNORE', $line);
+            $csvArr[] = user_str_getcsv($convertString,",",'"');
+        }
+        
+        
+        
+//         $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
         // echo $filePath;
-        $data = Excel::load($filePath,function($reader){
-            // $data = $reader->all();
-            // var_dump($reader->getTitle());
-            // $reader->getTitle();
-            // $reader->dump();
-        },$fileType)->toArray();
+//         $data = Excel::load($filePath,function($reader){
+//             // $data = $reader->all();
+//             // var_dump($reader->getTitle());
+//             // $reader->getTitle();
+//             // $reader->dump();
+//         },'gb2312')->convert('xls');//->toArray();
 
-        var_dump($data);
+        dd($csvArr);
     }
 
 
