@@ -61,7 +61,7 @@
                             @if (isset($importantGoods))
                                 @foreach ($importantGoods as $goods)
                                     <div class="swiper-slide">
-                                        <a href="{{ url($goods->href_url) }}" style="color: #333;text-decoration: none;">
+                                        <a href="{{ url(empty($goods->href_url) ? '#' : $goods->href_url) }}" style="color: #333;text-decoration: none;">
                                             <div class="indexList">
                                                 <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
                                                 <div class="title">
@@ -91,7 +91,7 @@
                             @if (isset($goodGoods))
                                 @foreach ($goodGoods as $goods)
                                     <div class="swiper-slide">
-                                        <a href="{{ url($goods->href_url) }}">
+                                        <a href="{{ url(empty($goods->href_url) ? '#' : $goods->href_url) }}">
                                             <div class="indexList">
                                                 <img src="{{ asset($goods->cover_url) }}" alt="{{$goods->name}}">
                                                 <div class="title">

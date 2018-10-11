@@ -95,8 +95,8 @@ ET;
         select count(cb.id) as cus_count, count(cba.id) as c_cus_count, count(cbb.id) as b_cus_count, 
                IFNULL(ob.obcus_count, 0) as obcus_count, IFNULL(ob.ob_count,0) as ob_count, 
                count(cus.id) as track_count, cu.{$groupBy}, ob.sum_freight, ob_freight.sum_freight as company_freight, ob2.obcus_count as sobcus_count,
-               cu.department_name,
-               cu.group_name,
+               depart_name.name as department_name,
+               group_name.name as group_name,
                cu.user_name,
                count(cbc.id) as a_cus_count,
                count(cbd.id) as d_cus_count,
@@ -104,6 +104,8 @@ ET;
                count(cbf.id) as n_cus_count
         from customer_basic as cb 
         inner join customer_user as cu on cb.id = cu.cus_id
+        left join department_basic as depart_name on cu.department_id=depart_name.id
+        left join group_basic as group_name on cu.group_id=group_name.id
         left join  (select count( distinct cus_id) as obcus_count, count(id) as ob_count , order_basic.{$groupBy}, sum(order_basic.freight) as sum_freight
                     from order_basic 
                     where   order_basic.status>0 and order_basic.status<7   and order_basic.created_at >= '{$start}'
