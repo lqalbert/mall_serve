@@ -48,7 +48,8 @@ class AfterSale extends Model
         'remark',
         'resend_fee',
         'reservice_fee',
-        'inventory_state'
+        'inventory_state',
+        'reason'
     ];
     
     protected $events = [
