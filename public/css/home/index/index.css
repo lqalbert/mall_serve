@@ -262,7 +262,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     max-width:100%;
     height: auto;
     margin: 0 auto;
-    background: #2ab27b;
+    #background: #2ab27b;
     border-radius: 2px;
 }
 

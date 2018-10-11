@@ -313,7 +313,7 @@ class OrderBasicController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            logger('dd',[$e->getMessage()]);
+//             logger('dd',[$e->getMessage()]);
             return $this->error([], $e->getMessage());
         }
 
