@@ -129,7 +129,7 @@ ET;
         left join customer_basic as cbe on cb.id = cbe.id and cbe.type = 'F'
         left join customer_basic as cbf on cb.id = cbf.id and cbf.type = 'N'
         left join customer_user as cus on cus.id = cu.id  and cus.last_track is not null
-        where cu.type = 0 
+        where cu.type = 0 and cu.department_id <> 11
         and   cb.created_at >= '{$start}'
               and cb.created_at <= '{$end}'
               where_str_
