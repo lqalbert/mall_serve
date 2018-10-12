@@ -277,8 +277,9 @@ class AfterSaleController extends Controller
                     $newModel = $xGoods->replicate();
                     $newModel->setResendSatus();
                     $newModel->assign_id = $assignmodel->id;
-                    $newModel->save();
                     $newModel->goods_number = $newModel->return_num;
+                    $newModel->save();
+//                     $newModel->goods_number = $newModel->return_num;
                     $newGoods[]  = $newModel;
                 }
 
