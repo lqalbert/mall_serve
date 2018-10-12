@@ -168,7 +168,7 @@ ET;
             select count(b.id) as in_count , b.`{$groupBy}`
             from customer_user as a
             inner join customer_user as b on a.cus_id = b.cus_id
-            where  b.`{$groupBy}` != a.`{$groupBy}`  and b.created_at >= '{$start}' and b.created_at <= '$end' and   (b.type=1 or b.type=2)
+            where  b.`{$groupBy}` != a.`{$groupBy}`  and a.deleted_at is not null and  b.created_at >= '{$start}' and b.created_at <= '$end' and   (b.type=1 or b.type=2)
             group by b.`{$groupBy}`
 ET;
         return ['sql'=>$sql, 'binds'=>$binds];
@@ -187,8 +187,8 @@ ET;
             select count(a.id) as out_count , a.`{$groupBy}`
             from customer_user as a
             inner join customer_user as b on a.cus_id = b.cus_id
-            where a.`{$groupBy}` != b.`{$groupBy}` and a.deleted_at >= '{$start}' and a.deleted_at <= '$end' and  (b.type=1 or b.type=2)
-            group by b.`{$groupBy}`
+            where a.`{$groupBy}` != b.`{$groupBy}` and a.deleted_at is not null and  a.deleted_at >= '{$start}' and a.deleted_at <= '$end' and  (b.type=1 or b.type=2)
+            group by a.`{$groupBy}`
 ET;
         return ['sql'=>$sql, 'binds'=>$binds];
     }
