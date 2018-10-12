@@ -79,6 +79,12 @@ class AfterSale extends Model
         return $map[$this->attributes['check_status']];
     }
     
+    public function getStatusTextAttribute()
+    {
+        $map = ['未处理','已审核','已确认','审核未通过'];
+        return $map[$this->attributes['status']];
+    }
+    
     public function getTypeTextAttribute()
     {
         $map = ['退货', '换货'];
