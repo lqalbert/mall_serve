@@ -184,7 +184,7 @@ ET;
             from customer_user as a
             inner join customer_user as b on a.cus_id = b.cus_id
             where a.`{$groupBy}` != b.`{$groupBy}` and a.deleted_at >= '{$start}' and a.deleted_at <= '{$end}' and  (b.type=1 or b.type=2)
-            group by b.`{$groupBy}`
+            group by a.`{$groupBy}`
 ET;
         return ['sql'=>$sql, 'binds'=>$binds];
     }
