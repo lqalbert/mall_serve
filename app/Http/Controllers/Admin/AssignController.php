@@ -391,7 +391,7 @@ class AssignController extends Controller
                     $order->save();
                     //保证金
                     $department = $order->department;
-                    $department->addDeposit($order->discounted_goods_money);
+                    $department->addDeposit($order->order_pay_money);
                     $department->save();
                 } catch (\Exception $e) {
                     DB::rollback();

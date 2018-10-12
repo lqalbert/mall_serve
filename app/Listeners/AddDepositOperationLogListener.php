@@ -31,7 +31,7 @@ class AddDepositOperationLogListener
         $orderModel = $event->orderModel;
         $order_sn = $orderModel->order_sn;
         $dep = $orderModel->department->name;
-        $money = $orderModel->discounted_goods_money;
+        $money = $orderModel->order_pay_money;
 
         $this->operationModel->operator_id = $event->user->id;
         $this->operationModel->operator = $event->user->realname;
