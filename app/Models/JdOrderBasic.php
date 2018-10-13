@@ -38,6 +38,8 @@ class JdOrderBasic extends Model
         "is_toplife"
     ];
 
+    protected $guarded = [];
+    
     //头部字段
     public static $fieldsName = [
     	"order_sn",

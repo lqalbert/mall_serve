@@ -70,8 +70,6 @@ class JdOrderImportController extends Controller
 
         $this->handleOrderDatas($newData);
 
-       
-
         /*$fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
         echo $filePath;
         $data = Excel::load($filePath,function($reader){
@@ -94,6 +92,7 @@ class JdOrderImportController extends Controller
         $orderBasic = [];
         $cusBasic = [];
         $orderAddress = [];
+
         foreach ($s as $k => $v) {
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
                 "all_money","pay_money","pay_balance","status","type","remark","express_fee","pay_way",
@@ -110,37 +109,91 @@ class JdOrderImportController extends Controller
             $cusBasic[] = collect($v)->only(["order_sn","cus_name","tel","order_account"])->toArray();
 
             $orderAddress[] = collect($v)->only(["order_sn","cus_name","address","tel","zip_code","email"])->toArray();
+
+            $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
+                        "goods_price","entrepot_id","entrepot_name"])->toArray();
+
+            $otherDatas[] = collect($v)->only(["order_sn","invoice_type","invoice_head","invoice_content",
+                            "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
+                            "shop_sku_id"])->toArray();
         }
         
         //商品表数据 orderGoods 其他表 otherDatas
-        $sDatas = collect($newData)->groupBy('order_sn')->toArray();//以订单号为索引
-        $orderGoods = $sDatas;
-        $otherDatas = $sDatas;
-        foreach ($orderGoods as $k1 => &$v1) {
-            foreach ($v1 as $ke => &$val) {
-                $val = collect($val)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-                        "goods_price","entrepot_id","entrepot_name"])->toArray();
-            }
-            unset($val);
-        }
-        unset($v1);
+        $orderGoods = [];
+        $otherDatas = [];
+        foreach ($newData as $key => $value) {
+            $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
+                            "goods_price","entrepot_id","entrepot_name"])->toArray();
 
-        foreach ($otherDatas as $k2 => &$v2) {
-            foreach ($v2 as $key => &$value) {
-                $value = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
+            $otherDatas[] = collect($v)->only(["order_sn","invoice_type","invoice_head","invoice_content",
                             "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
                             "shop_sku_id"])->toArray();
-            }
-            unset($value);
         }
-        unset($v2);
+
+        //以订单号为索引 暂时不用
+        // $sDatas = collect($newData)->groupBy('order_sn')->toArray();
+        // $orderGoods = $sDatas;
+        // $otherDatas = $sDatas;
+        // foreach ($orderGoods as $k1 => &$v1) {
+        //     foreach ($v1 as $ke => &$val) {
+        //         $val = collect($val)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
+        //                 "goods_price","entrepot_id","entrepot_name"])->toArray();
+        //     }
+        //     unset($val);
+        // }
+        // unset($v1);
+
+        // foreach ($otherDatas as $k2 => &$v2) {
+        //     foreach ($v2 as $key => &$value) {
+        //         $value = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
+        //                     "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
+        //                     "shop_sku_id"])->toArray();
+        //     }
+        //     unset($value);
+        // }
+        // unset($v2);
 
         // dd($orderBasic);
         $this->soreOrderDatas($orderBasic,$cusBasic,$orderAddress,$orderGoods,$otherDatas);
     }
 
 
-    private function soreOrderDatas($orderBasic,$cusBasic,$orderAddress,$orderGoodsarray,$otherDatas){
+    private function soreOrderDatas($basic,$cus,$address,$goods,$other){
+        // dd($goods);
+        DB::beginTransaction();
+        try {
+            $reBasic = JdOrderBasic::insert($basic);
+            if(!$reBasic){
+                throw new \Exception("订单保存失败"); 
+            }
+
+            $reCus = JdOrderCustomer::insert($cus);
+            if(!$reCus){
+                throw new \Exception("订单客户保存失败"); 
+            }
+
+            $reAddress= JdOrderAddress::insert($address);
+            if(!$reAddress){
+                throw new \Exception("订单地址保存失败"); 
+            }
+
+            $reGoods= JdOrderGoods::insert($goods);
+            if(!$reGoods){
+                throw new \Exception("订单商品保存失败"); 
+            }
+
+            $reOther= JdOrderOther::insert($other);
+            if(!$reOther){
+                throw new \Exception("订单其他数据保存失败"); 
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+
+        return  $this->success([],"导入数据并保存成功");
 
     }
 
