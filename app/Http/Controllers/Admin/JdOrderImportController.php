@@ -122,14 +122,14 @@ class JdOrderImportController extends Controller
         $orderGoods = [];
         $otherDatas = [];
         foreach ($newData as $key => $value) {
-            $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
+            $orderGoods[] = collect($value)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
                             "goods_price","entrepot_id","entrepot_name"])->toArray();
 
-            $otherDatas[] = collect($v)->only(["order_sn","invoice_type","invoice_head","invoice_content",
+            $otherDatas[] = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
                             "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
                             "shop_sku_id"])->toArray();
         }
-
+        
         //以订单号为索引 暂时不用
         // $sDatas = collect($newData)->groupBy('order_sn')->toArray();
         // $orderGoods = $sDatas;
@@ -157,7 +157,15 @@ class JdOrderImportController extends Controller
         $this->soreOrderDatas($orderBasic,$cusBasic,$orderAddress,$orderGoods,$otherDatas);
     }
 
-
+    /**
+     * [soreOrderDatas 将数据存入数据库]
+     * @param  [type] $basic   [description]
+     * @param  [type] $cus     [description]
+     * @param  [type] $address [description]
+     * @param  [type] $goods   [description]
+     * @param  [type] $other   [description]
+     * @return [type]          [description]
+     */
     private function soreOrderDatas($basic,$cus,$address,$goods,$other){
         // dd($goods);
         DB::beginTransaction();
