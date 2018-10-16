@@ -21,8 +21,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-       // 'SalesPerformance',
-       // 'SalesQuantization',
+       'SalesPerformance',
+       'SalesQuantization',
         'http://ws.pulata.com.cn:8888/login'
     ],
     'human-resources' => [
@@ -45,8 +45,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-       // 'SalesPerformance',
-       // 'SalesQuantization',
+       'SalesPerformance',
+       'SalesQuantization',
         'http://ws.pulata.com.cn:8888/login'
     ],
     'sale-staff' => [
