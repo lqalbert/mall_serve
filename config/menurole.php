@@ -21,8 +21,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-       'SalesPerformance',
-       'SalesQuantization',
+        'SalesPerformance',
+        'SalesQuantization',
         'http://ws.pulata.com.cn:8888/login'
     ],
     'human-resources' => [
@@ -45,8 +45,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-       'SalesPerformance',
-       'SalesQuantization',
+        'SalesPerformance',
+        'SalesQuantization',
         'http://ws.pulata.com.cn:8888/login'
     ],
     'sale-staff' => [
@@ -66,7 +66,8 @@ return [
         'Website',
         'WarehousingProcess',
         'PurchaseList',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund'
     ],
     'assign-buyer-manager' => [
         'WarehousingProcess',
@@ -75,7 +76,8 @@ return [
         'SysNotice',
         'Contacts',
         'Website',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund'
     ],
     
     'assign-manager'=>[
@@ -99,7 +101,8 @@ return [
         'Mail',
         'SalesGoodsStatistics',
         'SampleApplication',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -119,7 +122,9 @@ return [
         'Contacts',
         'Website',
         'Mail',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund',
+        'OrderList'
     ],
     'assign-staff'=>[
         'StockDetails',
@@ -139,7 +144,9 @@ return [
         'Contacts',
         'Website',
         'Mail',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund',
+        'OrderList'
     ],
     'assign-service'=>[
         'StockDetails',
@@ -159,7 +166,8 @@ return [
         'Contacts',
         'Website',
         'OrderList',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'Refund'
     ],
     'finance'=>[
         'SalesPerformance',
@@ -179,9 +187,10 @@ return [
         'AccountSettings'
     ],
     
-    // 隐藏的角色
+    // 隐藏的角色 不起作用
     'group-member' => [],
     'department-manager' => [],
     'group-captain' => [],
-    'sale-department-member' => []
+    'sale-department-member' => [],
+    'assign-department-member' => []
 ];
