@@ -234,6 +234,7 @@ Route::group($adminGroup, function(){
     Route::resource('/questionnaireoptions', 'QuestionnaireOptionsController');
     //测试JD订单导入数据处理
     Route::get('/test-import-order','JdOrderImportController@index');
+    Route::get('/jd-order-list','JdOrderImportController@jdOrderList');
 
 });
 

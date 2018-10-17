@@ -205,7 +205,41 @@ class JdOrderImportController extends Controller
 
     }
 
+    public function jdOrderList(Request $request){
+    	$model = new JdOrderBasic;
 
+    	if ($request->has('start')) {
+    		$start = $request->input('start')." 00:00:00";
+            $model = $model->where('order_at','>=',$start);
+        }
+
+        if ($request->has('end')) {
+        	$end = $request->input('end')." 23:59:59";
+            $model = $model->where('order_at','<=',$end);
+        }
+
+        if($request->has('order_sn')){
+        	$model = $model->where('order_sn',$request->input('order_sn'));
+        }
+
+        if($request->has('order_account')){
+        	$model = $model->where('order_account',$request->input('order_account'));
+        }
+
+        $result = $model->paginate($request->input('pageSize',15));
+        $collection = $result->getCollection();
+        $collection->load('goods','other','customer','address','department');
+
+        $re = $collection->toArray();
+
+        return [
+        	'items'=>$re,
+        	'total'=>$result->total()
+        ];
+
+
+
+    }
 
 
 

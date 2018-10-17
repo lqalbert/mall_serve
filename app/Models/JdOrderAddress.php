@@ -30,7 +30,7 @@ class JdOrderAddress extends Model
      */
     public function order()
     {
-        return $this->hasMany('App\Models\JdOrderBasic', 'order_sn','order_sn');
+        return $this->belongsTo('App\Models\JdOrderBasic', 'order_sn','order_sn');
     }
 
 

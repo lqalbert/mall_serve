@@ -35,7 +35,10 @@ class JdOrderBasic extends Model
         "install_service",
         "service_fee",
         "is_brand",
-        "is_toplife"
+        "is_toplife",
+        "department_id",
+        "group_id",
+        "user_id"
     ];
 
     protected $guarded = [];
@@ -99,14 +102,17 @@ class JdOrderBasic extends Model
     }
 
     public function customer(){
-    	return $this->belongsTo('App\Models\JdOrderCustomer', 'order_sn','order_sn');
+    	return $this->hasMany('App\Models\JdOrderCustomer', 'order_sn','order_sn');
     }
 
     public function address(){
-    	return $this->belongsTo('App\Models\JdOrderAddress', 'order_sn','order_sn');
+    	return $this->hasMany('App\Models\JdOrderAddress', 'order_sn','order_sn');
     }
 
-
+    //关联部门
+    public function department(){
+        return $this->belongsTo('App\Models\Department', 'department_id');
+    }
 
 
 
