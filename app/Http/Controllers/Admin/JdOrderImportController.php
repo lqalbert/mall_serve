@@ -206,6 +206,11 @@ class JdOrderImportController extends Controller
 
     }
 
+    /**
+     * [jdOrderList 获取导入到数据库的数据]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function jdOrderList(Request $request){
     	$model = new JdOrderBasic;
 

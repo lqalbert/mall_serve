@@ -233,7 +233,7 @@ Route::group($adminGroup, function(){
     Route::get('/sales-goods-statistics-download-excel','SalesGoodsStatisticsController@downloadExcel');
     Route::resource('/questionnaireoptions', 'QuestionnaireOptionsController');
     //测试JD订单导入数据处理
-    Route::get('/jd-import-order','JdOrderImportController@index');
+    Route::match(['get', 'post'],'/jd-import-order','JdOrderImportController@index');
     Route::get('/jd-order-list','JdOrderImportController@jdOrderList');
 
 });
