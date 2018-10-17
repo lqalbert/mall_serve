@@ -35,6 +35,7 @@ class JdOrderImportController extends Controller
 	 *      "普通发票纳税编号general_invoice_tax","商家SKUID shop_sku_id"
 	 */
     public function index(Request $request){
+    	var_dump($_FILES);die();
     	$fileName = iconv('UTF-8', 'GBK//IGNORE', '19453840').'.csv';//测试的文档
         $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
         $contentArr = file($filePath);
