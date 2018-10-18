@@ -89,6 +89,8 @@ class OrderBasicController extends Controller
             $allData['group_name'] = $group->name;
             $allData['department_id'] = $department->id;
             $allData['department_name'] = $department->name;
+            $allData['deposit'] = $allData['discounted_goods_money'] + $allData['book_freight'] + $allData['freight'];
+            $allData['return_deposit'] = $allData['discounted_goods_money'] * 0.67;
 
             $orderModel = OrderBasic::make($allData);
             $orderModel->typeToPlanObject();

@@ -837,6 +837,15 @@ class AssignController extends Controller
             if (!$re) {
                 throw new \Exception('更新失败');
             }
+            //退保证金
+            $money = $order->getReturnDeposit();
+            $department = $order->department;
+            $department->addDeposit($money);
+            if ($department->save()) {
+                throw  new \Exception('返还保证金失败');
+            }
+            
+            
             $goods = $assign->goods;
             
             //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件

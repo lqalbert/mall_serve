@@ -60,7 +60,10 @@ class OrderBasic extends Model
         'group_name',
         'department_name',
         'include_freight',
-        'freight'
+        'freight',
+        'book_freight',
+        'deposit',
+        'return_deposit'
     ];
     
     /**
@@ -223,7 +226,15 @@ class OrderBasic extends Model
         return $this->status == self::ORDER_STATUS_7;
     }
     
+    public function getDeposit()
+    {
+        return  $this->deposit;
+    }
     
+    public function getReturnDeposit()
+    {
+        return $this->return_deposit;
+    }
     
     public function updateStatusToAssigning()
     {

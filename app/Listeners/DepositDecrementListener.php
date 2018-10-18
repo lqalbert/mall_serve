@@ -34,8 +34,9 @@ class DepositDecrementListener
         $operator = $event->getUser();
         //部门
         $department   =  $order->department ;
-     
-        $department->subDeposit($order->order_pay_money);
+        
+        $money = $order->getDeposit();
+        $department->subDeposit($money);
         $department->save();
 
         //扣钱成功 记录一下
@@ -43,7 +44,7 @@ class DepositDecrementListener
             'user_id' => $operator->id, //操作员工
             'target_id' => $order->user->id,
             'event_type' => DepositRecord::APP_EVENT_ORDER_PASS,
-            'money' => -$order->order_pay_money,
+            'money' => -$money,
             'brief' => '订单号：'.$order->order_sn
         ]);
         
