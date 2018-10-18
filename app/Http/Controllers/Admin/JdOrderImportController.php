@@ -35,41 +35,53 @@ class JdOrderImportController extends Controller
 	 *      "普通发票纳税编号general_invoice_tax","商家SKUID shop_sku_id"
 	 */
     public function index(Request $request){
-    	var_dump($_FILES);die();
-    	$fileName = iconv('UTF-8', 'GBK//IGNORE', '19453840').'.csv';//测试的文档
-        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
-        $contentArr = file($filePath);
-        $csvArr = [];
-        foreach ($contentArr as $line) {
-            $convertString = iconv('GB2312','UTF-8//IGNORE', $line);
-            $csvArr[] = user_str_getcsv($convertString,",",'"');
-        }
-        array_shift($csvArr);
+    	try {
+	    	$uploadFile = $request->file('avatar');
+	    	$originalName = $uploadFile->getClientOriginalName();
+	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$originalName,'excel');
+	    	if(!$uploadFilePath){
+	    		throw new \Exception("上传文件失败"); 
+	    	}
+	        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.$uploadFilePath);
+	        $contentArr = file($filePath);
+	        $csvArr = [];
+	        foreach ($contentArr as $line) {
+	            $convertString = iconv('GB2312','UTF-8//IGNORE', $line);
+	            $csvArr[] = user_str_getcsv($convertString,",",'"');
+	        }
+        	$oldTitle = array_shift($csvArr);
+	        $titleArr = JdOrderBasic::$fieldsName;
+	        if(count($oldTitle) != count($titleArr)){
+	        	throw new \Exception("excel数据不正确"); 
+	        }
 
-        $titleArr = JdOrderBasic::$fieldsName;
+	        $i = 0; 
+	        $columnLen = count($titleArr);
+	        while ( $i < $columnLen) {
+	            foreach ($csvArr as $k => $v) {
+	                foreach ($v as $k1 => $v1) {
+	                    if(!isset($v[$i])){
+	                        $csvArr[$k][$i] = '';
+	                    }
+	                }
+	                ksort($csvArr[$k]);
+	            }
+	            $i++;
+	        }
+	        
+	        $newData = [];
+	        foreach ($csvArr as $key => $value) {
+	            $newData[] = array_combine($titleArr, $value);
+	        }
+	        // dd($titleArr);
+	        // dd($newData);
 
-        $i = 0; 
-        $columnLen = count($titleArr);
-        while ( $i < $columnLen) {
-            foreach ($csvArr as $k => $v) {
-                foreach ($v as $k1 => $v1) {
-                    if(!isset($v[$i])){
-                        $csvArr[$k][$i] = '';
-                    }
-                }
-                ksort($csvArr[$k]);
-            }
-            $i++;
-        }
-        
-        $newData = [];
-        foreach ($csvArr as $key => $value) {
-            $newData[] = array_combine($titleArr, $value);
-        }
-        // dd($titleArr);
-        // dd($newData);
-
-        $this->handleOrderDatas($newData);
+	        $this->handleOrderDatas($newData);
+    	} catch (\Exception $e) {
+            return  $this->error([], "失败".$e->getMessage());
+    	}
+    	return  $this->success([],"导入数据并保存成功");
+	
 
         /*$fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
         echo $filePath;
