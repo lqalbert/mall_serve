@@ -43,7 +43,8 @@ class OrderGoods extends Model implements GoodsContracts
         'return_num',
         'specifications',
         'assign_id',
-        'destroy_num'
+        'destroy_num',
+        'sale_type'
     ];
     
     public function productCategory()
@@ -118,6 +119,12 @@ class OrderGoods extends Model implements GoodsContracts
     {
         $orderType = $this->order->typeObjecToOrderType();
         return $orderType->getDiscounted($this->price);
+    }
+    
+    public function getSaleTypeTextAttribute()
+    {
+        $map = ['','赠品'];
+        return $map[$this->sale_type];
     }
     
     /**

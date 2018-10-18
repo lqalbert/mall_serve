@@ -11,6 +11,7 @@ use App\Models\GoodsImg;
 use App\Repositories\Criteria\Order;
 use App\Repositories\Criteria\Goods\SkuSn;
 use App\Repositories\Criteria\Goods\FrontCates;
+use App\Repositories\Criteria\FieldEqual;
 
 class GoodsDetailsService{
 
@@ -54,6 +55,11 @@ class GoodsDetailsService{
         
         if ($this->request->has('front_id')) {
             $this->repository->pushCriteria( new FrontCates($this->request->input('front_id')));
+        }
+        
+        if ($this->request->has('is_appendage')) {
+            $appendage = $this->request->input('is_appendage', 0);
+            $this->repository->pushCriteria( new FieldEqual('is_appendage', $appendage));
         }
         
         
