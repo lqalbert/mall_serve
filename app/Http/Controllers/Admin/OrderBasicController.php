@@ -141,7 +141,7 @@ class OrderBasicController extends Controller
         $s = 0;
         foreach ($orderGoods as $goods) {
             $not = round($goods['price'] * $goods['goods_number'], 2);
-            if ($goods->sale_type == 1) {
+            if ($goods['sale_type'] == 1) {
                 $not = round($not * 0.3, 2);
             }
             $s = $s + $not;
