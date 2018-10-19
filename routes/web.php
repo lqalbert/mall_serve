@@ -235,7 +235,8 @@ Route::group($adminGroup, function(){
     //测试JD订单导入数据处理
     Route::match(['get', 'post'],'/jd-import-order','JdOrderImportController@index');
     Route::get('/jd-order-list','JdOrderImportController@jdOrderList');
-
+    Route::put('/match-user/{flag}', 'JdOrderImportController@matchUser');
+    Route::get('/get-match', 'JdOrderImportController@getMatch');
 });
 
 

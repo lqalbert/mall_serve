@@ -38,7 +38,8 @@ class JdOrderBasic extends Model
         "is_toplife",
         "department_id",
         "group_id",
-        "user_id"
+        "user_id",
+        'flag'
     ];
 
     protected $guarded = [];
@@ -111,9 +112,18 @@ class JdOrderBasic extends Model
 
     //关联部门
     public function department(){
-        return $this->belongsTo('App\Models\Department', 'department_id');
+        return $this->belongsTo('App\Models\Department', 'department_id')->select(['id','name']);
     }
 
+    //关联小组
+    public function group(){
+        return $this->belongsTo('App\Models\Group', 'group_id')->select(['id','name']);
+    }
+
+    //关联销售员工
+    public function user(){
+        return $this->belongsTo('App\Models\User', 'user_id')->select(['id','realname','group_id']);
+    }
 
 
 

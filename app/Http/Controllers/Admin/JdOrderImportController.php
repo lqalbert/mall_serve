@@ -10,10 +10,15 @@ use App\Models\JdOrderGoods;
 use App\Models\JdOrderOther;
 use App\Models\JdOrderCustomer;
 use App\Models\JdOrderAddress;
+use App\Models\JdMatchBasic;
+use App\Jobs\JdOrderMatchUser;
+use App\Models\CustomerContact;
 
 class JdOrderImportController extends Controller
 {
-
+	private $flag;
+	private $sum;
+	private $fileName;
     /**
 	 *   $newData拆分成 订单表,商品表,客户表,收货地址表数据
 	 *  订单表jd_order_basic:"订单号order_sn","下单帐号order_account","下单时间order_at","订单金额order_money",
@@ -35,10 +40,11 @@ class JdOrderImportController extends Controller
 	 *      "普通发票纳税编号general_invoice_tax","商家SKUID shop_sku_id"
 	 */
     public function index(Request $request){
+    	// $exists = Storage::disk('excel')->exists('import/file.jpg');
     	try {
 	    	$uploadFile = $request->file('avatar');
-	    	$originalName = $uploadFile->getClientOriginalName();
-	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$originalName,'excel');
+	    	$this->fileName = $uploadFile->getClientOriginalName();
+	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$this->fileName,'excel');
 	    	if(!$uploadFilePath){
 	    		throw new \Exception("上传文件失败"); 
 	    	}
@@ -75,12 +81,12 @@ class JdOrderImportController extends Controller
 	        }
 	        // dd($titleArr);
 	        // dd($newData);
-
+	        $this->sum = count($newData);
 	        $this->handleOrderDatas($newData);
     	} catch (\Exception $e) {
             return  $this->error([], "失败".$e->getMessage());
     	}
-    	return  $this->success([],"导入数据并保存成功");
+    	return  $this->success(["sum"=>$this->sum,"flag"=>$this->flag],"导入数据并保存成功");
 	
 
         /*$fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
@@ -105,7 +111,7 @@ class JdOrderImportController extends Controller
         $orderBasic = [];
         $cusBasic = [];
         $orderAddress = [];
-
+        $this->flag = time();
         foreach ($s as $k => $v) {
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
                 "all_money","pay_money","pay_balance","status","type","remark","express_fee","pay_way",
@@ -117,11 +123,13 @@ class JdOrderImportController extends Controller
                         }
                     }
                     return $item;
-                })->toArray();
+                })->put('flag',$this->flag)->toArray();
 
-            $cusBasic[] = collect($v)->only(["order_sn","cus_name","tel","order_account"])->toArray();
+            $cusBasic[] = collect($v)->only(["order_sn","cus_name","tel","order_account"])
+            				->put('flag',$this->flag)->toArray();
 
-            $orderAddress[] = collect($v)->only(["order_sn","cus_name","address","tel","zip_code","email"])->toArray();
+            $orderAddress[] = collect($v)->only(["order_sn","cus_name","address","tel","zip_code",
+        					"email"])->toArray();
 
             $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
                         "goods_price","entrepot_id","entrepot_name"])->toArray();
@@ -144,27 +152,27 @@ class JdOrderImportController extends Controller
         }
         
         //以订单号为索引 暂时不用
-        // $sDatas = collect($newData)->groupBy('order_sn')->toArray();
-        // $orderGoods = $sDatas;
-        // $otherDatas = $sDatas;
-        // foreach ($orderGoods as $k1 => &$v1) {
-        //     foreach ($v1 as $ke => &$val) {
-        //         $val = collect($val)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-        //                 "goods_price","entrepot_id","entrepot_name"])->toArray();
-        //     }
-        //     unset($val);
-        // }
-        // unset($v1);
+/*        $sDatas = collect($newData)->groupBy('order_sn')->toArray();
+        $orderGoods = $sDatas;
+        $otherDatas = $sDatas;
+        foreach ($orderGoods as $k1 => &$v1) {
+            foreach ($v1 as $ke => &$val) {
+                $val = collect($val)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
+                        "goods_price","entrepot_id","entrepot_name"])->toArray();
+            }
+            unset($val);
+        }
+        unset($v1);
 
-        // foreach ($otherDatas as $k2 => &$v2) {
-        //     foreach ($v2 as $key => &$value) {
-        //         $value = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
-        //                     "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
-        //                     "shop_sku_id"])->toArray();
-        //     }
-        //     unset($value);
-        // }
-        // unset($v2);
+        foreach ($otherDatas as $k2 => &$v2) {
+            foreach ($v2 as $key => &$value) {
+                $value = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
+                            "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
+                            "shop_sku_id"])->toArray();
+            }
+            unset($value);
+        }
+        unset($v2);*/
 
         // dd($orderBasic);
         $this->soreOrderDatas($orderBasic,$cusBasic,$orderAddress,$orderGoods,$otherDatas);
@@ -208,6 +216,14 @@ class JdOrderImportController extends Controller
                 throw new \Exception("订单其他数据保存失败"); 
             }
 
+            $reMatch = JdMatchBasic::create([
+            	'flag' => $this->flag,
+		    	'sum' => $this->sum,
+		    	'file_name' => $this->fileName
+            ]);
+            if(!$reMatch){
+            	throw new \Exception("订单匹配批次保存失败");
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -246,7 +262,7 @@ class JdOrderImportController extends Controller
 
         $result = $model->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();
-        $collection->load('goods','other','customer','address','department');
+        $collection->load('goods','other','customer','address','department','group','user');
 
         $re = $collection->toArray();
 
@@ -255,13 +271,20 @@ class JdOrderImportController extends Controller
         	'total'=>$result->total()
         ];
 
-
-
     }
 
+    public function matchUser(Request $request,$flag){
+    	// echo $flag;
+    	// $cus_id = CustomerContact::where('phone',13853125743)->first(['cus_id']);
+    	// var_dump($cus_id->cus_id;
+    	$jdCustomer = JdOrderCustomer::where('flag',$flag)->get();
+    	dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
+    }
 
-
-
+    public function getMatch(Request $request){
+    	$re = JdMatchBasic::orderBy('id','desc')->get();
+    	return $re;
+    }
 
 
 

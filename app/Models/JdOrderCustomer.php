@@ -19,7 +19,8 @@ class JdOrderCustomer extends Model
         "order_sn",
         "cus_name",
         "tel",
-        "order_account"
+        "order_account",
+        "flag"
     ];
 
 
