@@ -39,9 +39,10 @@ class AddDepositOperationLogListener
         $this->operationModel->action = $event->action;
         
         switch ($event->action) {
-            case 'cancel':
-                $this->operationModel->remark = "订单".$order_sn."，部门".$dep.'保证金+'.$money;
-                break;
+            // 订单审核之后 才扣保证金， 审核之后不能取消
+//             case 'cancel':
+//                 $this->operationModel->remark = "订单".$order_sn."，部门".$dep.'保证金+'.$money;
+//                 break;
             case 'check':
                 $this->operationModel->remark = "订单".$order_sn."，部门".$dep.'保证金-'.$money;
                 break;

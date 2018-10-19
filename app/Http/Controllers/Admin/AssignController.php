@@ -841,7 +841,7 @@ class AssignController extends Controller
             $money = $order->getReturnDeposit();
             $department = $order->department;
             $department->addDeposit($money);
-            if ($department->save()) {
+            if (!$department->save()) {
                 throw  new \Exception('返还保证金失败');
             }
             
