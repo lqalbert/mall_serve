@@ -90,7 +90,7 @@ class OrderBasicController extends Controller
             $allData['department_id'] = $department->id;
             $allData['department_name'] = $department->name;
 //             $allData['deposit'] = $allData['discounted_goods_money'] + $allData['book_freight'] + $allData['freight'];
-            $allData['deposit'] = $allData['discounted_goods_money'];
+            $allData['deposit'] = $this->calculateAppendage($request->order_goods);//$allData['discounted_goods_money'];
             $allData['return_deposit'] = $allData['discounted_goods_money'] * 0.67;
 
             $orderModel = OrderBasic::make($allData);
@@ -134,6 +134,19 @@ class OrderBasicController extends Controller
         }
 
         return $this->success([$orderModel->id]);
+    }
+    
+    private function calculateAppendage($orderGoods)
+    {
+        $s = 0;
+        foreach ($orderGoods as $goods) {
+            $not = round($goods['price'] * $goods['goods_number'], 2);
+            if ($goods->sale_type == 1) {
+                $not = round($not * 0.3, 2);
+            }
+            $s = $s + $not;
+        }
+        return $s;
     }
 
     /**
