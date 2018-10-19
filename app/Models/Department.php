@@ -103,9 +103,12 @@ class Department extends Model
     
     public function subDeposit($deposit) {
         $this->deposit = round($this->deposit - $deposit, 2);
-        if ($this->deposit < 0) {
-            throw new \Exception('保证金不足');
-        }
+        
+    }
+    
+    public function isNegative()
+    {
+        return  $this->deposit < 0;
     }
     
 }

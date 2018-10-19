@@ -264,31 +264,27 @@ class OrderBasicController extends Controller
         $data = $request->all();
         $this->model = $this->model->find($id);
         $this->model->status = $data['status'];
-        $re = $this->model->save();
-        if ($re) {
+        
+        try{
             DB::beginTransaction();
+            $this->model->save();
             if ($data['status'] == 1) {
-                try {
-                    event( new OrderPass($this->model, auth()->user()));
-
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    return $this->error([], $e->getMessage());
-                }
-            } 
-            //添加订单操作记录事件
-            $dataLog = [
-                'order_id'=>$id,
-                'action'=>'check',
-                'remark'=>$data['order_sn']
-            ];
-            event(new AddOrderOperationLog(auth()->user(),$dataLog));
-
-            return $this->success([]);
-        } else {
-            return $this->error([]);
+                event( new OrderPass($this->model, auth()->user()));
+            }
+            DB::commit();
+        }catch (Exception $e) {
+            DB::rollback();
+            dd($e);
+            return $this->error([], $e->getMessage());
         }
+        
+        $dataLog = [
+            'order_id'=>$id,
+            'action'=>'check',
+            'remark'=>$data['order_sn']
+        ];
+        event(new AddOrderOperationLog(auth()->user(),$dataLog));
+        return $this->success([]);
     }
 
     public function cancel(Request $request , $id)

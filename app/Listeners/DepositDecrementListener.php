@@ -37,6 +37,9 @@ class DepositDecrementListener
         
         $money = $order->getDeposit();
         $department->subDeposit($money);
+        if ($department->isNegative()) {
+            throw new \Exception('保证金不足');
+        }
         $department->save();
 
         //扣钱成功 记录一下
