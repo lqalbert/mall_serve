@@ -18,6 +18,7 @@ class SalesGoodsStatisticsController extends Controller
      */
     public function index(Request $request)
     {
+        // var_dump($request->end);die();
         $start = $request->input('start')." 00:00:00";
         $end = $request->input('end')." 23:59:59";
         $pageSize = $request->input('pageSize', 15);
@@ -41,22 +42,24 @@ class SalesGoodsStatisticsController extends Controller
         $innerSaleMoneyBuilder = $this->innerSaleMoney($start, $end);
         $shopSaleMoneyBuilder = $this->shopSaleMoney($start, $end);
         $sampleSaleMoneyBuilder = $this->sampleSaleMoney($start, $end);
+        $destroyCount = $this->destroyCount($start, $end);
 
         $result = DB::table('inventory_system as iso')->select(
                         'iso.sku_sn','iso.goods_name',
                         DB::raw('iso.produce_in as produce_in_total'),
                         DB::raw('iso.entrepot_count as saleable_count'),
-                        DB::raw("inven.goods_num as invent_num"),
                         DB::raw('sale.goods_num as sale_num'),
-                        DB::raw('refu.goods_num as ref_num'),
+                        DB::raw("inven.goods_num as invent_num"),
                         DB::raw('inner_sale.goods_num as inner_num'),
                         DB::raw('shop_sale.goods_num as shop_num'),
-                        DB::raw('inven.goods_num as invent_num'),
                         DB::raw('sample.goods_num as sample_num'),
+                        DB::raw('refu.goods_num as ref_num'),
+                        // DB::raw('inven.goods_num as invent_num'),
                         DB::raw('sm.money as sale_money'),
-                        DB::raw('ism.money as inner_sale_money'),
+                        DB::raw('ism.money*0.6 as inner_sale_money'),
                         DB::raw('ssm.money as shop_sale_money'),
-                        DB::raw('spsm.money as sample_sale_money')
+                        DB::raw('spsm.money as sample_sale_money'),
+                        DB::raw('dc.destroyNum as destroy_count')
                     )
                     ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
                     ->mergeBindings($inventoryBuilder)
@@ -78,6 +81,8 @@ class SalesGoodsStatisticsController extends Controller
                     ->mergeBindings($shopSaleMoneyBuilder)
                     ->leftJoin(DB::raw("({$sampleSaleMoneyBuilder->toSql()}) as spsm"),'iso.sku_sn','=','spsm.sku_sn')
                     ->mergeBindings($sampleSaleMoneyBuilder)
+                    ->leftJoin(DB::raw("({$destroyCount->toSql()}) as dc"),'iso.sku_sn','=','dc.sku_sn')
+                    ->mergeBindings($destroyCount)
                     ->where($where)->orderBy($orderField,$orderWay)
                     ->paginate($pageSize);
 
@@ -279,11 +284,27 @@ class SalesGoodsStatisticsController extends Controller
                 ['sample_basic.check_time',"<=", $end],
             ])->groupBy('sku_sn');
     }
+    /**
+     * [destroyCount 损坏数]
+     * @param  [type] $start [description]
+     * @param  [type] $end   [description]
+     * @return [type]        [description]
+     */
+    private function destroyCount($start,$end){
+        return DB::table('order_goods')->select(
+                DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn')
+            ->where([
+                ['order_goods.destroy_time',">=", $start],
+                ['order_goods.destroy_time',"<=", $end],
+            ])->groupBy('sku_sn');
+    }
 
 //******************************************以下为部门的**************************************************************
     public function getDepSaleGoods(Request $request, $sku){
         $start = $request->input('start')." 00:00:00";
         $end = $request->input('end')." 23:59:59";
+        $orderField = $request->input('orderField','sale_num');
+        $orderWay  = $request->input('orderWay','desc');
 
         $depSaleBuilder = $this->depSaleNUm($sku,$start, $end);
         $depSaleMoneyBuilder = $this->depSaleMoney($sku,$start, $end);
@@ -292,18 +313,24 @@ class SalesGoodsStatisticsController extends Controller
         $depShopSaleBuilder = $this->depShopSaleNum($sku,$start, $end);
         $depShopSaleMoneyBuilder = $this->depShopSaleMoney($sku,$start, $end);
         $depRefundBuilder = $this->depRefundNum($sku,$start, $end);
+        $depSampleBuilder = $this->depSampleNum($sku,$start, $end);
+        $depSampleMoneyBuilder = $this->depSampleMoney($sku,$start, $end);
+        $depDestroyCountBuilder = $this->depDestroyCount($sku,$start, $end);
 
         $result = DB::table('department_basic as db')->select(
                 'db.manager_id',
                 DB::raw("db.name as department_name"),
                 DB::raw("ub.realname as department_manager"),
                 DB::raw('ds.goods_num as sale_num'),
-                DB::raw('dsm.money as sale_money'),
                 DB::raw('dis.goods_num as inner_num'),
-                DB::raw('dism.money as inner_sale_money'),
                 DB::raw('dss.goods_num as shop_num'),
+                DB::raw('dsp.goods_num as sample_num'),
+                DB::raw('drf.goods_num as ref_num'),
+                DB::raw('ddc.destroyNum as destroy_count'),
+                DB::raw('dsm.money as sale_money'),
+                DB::raw('dism.money*0.6 as inner_sale_money'),
                 DB::raw('dssm.money as shop_sale_money'),
-                DB::raw('drf.goods_num as ref_num')
+                DB::raw('dspm.money as sample_sale_money')
 
             )->join('user_basic as ub','db.manager_id','=','ub.id')
             ->leftJoin(DB::raw("({$depSaleBuilder->toSql()}) as ds"),'db.id','=','ds.department_id')
@@ -320,10 +347,16 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depShopSaleMoneyBuilder)
             ->leftJoin(DB::raw("({$depRefundBuilder->toSql()}) as drf"),'db.id','=','drf.department_id')
             ->mergeBindings($depRefundBuilder)
+            ->leftJoin(DB::raw("({$depSampleBuilder->toSql()}) as dsp"),'db.id','=','dsp.department_id')
+            ->mergeBindings($depSampleBuilder)
+            ->leftJoin(DB::raw("({$depSampleMoneyBuilder->toSql()}) as dspm"),'db.id','=','dspm.department_id')
+            ->mergeBindings($depSampleMoneyBuilder)
+            ->leftJoin(DB::raw("({$depDestroyCountBuilder->toSql()}) as ddc"),'db.id','=','ddc.department_id')
+            ->mergeBindings($depDestroyCountBuilder)
             ->where([
                 ['db.type',0],
                 ['db.status',1],
-            ])->paginate(15);
+            ])->orderBy($orderField,$orderWay)->paginate(15);
 
         return [
             'items'=>$result->items(),
@@ -341,12 +374,7 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function depSaleNUm($sku,$start, $end)
     {
-        return DB::table('order_basic')->select(
-            DB::raw("sum(`goods_number`) as goods_num"),
-            'sku_sn','department_id'
-            )
-        ->join('order_goods','order_basic.id','=','order_goods.order_id')
-        ->where([
+        $where = [
             ['order_basic.status','>=',1],
             ['order_basic.status','<=',6],
             ['order_basic.type','=',3], //销售订单
@@ -354,7 +382,16 @@ class SalesGoodsStatisticsController extends Controller
             ['order_basic.created_at',"<=", $end],
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
-        ])->groupBy('department_id');
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
+        return DB::table('order_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn','department_id'
+            )
+        ->join('order_goods','order_basic.id','=','order_goods.order_id')
+        ->where($where)->groupBy('department_id');
     }
     
     /**
@@ -364,18 +401,22 @@ class SalesGoodsStatisticsController extends Controller
      * @return [type]        [description]
      */
     private function depSaleMoney($sku,$start, $end){
+        $where = [
+            ['order_basic.status','>=',1],
+            ['order_basic.status','<=',6],
+            ['order_basic.type','=',3], //销售订单
+            ['order_basic.created_at',">=", $start],
+            ['order_basic.created_at',"<=", $end],
+            ['order_goods.status','<>',3],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
-                ['order_basic.type','=',3], //销售订单
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
-                ['order_goods.status','<>',3],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
 
     /**
@@ -386,22 +427,26 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function depInnerSaleNum($sku,$start, $end)
     {
+        $where = [
+            ['order_basic.status','>=',1],
+            ['order_basic.status','<=',6],
+            ['order_basic.type','=',2], // 内部的订单
+            ['order_basic.created_at',">=", $start],
+            ['order_basic.created_at',"<=", $end],
+            ['order_goods.status','<>',3],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
             )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
-                ['order_basic.type','=',2], // 内部的订单
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
-                ['order_goods.status','<>',3],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
-    
+
     /**
      * [innerSaleMoney 内购金额]
      * @param  [type] $start [description]
@@ -409,36 +454,44 @@ class SalesGoodsStatisticsController extends Controller
      * @return [type]        [description]
      */
     private function depInnerSaleMoney($sku,$start,$end){
+        $where = [
+            ['order_basic.status','>=',1],
+            ['order_basic.status','<=',6],
+            ['order_basic.type','=',2], //销售订单
+            ['order_basic.created_at',">=", $start],
+            ['order_basic.created_at',"<=", $end],
+            ['order_goods.status','<>',3],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
-                ['order_basic.type','=',2], //销售订单
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
-                ['order_goods.status','<>',3],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
 
     private function depShopSaleNum($sku,$start, $end)
     {
+        $where = [
+            ['order_basic.status','>=',1],
+            ['order_basic.status','<=',6],
+            ['order_basic.type','=',1], //商城的订单
+            ['order_basic.created_at',">=", $start],
+            ['order_basic.created_at',"<=", $end],
+            ['order_goods.status','<>',3],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
             )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
-                ['order_basic.type','=',1], //商城的订单
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
-                ['order_goods.status','<>',3],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
     
     /**
@@ -448,18 +501,22 @@ class SalesGoodsStatisticsController extends Controller
      * @return [type]        [description]
      */
     private function depShopSaleMoney($sku,$start, $end){
+        $where = [
+            ['order_basic.status','>=',1],
+            ['order_basic.status','<=',6],
+            ['order_basic.type','=',1], //商城订单
+            ['order_basic.created_at',">=", $start],
+            ['order_basic.created_at',"<=", $end],
+            ['order_goods.status','<>',3],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where([
-                ['order_basic.status','>=',1],
-                ['order_basic.status','<=',6],
-                ['order_basic.type','=',1], //商城订单
-                ['order_basic.created_at',">=", $start],
-                ['order_basic.created_at',"<=", $end],
-                ['order_goods.status','<>',3],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
 
     /**
@@ -470,22 +527,89 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function depRefundNum($sku,$start, $end)
     {
+        $where = [
+            // ['order_basic.status','>=',1],
+            // ['order_basic.status','<=',6],
+            ['order_after.created_at',">=", $start],
+            ['order_after.created_at',"<=", $end],
+            ['order_goods.status','=',1],
+            ['order_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
         return DB::table('order_after')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
             )
             ->join('order_basic','order_after.order_id','=','order_basic.id')
             ->join('order_goods','order_after.order_id','=','order_goods.order_id')
-            ->where([
-//                 ['order_basic.status','>=',1],
-//                 ['order_basic.status','<=',6],
-                ['order_after.created_at',">=", $start],
-                ['order_after.created_at',"<=", $end],
-                ['order_goods.status','=',1],
-                ['order_goods.sku_sn',$sku]
-            ])->groupBy('department_id');
+            ->where($where)->groupBy('department_id');
     }
 
+    /**
+     * 样品数量
+     * @param unknown $start
+     * @param unknown $end
+     */
+    private function depSampleNum($sku,$start, $end) 
+    {
+        $where = [
+            ['sample_basic.check_status',1],
+            ['sample_basic.check_time',">=", $start],
+            ['sample_basic.check_time',"<=", $end],
+            ['sample_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
+        return DB::table('sample_basic')->select(
+            DB::raw("sum(`goods_number`) as goods_num"),
+            'sku_sn','department_id'
+            )
+            ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            ->where($where)->groupBy('department_id');
+    }
+
+    /**
+     * 样品金额
+     * @param unknown $start
+     * @param unknown $end
+     */
+    private function depSampleMoney($sku,$start, $end) 
+    {
+        $where = [
+            ['sample_basic.check_status',1],
+            ['sample_basic.check_time',">=", $start],
+            ['sample_basic.check_time',"<=", $end],
+            ['sample_goods.sku_sn',$sku]
+        ];
+        if($sku == 0){
+            array_pop($where);
+        }
+        return DB::table('sample_basic')->select(
+            DB::raw("sum(`goods_number`*`price`) as money"),
+            'sku_sn','department_id'
+            )
+            ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            ->where($where)->groupBy('department_id');
+    }
+    /**
+     * [destroyCount 损坏数]
+     * @param  [type] $start [description]
+     * @param  [type] $end   [description]
+     * @return [type]        [description]
+     */
+    private function depDestroyCount($sku,$start,$end){
+        return DB::table('order_goods')->select(
+            DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn','department_id')
+            ->join('order_basic','order_basic.id','=','order_goods.order_id')
+            ->where([
+                ['order_goods.destroy_time',">=", $start],
+                ['order_goods.destroy_time',"<=", $end],
+                ['order_goods.sku_sn',"=", $sku]
+            ])->groupBy('department_id');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -559,30 +683,105 @@ class SalesGoodsStatisticsController extends Controller
      * @return [type]    [description]
      */
     public function downloadExcel(Request $request){
-        var_dump($request->all());die();
-        echo storage_path();die();
-        $cellData = [
-            ['学号','姓名','成绩'],
-            ['10001','AAAAA','99'],
-            ['10002','BBBBB','92'],
-            ['10003','CCCCC','95'],
-            ['10004','DDDDD','89'],
-            ['10005','EEEEE','96'],
-        ];
-        Excel::create('学生成绩',function($excel) use ($cellData){
-            $excel->sheet('score', function($sheet) use ($cellData){
-                $sheet->rows($cellData);
-            });
-        })->store('xls', public_path('excel/exports'));//export('csv');
+        $goodsData = $this->index($request);
+        $start = $request->input('start');
+        $end = $request->input('end');
 
-        $file = public_path('excel\exports\学生成绩.xls');
-        // echo $file;
- 
-        return response()->download($file);
+        $arr = [];
+        $titleArr = ['商品名称','当前库存量','本次销售数量','本次内购数量','本次商城数量','样品数量','退货数量','损坏数量'];
+        $cellData = $goodsData['items'];
+        foreach ($cellData as $k => &$value) {
+            $value = collect($value)->except([
+                'invent_num','sale_money','inner_sale_money',
+                'shop_sale_money','sample_sale_money','produce_in_total'])->toArray();
+//            $value['destroy_count']="暂无";
+            
+            $sku = $value['sku_sn'];
+            array_push($arr, $value);
+            $depGoods = $this->getDepSaleGoods($request,$sku);
+            foreach ($depGoods['items'] as $n => &$v) {
+                $v = collect($v)->toArray();
+                $v = collect($v)->except([
+                'manager_id','department_manager','sale_money',
+                'inner_sale_money','shop_sale_money','sample_sale_money'])->toArray();
+
+                array_unshift($v,'');
+                // array_splice($v,-1,0,['sample_num'=>"暂无"]);
+//                $v['destroy_count']="暂无";
+                array_push($arr,$v);
+            }
+            
+            unset($v);
+        }
+        unset($value);
+
+        foreach ($arr as &$val) {
+            $val = collect($val)->except(['sku_sn'])->map(function($item,$key){
+                if($item === null){
+                    return $item = 0;
+                }else{
+                    return $item;
+                }
+            })->toArray();
+        }
+        unset($val);
+
+        array_unshift($arr,$titleArr);
+        array_unshift($arr,[$start.'至'.$end."销售商品统计表"]);
+        // var_dump($arr);die();
+        Excel::create('销售商品统计报表',function($excel) use ($arr){
+            $excel->sheet('商品统计', function($sheet) use ($arr){
+                $sheet->setStyle(array(
+                    'font' => [
+                        'name' => '宋体',
+                        'size' => 13,
+                    ]
+                ))->row(1, function ($row) {
+                    $row->setFont(['bold' => true]);
+                });
+                $sheet->mergeCells('A1:H1');
+                $sheet->setWidth(array(
+                    'A'     =>  15,
+                    'B'     =>  15,
+                    'C'     =>  15,
+                    'D'     =>  15,
+                    'E'     =>  15,
+                    'F'     =>  15,
+                    'G'     =>  15,
+                    'H'     =>  15
+                ));
+                $sheet->row(1, function ($row) {
+                    $row->setAlignment('center');
+                });
+                $sheet->rows($arr);
+            });
+        })->export('xls');//export('csv');
 
     }
 
+    public function importOrder(){
+        $fileName = iconv('UTF-8', 'GBK//IGNORE', '19453840').'.csv';//测试的文档
+        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
+        $contentArr = file($filePath);
+        $csvArr = [];
+        foreach ($contentArr as $line) {
+            $convertString = iconv('GB2312','UTF-8//IGNORE', $line);
+            $csvArr[] = user_str_getcsv($convertString,",",'"');
+        }
+        
+        
+        
+//         $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
+        // echo $filePath;
+//         $data = Excel::load($filePath,function($reader){
+//             // $data = $reader->all();
+//             // var_dump($reader->getTitle());
+//             // $reader->getTitle();
+//             // $reader->dump();
+//         },'gb2312')->convert('xls');//->toArray();
 
+        dd($csvArr);
+    }
 
 
 

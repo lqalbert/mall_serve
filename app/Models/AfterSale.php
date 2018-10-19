@@ -48,7 +48,8 @@ class AfterSale extends Model
         'remark',
         'resend_fee',
         'reservice_fee',
-        'inventory_state'
+        'inventory_state',
+        'reason'
     ];
     
     protected $events = [
@@ -58,7 +59,7 @@ class AfterSale extends Model
     
     public function goods()
     {
-        return $this->hasMany('App\Models\OrderGoods', 'order_id')->after();
+        return $this->hasMany('App\Models\OrderGoods', 'order_id', 'order_id')->after();
     }
     
     public function entrepot()
@@ -76,6 +77,12 @@ class AfterSale extends Model
     {
         $map = ['待审核', '通过', '不通过'];
         return $map[$this->attributes['check_status']];
+    }
+    
+    public function getStatusTextAttribute()
+    {
+        $map = ['未处理','已审核','已确认','审核未通过'];
+        return $map[$this->attributes['status']];
     }
     
     public function getTypeTextAttribute()

@@ -53,8 +53,8 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\OrderCancel' => [
             //库存
             'App\Listeners\OrderCancelListener',
-            //退保证金
-            'App\Listeners\DepositRefundListener'
+            //退保证金 审核通过才扣保证金，这里不需要了
+//             'App\Listeners\DepositRefundListener'
         ],
         
         'App\Events\ProduceEntryCreating' => [

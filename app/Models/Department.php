@@ -103,6 +103,16 @@ class Department extends Model
     
     public function subDeposit($deposit) {
         $this->deposit = round($this->deposit - $deposit, 2);
+        
+    }
+    
+    /**
+     * 
+     */
+    public function isNegative()
+    {
+//         return  $this->deposit < 0;
+           return false;
     }
     
 }

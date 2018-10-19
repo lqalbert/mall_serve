@@ -16,3 +16,4 @@ yarn-error.log
 .project
 composer.phar
 /.settings
+composer.phar

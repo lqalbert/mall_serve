@@ -10,6 +10,7 @@ class OrderGoods extends Model implements GoodsContracts
 {
     const STATUS_RETURN = 1;
     const STATUS_EXCHANGE  =2;
+    const STATUS_EXCHANGE_SEND  =3;
     use SoftDeletes;
     protected $table = 'order_goods';
     protected $dates = [
@@ -42,7 +43,8 @@ class OrderGoods extends Model implements GoodsContracts
         'return_num',
         'specifications',
         'assign_id',
-        'destroy_num'
+        'destroy_num',
+        'sale_type'
     ];
     
     public function productCategory()
@@ -82,12 +84,20 @@ class OrderGoods extends Model implements GoodsContracts
     {
         return $this->status == self::STATUS_RETURN;
     }
+    public function isResend()
+    {
+        $this->status = self::STATUS_EXCHANGE_SEND;
+    }
     
     public function setExchangeStatus()
     {
         $this->status = self::STATUS_EXCHANGE;
     }
     
+    public function setResendSatus()
+    {
+        $this->status = self::STATUS_EXCHANGE_SEND;
+    }
     
     public function goods()
     {
@@ -109,6 +119,12 @@ class OrderGoods extends Model implements GoodsContracts
     {
         $orderType = $this->order->typeObjecToOrderType();
         return $orderType->getDiscounted($this->price);
+    }
+    
+    public function getSaleTypeTextAttribute()
+    {
+        $map = ['','赠品'];
+        return $map[$this->sale_type];
     }
     
     /**

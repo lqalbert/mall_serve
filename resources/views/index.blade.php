@@ -23,7 +23,7 @@
                 @if (isset($topImg))
                     @foreach ($topImg as $img)
                         <div class="swiper-slide">
-                            <a href="{{ url($img->href_url) }}">
+                            <a href="{{ url(empty($img->href_url) ? '#' : $img->href_url) }}">
                                 <img class="imgs" src="{{ asset($img->cover_url) }}" alt="{{$img->name}}">
                             </a>
                         </div>

@@ -89,6 +89,9 @@ class OrderBasicController extends Controller
             $allData['group_name'] = $group->name;
             $allData['department_id'] = $department->id;
             $allData['department_name'] = $department->name;
+//             $allData['deposit'] = $allData['discounted_goods_money'] + $allData['book_freight'] + $allData['freight'];
+            $allData['deposit'] = $this->calculateAppendage($request->order_goods);//$allData['discounted_goods_money'];
+            $allData['return_deposit'] = $allData['discounted_goods_money'] * 0.67;
 
             $orderModel = OrderBasic::make($allData);
             $orderModel->typeToPlanObject();
@@ -131,6 +134,19 @@ class OrderBasicController extends Controller
         }
 
         return $this->success([$orderModel->id]);
+    }
+    
+    private function calculateAppendage($orderGoods)
+    {
+        $s = 0;
+        foreach ($orderGoods as $goods) {
+            $not = round($goods['price'] * $goods['goods_number'], 2);
+            if ($goods['sale_type'] == 1) {
+                $not = round($not * 0.3, 2);
+            }
+            $s = $s + $not;
+        }
+        return $s;
     }
 
     /**
@@ -184,8 +200,8 @@ class OrderBasicController extends Controller
             'check_status' => $request->input('check_status'),
             'order_status' => $request->input('order_status'),
         ); */
-        $re = $this->repository->update($request->all(), $id);
-        if ($re) {
+//         $re = $this->repository->update($request->all(), $id);
+        if (true) {
             //添加订单操作记录事件
             $dataLog = [
                 'order_id'=>$request->input('id'),
@@ -193,10 +209,10 @@ class OrderBasicController extends Controller
                 'remark'=>$request->input('order_sn')
             ];
             event(new AddOrderOperationLog(auth()->user(),$dataLog));
-            return $this->success($re);
+            return $this->success([]);
             //return 1;
         } else {
-            return $this->error($re);
+            return $this->error([]);
             //return 2;
         }
     }
@@ -262,31 +278,27 @@ class OrderBasicController extends Controller
         $data = $request->all();
         $this->model = $this->model->find($id);
         $this->model->status = $data['status'];
-        $re = $this->model->save();
-        if ($re) {
+        
+        try{
             DB::beginTransaction();
+            $this->model->save();
             if ($data['status'] == 1) {
-                try {
-                    event( new OrderPass($this->model, auth()->user()));
-
-                    DB::commit();
-                } catch (Exception $e) {
-                    DB::rollback();
-                    return $this->error([], $e->getMessage());
-                }
-            } 
-            //添加订单操作记录事件
-            $dataLog = [
-                'order_id'=>$id,
-                'action'=>'check',
-                'remark'=>$data['order_sn']
-            ];
-            event(new AddOrderOperationLog(auth()->user(),$dataLog));
-
-            return $this->success([]);
-        } else {
-            return $this->error([]);
+                event( new OrderPass($this->model, auth()->user()));
+            }
+            DB::commit();
+        }catch (Exception $e) {
+            DB::rollback();
+            dd($e);
+            return $this->error([], $e->getMessage());
         }
+        
+        $dataLog = [
+            'order_id'=>$id,
+            'action'=>'check',
+            'remark'=>$data['order_sn']
+        ];
+        event(new AddOrderOperationLog(auth()->user(),$dataLog));
+        return $this->success([]);
     }
 
     public function cancel(Request $request , $id)
@@ -313,7 +325,7 @@ class OrderBasicController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            logger('dd',[$e->getMessage()]);
+//             logger('dd',[$e->getMessage()]);
             return $this->error([], $e->getMessage());
         }
 

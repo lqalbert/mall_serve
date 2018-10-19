@@ -391,7 +391,7 @@ class AssignController extends Controller
                     $order->save();
                     //保证金
                     $department = $order->department;
-                    $department->addDeposit($order->discounted_goods_money);
+                    $department->addDeposit($order->order_pay_money);
                     $department->save();
                 } catch (\Exception $e) {
                     DB::rollback();
@@ -826,7 +826,10 @@ class AssignController extends Controller
         try {
             $order = $assign->order;
             if ($order->isFinish()) {
-                throw new \Exception('已经签收');
+                $ass = Assign::where('order_id', $order->id)->count();
+                if ($ass <2) {
+                    throw new \Exception('已经签收');
+                } 
             }
             
 
@@ -835,10 +838,20 @@ class AssignController extends Controller
             if (!$re) {
                 throw new \Exception('更新失败');
             }
+            //退保证金
+//             $money = $order->getReturnDeposit();
+//             $department = $order->department;
+//             $department->addDeposit($money);
+//             if (!$department->save()) {
+//                 throw  new \Exception('返还保证金失败');
+//             }
+            
+            
             $goods = $assign->goods;
             
             //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件
-            if (!$assign->isSended()) {
+            
+            if (!$assign->isSended() && !$assign->isParcel()) {
                 $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             } 
             

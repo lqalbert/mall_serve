@@ -33,7 +33,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -53,7 +53,8 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+//             throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -69,11 +70,14 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->saleLock($entrepot->id, $products, false);
+//             foreach ($products as &$item) {
+//                 $item->goods_number = - $item->goods_number;
+//             }
 //             $this->log->saleLock($entrepot, $products, $user);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -98,7 +102,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -119,7 +123,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -139,7 +143,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -160,7 +164,23 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
+        }
+    }
+    
+    /**
+     * 损坏出库
+     */
+    public function destroyUpdateOut($entrepot, $products, $user)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->destroyUpdateOut($entrepot->id, $products);
+            $this->log->destroyNum($entrepot, $products, $user);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -177,7 +197,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -193,11 +213,12 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->exLock($entrepot->id, $products);
-            $this->log->exchangeLock($entrepot, $products, $user);
+            
+            $this->log->exchangeLock($entrepot, $products, $user, $dan);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -217,7 +238,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -230,7 +251,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -250,7 +271,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
@@ -266,7 +287,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
