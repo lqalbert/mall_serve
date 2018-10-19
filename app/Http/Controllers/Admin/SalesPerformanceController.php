@@ -66,7 +66,7 @@ class SalesPerformanceController extends Controller
             ->groupBy('db.'.$groupBy);
 
         if ($groupBy == 'department_id') {
-            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('deposit');
+            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('department_basic.deposit');
         }
         //生成内部订单的 内购单数 内购金额
         $where2 = [];
