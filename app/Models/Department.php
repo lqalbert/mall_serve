@@ -106,9 +106,13 @@ class Department extends Model
         
     }
     
+    /**
+     * 
+     */
     public function isNegative()
     {
-        return  $this->deposit < 0;
+//         return  $this->deposit < 0;
+           return false;
     }
     
 }
