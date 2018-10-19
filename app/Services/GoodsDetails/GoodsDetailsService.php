@@ -57,9 +57,11 @@ class GoodsDetailsService{
             $this->repository->pushCriteria( new FrontCates($this->request->input('front_id')));
         }
         
-        if ($this->request->has('is_appendage')) {
-            $appendage = $this->request->input('is_appendage', 0);
-            $this->repository->pushCriteria( new FieldEqual('is_appendage', $appendage));
+        if ($this->request->has('filter_appendage')) {
+            $filter = $this->request->input('filter_appendage');
+            if ($filter == 1) { //要过滤 赠品
+                $this->repository->pushCriteria( new FieldEqual('is_appendage', 0));
+            }
         }
         
         
