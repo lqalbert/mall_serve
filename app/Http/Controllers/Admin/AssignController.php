@@ -838,12 +838,12 @@ class AssignController extends Controller
                 throw new \Exception('更新失败');
             }
             //退保证金
-            $money = $order->getReturnDeposit();
-            $department = $order->department;
-            $department->addDeposit($money);
-            if (!$department->save()) {
-                throw  new \Exception('返还保证金失败');
-            }
+//             $money = $order->getReturnDeposit();
+//             $department = $order->department;
+//             $department->addDeposit($money);
+//             if (!$department->save()) {
+//                 throw  new \Exception('返还保证金失败');
+//             }
             
             
             $goods = $assign->goods;
