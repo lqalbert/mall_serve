@@ -19,7 +19,8 @@ class JdMatchBasic extends Model
     	'flag',
     	'sum',
     	'match_status',
-    	'file_name'
+    	'file_name',
+        'inventory_status'
     ];
 
 

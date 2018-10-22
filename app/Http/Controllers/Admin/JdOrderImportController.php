@@ -132,7 +132,7 @@ class JdOrderImportController extends Controller
         					"email"])->toArray();
 
             $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-                        "goods_price","entrepot_id","entrepot_name"])->toArray();
+                        "goods_price","entrepot_id","entrepot_name"])->put('flag',$this->flag)->toArray();
 
             $otherDatas[] = collect($v)->only(["order_sn","invoice_type","invoice_head","invoice_content",
                             "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
@@ -203,17 +203,17 @@ class JdOrderImportController extends Controller
 
             $reAddress= JdOrderAddress::insert($address);
             if(!$reAddress){
-                throw new \Exception("订单地址保存失败"); 
+                throw new \Exception("订单地址保存失败");
             }
 
             $reGoods= JdOrderGoods::insert($goods);
             if(!$reGoods){
-                throw new \Exception("订单商品保存失败"); 
+                throw new \Exception("订单商品保存失败");
             }
 
             $reOther= JdOrderOther::insert($other);
             if(!$reOther){
-                throw new \Exception("订单其他数据保存失败"); 
+                throw new \Exception("订单其他数据保存失败");
             }
 
             $reMatch = JdMatchBasic::create([
@@ -302,7 +302,9 @@ class JdOrderImportController extends Controller
     	
     }
 
-
+    public function minusInventory(Request $request,$flag,$entrepot_id){
+        echo $flag."----".$entrepot_id;
+    }
 
 
 
