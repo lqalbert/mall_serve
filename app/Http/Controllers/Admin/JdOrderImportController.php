@@ -281,9 +281,14 @@ class JdOrderImportController extends Controller
     public function matchUser(Request $request,$flag){
     	// echo $flag;
     	// $cus_id = CustomerContact::where('phone',13853125743)->first(['cus_id']);
-    	// var_dump($cus_id->cus_id;
     	$jdCustomer = JdOrderCustomer::where('flag',$flag)->get();
-    	dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
+    	if(!($jdCustomer->isEmpty())){
+    		dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
+    		return $this->success([],"数据在后台匹配中,不影响操作其他页面");
+    	}else{
+    		return $this->error([],"该批次无数据,无法匹配");
+    	}
+    	
     }
 
     /**
@@ -293,7 +298,8 @@ class JdOrderImportController extends Controller
      */
     public function getMatch(Request $request){
     	$re = JdMatchBasic::orderBy('id','desc')->get();
-    	return $re;
+		return $re;
+    	
     }
 
 
