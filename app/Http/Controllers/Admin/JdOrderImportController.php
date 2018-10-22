@@ -272,7 +272,12 @@ class JdOrderImportController extends Controller
         ];
 
     }
-
+    /**
+     * [matchUser 分发队列 匹配]
+     * @param  Request $request [description]
+     * @param  [type]  $flag    [description]
+     * @return [type]           [description]
+     */
     public function matchUser(Request $request,$flag){
     	// echo $flag;
     	// $cus_id = CustomerContact::where('phone',13853125743)->first(['cus_id']);
@@ -281,6 +286,11 @@ class JdOrderImportController extends Controller
     	dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
     }
 
+    /**
+     * [getMatch 获取批次列表]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function getMatch(Request $request){
     	$re = JdMatchBasic::orderBy('id','desc')->get();
     	return $re;
