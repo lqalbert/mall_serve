@@ -44,17 +44,16 @@ class JdOrderMatchUser implements ShouldQueue
      */
     public function handle()
     {
-        JdMatchBasic::where('flag','=',$this->flag)->update(['match_status'=>1]);
+        $this->updateMinusStatus(JdOrderCustomer::MATCHING);
 
         foreach ($this->jdCustomer as $k => $v) {
             $cusCtModel = CustomerContact::where('phone',$v->tel)->first(['cus_id']);
-            // var_dump($cusCtModel);
+            
             if(!empty($cusCtModel)){
-                // echo $cusCtModel->cus_id;
+                
                 $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
                                     ->first(['user_id','group_id','department_id'])->toArray();
-                // echo 'order_sn'.$v->order_sn;
-                // echo 'flag'.$v->flag;
+                
                 $res = JdOrderBasic::where([
                                 ['order_sn','=',$v->order_sn],
                                 ['flag','=',$v->flag]
@@ -63,9 +62,18 @@ class JdOrderMatchUser implements ShouldQueue
             }
         }
 
-        JdMatchBasic::where('flag','=',$this->flag)->update(['match_status'=>2]);
+        $this->updateMinusStatus(JdOrderCustomer::MATCHING);
 
 
+    }
+
+    /**
+     * [updateMinusStatus 更新状态]
+     * @param  [type] $status [description]
+     * @return [type]         [description]
+     */
+    private function updateMinusStatus($status){
+        JdMatchBasic::where('flag','=',$this->flag)->update(['match_status'=>$status]);
     }
 
     /**
@@ -76,7 +84,7 @@ class JdOrderMatchUser implements ShouldQueue
      */
     public function failed(Exception $exception)
     {
-        logger("[queueErr]", $exception->getMessage());
+        logger("[jdMatchError]", $exception->getMessage());
     }
 
 

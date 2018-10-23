@@ -9,6 +9,10 @@ class JdOrderCustomer extends Model
 {
     use SoftDeletes;
     
+    const NOTMATCH = 0;
+    const MATCHING = 1;
+    const MATCHED = 2;
+
     protected $table = 'jd_order_customer';
 
     protected $dates = ['deleted_at'];

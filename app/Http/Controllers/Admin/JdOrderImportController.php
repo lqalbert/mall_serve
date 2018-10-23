@@ -12,7 +12,7 @@ use App\Models\JdOrderCustomer;
 use App\Models\JdOrderAddress;
 use App\Models\JdMatchBasic;
 use App\Jobs\JdOrderMatchUser;
-use App\Models\CustomerContact;
+use App\Jobs\JdOrderGoodsMinusInventory;
 
 class JdOrderImportController extends Controller
 {
@@ -280,13 +280,12 @@ class JdOrderImportController extends Controller
      */
     public function matchUser(Request $request,$flag){
     	// echo $flag;
-    	// $cus_id = CustomerContact::where('phone',13853125743)->first(['cus_id']);
     	$jdCustomer = JdOrderCustomer::where('flag',$flag)->get();
     	if(!($jdCustomer->isEmpty())){
     		dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
     		return $this->success([],"数据在后台匹配中,不影响操作其他页面");
     	}else{
-    		return $this->error([],"该批次无数据,无法匹配");
+    		return $this->error([],"该批次无客户数据,无法匹配");
     	}
     	
     }
@@ -303,7 +302,15 @@ class JdOrderImportController extends Controller
     }
 
     public function minusInventory(Request $request,$flag,$entrepot_id){
-        echo $flag."----".$entrepot_id;
+        // echo $flag."----".$entrepot_id;
+        $jdGoosd = JdOrderGoods::where('flag',$flag)->get();
+        if(!($jdGoosd->isEmpty())){
+        	dispatch((new JdOrderGoodsMinusInventory($jdGoosd,$flag,$entrepot_id))->onConnection('redis'));
+    		return $this->success([],"数据在后台扣除中,不影响操作其他页面");
+        }else{
+        	return $this->error([],"该批次无商品数据,无法匹配");
+        }
+
     }
 
 
