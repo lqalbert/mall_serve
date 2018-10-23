@@ -25,7 +25,8 @@ class JdOrderGoods extends Model
         "goods_num",
         "goods_price",
         "entrepot_id",
-        "entrepot_name",
+        "jd_entrepot_id",
+        "jd_entrepot_name",
         'flag'
     ];
 

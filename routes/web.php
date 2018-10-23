@@ -237,7 +237,7 @@ Route::group($adminGroup, function(){
     Route::get('/jd-order-list','JdOrderImportController@jdOrderList');
     Route::put('/match-user/{flag}', 'JdOrderImportController@matchUser');
     Route::get('/get-match', 'JdOrderImportController@getMatch');
-    Route::put('/minus-inventory/{flag}/{entrepot_id}', 'JdOrderImportController@minusInventory');
+    Route::put('/minus-inventory/{flag}', 'JdOrderImportController@minusInventory');
 });
 
 

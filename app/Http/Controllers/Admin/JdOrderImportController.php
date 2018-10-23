@@ -19,6 +19,7 @@ class JdOrderImportController extends Controller
 	private $flag;
 	private $sum;
 	private $fileName;
+	private $entrepot_id;
     /**
 	 *   $newData拆分成 订单表,商品表,客户表,收货地址表数据
 	 *  订单表jd_order_basic:"订单号order_sn","下单帐号order_account","下单时间order_at","订单金额order_money",
@@ -28,7 +29,7 @@ class JdOrderImportController extends Controller
 	 *      "送装服务install_service","服务费service_fee","是否为品牌商订单is_brand","是否为toplife订单is_toplife"
 	 *                  
 	 *  商品表jd_order_goods:"订单号order_sn","商品ID goods_id","货号sku_sn","商品名称goods_name","订购数量goods_num",
-	 *      "京东价goods_price","仓库id entrepot_id","仓库名称entrepot_name"
+	 *      "京东价goods_price","仓库id jd_entrepot_id","仓库名称jd_entrepot_name"
 	 *  
 	 *  客户表jd_order_customer:"订单号order_sn","客户姓名cus_name","联系电话tel","下单帐号order_account"
 	 *  
@@ -42,6 +43,7 @@ class JdOrderImportController extends Controller
     public function index(Request $request){
     	// $exists = Storage::disk('excel')->exists('import/file.jpg');
     	try {
+    		$this->entrepot_id = $request->input('entrepot_id');
 	    	$uploadFile = $request->file('avatar');
 	    	$this->fileName = $uploadFile->getClientOriginalName();
 	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$this->fileName,'excel');
@@ -130,13 +132,6 @@ class JdOrderImportController extends Controller
 
             $orderAddress[] = collect($v)->only(["order_sn","cus_name","address","tel","zip_code",
         					"email"])->toArray();
-
-            $orderGoods[] = collect($v)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-                        "goods_price","entrepot_id","entrepot_name"])->put('flag',$this->flag)->toArray();
-
-            $otherDatas[] = collect($v)->only(["order_sn","invoice_type","invoice_head","invoice_content",
-                            "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
-                            "shop_sku_id"])->toArray();
         }
         
         //商品表数据 orderGoods 其他表 otherDatas
@@ -144,7 +139,8 @@ class JdOrderImportController extends Controller
         $otherDatas = [];
         foreach ($newData as $key => $value) {
             $orderGoods[] = collect($value)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-                            "goods_price","entrepot_id","entrepot_name"])->toArray();
+                            "goods_price","jd_entrepot_id","jd_entrepot_name"])->put('flag',$this->flag)
+                            ->put('entrepot_id',$this->entrepot_id)->toArray();
 
             $otherDatas[] = collect($value)->only(["order_sn","invoice_type","invoice_head","invoice_content",
                             "shop_remark", "shop_remark_level","add_tax_invoice","general_invoice_tax",
@@ -158,7 +154,7 @@ class JdOrderImportController extends Controller
         foreach ($orderGoods as $k1 => &$v1) {
             foreach ($v1 as $ke => &$val) {
                 $val = collect($val)->only(["order_sn","goods_id","sku_sn","goods_name","goods_num",
-                        "goods_price","entrepot_id","entrepot_name"])->toArray();
+                        "goods_price","jd_entrepot_id","jd_entrepot_name"])->toArray();
             }
             unset($val);
         }
@@ -301,11 +297,11 @@ class JdOrderImportController extends Controller
     	
     }
 
-    public function minusInventory(Request $request,$flag,$entrepot_id){
-        // echo $flag."----".$entrepot_id;
+    public function minusInventory(Request $request,$flag){
+        // echo $flag;
         $jdGoosd = JdOrderGoods::where('flag',$flag)->get();
         if(!($jdGoosd->isEmpty())){
-        	dispatch((new JdOrderGoodsMinusInventory($jdGoosd,$flag,$entrepot_id))->onConnection('redis'));
+        	dispatch((new JdOrderGoodsMinusInventory($jdGoosd,$flag))->onConnection('redis'));
     		return $this->success([],"数据在后台扣除中,不影响操作其他页面");
         }else{
         	return $this->error([],"该批次无商品数据,无法匹配");

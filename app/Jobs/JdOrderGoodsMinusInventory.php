@@ -17,7 +17,6 @@ class JdOrderGoodsMinusInventory implements ShouldQueue
 
     const TABLE = 'inventory_system';
     private $flag;
-    private $entrepot_id;
     private $jdGoosd;
     /**
      * 任务最大尝试次数
@@ -31,11 +30,10 @@ class JdOrderGoodsMinusInventory implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($jdGoosd,$flag,$entrepot_id)
+    public function __construct($jdGoosd,$flag)
     {
         $this->jdGoosd = $jdGoosd;
         $this->flag = $flag;
-        $this->entrepot_id = $entrepot_id;
     }
 
     /**
@@ -50,7 +48,7 @@ class JdOrderGoodsMinusInventory implements ShouldQueue
         foreach ($this->jdGoosd as $v) {
             if($v->sku_sn){
                 $re = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?, sale_count = sale_count + ? ',
-                    [ $v->goods_num, $v->goods_num,$v->goods_num,$this->entrepot_id, $v->sku_sn ]);
+                    [ $v->goods_num, $v->goods_num,$v->goods_num,$v->entrepot_id, $v->sku_sn ]);
                 if($re != 0){
                     echo $re."行-sku_sn:".$v->sku_sn.PHP_EOL;
                 }

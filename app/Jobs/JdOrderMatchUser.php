@@ -62,7 +62,7 @@ class JdOrderMatchUser implements ShouldQueue
             }
         }
 
-        $this->updateMinusStatus(JdOrderCustomer::MATCHING);
+        $this->updateMinusStatus(JdOrderCustomer::MATCHED);
 
 
     }
