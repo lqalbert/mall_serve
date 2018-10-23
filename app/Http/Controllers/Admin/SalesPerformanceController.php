@@ -48,6 +48,7 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
+                DB::raw('IFNULL(sum(assign_basic.express_fee),0) as express_fee'),
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
@@ -57,6 +58,7 @@ class SalesPerformanceController extends Controller
             )
             //如果 一个订单有多个 order_after 就会造成 DB::raw(count, sum) 重复计算,而且也是不 时间段内的退款，而是指定时间段内订单的退款
             ->leftJoin(DB::raw("({$refundQuery->toSql()}) as oa"), "db.{$groupBy}",'=','oa.map_key')->mergeBindings($refundQuery)
+            ->leftJoin('assign_basic','assign_basic.order_id','=','db.id')
             ->where($where)
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
@@ -83,6 +85,7 @@ class SalesPerformanceController extends Controller
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
+                           DB::raw('IFNULL(sum(book_freight),0) as b_freight'),
                            "db2.{$groupBy}",
                            DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
                            DB::raw('sum(order_after.fee) as inner_refund'))
@@ -99,6 +102,7 @@ class SalesPerformanceController extends Controller
                                 DB::raw('re2.inner_count'), 
                                 DB::raw('re2.inner_sum'), 
                                 DB::raw('(re1.s_freight-IFNULL(re2.i_freight,0)) as i_freight '),
+                                DB::raw('re2.b_freight'),
                                 DB::raw('re2.inner_cus_count'),
                                 DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
                                 DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count ,0)) as out_cus_cout'),
