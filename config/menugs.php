@@ -304,6 +304,11 @@ return [
             'text' => '素材库',
             'icon' => null,
             'index' => 'http://ws.pulata.com.cn:8888/login'
+        ],
+        [
+            'text' => '京东订单',
+            'icon' => null,
+            'index' => 'JdOrderBasic'
         ]
 
 ];
