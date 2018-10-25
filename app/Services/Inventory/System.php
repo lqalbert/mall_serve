@@ -312,8 +312,8 @@ class System
         $affectedRows = 0;
         try{
             foreach ($products as $product) {
-                $affectedRows += $this->updates('set send_ing = send_ing - ? ',
-                    [ $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $affectedRows += $this->updates('set send_ing = send_ing - ? ,sale_count = sale_count + ? ',
+                    [ $product->getNum(), $product->getNum(), $entrepot_id, $product->getSkuSn() ]);
             }
             $this->updateIsSuccess($affectedRows);
         } catch (\Exception $e ) {
