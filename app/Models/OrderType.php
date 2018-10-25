@@ -45,4 +45,9 @@ class OrderType extends Model
         $tmp->discount = $this->discount;
         return $tmp;
     }
+    //人工判断一下是不是内购订单
+    public function isInner()
+    {
+        return $this->name == "内部订单";
+    }
 }
