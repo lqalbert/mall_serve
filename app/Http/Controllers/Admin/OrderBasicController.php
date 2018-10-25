@@ -96,7 +96,7 @@ class OrderBasicController extends Controller
             $orderModel = OrderBasic::make($allData);
             //内部订单 保证金就是 打折之后的金额
             if ($orderModel->orderType->isInner()) {
-                $allData['deposit'] = $allData['discounted_goods_money'];
+                $orderModel->deposit = $allData['discounted_goods_money'];
             }
             $orderModel->typeToPlanObject();
             $re = $orderModel->save();
