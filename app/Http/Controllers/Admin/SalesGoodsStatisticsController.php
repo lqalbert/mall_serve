@@ -355,7 +355,7 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depDestroyCountBuilder)
             ->where([
                 ['db.type',0],
-                ['db.status',1],
+                ['db.status',1]
             ])->orderBy($orderField,$orderWay)->paginate(15);
 
         return [
