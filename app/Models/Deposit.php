@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Deposit extends Model
 {
     use SoftDeletes;
-    
+    const ADD = 0;
+    const DEDUCTION = 1; //扣除
+    const TYPE_RETURN = 2;
     
     protected $table = 'deposit_basic';
     
@@ -41,13 +43,20 @@ class Deposit extends Model
     		'charge_type',
     		'charge_time',
     		'remark',
-            'revoke_status'
+            'revoke_status',
+            'action_type'
     ];
     
     
     public function department()
     {
         return $this->belongsTo('App\Models\Department', 'department_id');
+    }
+    
+    public function getTypeTextAttribute()
+    {
+        $map = ['添加','扣除', '返还'];
+        return $map[$this->action_type];
     }
     
     

@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Inventory\InventoryService;
 use App\Models\AfterSale;
 use App\Repositories\Criteria\Assign\PrintStatus;
+use App\Services\DepositOperation\DepositAppLogicService;
 
 class AssignController extends Controller
 {
@@ -697,7 +698,7 @@ class AssignController extends Controller
      * 称重发货
      * @todo 事件处理　操作记录
      */
-    public function weightGoods(Request $request, InventoryService $serve, $id)
+    public function weightGoods(Request $request, InventoryService $serve, DepositAppLogicService $depostService ,$id)
     {
         //减库存
         $assign = Assign::find($id);
@@ -712,6 +713,7 @@ class AssignController extends Controller
         $real_weigth = $request->input('real_weigth');
         $express_fee = $request->input('express_fee',0);
         
+        
         DB::beginTransaction();
         try {
             $assign->weightGoods($real_weigth,$express_fee,auth()->user());
@@ -725,7 +727,8 @@ class AssignController extends Controller
                     'remark'=>$assign->assign_sn
                 ];
                 event(new AddAssignOperationLog(auth()->user(),$dataLog));
-                $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn);   
+                $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn);
+                $depostService->depositAtSend($assign->order);
             } else {
                 throw new \Exception("更新失败");
             }
@@ -819,7 +822,7 @@ class AssignController extends Controller
      * @todo 添加操作记录
      *
      */
-    public function orderSign(Request $request, InventoryService $service, $id)
+    public function orderSign(Request $request, InventoryService $service, DepositAppLogicService $depostService, $id)
     {
         $assign = Assign::findOrFail($id);
         DB::beginTransaction();
@@ -856,7 +859,7 @@ class AssignController extends Controller
             } 
             
             $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
-            
+            $depostService->depositAtSend($assign->order);
             $assign->updateSignStatus();
             $assign->fill($request->all());
             $re = $assign->save();

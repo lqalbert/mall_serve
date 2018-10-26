@@ -37,6 +37,8 @@ Route::group($adminGroup, function(){
 
     Route::post('/upload-file', 'UploadController@index')->name('upload');
 	Route::resource('/deposits', 'DepositController');
+	Route::get('/deposit-set', 'DepositController@getDepositSet');
+	Route::put('/deposit-set', 'DepositController@setDeposit');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
 	Route::get('/getCategorys/{pid}','CategoryController@getChildrens');

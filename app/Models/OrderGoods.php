@@ -86,7 +86,15 @@ class OrderGoods extends Model implements GoodsContracts
     }
     public function isResend()
     {
-        $this->status = self::STATUS_EXCHANGE_SEND;
+        return $this->status = self::STATUS_EXCHANGE_SEND;
+    }
+    /**
+     * 是不是 赠品
+     * @return boolean
+     */
+    public function isAppendage()
+    {
+        return $this->sale_type == 1;
     }
     
     public function setExchangeStatus()
@@ -126,6 +134,8 @@ class OrderGoods extends Model implements GoodsContracts
         $map = ['','赠品'];
         return $map[$this->sale_type];
     }
+    
+    
     
     /**
      * 退换货的
