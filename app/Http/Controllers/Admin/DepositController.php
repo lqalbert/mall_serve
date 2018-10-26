@@ -13,6 +13,7 @@ use Psy\Exception\ThrowUpException;
 use App\Services\DepositOperation\DepositOperationService;
 use App\Models\Department;
 use App\Models\DepositSet;
+use App\Alg\ModelCollection;
 
 class DepositController extends Controller
 {
@@ -32,9 +33,18 @@ class DepositController extends Controller
             $where[]=['charge_time','>=',$request->input('start')];
             $where[]=['charge_time','<=',$request->input('end')];
         }
+        
+        
+        
         $page = Deposit::where($where)->orderBy('id', 'desc')->paginate($request->input('pageSize', 20));
+        $collection = $page->getCollection();
+        if ($request->has('append')) {
+            $collection = ModelCollection::setAppends($collection, $request->input('append'));
+        }
+        
+        
     	return [
-    	    'items'=> $page->items(),
+    	    'items'=> $collection,
 			'total'=> $page->total(),
     	];
     }
