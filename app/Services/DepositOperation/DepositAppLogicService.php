@@ -27,22 +27,18 @@ class DepositAppLogicService
         try {
             DB::beginTransaction();
             
-            if ($order->orderType->isInner()) {
-                $deposit = $order->discounted_goods_money;
-            } else {
-                if ($this->setModel->isZero()) {
-                    // 扣除部分就是 = 保证金-返还部分
-                    $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
-                    $order->setDepositReturn();
-                    if (!$order->save()) {
-                        throw  new \Exception('订单返还状态设置失败');
-                    }
-                } else {
-                    // 扣除部分就是 = 保证金
-                    $deposit = $this->caculDeposit($order);
+            if ($this->setModel->isZero()) {
+                // 扣除部分就是 = 保证金-返还部分
+                $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
+                $order->setDepositReturn();
+                if (!$order->save()) {
+                    throw  new \Exception('订单返还状态设置失败');
                 }
+            } else {
+                // 扣除部分就是 = 保证金
+                $deposit = $this->caculDeposit($order);
             }
-            
+
             $this->service->subDeposit($order->department, $deposit);
             DB::commit();
         } catch (Exception $e) {
@@ -99,7 +95,11 @@ class DepositAppLogicService
     {
         $orderGoods = $order->goods;
         //算商品价格
-        $s = $this->caculGoods($orderGoods);
+        if ($order->orderType->isInner()) {
+            $s = $order->discounted_goods_money;;
+        } else {
+            $s = $this->caculGoods($orderGoods);
+        }
         //算邮费
         $s = $s + $order->getDepositFreight();
         return $s;
@@ -107,7 +107,12 @@ class DepositAppLogicService
     
     public function caculReturn($order)
     {
-        $s = $this->caculGoods($order->goods);
+        if ($order->orderType->isInner()) {
+            $s = $order->discounted_goods_money;;
+        } else {
+            $s = $this->caculGoods($orderGoods);
+        }
+//         $s = $this->caculGoods($order->goods);
         return round($s * $this->setModel->getReturn(), 2);
     }
     
