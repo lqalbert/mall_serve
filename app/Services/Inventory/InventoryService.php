@@ -123,7 +123,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw new $e;
+            throw  $e;
         }
     }
     
