@@ -117,9 +117,9 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->sending($entrepot->id, $products, $on);
-            if ($on) {
-                $this->log->sending($entrepot, $products, $user, $dan);
-            }
+//             if ($on) {
+//                 $this->log->sending($entrepot, $products, $user, $dan);
+//             }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
