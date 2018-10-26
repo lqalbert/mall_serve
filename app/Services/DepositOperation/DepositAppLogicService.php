@@ -25,7 +25,7 @@ class DepositAppLogicService
     public function depositAtCheck(OrderBasic $order)
     {
         try {
-            DB:beginTransaction();
+            DB::beginTransaction();
             
             if ($this->setModel->isZero()) {
                 // 扣除部分就是 = 保证金-返还部分
