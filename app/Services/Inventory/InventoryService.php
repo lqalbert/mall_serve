@@ -123,7 +123,7 @@ class InventoryService
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw new \Exception('库存更新失败');
+            throw new $e;
         }
     }
     
