@@ -24,7 +24,7 @@ class DepositSet extends Model
     
     public static function getInstance()
     {
-        return self::find(id);
+        return self::find(1);
     }
     
     
