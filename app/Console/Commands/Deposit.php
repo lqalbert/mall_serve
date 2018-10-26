@@ -19,7 +19,7 @@ class Deposit extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '设置保证金设置';
 
     /**
      * Create a new command instance.
