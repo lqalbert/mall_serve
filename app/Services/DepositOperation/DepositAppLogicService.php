@@ -27,16 +27,20 @@ class DepositAppLogicService
         try {
             DB::beginTransaction();
             
-            if ($this->setModel->isZero()) {
-                // 扣除部分就是 = 保证金-返还部分
-                $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
-                $order->setDepositReturn();
-                if (!$order->save()) {
-                    throw  new \Exception('订单返还状态设置失败');
-                }
+            if ($order->orderType->isInner()) {
+                $deposit = $order->discounted_goods_money;
             } else {
-                // 扣除部分就是 = 保证金
-                $deposit = $this->caculDeposit($order);
+                if ($this->setModel->isZero()) {
+                    // 扣除部分就是 = 保证金-返还部分
+                    $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
+                    $order->setDepositReturn();
+                    if (!$order->save()) {
+                        throw  new \Exception('订单返还状态设置失败');
+                    }
+                } else {
+                    // 扣除部分就是 = 保证金
+                    $deposit = $this->caculDeposit($order);
+                }
             }
             
             $this->service->subDeposit($order->department, $deposit);
