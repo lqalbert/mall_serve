@@ -1,13 +1,14 @@
 <?php
-namespace App\Services\OperationLog;
+namespace App\Services\DepositOperation;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use App\models\OrderBasic;
 use App\Models\User;
 use App\Models\DepositOperationLog;
+use App\Models\Department;
 
-class OperationLogService{
+class DepositOperationService{
 
 	private $operationModel;
 
@@ -22,7 +23,7 @@ class OperationLogService{
 	 * @param  [type]     $action     [description]
 	 * @return [type]                 [description]
 	 */
-	private function depositAttributes(User $user,OrderBasic $orderModel,$action){
+	private function depositLogAttributes(User $user,OrderBasic $orderModel,$action){
 		$this->operationModel->operator_id = $user->id;
         $this->operationModel->operator = $user->realname;
         $this->operationModel->order_id = $orderModel->id;
@@ -40,7 +41,7 @@ class OperationLogService{
 	public function depositLog(User $user,OrderBasic $orderModel,$action=''){
 		DB::beginTransaction();
 		try {
-			$this->depositAttributes($user,$orderModel,$action);
+			$this->depositLogAttributes($user,$orderModel,$action);
 
         	$order_sn = $orderModel->order_sn;
 	        $department_name = $orderModel->department->name;
@@ -69,8 +70,68 @@ class OperationLogService{
 
 	}
 
+	/**
+	 * [addDeposit 添加保证金]
+	 * @param Department $department [description]
+	 * @param [type]     $money      [description]
+	 */
+	public function addDeposit(Department $department,$money){
+		DB::beginTransaction();
+		try {
+			$department->addDeposit($money);
+			$re = $department->save();
+			if(!$re){
+				throw new \Exception('部门保证金添加失败');
+			}
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			throw new \Exception($e->getMessage());
+		}
 
+	}
+	
+	/**
+	 * [addDeposit 返还保证金]
+	 * @param Department $department [description]
+	 * @param [type]     $money      [description]
+	 */
+	public function returnDeposit(Department $department,$money){
+		DB::beginTransaction();
+		try {
+			$department->addDeposit($money);
+			$re = $department->save();
+			if(!$re){
+				throw new \Exception('部门保证金返还失败');
+			}
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			throw new \Exception($e->getMessage());
+		}
 
+	}
+
+	/**
+	 * [subDeposit 扣除保证金]
+	 * @param  Department $department [description]
+	 * @param  [type]     $money      [description]
+	 * @return [type]                 [description]
+	 */
+	public function subDeposit(Department $department,$money){
+		DB::beginTransaction();
+		try {
+			$department->subDeposit($money);
+			$re = $department->save();
+			if(!$re){
+				throw new \Exception('部门保证金扣除失败');
+			}
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+			throw new \Exception($e->getMessage());
+		}
+	}
 
 
 
