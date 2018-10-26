@@ -86,7 +86,7 @@ class OrderGoods extends Model implements GoodsContracts
     }
     public function isResend()
     {
-        return $this->status = self::STATUS_EXCHANGE_SEND;
+        return $this->status == self::STATUS_EXCHANGE_SEND;
     }
     /**
      * 是不是 赠品

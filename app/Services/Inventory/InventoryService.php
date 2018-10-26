@@ -117,13 +117,13 @@ class InventoryService
         DB::beginTransaction();
         try {
             $this->inventory->sending($entrepot->id, $products, $on);
-//             if ($on) {
-//                 $this->log->sending($entrepot, $products, $user, $dan);
-//             }
+            if ($on) {
+                $this->log->sending($entrepot, $products, $user, $dan);
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            throw  $e;
+            throw new \Exception('库存更新失败');
         }
     }
     
