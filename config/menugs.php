@@ -309,6 +309,11 @@ return [
             'text' => '京东订单',
             'icon' => null,
             'index' => 'JdOrderBasic'
+        ],
+        [
+            'text' => '预充值管理',
+            'icon' => null,
+            'index' => 'EarnestMoney'
         ]
 
 ];

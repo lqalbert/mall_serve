@@ -16,7 +16,7 @@ return [
 		[
 				'text'=>'员工管理',
 				'icon'=>null,
-				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog']
+				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog','EarnestMoney']
 		],
 // 		[
 // 				'text'=>'客户管理',
@@ -74,5 +74,10 @@ return [
 			    'text' => '问卷管理',
 			    'icon' => null,
 			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
-		]
+		],
+//         [
+//                 'text' => '预充值管理',
+//                 'icon' => null,
+//                 'subIndex' => []
+//         ]
 ];
