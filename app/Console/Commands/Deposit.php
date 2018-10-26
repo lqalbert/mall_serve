@@ -38,11 +38,17 @@ class Deposit extends Command
      */
     public function handle()
     {
-        DepositSet::create([
+        $re = DepositSet::create([
             'type'=>0,
             'appendage_rate'=>30,
             'sale_rate' => 0,
-            'return_rate' => 0
+            'return_rate' => 67
         ]);
+        if ($re) {
+            $this->info('Display this on the screen');
+        } else {
+            $this->error('Something went wrong!');
+        }
+        
     }
 }
