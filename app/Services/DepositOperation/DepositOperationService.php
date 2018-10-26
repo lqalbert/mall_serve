@@ -109,7 +109,7 @@ class DepositOperationService{
 	 * @param [type]     $money      [description]
 	 */
 	public function returnDeposit(Department $department, $money){
-		DB::beginTransaction();
+	    DB::beginTransaction();
 		try {
 			$department->addDeposit($money);
 			$re = $department->save();
@@ -143,7 +143,7 @@ class DepositOperationService{
 	 * @return [type]                 [description]
 	 */
 	public function subDeposit(Department $department,$money){
-		DB::beginTransaction();
+	    DB::beginTransaction();
 		try {
 			$department->subDeposit($money);
 			
