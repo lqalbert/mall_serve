@@ -28,6 +28,7 @@ use App\Services\Inventory\InventoryService;
 use App\Models\AfterSale;
 use App\Repositories\Criteria\Assign\PrintStatus;
 use App\Services\DepositOperation\DepositAppLogicService;
+use App\Services\DepositOperation\DepositOperationService;
 
 class AssignController extends Controller
 {
@@ -426,12 +427,23 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function stopOrder(Request $request, $id)
+    public function stopOrder(Request $request,DepositOperationService $service, $id)
     {   
         $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
         $assign->is_stop = $is_stop==0?1:0;
         $assign->stop_mark = $request->input('stop_mark');
+        $order = $assign->order;
+        if ($assign->is_stop == 0) {
+            //扣保证金
+            $deService = new DepositAppLogicService($service);
+            $deService->depositAtCheck($order);
+        } else {
+            // 返还保证金 把扣除的返还
+//             $order = $assign->order;
+            $service->returnDeposit($order->department, $order->deposit);
+        }
+        
         $re = $assign->save();
         if ($re) {
             //添加发货单操作记录
@@ -859,7 +871,7 @@ class AssignController extends Controller
             } 
             
             $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
-            $depostService->depositAtSend($assign->order);
+            $depostService->depositAtSign($assign->order);
             $assign->updateSignStatus();
             $assign->fill($request->all());
             $re = $assign->save();
