@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Bootstrap\SetRequestForConsole;
 
 if (!function_exists('user_str_getcsv')) {
     function user_str_getcsv($str, $delimiter=',', $enclosure='"', $escape='\\') {

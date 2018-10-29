@@ -31,13 +31,15 @@ class DepositAppLogicService
                 // 扣除部分就是 = 保证金-返还部分
                 $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
                 $order->setDepositReturn();
-                $order->deposit = $deposit;
-                if (!$order->save()) {
-                    throw  new \Exception('订单返还状态设置失败');
-                }
+                
             } else {
                 // 扣除部分就是 = 保证金
                 $deposit = $this->caculDeposit($order);
+            }
+            
+            $order->deposit = $deposit;
+            if (!$order->save()) {
+                throw  new \Exception('订单返还状态设置失败');
             }
 
             $this->service->subDeposit($order->department, $deposit);

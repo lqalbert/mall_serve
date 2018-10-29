@@ -334,7 +334,7 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function repeatOrder(Request $request, InventoryService $serve ,$id)
+    public function repeatOrder(Request $request, InventoryService $serve ,DepositOperationService $depostService,  $id)
     {
 //         {label:"导入状态", value:"1", sub:""},
 //         {label:"审核状态", value:"2", sub:""},　分配了快递公司　　快递号　快递号(面单可以更新)
@@ -383,7 +383,7 @@ class AssignController extends Controller
                     $assign->is_repeat = $is_repeat;
                     $re = $assign->save();
                     //改库存 还要改保证金
-                    logger('[xxdebug]',['findout why three time']);
+//                     logger('[xxdebug]',['findout why three time']);
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
@@ -392,9 +392,8 @@ class AssignController extends Controller
                     $order->updateStatusToUnChecked();
                     $order->save();
                     //保证金
-                    $department = $order->department;
-                    $department->addDeposit($order->order_pay_money);
-                    $department->save();
+                    $depostService->returnDeposit($order->department, $order->deposit);
+                    
                 } catch (\Exception $e) {
                     DB::rollback();
                     return $this->error([], $e->getMessage());

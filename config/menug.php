@@ -16,7 +16,7 @@ return [
 		[
 				'text'=>'员工管理',
 				'icon'=>null,
-				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog','EarnestMoney']
+		        'subIndex'=>['Department','Group','Employee','EarnestMoney'] //'Deposit','OrderDepositLog'
 		],
 // 		[
 // 				'text'=>'客户管理',
