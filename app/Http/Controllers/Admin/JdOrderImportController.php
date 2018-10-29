@@ -46,11 +46,13 @@ class JdOrderImportController extends Controller
     		$this->entrepot_id = $request->input('entrepot_id');
 	    	$uploadFile = $request->file('avatar');
 	    	$this->fileName = $uploadFile->getClientOriginalName();
-	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$this->fileName,'excel');
+// 	    	$uploadFilePath= $request->file('avatar')->storeAs('import',$this->fileName,'excel');
+	    	$uploadFilePath= $request->file('avatar')->store('excel');
 	    	if(!$uploadFilePath){
 	    		throw new \Exception("上传文件失败"); 
 	    	}
-	        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.$uploadFilePath);
+// 	        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.$uploadFilePath);
+	    	$filePath = storage_path('app'.DIRECTORY_SEPARATOR.$uploadFilePath); 
 	        $contentArr = file($filePath);
 	        $csvArr = [];
 	        foreach ($contentArr as $line) {
