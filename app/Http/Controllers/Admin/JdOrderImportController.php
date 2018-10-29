@@ -280,7 +280,7 @@ class JdOrderImportController extends Controller
     	// echo $flag;
     	$jdCustomer = JdOrderCustomer::where('flag',$flag)->get();
     	if(!($jdCustomer->isEmpty())){
-    		dispatch((new JdOrderMatchUser($jdCustomer,$flag))->onConnection('redis'));
+    		dispatch((new JdOrderMatchUser($jdCustomer,$flag)));//->onConnection('redis'));
     		return $this->success([],"数据在后台匹配中,不影响操作其他页面");
     	}else{
     		return $this->error([],"该批次无客户数据,无法匹配");
@@ -303,7 +303,7 @@ class JdOrderImportController extends Controller
         // echo $flag;
         $jdGoosd = JdOrderGoods::where('flag',$flag)->get();
         if(!($jdGoosd->isEmpty())){
-        	dispatch((new JdOrderGoodsMinusInventory($jdGoosd,$flag))->onConnection('redis'));
+        	dispatch((new JdOrderGoodsMinusInventory($jdGoosd,$flag))); //->onConnection('redis'));
     		return $this->success([],"数据在后台扣除中,不影响操作其他页面");
         }else{
         	return $this->error([],"该批次无商品数据,无法匹配");
