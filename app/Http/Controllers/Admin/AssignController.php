@@ -799,7 +799,6 @@ class AssignController extends Controller
             if (!$re) {
                 throw new \Exception('更新失败');
             }
-            
             $goods = $assign->goods;
             
             $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
