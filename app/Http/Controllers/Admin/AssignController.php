@@ -850,7 +850,7 @@ class AssignController extends Controller
             $goods = $assign->goods;
             
             //处于已发货 以前称重发货 已处理减库存了， 所以不再处理 已揽件
-            
+            // 不处于发送中 也不处于已揽件
             if (!$assign->isSended() && !$assign->isParcel()) {
                 $service->sending($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
             } 
