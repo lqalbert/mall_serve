@@ -300,13 +300,13 @@ class SalesGoodsStatisticsController extends Controller
     }
 
 //******************************************以下为部门的**************************************************************
-    public function getDepSaleGoods(Request $request, $sku){
+    public function getDepSaleGoods(Request $request,$sku){
         $start = $request->input('start')." 00:00:00";
         $end = $request->input('end')." 23:59:59";
         $orderField = $request->input('orderField','sale_num');
-        $orderWay  = $request->input('orderWay','desc');
+        $orderWay = $request->input('orderWay','desc');
 
-        $depSaleBuilder = $this->depSaleNUm($sku,$start, $end);
+        $depSaleBuilder = $this->depSaleNUm($sku,$start,$end);
         $depSaleMoneyBuilder = $this->depSaleMoney($sku,$start, $end);
         $depInnerSaleBuilder = $this->depInnerSaleNum($sku,$start, $end);
         $depInnerSaleMoneyBuilder = $this->depInnerSaleMoney($sku,$start, $end);
@@ -354,9 +354,9 @@ class SalesGoodsStatisticsController extends Controller
             ->leftJoin(DB::raw("({$depDestroyCountBuilder->toSql()}) as ddc"),'db.id','=','ddc.department_id')
             ->mergeBindings($depDestroyCountBuilder)
             ->where([
-                ['db.type',0],
-                ['db.status',1]
-            ])->orderBy($orderField,$orderWay)->paginate(15);
+                ['db.type',0]
+                // ['db.status',1]
+            ])->orderBy($orderField,$orderWay)->paginate(100);
 
         return [
             'items'=>$result->items(),
@@ -372,7 +372,7 @@ class SalesGoodsStatisticsController extends Controller
      * @param unknown $end
      * @return unknown
      */
-    private function depSaleNUm($sku,$start, $end)
+    private function depSaleNUm($sku,$start,$end)
     {
         $where = [
             ['order_basic.status','>=',1],
@@ -383,9 +383,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
@@ -410,9 +407,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
@@ -436,9 +430,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
@@ -463,9 +454,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
@@ -483,9 +471,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
@@ -510,9 +495,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','<>',3],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
@@ -535,9 +517,6 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.status','=',1],
             ['order_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('order_after')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
@@ -560,9 +539,6 @@ class SalesGoodsStatisticsController extends Controller
             ['sample_basic.check_time',"<=", $end],
             ['sample_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('sample_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
@@ -584,9 +560,6 @@ class SalesGoodsStatisticsController extends Controller
             ['sample_basic.check_time',"<=", $end],
             ['sample_goods.sku_sn',$sku]
         ];
-        if($sku == 0){
-            array_pop($where);
-        }
         return DB::table('sample_basic')->select(
             DB::raw("sum(`goods_number`*`price`) as money"),
             'sku_sn','department_id'
