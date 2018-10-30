@@ -238,12 +238,19 @@ class AssignController extends Controller
     }
 
 
-    public function editExpressFee(Request $request, $id)
+    public function editExpressFee(Request $request,DepositOperationService $service, $id)
     {
 //         $re = $this->repository->update($request->all(), $id);
         $assign = $this->repository->find($id);
         $order = $assign->order;
-        $order->updateFreight($request->input('express_fee'));
+        $deltFreight = $order->updateFreight($request->input('express_fee'));
+        if ($deltFreight > 0) {
+            // 新的运费比原来的多， 还要再扣一部分
+            $service->subDeposit($order->department, $deltFreight, '修改运费');
+        } else {
+            // 新的运费比原来的少， 要返还一部分
+            $service->returnDeposit($order->department, abs($deltFreight), '修改运费');
+        }
         $re = $order->save();
         if($re){
             //添加发货单操作记录

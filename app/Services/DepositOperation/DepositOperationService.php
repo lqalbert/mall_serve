@@ -108,7 +108,7 @@ class DepositOperationService{
 	 * @param Department $department [description]
 	 * @param [type]     $money      [description]
 	 */
-	public function returnDeposit(Department $department, $money){
+	public function returnDeposit(Department $department, $money, $remark=null){
 	    DB::beginTransaction();
 		try {
 			$department->addDeposit($money);
@@ -122,7 +122,8 @@ class DepositOperationService{
 			    'money' => $money,
 			    'creator_id' => auth()->user()->id,
 			    'creator' => auth()->user()->realname,
-			    'action_type' =>  Deposit::TYPE_RETURN
+			    'action_type' =>  Deposit::TYPE_RETURN,
+			    'remark' => $remark
 			]);
 			$re = $this->log->save();
 			if(!$re){
@@ -142,7 +143,7 @@ class DepositOperationService{
 	 * @param  [type]     $money      [description]
 	 * @return [type]                 [description]
 	 */
-	public function subDeposit(Department $department,$money){
+	public function subDeposit(Department $department,$money, $remark=null){
 	    DB::beginTransaction();
 		try {
 			$department->subDeposit($money);
@@ -161,7 +162,8 @@ class DepositOperationService{
 			    'money' => $money,
 			    'creator_id' => auth()->user()->id,
 			    'creator' => auth()->user()->realname,
-			    'action_type' =>  Deposit::DEDUCTION
+			    'action_type' =>  Deposit::DEDUCTION,
+			    'remark' => $remark
 			]);
 			$re = $this->log->save();
 			if(!$re){

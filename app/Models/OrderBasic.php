@@ -366,8 +366,10 @@ class OrderBasic extends Model
     
     public function updateFreight($newFreight)
     {
+        $tmp = $newFreight - $this->freight;
         $this->order_pay_money = $this->order_pay_money - $this->freight;
         $this->freight = $newFreight;
         $this->order_pay_money = $this->order_pay_money + $this->freight ;
+        return  $tmp;
     }
 }
