@@ -238,6 +238,8 @@ Route::group($adminGroup, function(){
     Route::put('/match-user/{flag}', 'JdOrderImportController@matchUser');
     Route::get('/get-match', 'JdOrderImportController@getMatch');
     Route::put('/minus-inventory/{flag}', 'JdOrderImportController@minusInventory');
+    Route::put('/set-brusher/{flag}/{order_sn}', 'JdOrderImportController@changeBrusher');
+    Route::post('/manual-match', 'JdOrderImportController@manualMatch');
 });
 
 
