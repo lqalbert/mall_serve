@@ -355,7 +355,9 @@ class AssignController extends Controller
             return $this->error([],'已签收，不能返单');
         }
         
-        
+        if ($assign->isSended()) {
+            $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+        }
         switch ($is_repeat) {
             case 1:
                 if (!$assign->isSetExpress()) {
@@ -367,16 +369,14 @@ class AssignController extends Controller
 //                 $assign->corrugated_id = 0;
                 $assign->status = 0;
                 $assign->check_status = 0;
-                if ($assign->isSended()) {
-                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
-                }
+                
                 
                 $re = $assign->save();
                 break;
             case 2:
-                if ($assign->isSended()) {
-                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
-                }
+//                 if ($assign->isSended()) {
+//                     $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+//                 }
                 $assign->status = 1;
                 $re = $assign->save();
                 break;
@@ -391,6 +391,9 @@ class AssignController extends Controller
                     $re = $assign->save();
                     //改库存 还要改保证金
 //                     logger('[xxdebug]',['findout why three time']);
+//                     if ($assign->isSended()) {
+//                         $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+//                     }
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
