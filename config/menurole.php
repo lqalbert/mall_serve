@@ -23,7 +23,8 @@ return [
         'Website',
         'SalesPerformance',
         'SalesQuantization',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'EarnestMoney'
     ],
     'human-resources' => [
       

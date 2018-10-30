@@ -67,10 +67,10 @@ class DepositAppLogicService
      */
     public function depositAtSign(OrderBasic $order)
     {
-        if ($this->setModel->isTwo()) {
+        //if ($this->setModel->isTwo()) {
             //返还代码
             $this->setReturn($order);
-        }
+        //}
     }
     
     private function setReturn($order)

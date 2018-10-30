@@ -64,7 +64,7 @@ class SalesPerformanceController extends Controller
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
 //                 ['db.type','<>', 2]
-            ])
+            ])->whereNotNull('db.deleted_at')
             ->groupBy('db.'.$groupBy);
 
         if ($groupBy == 'department_id') {
@@ -95,7 +95,7 @@ class SalesPerformanceController extends Controller
                            ['db2.status','>', OrderBasic::UN_CHECKED],
                            ['db2.status','<', OrderBasic::ORDER_STATUS_7],
                            ['db2.type','=', 2] //这种硬编码其实不好
-                       ])->groupBy('db2.'.$groupBy);
+                       ])->whereNotNull('db2.deleted_at')->groupBy('db2.'.$groupBy);
                        
        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
                        ->select(DB::raw("re1.*"), 
