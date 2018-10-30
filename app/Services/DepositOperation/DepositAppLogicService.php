@@ -110,6 +110,7 @@ class DepositAppLogicService
     
     public function caculReturn($order)
     {
+        $orderGoods = $order->goods;
         if ($order->orderType->isInner()) {
             $s = $order->discounted_goods_money;;
         } else {
