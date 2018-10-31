@@ -48,6 +48,7 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
+                DB::raw('IFNULL(sum(book_freight),0) as b_freight'),
                 DB::raw('IFNULL(sum(assign_basic.express_fee),0) as express_fee'),
                 'db.group_name',
                 'db.department_name',
@@ -80,12 +81,13 @@ class SalesPerformanceController extends Controller
         if($request->has('group_id')){
             $where2[]=['db2.group_id','=', $request->input('group_id')];
         }
+        //内购的
         $builder2 = DB::table('order_basic as db2')
                        ->select(
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
-                           DB::raw('IFNULL(sum(book_freight),0) as b_freight'),
+                           
                            "db2.{$groupBy}",
                            DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
                            DB::raw('sum(order_after.fee) as inner_refund'))
@@ -102,7 +104,6 @@ class SalesPerformanceController extends Controller
                                 DB::raw('re2.inner_count'), 
                                 DB::raw('re2.inner_sum'), 
                                 DB::raw('(re1.s_freight-IFNULL(re2.i_freight,0)) as i_freight '),
-                                DB::raw('re2.b_freight'),
                                 DB::raw('re2.inner_cus_count'),
                                 DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
                                 DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count ,0)) as out_cus_cout'),
