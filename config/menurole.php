@@ -12,7 +12,7 @@ return [
     'sale-manager' => [
         'GoodsDetails',
         'Group',
-        'Employee',
+//         'Employee',
         'Customer',
         'OrderList',
         'BuyOrders',
