@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\DepositSet;
+use App\Models\OrderBasic;
 
 class Deposit extends Command
 {
@@ -38,6 +39,7 @@ class Deposit extends Command
      */
     public function handle()
     {
+        OrderBasic::whereNull('deleted_at')->update(['is_deposit_return'=>1]);
         $re = DepositSet::create([
             'type'=>0,
             'appendage_rate'=>30,

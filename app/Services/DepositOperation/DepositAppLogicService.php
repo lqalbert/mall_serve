@@ -128,7 +128,7 @@ class DepositAppLogicService
         $orderGoods = $order->goods;
         //算商品价格
         if ($order->orderType->isInner()) {
-            $s = $order->discounted_goods_money;;
+            $s = $order->discounted_goods_money;
         } else {
             $s = $this->caculGoods($orderGoods);
         }
