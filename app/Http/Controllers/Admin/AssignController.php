@@ -341,7 +341,7 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function repeatOrder(Request $request, InventoryService $serve ,DepositOperationService $depostService,  $id)
+    public function repeatOrder(Request $request, InventoryService $serve ,DepositAppLogicService $depostService,  $id)
     {
 //         {label:"导入状态", value:"1", sub:""},
 //         {label:"审核状态", value:"2", sub:""},　分配了快递公司　　快递号　快递号(面单可以更新)
@@ -402,7 +402,8 @@ class AssignController extends Controller
                     $order->updateStatusToUnChecked();
                     $order->save();
                     //保证金
-                    $depostService->returnDeposit($order->department, $order->deposit);
+                    
+                    $depostService->returnDeposit($order);
                     
                 } catch (\Exception $e) {
                     DB::rollback();
@@ -436,7 +437,7 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function stopOrder(Request $request,DepositOperationService $service, $id)
+    public function stopOrder(Request $request,DepositAppLogicService $service, $id)
     {   
         $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
@@ -445,12 +446,12 @@ class AssignController extends Controller
         $order = $assign->order;
         if ($assign->is_stop == 0) {
             //扣保证金
-            $deService = new DepositAppLogicService($service);
-            $deService->depositAtCheck($order);
+//             $deService = new DepositAppLogicService($service);
+            $service->depositAtCheck($order);
         } else {
             // 返还保证金 把扣除的返还
 //             $order = $assign->order;
-            $service->returnDeposit($order->department, $order->deposit);
+            $service->returnDeposit($order);
         }
         
         $re = $assign->save();

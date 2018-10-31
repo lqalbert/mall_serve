@@ -63,6 +63,33 @@ class DepositAppLogicService
     }
     
     /**
+     * 在某些情况下需要退回保证金
+     */
+    public function returnDeposit(OrderBasic $order)
+    {
+        try {
+            DB::beginTransaction();
+            // 保证金是否已返
+            if ($order->isDepositReturn()) {  //是
+                $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit);
+                $order->setDepositReturn(false);
+                $order->return_deposit = 0.00;
+//                 $order->save();
+                if (!$order->save()) {
+                    throw  new \Exception('退还保证金失败');
+                }
+            } else { //还没有返
+                $this->service->returnDeposit($order->department, $order->deposit);
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw new \Exception('退还保证金失败:'. $e->getMessage());
+        }
+        
+    }
+    
+    /**
      * 签收时返还
      */
     public function depositAtSign(OrderBasic $order)
@@ -80,8 +107,10 @@ class DepositAppLogicService
             try {
                 DB::beginTransaction();
                 $this->service->returnDeposit($order->department, $returnDeposit);
-                
+                //设置已返还标志
                 $order->setDepositReturn();
+                //保存已返还的金额
+                $order->return_deposit = $returnDeposit;
                 if (!$order->save()) {
                     throw  new \Exception('订单返还状态设置失败');
                 }

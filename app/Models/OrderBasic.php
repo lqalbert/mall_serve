@@ -279,10 +279,17 @@ class OrderBasic extends Model
         return $this->is_deposit_return  == 1;
     }
     
-    public function setDepositReturn()
+    public function setDepositReturn($on=true)
     {
-        $this->is_deposit_return = 1;
+        if ($on) {
+            $this->is_deposit_return = 1;
+        } else {
+            $this->is_deposit_return = 0;
+        }
+        
     }
+    
+    
     
     
     /**
