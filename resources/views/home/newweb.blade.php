@@ -69,6 +69,9 @@
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
+        <!-- Add Arrows -->
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
     </div>
 </div>
 <!--/ minbanner-->
@@ -502,6 +505,7 @@
     </div>
 </div>
 <div class="container-fluid qidian">
+    <img src="/images/web/qidian.png" alt="">
     <div class="qidianText">
         <div class="col-lg-12 col-md-12 eText">Beauty</div>
         <div class="col-lg-12 col-md-12 eText">Filter Cushion</div>
@@ -571,19 +575,25 @@
 <script src="/js/swiper.min.js"></script>
 <script>
 	var swiper = new Swiper('.swiper-container', {
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
       autoplay: {
         delay: 5000,
         stopOnLastSlide: false,
         disableOnInteraction: true,
       },
+      spaceBetween: 30,
+      effect: 'fade',
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
 	});
 	$(document).ready(function () {
       /*-0---------小导航效果-------------*/
-      $('.minTab .tabList').on('click',function () {
+      $('.minTab .tabList').on('mouseenter',function () {
         const index=$(this).index() + 1
         $('.minTab .tabList .con .bg').removeClass('active')
         $(this).children('.con').children('.bg').addClass('active')
