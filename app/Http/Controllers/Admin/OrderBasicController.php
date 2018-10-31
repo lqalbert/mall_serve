@@ -90,8 +90,8 @@ class OrderBasicController extends Controller
             $allData['department_id'] = $department->id;
             $allData['department_name'] = $department->name;
 //             $allData['deposit'] = $allData['discounted_goods_money'] + $allData['book_freight'] + $allData['freight'];
-            $allData['deposit'] = $this->calculateAppendage($request->order_goods);//$allData['discounted_goods_money'];
-            $allData['return_deposit'] = $allData['discounted_goods_money'] * 0.67;
+//             $allData['deposit'] = $this->calculateAppendage($request->order_goods);//$allData['discounted_goods_money'];
+//             $allData['return_deposit'] = $allData['discounted_goods_money'] * 0.67;
 
             $orderModel = OrderBasic::make($allData);
             //内部订单 保证金就是 打折之后的金额

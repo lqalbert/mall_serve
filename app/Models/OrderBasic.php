@@ -269,6 +269,27 @@ class OrderBasic extends Model
         return $this;
     }
     
+    public function getDepositFreight()
+    {
+        return $this->freight + $this->book_freight;
+    }
+    
+    public function isDepositReturn()
+    {
+        return $this->is_deposit_return  == 1;
+    }
+    
+    public function setDepositReturn($on=true)
+    {
+        if ($on) {
+            $this->is_deposit_return = 1;
+        } else {
+            $this->is_deposit_return = 0;
+        }
+        
+    }
+    
+    
     
     
     /**
@@ -279,6 +300,8 @@ class OrderBasic extends Model
     {
         return $this->address->getRecipient();
     }
+    
+    
     
     
     
@@ -350,8 +373,10 @@ class OrderBasic extends Model
     
     public function updateFreight($newFreight)
     {
+        $tmp = $newFreight - $this->freight;
         $this->order_pay_money = $this->order_pay_money - $this->freight;
         $this->freight = $newFreight;
         $this->order_pay_money = $this->order_pay_money + $this->freight ;
+        return  $tmp;
     }
 }

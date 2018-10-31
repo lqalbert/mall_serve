@@ -37,6 +37,8 @@ Route::group($adminGroup, function(){
 
     Route::post('/upload-file', 'UploadController@index')->name('upload');
 	Route::resource('/deposits', 'DepositController');
+	Route::get('/deposit-set', 'DepositController@getDepositSet');
+	Route::put('/deposit-set', 'DepositController@setDeposit');
 	
 	Route::get('/categorys/{lel}','CategoryController@getLevels');
 	Route::get('/getCategorys/{pid}','CategoryController@getChildrens');
@@ -232,8 +234,12 @@ Route::group($adminGroup, function(){
     Route::put('/sales-goods-statistics-dep/{sku}','SalesGoodsStatisticsController@getDepSaleGoods');
     Route::get('/sales-goods-statistics-download-excel','SalesGoodsStatisticsController@downloadExcel');
     Route::resource('/questionnaireoptions', 'QuestionnaireOptionsController');
-    Route::get('/test-import-order','SalesGoodsStatisticsController@importOrder');
-
+    //测试JD订单导入数据处理
+    Route::match(['get', 'post'],'/jd-import-order','JdOrderImportController@index');
+    Route::get('/jd-order-list','JdOrderImportController@jdOrderList');
+    Route::put('/match-user/{flag}', 'JdOrderImportController@matchUser');
+    Route::get('/get-match', 'JdOrderImportController@getMatch');
+    Route::put('/minus-inventory/{flag}', 'JdOrderImportController@minusInventory');
 });
 
 

@@ -16,7 +16,7 @@ return [
 		[
 				'text'=>'员工管理',
 				'icon'=>null,
-				'subIndex'=>['Department','Group','Employee','Deposit','OrderDepositLog']
+		        'subIndex'=>['Department','Group','Employee','EarnestMoney'] //'Deposit','OrderDepositLog'
 		],
 // 		[
 // 				'text'=>'客户管理',
@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		        'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType', 'SampleApplication'] // 'Refund' ''
+		    'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType', 'SampleApplication'] // 'Refund' 'JdOrderBasic'
 		],
 		[
 				'text' => '库存管理',
@@ -74,5 +74,10 @@ return [
 			    'text' => '问卷管理',
 			    'icon' => null,
 			    'subIndex'=>['QuestionnaireManagement','AccountSettings']
-		]
+		],
+//         [
+//                 'text' => '预充值管理',
+//                 'icon' => null,
+//                 'subIndex' => []
+//         ]
 ];

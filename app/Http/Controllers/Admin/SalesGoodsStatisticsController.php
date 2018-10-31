@@ -28,9 +28,9 @@ class SalesGoodsStatisticsController extends Controller
             // ['cb.created_at','>=',$start],
             // ['cb.created_at','<=',$end],
         ];
-//         if($request->has('goods_name')){
-//             $where[] = ['goods_name','like',$request->input('goods_name')."%"];
-//         }
+        // if($request->has('goods_name')){
+        //     $where[] = ['goods_name','like',$request->input('goods_name')."%"];
+        // }
 
         $inventoryBuilder = $this->inInventory($start, $end);
         $saleBuilder = $this->saleNUm($start, $end);
@@ -100,10 +100,10 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('purchase_order_goods')->select(
             DB::raw("sum(`goods_purchase_num`) as goods_num"),
             'sku_sn')
-//         ->where([
-//             ['created_at',">=", $start],
-//             ['created_at',"<=", $end]
-//         ])
+        // ->where([
+        //     ['created_at',">=", $start],
+        //     ['created_at',"<=", $end]
+        // ])
         ->whereNull('deleted_at')
         ->groupBy('sku_sn'); 
     }
@@ -241,8 +241,8 @@ class SalesGoodsStatisticsController extends Controller
             )
             ->join('order_goods','order_after.order_id','=','order_goods.order_id')
             ->where([
-//                 ['order_basic.status','>=',1],
-//                 ['order_basic.status','<=',6],
+                // ['order_basic.status','>=',1],
+                // ['order_basic.status','<=',6],
                 ['order_after.created_at',">=", $start],
                 ['order_after.created_at',"<=", $end],
                 ['order_goods.status','=',1]
@@ -355,7 +355,7 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depDestroyCountBuilder)
             ->where([
                 ['db.type',0],
-                ['db.status',1],
+                ['db.status',1]
             ])->orderBy($orderField,$orderWay)->paginate(15);
 
         return [
@@ -694,7 +694,7 @@ class SalesGoodsStatisticsController extends Controller
             $value = collect($value)->except([
                 'invent_num','sale_money','inner_sale_money',
                 'shop_sale_money','sample_sale_money','produce_in_total'])->toArray();
-//            $value['destroy_count']="暂无";
+            // $value['destroy_count']="暂无";
             
             $sku = $value['sku_sn'];
             array_push($arr, $value);
@@ -707,7 +707,7 @@ class SalesGoodsStatisticsController extends Controller
 
                 array_unshift($v,'');
                 // array_splice($v,-1,0,['sample_num'=>"暂无"]);
-//                $v['destroy_count']="暂无";
+                // $v['destroy_count']="暂无";
                 array_push($arr,$v);
             }
             
@@ -757,30 +757,6 @@ class SalesGoodsStatisticsController extends Controller
             });
         })->export('xls');//export('csv');
 
-    }
-
-    public function importOrder(){
-        $fileName = iconv('UTF-8', 'GBK//IGNORE', '19453840').'.csv';//测试的文档
-        $filePath = public_path('excel'.DIRECTORY_SEPARATOR.'import'.DIRECTORY_SEPARATOR.$fileName);
-        $contentArr = file($filePath);
-        $csvArr = [];
-        foreach ($contentArr as $line) {
-            $convertString = iconv('GB2312','UTF-8//IGNORE', $line);
-            $csvArr[] = user_str_getcsv($convertString,",",'"');
-        }
-        
-        
-        
-//         $fileType = mb_detect_encoding($content,['UTF-8','GBK','LATIN1','BIG5']);
-        // echo $filePath;
-//         $data = Excel::load($filePath,function($reader){
-//             // $data = $reader->all();
-//             // var_dump($reader->getTitle());
-//             // $reader->getTitle();
-//             // $reader->dump();
-//         },'gb2312')->convert('xls');//->toArray();
-
-        dd($csvArr);
     }
 
 

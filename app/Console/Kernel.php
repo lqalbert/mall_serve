@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
         Commands\RestoreSending::class,
         Commands\PaddTypeObject::class,
         Commands\UpgradeOne::class,
-        Commands\ComboUpgrade::class
+        Commands\ComboUpgrade::class,
+        Commands\Deposit::class
     ];
 
     /**

@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\DB;
 use App\Services\Inventory\InventoryService;
 use App\Models\AfterSale;
 use App\Repositories\Criteria\Assign\PrintStatus;
+use App\Services\DepositOperation\DepositAppLogicService;
+use App\Services\DepositOperation\DepositOperationService;
 
 class AssignController extends Controller
 {
@@ -236,12 +238,19 @@ class AssignController extends Controller
     }
 
 
-    public function editExpressFee(Request $request, $id)
+    public function editExpressFee(Request $request,DepositOperationService $service, $id)
     {
 //         $re = $this->repository->update($request->all(), $id);
         $assign = $this->repository->find($id);
         $order = $assign->order;
-        $order->updateFreight($request->input('express_fee'));
+        $deltFreight = $order->updateFreight($request->input('express_fee'));
+        if ($deltFreight > 0) {
+            // 新的运费比原来的多， 还要再扣一部分
+            $service->subDeposit($order->department, $deltFreight, '修改运费');
+        } else {
+            // 新的运费比原来的少， 要返还一部分
+            $service->returnDeposit($order->department, abs($deltFreight), '修改运费');
+        }
         $re = $order->save();
         if($re){
             //添加发货单操作记录
@@ -332,7 +341,7 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function repeatOrder(Request $request, InventoryService $serve ,$id)
+    public function repeatOrder(Request $request, InventoryService $serve ,DepositAppLogicService $depostService,  $id)
     {
 //         {label:"导入状态", value:"1", sub:""},
 //         {label:"审核状态", value:"2", sub:""},　分配了快递公司　　快递号　快递号(面单可以更新)
@@ -346,7 +355,9 @@ class AssignController extends Controller
             return $this->error([],'已签收，不能返单');
         }
         
-        
+        if ($assign->isSended()) {
+            $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+        }
         switch ($is_repeat) {
             case 1:
                 if (!$assign->isSetExpress()) {
@@ -358,16 +369,14 @@ class AssignController extends Controller
 //                 $assign->corrugated_id = 0;
                 $assign->status = 0;
                 $assign->check_status = 0;
-                if ($assign->isSended()) {
-                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
-                }
+                
                 
                 $re = $assign->save();
                 break;
             case 2:
-                if ($assign->isSended()) {
-                    $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
-                }
+//                 if ($assign->isSended()) {
+//                     $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+//                 }
                 $assign->status = 1;
                 $re = $assign->save();
                 break;
@@ -381,7 +390,10 @@ class AssignController extends Controller
                     $assign->is_repeat = $is_repeat;
                     $re = $assign->save();
                     //改库存 还要改保证金
-                    logger('[xxdebug]',['findout why three time']);
+//                     logger('[xxdebug]',['findout why three time']);
+//                     if ($assign->isSended()) {
+//                         $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn, false);
+//                     }
                     $serve->assignLock($assign->entrepot, $assign->goods, $request->user(), false);
                     $order  = $assign->order;
                     if (AfterSale::where('order_id', $order->id)->first()) {
@@ -390,9 +402,9 @@ class AssignController extends Controller
                     $order->updateStatusToUnChecked();
                     $order->save();
                     //保证金
-                    $department = $order->department;
-                    $department->addDeposit($order->order_pay_money);
-                    $department->save();
+                    
+                    $depostService->returnDeposit($order);
+                    
                 } catch (\Exception $e) {
                     DB::rollback();
                     return $this->error([], $e->getMessage());
@@ -425,12 +437,23 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function stopOrder(Request $request, $id)
+    public function stopOrder(Request $request,  $id)
     {   
         $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
         $assign->is_stop = $is_stop==0?1:0;
         $assign->stop_mark = $request->input('stop_mark');
+        $order = $assign->order;
+//         if ($assign->is_stop == 0) {
+//             //扣保证金
+// //             $deService = new DepositAppLogicService($service);
+//             $service->depositAtCheck($order);
+//         } else {
+//             // 返还保证金 把扣除的返还
+// //             $order = $assign->order;
+//             $service->returnDeposit($order);
+//         }
+        
         $re = $assign->save();
         if ($re) {
             //添加发货单操作记录
@@ -697,7 +720,7 @@ class AssignController extends Controller
      * 称重发货
      * @todo 事件处理　操作记录
      */
-    public function weightGoods(Request $request, InventoryService $serve, $id)
+    public function weightGoods(Request $request, InventoryService $serve, DepositAppLogicService $depostService ,$id)
     {
         //减库存
         $assign = Assign::find($id);
@@ -712,6 +735,7 @@ class AssignController extends Controller
         $real_weigth = $request->input('real_weigth');
         $express_fee = $request->input('express_fee',0);
         
+        
         DB::beginTransaction();
         try {
             $assign->weightGoods($real_weigth,$express_fee,auth()->user());
@@ -725,7 +749,8 @@ class AssignController extends Controller
                     'remark'=>$assign->assign_sn
                 ];
                 event(new AddAssignOperationLog(auth()->user(),$dataLog));
-                $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn);   
+                $serve->sending($assign->entrepot, $assign->goods, $request->user(), $assign->assign_sn);
+                $depostService->depositAtSend($assign->order);
             } else {
                 throw new \Exception("更新失败");
             }
@@ -818,7 +843,7 @@ class AssignController extends Controller
      * @todo 添加操作记录
      *
      */
-    public function orderSign(Request $request, InventoryService $service, $id)
+    public function orderSign(Request $request, InventoryService $service, DepositAppLogicService $depostService, $id)
     {
         $assign = Assign::findOrFail($id);
         DB::beginTransaction();
@@ -855,7 +880,7 @@ class AssignController extends Controller
             } 
             
             $service->sign($assign->entrepot, $goods, $request->user(), $assign->assign_sn);
-            
+            $depostService->depositAtSign($assign->order);
             $assign->updateSignStatus();
             $assign->fill($request->all());
             $re = $assign->save();

@@ -48,6 +48,8 @@ class SalesPerformanceController extends Controller
                 DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
                 DB::raw('IFNULL(sum(oa.fee),0) as refund'),
                 DB::raw('IFNULL(sum(freight),0) as s_freight'),
+                DB::raw('IFNULL(sum(book_freight),0) as b_freight'),
+                DB::raw('IFNULL(sum(assign_basic.express_fee),0) as express_fee'),
                 'db.group_name',
                 'db.department_name',
                 'db.department_id',
@@ -57,12 +59,13 @@ class SalesPerformanceController extends Controller
             )
             //如果 一个订单有多个 order_after 就会造成 DB::raw(count, sum) 重复计算,而且也是不 时间段内的退款，而是指定时间段内订单的退款
             ->leftJoin(DB::raw("({$refundQuery->toSql()}) as oa"), "db.{$groupBy}",'=','oa.map_key')->mergeBindings($refundQuery)
+            ->leftJoin('assign_basic','assign_basic.order_id','=','db.id')
             ->where($where)
             ->where([
                 ['db.status','>', OrderBasic::UN_CHECKED],
                 ['db.status','<', OrderBasic::ORDER_STATUS_7],
 //                 ['db.type','<>', 2]
-            ])
+            ])->whereNull('db.deleted_at')
             ->groupBy('db.'.$groupBy);
 
         if ($groupBy == 'department_id') {
@@ -78,11 +81,13 @@ class SalesPerformanceController extends Controller
         if($request->has('group_id')){
             $where2[]=['db2.group_id','=', $request->input('group_id')];
         }
+        //内购的
         $builder2 = DB::table('order_basic as db2')
                        ->select(
                            DB::raw('count(db2.id) as inner_count'), 
                            DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
                            DB::raw('IFNULL(sum(freight), 0) as i_freight'),
+                           
                            "db2.{$groupBy}",
                            DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
                            DB::raw('sum(order_after.fee) as inner_refund'))
@@ -92,7 +97,7 @@ class SalesPerformanceController extends Controller
                            ['db2.status','>', OrderBasic::UN_CHECKED],
                            ['db2.status','<', OrderBasic::ORDER_STATUS_7],
                            ['db2.type','=', 2] //这种硬编码其实不好
-                       ])->groupBy('db2.'.$groupBy);
+                       ])->whereNull('db2.deleted_at')->groupBy('db2.'.$groupBy);
                        
        $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
                        ->select(DB::raw("re1.*"), 

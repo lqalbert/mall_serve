@@ -10,6 +10,10 @@ use App\models\OrderBasic;
 use App\Events\OrderPass;
 use Illuminate\Support\Facades\DB;
 use Psy\Exception\ThrowUpException;
+use App\Services\DepositOperation\DepositOperationService;
+use App\Models\Department;
+use App\Models\DepositSet;
+use App\Alg\ModelCollection;
 
 class DepositController extends Controller
 {
@@ -30,16 +34,17 @@ class DepositController extends Controller
             $where[]=['charge_time','<=',$request->input('end')];
         }
         
-//         if($request->has('group_id')){
-//         $where[]=['group_id','=',$request->input('group_id')];
-//         }
-//         if($request->has('user_id')){
-//         $where[]=['user_id','=',$request->input('user_id')];
-//         }
+        
         
         $page = Deposit::where($where)->orderBy('id', 'desc')->paginate($request->input('pageSize', 20));
+        $collection = $page->getCollection();
+        if ($request->has('append')) {
+            $collection = ModelCollection::setAppends($collection, $request->input('append'));
+        }
+        
+        
     	return [
-    	    'items'=> $page->items(),
+    	    'items'=> $collection,
 			'total'=> $page->total(),
     	];
     }
@@ -60,30 +65,15 @@ class DepositController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, DepositOperationService $service)
     {
-        DB::beginTransaction();
+        $department = Department::find($request->input('department_id'));
         try {
-            $model = Deposit::create($request->all());
-            
-            if (!$model) {
-               throw new \Exception('充值失败');
-            }
-            
-            $department = $model->department;
-            $department->addDeposit($model->money);
-            $re = $department->save();
-            if (!$re) {
-                throw new \Exception('更新部门保证金失败');
-            }
-//             $this->checkOrder($model->department_id);
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollback();
+            $service->addDeposit($department,  $request->input('money'), $request->input('remark',null));
+        } catch (Exception $e) {
             return $this->error([], $e->getMessage());
         }
-    	
-        return $this->success($model);
+        return $this->success([]);
     }
 
     /**
@@ -169,7 +159,6 @@ class DepositController extends Controller
             if(!$result){
                 throw new \Exception("撤销失败");
             }
-
             $department = $model->department;
             $department->subDeposit($request->money);
             $re = $department->save();
@@ -182,6 +171,29 @@ class DepositController extends Controller
             return $this->error([], $e->getMessage());
         }
         return $this->success([]);
+    }
+    
+    
+    /**
+     * 保证金设置
+     */
+    public function setDeposit(Request $request)
+    {
+        $model = DepositSet::getInstance();
+        $model->fill($request->all());
+        if ($model->save()) {
+            return $this->success([]);
+        } else {
+            return $this->error([]);
+        }
+    }
+    
+    /**
+     * 获取设置 
+     */
+    public function getDepositSet()
+    {
+        return $this->success(DepositSet::getInstance());
     }
 
 
