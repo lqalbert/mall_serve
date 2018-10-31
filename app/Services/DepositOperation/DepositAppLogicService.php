@@ -84,7 +84,7 @@ class DepositAppLogicService
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
-            throw new \Exception('退还保证金失败:'. $e->getMessage());
+            throw new \Exception('退还预充值失败:'. $e->getMessage());
         }
         
     }

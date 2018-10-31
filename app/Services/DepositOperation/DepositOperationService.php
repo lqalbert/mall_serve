@@ -80,7 +80,7 @@ class DepositOperationService{
 			$department->addDeposit($money);
 			$re = $department->save();
 			if(!$re){
-				throw new \Exception('部门保证金添加失败');
+				throw new \Exception('部门预充值添加失败');
 			}
 			$this->log->fill([
 			   'department_id'=> $department->id,
@@ -93,7 +93,7 @@ class DepositOperationService{
 			]);
 			$re = $this->log->save();
 			if(!$re){
-			    throw new \Exception('部门保证金添加失败:日志失败');
+			    throw new \Exception('部门预充值添加失败:日志失败');
 			}
 			DB::commit();
 		} catch (\Exception $e) {
@@ -114,7 +114,7 @@ class DepositOperationService{
 			$department->addDeposit($money);
 			$re = $department->save();
 			if(!$re){
-				throw new \Exception('部门保证金返还失败');
+				throw new \Exception('部门预充值返还失败');
 			}
 			$this->log->fill([
 			    'department_id'=> $department->id,
@@ -127,7 +127,7 @@ class DepositOperationService{
 			]);
 			$re = $this->log->save();
 			if(!$re){
-			    throw new \Exception('部门保证金返还失败:日志失败');
+			    throw new \Exception('部门预充值返还失败:日志失败');
 			}
 			DB::commit();
 		} catch (\Exception $e) {
@@ -149,11 +149,11 @@ class DepositOperationService{
 			$department->subDeposit($money);
 			
 			if ($department->isNegative()) {
-			    throw new \Exception('部门保证金余额不足');
+			    throw new \Exception('部门预充值余额不足，请先充值');
 			}
 			$re = $department->save();
 			if(!$re){
-				throw new \Exception('部门保证金扣除失败');
+				throw new \Exception('部门预充值扣除失败');
 			}
 			
 			$this->log->fill([
@@ -167,7 +167,7 @@ class DepositOperationService{
 			]);
 			$re = $this->log->save();
 			if(!$re){
-			    throw new \Exception('部门保证金扣除失败:日志失败');
+			    throw new \Exception('部门预充值扣除失败:日志失败');
 			}
 			DB::commit();
 		} catch (\Exception $e) {

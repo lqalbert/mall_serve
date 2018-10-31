@@ -437,22 +437,22 @@ class AssignController extends Controller
      * @param Request $request
      * @param unknown $id
      */
-    public function stopOrder(Request $request,DepositAppLogicService $service, $id)
+    public function stopOrder(Request $request,  $id)
     {   
         $assign = Assign::find($id);
         $is_stop = $request->input('is_stop');
         $assign->is_stop = $is_stop==0?1:0;
         $assign->stop_mark = $request->input('stop_mark');
         $order = $assign->order;
-        if ($assign->is_stop == 0) {
-            //扣保证金
-//             $deService = new DepositAppLogicService($service);
-            $service->depositAtCheck($order);
-        } else {
-            // 返还保证金 把扣除的返还
-//             $order = $assign->order;
-            $service->returnDeposit($order);
-        }
+//         if ($assign->is_stop == 0) {
+//             //扣保证金
+// //             $deService = new DepositAppLogicService($service);
+//             $service->depositAtCheck($order);
+//         } else {
+//             // 返还保证金 把扣除的返还
+// //             $order = $assign->order;
+//             $service->returnDeposit($order);
+//         }
         
         $re = $assign->save();
         if ($re) {
