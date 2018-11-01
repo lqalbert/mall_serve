@@ -466,8 +466,11 @@
     </div>
 </div>
 <div class="container-fluid goldCon">
-    <div class="container">
-        <div class="textBox">
+    <a href="#">
+        <img src="/images/web/gold1.png" alt="">
+    </a>
+    {{--<div class="container">
+        --}}{{--<div class="textBox">
             <div class="col-lg-12 col-md-12 eText">Royale</div>
             <div class="col-lg-12 col-md-12 eText">Revitalizing</div>
             <div class="col-lg-12 col-md-12 eText">Series</div>
@@ -481,13 +484,16 @@
                 <div class="col-lg-12 col-md-12 maxText">奢华能量，紧致提拉塑颜</div>
                 <div class="col-lg-12 col-md-12 minText">隐退岁月年轮，重唤年轻动力</div>
             </div>
-        </div>
-    </div>
+        </div>--}}{{--
+    </div>--}}
 </div>
 <div class="container-fluid wakeLine"></div>
 <div class="container-fluid goldCon water">
-    <div class="container">
-        <div class="textBox">
+    <a href="#">
+        <img src="/images/web/water1.png" alt="">
+    </a>
+    {{--<div class="container">
+        --}}{{--<div class="textBox">
             <div class="col-lg-12 col-md-12 eText">Moisturizing</div>
             <div class="col-lg-12 col-md-12 eText">Hydrating</div>
             <div class="col-lg-12 col-md-12 eText">Series</div>
@@ -501,12 +507,14 @@
                 <div class="col-lg-12 col-md-12 maxText">深补水，莹润透亮</div>
                 <div class="col-lg-12 col-md-12 minText">唤醒肌肤，深层莹润，水与白不可或缺。</div>
             </div>
-        </div>
-    </div>
+        </div>--}}{{--
+    </div>--}}
 </div>
 <div class="container-fluid qidian">
-    <img src="/images/web/qidian.png" alt="">
-    <div class="qidianText">
+    <a href="#">
+        <img src="/images/web/qidian1.png" alt="">
+    </a>
+    {{--<div class="qidianText">
         <div class="col-lg-12 col-md-12 eText">Beauty</div>
         <div class="col-lg-12 col-md-12 eText">Filter Cushion</div>
         <div class="col-lg-12 col-md-12 eText">Cream</div>
@@ -515,11 +523,13 @@
         <div class="col-lg-12 col-md-12">
             <div class="checkD"><a href="#">查看详情</a></div>
         </div>
-    </div>
+    </div>--}}
 </div>
 <div class="container qidian fendi">
-    <img src="/images/web/fendi.png" alt="">
-    <div class="qidianText">
+    <a href="#">
+        <img src="/images/web/fendi1.png" alt="">
+    </a>
+    {{--<div class="qidianText">
         <div class="col-lg-12 col-md-12 eText">Beauty</div>
         <div class="col-lg-12 col-md-12 eText">Filter Cushion</div>
         <div class="col-lg-12 col-md-12 eText">Cream</div>
@@ -528,7 +538,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="checkD"><a href="#">查看详情</a></div>
         </div>
-    </div>
+    </div>--}}
 </div>
 <div class="container-fluid footerBox">
     <div class="container" style="padding: 0;position: relative">
