@@ -21,8 +21,8 @@
             </div>
             <div class="col-lg-4 col-md-4">
                 <div class="searchBox">
-                    <input type="text" class="search">
-                    <img src="/images/web/search.png" alt="">
+                    <input type="text" class="search" id="seachText" >
+                    <img src="/images/web/search.png" alt="" id="searchButton">
                 </div>
             </div>
             <div class="col-lg-4 col-md-4">
@@ -37,13 +37,13 @@
         <div class="container" style="padding: 0;" role="navigation">
             <ul class="nav nav-pills nav-justified">
                 <li class="active"><a href="#">首页</a></li>
-                <li><a href="#">臻品面膜系列</a></li>
-                <li><a href="#">金致焕肌系列</a></li>
-                <li><a href="#">水嫩保湿系列</a></li>
-                <li><a href="#">美妆产品</a></li>
-                <li><a href="#">滋润护肤</a></li>
-                <li><a href="#">营养饮品</a></li>
-                <li><a href="#">品牌故事</a></li>
+                <li><a href="/product/index?cate_id=10">臻品面膜系列</a></li>
+                <li><a href="/product/index?cate_id=3">金致焕肌系列</a></li>
+                <li><a href="/product/index?cate_id=4">水嫩保湿系列</a></li>
+                <li><a href="/product/index?cate_id=2">美妆产品</a></li>
+                <li><a href="/product/index?cate_id=28">滋润护肤</a></li>
+                <li><a href="/product/index?cate_id=25">营养饮品</a></li>
+                <li><a href="/brand/index">品牌故事</a></li>
                 <li><a href="#">联系我们</a></li>
             </ul>
         </div>
@@ -54,6 +54,7 @@
 <div class="container-fluid maxBanner">
     <div class="swiper-container">
         <div class="swiper-wrapper">
+        	
             <div class="swiper-slide">
                 <a href="#"><img src="/images/web/banner1.png" alt=""></a>
             </div>
@@ -128,7 +129,9 @@
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/mianmo1.png" alt="">
+                            <a href="/product/21" target="_blank">
+                                <img src="/images/web/mianmo1.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -137,14 +140,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·自带滤镜 美白莹润·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>88</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/21" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/mianmo2.png" alt="">
+                        	<a href="/product/20" target="_blank">
+                            	<img src="/images/web/mianmo2.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -153,14 +158,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·澄净如初 细腻净透·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>118</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/20" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/mianmo3.png" alt="">
+                            <a href="/product/22" target="_blank">
+                                <img src="/images/web/mianmo3.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -169,7 +176,7 @@
                         <div class="col-lg-12 col-md-12 textA description">·细致毛孔 自然提亮·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>88</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/22" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
@@ -179,7 +186,9 @@
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/jinzhi1.png" alt="">
+                        <a href="/product/26" target="_blank">
+                            <img src="/images/web/jinzhi1.png" alt="">
+                        </a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -188,14 +197,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·清透润泽年轻态·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>208</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/26" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/jinzhi2.png" alt="">
+                    	<a href="/product/24" target="_blank">
+                        	<img src="/images/web/jinzhi2.png" alt="">	
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -204,14 +215,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·紧致提拉塑颜·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>268</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/24" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/jinzhi3.png" alt="">
+                    	<a href="/product/25" target="_blank">
+	                        <img src="/images/web/jinzhi3.png" alt="">
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -220,14 +233,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·层层修护 绽现柔嫩·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>306</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/25" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/jinzhi4.png" alt="">
+                        <a href="/product/23" target="_blank">
+                            <img src="/images/web/jinzhi4.png" alt="">
+                        </a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -236,14 +251,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·去角质 净透不紧绷·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>118</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/23" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/jinzhi5.png" alt="">
+                        <a href="/product/27" target="_blank">
+                            <img src="/images/web/jinzhi5.png" alt="">
+                        </a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -252,7 +269,7 @@
                     <div class="col-lg-12 col-md-12 textA description">·一瓶多效 奢养肌底·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>278</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/27" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
@@ -261,7 +278,9 @@
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/shuinen1.png" alt="">
+                    	<a href="/product/32" target="_blank">
+	                        <img src="/images/web/shuinen1.png" alt="">
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -270,14 +289,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·沁透吸收 水润光泽·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>98</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/32" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/shuinen2.png" alt="">
+                    	<a href="/product/30" target="_blank">
+                        	<img src="/images/web/shuinen2.png" alt="">
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -286,14 +307,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·滋养润泽 舒缓保湿·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>178</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/30" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/shuinen3.png" alt="">
+                        <a href="/product/31" target="_blank">
+                            <img src="/images/web/shuinen3.png" alt="">
+                        </a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -302,14 +325,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·绽放柔嫩光彩·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>136</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/31" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/shuinen4.png" alt="">
+                    	<a href="/product/28" target="_blank">
+	                        <img src="/images/web/shuinen4.png" alt="">
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -318,14 +343,16 @@
                     <div class="col-lg-12 col-md-12 textA description">·温和亲肤 深透清洁·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>78</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/28" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
             <div class="cons">
                 <div class="col-lg-12 col-md-12 bg">
                     <div class="col-lg-12 col-md-12 img">
-                        <img src="/images/web/shuinen5.png" alt="">
+                    	<a href="/product/29" target="_blank">
+                            <img src="/images/web/shuinen5.png" alt="">
+                    	</a>
                     </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="line"></div>
@@ -334,7 +361,7 @@
                     <div class="col-lg-12 col-md-12 textA description">·一瓶多效 奢养肌底·</div>
                     <div class="col-lg-12 col-md-12 textA price"><span>￥</span>150</div>
                     <div class="col-lg-12 col-md-12 textA checkDetail">
-                        <div class="check"><a href="#">查看详情</a></div>
+                        <div class="check"><a href="/product/29" target="_blank">查看详情</a></div>
                     </div>
                 </div>
             </div>
@@ -344,7 +371,9 @@
                 <div class="col-lg-6 col-md-6 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/meizhuang1.png" alt="">
+                        	<a href="/product/39" target="_blank">
+	                            <img src="/images/web/meizhuang1.png" alt="">
+                        	</a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -353,14 +382,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·亮彩妆容 持久妆容·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>198</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/39" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/meizhuang2.png" alt="">
+                        	<a href="/product/37" target="_blank">
+                                <img src="/images/web/meizhuang2.png" alt="">
+                        	</a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -369,7 +400,7 @@
                         <div class="col-lg-12 col-md-12 textA description">·缔造无暇丝缎肌·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>258</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/37" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
@@ -380,7 +411,9 @@
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/zirun1.png" alt="">
+                        	<a href="/product/46" target="_blank">
+	                            <img src="/images/web/zirun1.png" alt="">
+                        	</a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -389,14 +422,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·对抗干燥 保湿莹润·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>69</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/46" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/zirun2.png" alt="">
+                        	<a href="/product/47" target="_blank">
+	                            <img src="/images/web/zirun2.png" alt="">
+                        	</a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -405,14 +440,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·樱花淡香 温和护理·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>69</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/47" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/mianmo3.png" alt="">
+                        	<a href="/product/53" target="_blank">
+                            	<img src="/images/web/mianmo3.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -421,7 +458,7 @@
                         <div class="col-lg-12 col-md-12 textA description">·深层莹润 温和护理·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>66</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/53" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
@@ -432,7 +469,9 @@
                 <div class="col-lg-6 col-md-6 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/baojian1.png" alt="">
+                        	<a href="/product/36" target="_blank">
+                            	<img src="/images/web/baojian1.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -441,14 +480,16 @@
                         <div class="col-lg-12 col-md-12 textA description">·胶原蛋白 重塑年轻态·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>418</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/36" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/baojian2.png" alt="">
+                        	<a href="/product/44" target="_blank">
+                            	<img src="/images/web/baojian2.png" alt="">
+                            </a>
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -457,7 +498,7 @@
                         <div class="col-lg-12 col-md-12 textA description">·促进肠道吸收 改善问题肌肤·</div>
                         <div class="col-lg-12 col-md-12 textA price"><span>￥</span>298</div>
                         <div class="col-lg-12 col-md-12 textA checkDetail">
-                            <div class="check"><a href="#">查看详情</a></div>
+                            <div class="check"><a href="/product/44" target="_blank">查看详情</a></div>
                         </div>
                     </div>
                 </div>
@@ -474,7 +515,7 @@
             <div class="col-lg-12 col-md-12 eText name">金致焕肌系列</div>
             <div class="col-lg-12 col-md-12 eText price"><span>￥</span>1099</div>
             <div class="col-lg-12 col-md-12">
-                <div class="checkD"><a href="#">查看详情</a></div>
+                <div class="checkD"><a href="/product/33" target="_blank">查看详情</a></div>
             </div>
             <div class="imgBox">
                 <img class="goldImg" src="/images/web/gold.png" alt="">
@@ -494,7 +535,7 @@
             <div class="col-lg-12 col-md-12 eText name">水嫩保湿系列</div>
             <div class="col-lg-12 col-md-12 eText price"><span>￥</span>618</div>
             <div class="col-lg-12 col-md-12">
-                <div class="checkD"><a href="#">查看详情</a></div>
+                <div class="checkD"><a href="/product/34" target="_blank">查看详情</a></div>
             </div>
             <div class="imgBox">
                 <img class="goldImg" src="/images/web/water.png" alt="">
@@ -513,7 +554,7 @@
         <div class="col-lg-12 col-md-12 eText name">美肌滤镜气垫霜</div>
         <div class="col-lg-12 col-md-12 eText price"><span>￥</span>198</div>
         <div class="col-lg-12 col-md-12">
-            <div class="checkD"><a href="#">查看详情</a></div>
+            <div class="checkD"><a href="/product/39" target="_blank">查看详情</a></div>
         </div>
     </div>
 </div>
@@ -526,7 +567,7 @@
         <div class="col-lg-12 col-md-12 eText name">美肌滤镜精华粉底液</div>
         <div class="col-lg-12 col-md-12 eText price"><span>￥</span>268</div>
         <div class="col-lg-12 col-md-12">
-            <div class="checkD"><a href="#">查看详情</a></div>
+            <div class="checkD"><a href="/product/37" target="_blank">查看详情</a></div>
         </div>
     </div>
 </div>
@@ -553,12 +594,12 @@
                     <div class="col-lg-7 col-md-7 footTab">
                         <div class="col-lg-12 col-md-12">
                             <div class="row">
-                                <div class="col-lg-2 col-md-2"><a href="#">品牌故事</a></div>
-                                <div class="col-lg-2 col-md-2"><a href="#">美丽资讯</a></div>
-                                <div class="col-lg-2 col-md-2"><a href="#">常见问题</a></div>
-                                <div class="col-lg-2 col-md-2"><a href="#">公司信息</a></div>
-                                <div class="col-lg-2 col-md-2"><a href="#">技术咨询</a></div>
-                                <div class="col-lg-2 col-md-2"><a href="#">退换货问题</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/brand/index">品牌故事</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/information/news">美丽资讯</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/question/index">常见问题</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/information/company">公司信息</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/connection/technology">技术咨询</a></div>
+                                <div class="col-lg-2 col-md-2"><a href="/question/index?exchange=1">退换货问题</a></div>
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 beian">
@@ -600,6 +641,14 @@
         $('.minCon .conList').fadeOut(100)
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
       })
+
+      /* 搜索 */
+      $('#searchButton').click(function(){
+		var text = $("#seachText").val();
+		if(text && text.length > 0) {
+			window.location.href="/product/index?seachText=" + text;
+		}
+      });
 	})
 </script>
 @yield('js')

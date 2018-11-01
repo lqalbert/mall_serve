@@ -15,11 +15,14 @@ class ProductController extends CommonController
         static::$bar['line2']='line';
         
         $subNav = [
-            '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>'护肤'],
+            '10'=>['url'=>route('product/index', ['cate_id'=>'10']),'isactive'=>'','name'=>'面膜'],
+//             '1'=>['url'=>route('product/index', ['cate_id'=>'1']),'isactive'=>'','name'=>'护肤'],
             '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>'彩妆'],
             '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>'金致焕肌系列'],
             '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'水嫩保湿系列'],
             '25'=>['url'=>route('product/index', ['cate_id'=>'25']),'isactive'=>'','name'=>'营养'],
+            '28'=>['url'=>route('product/index', ['cate_id'=>'28']),'isactive'=>'','name'=>'身体乳'],
+            '30'=>['url'=>route('product/index', ['cate_id'=>'30']),'isactive'=>'','name'=>'护手霜'],
         ];
         $name='';
         //还是有问题 的 如果 type 有多个非一级分类就会出错
