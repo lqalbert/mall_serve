@@ -658,3 +658,15 @@ body{
         width: 1300px;
     }
 }
+
+@media (max-width: 1700px) {
+    .qidian .qidianText{
+        bottom: 100px;
+    }
+}
+
+@media (max-width: 1300px) {
+    .qidian .qidianText{
+        bottom: 80px;
+    }
+}
