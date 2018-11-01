@@ -293,6 +293,8 @@ Route::post('/save-user-answers', 'Home\InformationController@saveUserAnswers')-
 Route::get('/questionnaire/{id}', 'Home\LoginController@questionnaire')->name('questionnaire');
 //保存游客用户信息
 Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
+//新设计首页
+Route::get('/newweb','Home\IndexController@newWeb')->name('newweb');
 
 // Auth::routes();
 

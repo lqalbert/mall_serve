@@ -1,0 +1,660 @@
+
+body{
+    padding-top: 180px;
+    background: #EBEBEB;
+}
+
+.row{
+    padding: 0;
+    margin: 0;
+}
+
+.navContent{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 180px;
+    background: #ebebeb;
+    width: 100%;
+    padding: 0;
+    z-index: 9999;
+}
+
+.logoContent{
+    padding: 0;
+    height: 100px;
+}
+
+.logoContent div{
+    padding: 0;
+    height: 100px;
+}
+
+.logoContent .logo img{
+    margin-top: 27px;
+}
+
+.logoContent .searchBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 222px;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -111px;
+}
+
+.searchBox .search{
+    width: 100%;
+    line-height: 30px;
+    background: #9D8255;
+    border-radius: 13px;
+    border: 1px solid #ccc;
+    padding: 0 30px 0 10px;
+    color: #fff;
+    outline: none;
+}
+
+.searchBox .search:focus{
+    border-color: #2a88bd;
+}
+
+.searchBox img{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.logoContent .tels{
+    line-height: 100px;
+    width: 100%;
+    font-size: 32px;
+    text-align: center;
+    color: rgba(0,0,0,0.9);
+}
+
+.logoContent .tels .hol{
+    font-size: 16px;
+    background-image: url("../../images/web/hol.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 56px;
+    height: 19px;
+    line-height: 19px;
+    padding-left: 4px;
+    position: absolute;
+    top: 50%;
+    left: 55px;
+    margin-top: -10px;
+}
+
+.navbContent{
+    padding: 0;
+    background: #171717;
+    line-height: 60px;
+}
+
+.navbContent ul li a{
+    color: rgba(255,255,255,0.9);
+    font-size: 16px;
+    border-radius: 2px;
+}
+
+.navbContent ul li a:hover{
+    background: rgba(200,173,126,0.8);
+}
+
+.navbContent ul li.active>a,.navbContent ul li.active>a:hover,.navbContent ul li.active>a:focus{
+    background: rgba(200,173,126,0.8);
+}
+
+/*-----------内容区域---------*/
+/*---------maxBanner-----------*/
+.maxBanner{
+    padding: 0;
+}
+
+.maxBanner .swiper-container{
+    width: 100%;
+}
+
+.maxBanner .swiper-slide a img{
+    display: block;
+    width: 100%;
+    background: #2ca02c;
+}
+
+/*-------------minBanner---------*/
+
+.minBanner{
+    padding: 0;
+    margin-top: 20px;
+    height: 706px;
+}
+
+.minBanner .minTab{
+    padding: 0;
+}
+
+.minBanner .minTab .tabList{
+    padding: 0 5px;
+    text-align: center;
+    line-height: 88px;
+    color: #000;
+    font-size: 26px;
+    font-family: "PingFang-SC-Light";
+}
+
+.minBanner .minTab .tabList .con{
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 1px;
+}
+
+.minBanner .minTab .tabList .con .bg{
+    padding: 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.minBanner .minTab .tabList .con .active{
+    background: #C8AD7E;
+}
+
+.minCon{
+    padding: 0 5px;
+    margin-top: 15px;
+}
+
+.minCon .conList{
+    min-height: 560px;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 27px 2px 5px 2px;
+}
+/*-------面膜-------------*/
+.minCon .mianmo{
+    background-image: url("../../images/web/1.png");
+}
+
+.minCon .conList .cons{
+    padding: 0 5px;
+}
+
+.minCon .conList .cons .bg{
+    background: #fff;
+    padding: 0;
+    height: 560px;
+}
+
+.minCon .conList .cons .img{
+    height: 370px;
+    padding-top: 60px;
+}
+
+.minCon .conList .cons .img img{
+    max-width: 240px;
+    margin: 0 auto;
+    display: block;
+}
+
+.minCon .conList .cons .line{
+    width: 106px;
+    height: 2px;
+    margin: 0 auto;
+    background: #484848;
+}
+
+.minCon .conList .cons .textA{
+    line-height: 40px;
+    text-align: center;
+    padding: 0;
+}
+
+.minCon .conList .cons .volum{
+    color: rgba(0,0,0,0.9);
+    font-size: 24px;
+    margin-top: 15px;
+}
+
+.minCon .conList .cons .description{
+    font-size: 30px;
+    color: rgba(0,0,0,0.8);
+    line-height: 60px;
+}
+
+.minCon .conList .cons .price{
+    font-size: 30px;
+    color: #000;
+}
+
+.minCon .conList .cons .price span{
+    font-size: 18px;
+}
+
+.minCon .conList .cons .checkDetail{
+    height: 30px;
+}
+
+.minCon .conList .cons .checkDetail .check{
+    width: 190px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    margin-left: -95px;
+    top: 8px;
+    background: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.minCon .conList .cons .checkDetail .check a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+}
+/*---------金致焕肌--------*/
+.minCon .jinzhi{
+    display: none;
+    background-image: url("../../images/web/2.png");
+}
+.minCon .fiveCon .cons{
+    float: left;
+    width: 20%;
+}
+.minCon .fiveCon .cons .volum{
+    font-size: 20px;
+}
+.minCon .fiveCon .cons .description{
+    font-size: 26px;
+}
+.minCon .fiveCon .cons .price{
+    font-size: 26px;
+}
+
+/*------水嫩保湿------*/
+.minCon .shuinen{
+    display: none;
+    background-image: url("../../images/web/3.png");
+}
+
+/*------美妆系列--*/
+.minCon .meizhuang{
+    display: none;
+    background-image: url("../../images/web/4.png");
+}
+
+/*-----------滋润护肤----------*/
+.minCon .zirun{
+    display: none;
+    background-image: url("../../images/web/5.png");
+}
+
+/*--------保健食品---------*/
+.minCon .baojian{
+    display: none;
+    background-image: url("../../images/web/6.png");
+}
+
+/*---------------金色套装--------*/
+.goldCon{
+    background: #fff;
+    height: 760px;
+    margin-top: 60px;
+    position: relative;
+    width: 100%;
+    padding: 0;
+}
+
+.goldCon .container{
+    height: 760px;
+}
+
+.goldCon .imgBox{
+    position: absolute;
+    right: -600px;
+    bottom: -360px;
+    width: 700px;
+    height: 840px;
+}
+
+.goldCon .imgBox .goldImg{
+    width: 700px;
+}
+
+.goldCon .imgBox .maxText{
+    position: absolute;
+    left: 0;
+    line-height: 50px;
+    font-size: 50px;
+    padding: 0 50px;
+    bottom: 120px;
+    color: rgba(255,255,255,0.9);
+}
+
+.goldCon .imgBox .minText{
+    position: absolute;
+    left: 0;
+    line-height: 30px;
+    font-size: 30px;
+    padding: 0 50px;
+    bottom: 70px;
+    color: rgba(255,252,255,0.8);
+    font-family: 宋体;
+}
+
+.goldCon .textBox{
+    width: 400px;
+    position: absolute;
+    left: 28%;
+    bottom: 150px;
+}
+
+.goldCon .textBox .eText{
+    line-height: 70px;
+    font-size: 70px;
+    color: #9D8255;
+    user-select: none;
+}
+
+.goldCon .textBox .name{
+    font-size: 36px;
+    line-height: 120px;
+}
+
+.goldCon .textBox .price{
+    font-size: 34px;
+    padding-left: 30px;
+}
+
+.goldCon .textBox .price span{
+    font-size: 22px;
+}
+
+.goldCon .textBox .checkD{
+    width: 140px;
+    height: 40px;
+    line-height: 42px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 20px;
+    background: #9F7356;
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+}
+
+.goldCon .textBox .checkD a{
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-decoration: none;
+    color: rgba(255,255,255,0.8);
+}
+    /*-----------wakeup----------*/
+
+.wakeLine{
+    height: 30px;
+    background-image: url("../../images/web/wake.png");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 340px;
+}
+
+/*-------------水嫩保湿-------------*/
+.water{
+    height: 650px;
+    margin-top: 280px;
+    background-image: url("../../images/web/waterbg.png");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.water .container{
+    height: 650px;
+}
+
+.water .textBox{
+    left: 60%;
+    bottom: 100px;
+}
+
+.water .textBox .eText{
+    color: rgba(0,0,0,0.8);
+}
+
+.water .textBox .checkD{
+    background: #333;
+}
+
+.water .imgBox{
+    right: 550px;
+    top: -250px;
+}
+
+.water .imgBox .maxText{
+    bottom: 160px;
+}
+
+.water .imgBox .minText{
+    bottom: 110px;
+}
+
+.water .imgBox .maxText,.water .imgBox .minText{
+    color: rgba(0,0,0,0.8);
+}
+
+/*-------------美肌气垫---------*/
+
+.qidian{
+    margin-top: 40px;
+    position: relative;
+    padding: 0;
+}
+
+.qidian img{
+    width: 100%;
+}
+
+.qidian .qidianText{
+    width: 600px;
+    position: absolute;
+    left: 20%;
+    bottom: 180px;
+}
+
+.qidian .eText{
+    line-height: 70px;
+    font-size: 70px;
+    color: #fff;
+    user-select: none;
+}
+
+.qidian .qidianText .name {
+    line-height: 80px;
+    font-size: 34px;
+    color: rgba(255,255,255,0.8);
+}
+
+.qidian .qidianText .price{
+    line-height: 30px;
+    font-size: 30px;
+    color: rgba(0,0,0,0.8);
+    padding-left: 30px;
+    margin-top: 50px;
+}
+
+.qidian .qidianText .price span{
+    font-size: 18px;
+}
+
+.qidian .qidianText .checkD{
+    width: 140px;
+    height: 40px;
+    line-height: 42px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 20px;
+    background: #fff;
+    color: rgba(0,0,0,0.8);
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.qidian .qidianText .checkD a{
+    width: 100%;
+    height: 100%;
+    display: block;
+    text-decoration: none;
+    color: rgba(0,0,0,0.8);
+}
+
+/*--------------粉底-------------*/
+
+.fendi{
+    margin-top: 160px;
+    background-image: none;
+    padding: 0;
+    height: auto;
+}
+
+.fendi img{
+    width: 100%;
+}
+
+.fendi .qidianText{
+    left: 40px;
+    bottom: 100px;
+}
+
+.fendi .qidianText .eText{
+    color: rgba(144,152,148,0.6);
+}
+
+.fendi .qidianText .name{
+    color: rgba(144,152,148,0.6);
+}
+
+.fendi .qidianText  .price{
+    color: rgba(144,152,148,0.6);
+}
+
+.fendi .qidianText .checkD{
+    background: #A7ADAB;
+}
+
+.fendi .qidianText .checkD a{
+    color: rgba(255,255,255,0.8);
+}
+
+
+/*---------底部-----------------*/
+.footerBox{
+    padding: 0;
+    margin-top: 40px;
+    background-image: url("../../images/web/foot1.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.footerBox .bgImg{
+    width: 100%;
+}
+
+.footerBox .footCon{
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 100px;
+}
+
+.footerBox .footCon div{
+    padding: 0;
+}
+
+.footerBox .footCon .logos img{
+    display: block;
+    margin: 0 auto;
+    width: 190px;
+}
+
+.footerBox .footCon .logos .hot{
+    width: 400px;
+    line-height: 60px;
+    font-size: 34px;
+    color: rgba(255,255,255,0.5);
+    position: absolute;
+    left: 60%;
+    top: 76px;
+}
+
+.footerBox .footCon .logos .hotBox{
+    float: left;
+}
+
+.footerBox .footCon .logos .hots{
+    width: 60px;
+    height: 22px;
+    line-height: 20px;
+    margin-top: 20px;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.footerBox .footCon .logos .hots .hotLine{
+    border-radius: 15px;
+    width: 80px;
+    padding-left: 3px;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.footerBox .footCon  .footBan .wchat{
+    height: 90px;
+    position: relative;
+}
+
+.footerBox .footCon  .footBan .wchat img{
+    width: 90px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    display: block;
+}
+
+.footerBox .footCon  .footBan .footTab{
+    padding-right: 20px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.footerBox .footCon  .footBan .footTab a{
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+.footerBox .footCon  .footBan .footTab .beian{
+    color: #fff;
+    font-size: 10px;
+    text-align: left;
+    padding-left: 25px;
+    margin-top: 32px;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        width: 1300px;
+    }
+}

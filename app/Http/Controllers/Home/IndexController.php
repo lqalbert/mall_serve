@@ -65,6 +65,9 @@ class IndexController extends CommonController
             ];
     }
 
+    public function newWeb(){
+        return view('home/newweb');
+    }
 
 
 
