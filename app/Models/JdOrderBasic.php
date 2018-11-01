@@ -9,6 +9,8 @@ class JdOrderBasic extends Model
 {
     use SoftDeletes;
 
+    const IS_BRUSHER = 1;//刷单
+
     protected $table = 'jd_order_basic';
 
     protected $dates = ['deleted_at'];
@@ -39,7 +41,8 @@ class JdOrderBasic extends Model
         "department_id",
         "group_id",
         "user_id",
-        'flag'
+        'flag',
+        'is_brusher'
     ];
 
     protected $guarded = [];

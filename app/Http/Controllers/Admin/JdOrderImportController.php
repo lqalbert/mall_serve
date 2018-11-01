@@ -13,6 +13,8 @@ use App\Models\JdOrderAddress;
 use App\Models\JdMatchBasic;
 use App\Jobs\JdOrderMatchUser;
 use App\Jobs\JdOrderGoodsMinusInventory;
+use App\Models\CustomerContact;
+use App\Models\CustomerUser;
 
 class JdOrderImportController extends Controller
 {
@@ -258,6 +260,10 @@ class JdOrderImportController extends Controller
         	$model = $model->where('order_account',$request->input('order_account'));
         }
 
+        if($request->has('flag')){
+            $model = $model->where('flag',$request->input('flag'));
+        }
+
         $result = $model->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();
         $collection->load('goods','other','customer','address','department','group','user');
@@ -278,7 +284,10 @@ class JdOrderImportController extends Controller
      */
     public function matchUser(Request $request,$flag){
     	// echo $flag;
-    	$jdCustomer = JdOrderCustomer::where('flag',$flag)->get();
+    	$jdCustomer = JdOrderCustomer::where([
+            ['flag','=',$flag],
+            ['is_brusher','=',0],
+        ])->get();
     	if(!($jdCustomer->isEmpty())){
     		dispatch((new JdOrderMatchUser($jdCustomer,$flag)));//->onConnection('redis'));
     		return $this->success([],"数据在后台匹配中,不影响操作其他页面");
@@ -311,7 +320,82 @@ class JdOrderImportController extends Controller
 
     }
 
+    /**
+     * [changeBrusher 更新是否为刷单标志]
+     * @param  Request $request  [description]
+     * @param  [type]  $flag     [description]
+     * @param  [type]  $order_sn [description]
+     * @return [type]            [description]
+     */
+    public function changeBrusher(Request $request,$flag,$order_sn){
+        DB::beginTransaction();
+        try {
+            $where = [
+                ['flag','=',$flag],
+                ['order_sn','=',$order_sn]
+            ];
+            $model = JdOrderBasic::where($where)->firstOrFail();
+            $is_brusher = $model->is_brusher==0?1:0;
 
+            $re = JdOrderBasic::where($where)->update(['is_brusher'=>$is_brusher]);
+            if(!$re){
+                throw new \Exception("订单表更新失败");
+                
+            }
+            
+            $res = $model->goods()->update(['is_brusher'=>$is_brusher]);
+            if(!$res){
+                throw new \Exception("商品更新失败");
+            }
+
+            $resu = $model->customer()->update(['is_brusher'=>$is_brusher]);
+            if(!$resu){
+                throw new \Exception("客户表更新失败");
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+
+        return $this->success([],"设置成功");
+    }
+
+    /**
+     * [manualMatch 手动选择匹配]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function manualMatch(Request $request){
+        DB::beginTransaction();
+        try {
+            $data = $request->all();
+            foreach ($data as $value) {
+                $cus = reset($value['customer']);
+                $cusCtModel = CustomerContact::where('phone',$cus['tel'])->first(['cus_id']);
+                
+                if(!empty($cusCtModel)){
+                    
+                    $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
+                                        ->first(['user_id','group_id','department_id'])->toArray();
+                    
+                    $res = JdOrderBasic::where([
+                                    ['order_sn','=',$cus['order_sn']],
+                                    ['flag','=',$cus['flag']]
+                                ])->update($cusUserl);
+                    if(!$res){
+                        throw new \Exception("匹配出错");
+                    }
+                }
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return  $this->error([], $e->getMessage());
+        }
+        return  $this->success([], "匹配完成");
+    
+    }
 
 
 }

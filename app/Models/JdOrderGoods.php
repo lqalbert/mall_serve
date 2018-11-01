@@ -27,7 +27,8 @@ class JdOrderGoods extends Model
         "entrepot_id",
         "jd_entrepot_id",
         "jd_entrepot_name",
-        'flag'
+        'flag',
+        'is_brusher'
     ];
 
     /**
