@@ -412,7 +412,7 @@
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/zirun3.png" alt="">
+                            <img src="/images/web/zirun3.png" style="max-width: 300px" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
