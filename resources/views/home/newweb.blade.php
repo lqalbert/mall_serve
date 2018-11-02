@@ -36,15 +36,15 @@
     <div class="container-fluid navbContent">
         <div class="container" style="padding: 0;" role="navigation">
             <ul class="nav nav-pills nav-justified">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="#">臻品面膜系列</a></li>
-                <li><a href="#">金致焕肌系列</a></li>
-                <li><a href="#">水嫩保湿系列</a></li>
-                <li><a href="#">美妆产品</a></li>
-                <li><a href="#">滋润护肤</a></li>
-                <li><a href="#">营养饮品</a></li>
-                <li><a href="#">品牌故事</a></li>
-                <li><a href="#">联系我们</a></li>
+                <li class="active"><a href="#"><span class="ink"></span>首页</a></li>
+                <li><a href="#"><span class="ink"></span>臻品面膜系列</a></li>
+                <li><a href="#"><span class="ink"></span>金致焕肌系列</a></li>
+                <li><a href="#"><span class="ink"></span>水嫩保湿系列</a></li>
+                <li><a href="#"><span class="ink"></span>美妆产品</a></li>
+                <li><a href="#"><span class="ink"></span>滋润护肤</a></li>
+                <li><a href="#"><span class="ink"></span>营养饮品</a></li>
+                <li><a href="#"><span class="ink"></span>品牌故事</a></li>
+                <li><a href="#"><span class="ink"></span>联系我们</a></li>
             </ul>
         </div>
     </div>
@@ -412,7 +412,7 @@
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                            <img src="/images/web/mianmo3.png" alt="">
+                            <img src="/images/web/zirun3.png" alt="">
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -602,6 +602,21 @@
       },
 	});
 	$(document).ready(function () {
+      /*----------大导航下效果----------------*/
+      $('.navbContent li a').on('mouseenter',function () {
+      	$('.navbContent li a .ink').removeClass('animates')
+        $(this).children('.ink').addClass('animates')
+      })
+      $('.navbContent li').on('click',function () {
+      	if($(this).hasClass('active')){
+          $(this).children().css('background','rgba(200,173,126,0.8)')
+        }else{
+          $(this).children().css('background','none')
+        }
+      })
+      $('.navbContent ul').on('mouseleave',function () {
+	      $('.navbContent li a .ink').removeClass('animates')
+      })
       /*-0---------小导航效果-------------*/
       $('.minTab .tabList').on('mouseenter',function () {
         const index=$(this).index() + 1
