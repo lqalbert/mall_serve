@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\PaddTypeObject::class,
         Commands\UpgradeOne::class,
         Commands\ComboUpgrade::class,
-        Commands\Deposit::class
+        Commands\Deposit::class,
+        Commands\UpOldBookFreight::class
     ];
 
     /**
