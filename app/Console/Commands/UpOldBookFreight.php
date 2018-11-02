@@ -39,35 +39,39 @@ class UpOldBookFreight extends Command
      */
     public function handle()
     {
-        
-        OrderBasic::where([
-            ['include_freight','=',1],
-            ['book_freight','=','0.00']
-        ])->whereIn('type',[2,3])
-        ->where([ ['status','>',0], ['status','<',7]])
-        ->whereNull('deleted_at')
-        ->chunk(100, function($orders) {
-            foreach ($orders as $order) {
-                switch ($order->express_delivery) {
-                    case '顺丰':
-                        $order->book_freight = 12.00;
-                        break;
-                    case 'EMS':
-                        $order->book_freight = 18.00;
-                        break;
-                    default:
-                        //偏远地区 新疆650000  宁夏 640000 青海省630000  西藏540000
-                        $address = OrderAddress::where('order_id', $order->id)->first();
-                        if (in_array($address->area_province_id, [650000,640000,630000,540000])) {
+        try {
+            OrderBasic::where([
+                ['include_freight','=',1],
+                ['book_freight','=','0.00']
+            ])->whereIn('type',[2,3])
+            ->where([ ['status','>',0], ['status','<',7]])
+            ->whereNull('deleted_at')
+            ->chunk(100, function($orders) {
+                foreach ($orders as $order) {
+                    switch ($order->express_delivery) {
+                        case '顺丰':
+                            $order->book_freight = 12.00;
+                            break;
+                        case 'EMS':
                             $order->book_freight = 18.00;
-                        } else {
-                            $order->book_freight = 10.00;
-                        }
-                        //不是
+                            break;
+                        default:
+                            //偏远地区 新疆650000  宁夏 640000 青海省630000  西藏540000
+                            $address = OrderAddress::where('order_id', $order->id)->first();
+                            if (in_array($address->area_province_id, [650000,640000,630000,540000])) {
+                                $order->book_freight = 18.00;
+                            } else {
+                                $order->book_freight = 10.00;
+                            }
+                            //不是
+                    }
+                    $order->save();
                 }
-                $order->save();
-            }
-        });
+            });
+        } catch (Exception $e) {
+            $this->error('wrong');
+        }
+        
         
             $this->info('done');
     }
