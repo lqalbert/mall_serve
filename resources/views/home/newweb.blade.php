@@ -59,13 +59,13 @@
                 <a href="#"><img src="/images/web/banner1.png" alt=""></a>
             </div>
             <div class="swiper-slide">
-                <a href="#"><img src="/images/web/banner2.jpg" alt=""></a>
+                <a href="/product/index?cate_id=10"><img src="/images/web/banner2.jpg" alt=""></a>
             </div>
             <div class="swiper-slide">
-                <a href="#"><img src="/images/web/banner3.png" alt=""></a>
+                <a href="/product/index?cate_id=3"><img src="/images/web/banner3.png" alt=""></a>
             </div>
             <div class="swiper-slide">
-                <a href="#"><img src="/images/web/banner4.png" alt=""></a>
+                <a href="/product/39"><img src="/images/web/banner4.png" alt=""></a>
             </div>
         </div>
         <!-- Add Pagination -->
