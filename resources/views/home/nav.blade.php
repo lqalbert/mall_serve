@@ -37,11 +37,11 @@
                                             </a>
                                         </li>
                                         
-                                        <li role="presentation"><a href="{{route('product/index', ['cate_id'=>1])}}" class="{{$bar['bar4']}}">
-                                                护肤
-                                                <div class="{{$bar['line4']}}"></div>
-                                            </a>
-                                        </li>
+<!--                                         <li role="presentation"><a href="{{route('product/index', ['cate_id'=>1])}}" class="{{$bar['bar4']}}"> -->
+<!--                                                 护肤 -->
+<!--                                                 <div class="{{$bar['line4']}}"></div> -->
+<!--                                             </a> -->
+<!--                                         </li> -->
                                         <li role="presentation"><a href="{{route('product/index', ['cate_id'=>2])}}" class="{{$bar['bar5']}}">
                                                 彩妆
                                                 <div class="{{$bar['line5']}}"></div>
