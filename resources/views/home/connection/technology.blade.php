@@ -11,7 +11,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lle">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 messageBox">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
-                    技术资讯
+                    技术咨询
                 </div>
                 <form action="">
                     <div class="col-lg-12 col-md-12 col-sm-12 formName">
