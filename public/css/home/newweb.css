@@ -211,6 +211,8 @@ body{
 .minCon{
     padding: 0 5px;
     margin-top: 15px;
+    height: 610px;
+    overflow: hidden;
 }
 
 .minCon .conList{
@@ -697,7 +699,7 @@ body{
 
 .footerBox .footCon  .footBan .footTab .beian{
     color: #fff;
-    font-size: 10px;
+    font-size: 12px;
     text-align: left;
     padding-left: 25px;
     margin-top: 32px;
