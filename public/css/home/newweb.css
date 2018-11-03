@@ -731,3 +731,6 @@ body{
         bottom: 80px;
     }
 }
+.swiper-pagination-bullet-active {
+	background-color:#000;
+}
