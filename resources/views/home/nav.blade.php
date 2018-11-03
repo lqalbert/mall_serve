@@ -48,10 +48,10 @@
                 @endif
                 ><a href="/product/index?cate_id=2"><span class="ink"></span>美妆产品</a></li>
                 <li
-                 @if($nav=='cate' && $cate_id==28)
+                 @if($nav=='cate' && $cate_id==1)
                 	class="active"
                 @endif
-                ><a href="/product/index?cate_id=28"><span class="ink"></span>滋润护肤</a></li>
+                ><a href="/product/index?cate_id=1"><span class="ink"></span>滋润护肤</a></li>
                 <li
                  @if($nav=='cate' && $cate_id==25)
                 	class="active"
