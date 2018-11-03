@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-4 col-md-4">
                 <div class="searchBox">
-                    <input type="text" class="search" id="seachText" >
+                    <input type="text" class="search" id="seachText" placeholder="水嫩保湿" >
                     <img src="/images/web/search.png" alt="" id="searchButton">
                 </div>
             </div>
@@ -36,15 +36,15 @@
     <div class="container-fluid navbContent">
         <div class="container" style="padding: 0;" role="navigation">
             <ul class="nav nav-pills nav-justified">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="/product/index?cate_id=10">臻品面膜系列</a></li>
-                <li><a href="/product/index?cate_id=3">金致焕肌系列</a></li>
-                <li><a href="/product/index?cate_id=4">水嫩保湿系列</a></li>
-                <li><a href="/product/index?cate_id=2">美妆产品</a></li>
-                <li><a href="/product/index?cate_id=28">滋润护肤</a></li>
-                <li><a href="/product/index?cate_id=25">营养饮品</a></li>
-                <li><a href="/brand/index">品牌故事</a></li>
-                <li><a href="#">联系我们</a></li>
+                <li class="active"><a href="/"><span class="ink"></span>首页</a></li>
+                <li><a href="/product/index?cate_id=10"><span class="ink"></span>臻品面膜系列</a></li>
+                <li><a href="/product/index?cate_id=3"><span class="ink"></span>金致焕肌系列</a></li>
+                <li><a href="/product/index?cate_id=4"><span class="ink"></span>水嫩保湿系列</a></li>
+                <li><a href="/product/index?cate_id=2"><span class="ink"></span>美妆产品</a></li>
+                <li><a href="/product/index?cate_id=28"><span class="ink"></span>滋润护肤</a></li>
+                <li><a href="/product/index?cate_id=25"><span class="ink"></span>营养饮品</a></li>
+                <li><a href="/brand/index"><span class="ink"></span>品牌故事</a></li>
+                <li><a href="#"><span class="ink"></span>联系我们</a></li>
             </ul>
         </div>
     </div>
@@ -665,7 +665,13 @@
         $('.minCon .conList').fadeOut(100)
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
       })
-
+      $('.minCon .cons .bg').on('mouseenter',function () {
+      	$(this).css('background','#fff')
+        $(this).parents().siblings().children('.bg').css('background','rgb(0,0,0,0.1)')
+      })
+      $('.minCon .conList').on('mouseleave',function () {
+        $('.minCon .cons .bg').css('background','#fff')
+      })
       /* 搜索 */
       $('#searchButton').click(function(){
 		var text = $("#seachText").val();
