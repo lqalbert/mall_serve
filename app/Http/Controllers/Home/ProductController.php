@@ -15,7 +15,7 @@ class ProductController extends CommonController
         static::$bar['line2']='line';
         
         $subNav = [
-            '10'=>['url'=>route('product/index', ['cate_id'=>'10']),'isactive'=>'','name'=>'面膜'],
+            '10'=>['url'=>route('product/index', ['cate_id'=>'10']),'isactive'=>'','name'=>'臻品面膜系列'],
             '3'=>['url'=>route('product/index', ['cate_id'=>'3']),'isactive'=>'','name'=>'金致焕肌系列'],
             '4'=>['url'=>route('product/index', ['cate_id'=>'4']),'isactive'=>'','name'=>'水嫩保湿系列'],
             '2'=>['url'=>route('product/index', ['cate_id'=>'2']),'isactive'=>'','name'=>'美妆产品'],
