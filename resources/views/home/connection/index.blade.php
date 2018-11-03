@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="/css/home/connection/index.css"/>
 @endsection
 @section('nav')
-@include("home.nav",['bar' => $bar])
+@include("home.nav",['nav' => 'brand'])
 @endsection
 
 @section('content')
