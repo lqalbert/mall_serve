@@ -273,17 +273,21 @@ body{
     color: rgba(0,0,0,0.9);
     font-size: 24px;
     margin-top: 15px;
+    font-family: 微软雅黑;
+    font-weight: 100;
 }
 
 .minCon .conList .cons .description{
     font-size: 30px;
     color: rgba(0,0,0,0.8);
     line-height: 60px;
+    font-family: 微软雅黑;
 }
 
 .minCon .conList .cons .price{
     font-size: 30px;
     color: #000;
+    font-family: 微软雅黑;
 }
 
 .minCon .conList .cons .price span{
