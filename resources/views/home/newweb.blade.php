@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-4 col-md-4">
                 <div class="searchBox">
-                    <input type="text" class="search">
+                    <input type="text" class="search" placeholder="水嫩保湿">
                     <img src="/images/web/search.png" alt="">
                 </div>
             </div>
@@ -624,6 +624,13 @@
         $(this).children('.con').children('.bg').addClass('active')
         $('.minCon .conList').fadeOut(100)
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
+      })
+      $('.minCon .cons .bg').on('mouseenter',function () {
+      	$(this).css('background','#fff')
+        $(this).parents().siblings().children('.bg').css('background','rgb(0,0,0,0.1)')
+      })
+      $('.minCon .conList').on('mouseleave',function () {
+        $('.minCon .cons .bg').css('background','#fff')
       })
 	})
 </script>
