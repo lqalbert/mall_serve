@@ -254,8 +254,8 @@ Route::group($adminGroup, function(){
 
 
 
-Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
-Route::get('/newweb','Home\IndexController@newWeb')->name('newweb');
+// Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
+Route::get('/','Home\IndexController@newWeb')->name('newweb')->middleware('mobiledetected');
 
 Route::get('/product/index', 'Home\ProductController@index')->name('product/index')->middleware('mobiledetected');
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');

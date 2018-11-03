@@ -13,42 +13,7 @@
 </head>
 <body>
 <!--导航-->
-<div class="container-fluid navContent">
-    <div class="container logoContent">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 logo">
-                <img src="/images/web/logos.png" alt="">
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="searchBox">
-                    <input type="text" class="search" id="seachText" placeholder="水嫩保湿" >
-                    <img src="/images/web/search.png" alt="" id="searchButton">
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <div class="tels">
-                    <div class="hol">Hotline</div>
-                    400-158-2369
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid navbContent">
-        <div class="container" style="padding: 0;" role="navigation">
-            <ul class="nav nav-pills nav-justified">
-                <li class="active"><a href="/"><span class="ink"></span>首页</a></li>
-                <li><a href="/product/index?cate_id=10"><span class="ink"></span>臻品面膜系列</a></li>
-                <li><a href="/product/index?cate_id=3"><span class="ink"></span>金致焕肌系列</a></li>
-                <li><a href="/product/index?cate_id=4"><span class="ink"></span>水嫩保湿系列</a></li>
-                <li><a href="/product/index?cate_id=2"><span class="ink"></span>美妆产品</a></li>
-                <li><a href="/product/index?cate_id=28"><span class="ink"></span>滋润护肤</a></li>
-                <li><a href="/product/index?cate_id=25"><span class="ink"></span>营养饮品</a></li>
-                <li><a href="/brand/index"><span class="ink"></span>品牌故事</a></li>
-                <li><a href="#"><span class="ink"></span>联系我们</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+@include("home.nav", ['nav'=>'index'])
 <!--/ 内容区域-->
 <!--/ banner-->
 <div class="container-fluid maxBanner">
@@ -666,7 +631,7 @@
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
       })
       $('.minCon .cons .bg').on('mouseenter',function () {
-      	console.log(1111)
+//       	console.log(1111)
       	$(this).css('background','#fff')
         $(this).parent().siblings().children('.bg').css('background','#D6D6D6')
       })

@@ -5,7 +5,7 @@
 @endsection
 
 @section('nav')
-@include("home.nav",['bar' => $bar])
+@include("home.nav", ['nav'=>'cate', 'cate_id'=>app('Illuminate\Http\Request')->input('cate_id',999)])
 @endsection
 
 

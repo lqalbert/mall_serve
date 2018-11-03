@@ -14,7 +14,7 @@
 }
 
 .indexContent{
-    padding-top: 62px;
+    padding-top: 32px;
     background: #fff ;
 
 }
@@ -462,8 +462,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .productBanner{
-    padding: 0;
-    margin-top: 0px;
+   /*  padding: 0;
+    margin-top: 0px; */
+    display:none;
 }
 
 .navBottom .navBot{

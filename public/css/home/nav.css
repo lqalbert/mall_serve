@@ -144,7 +144,7 @@ body{
     -webkit-transform: scale(0);
 }
 
-.navbContent ul li a .animates{
+.navbContent ul li a:hover .ink{
     animation: ripple 0.65s linear;
 }
 
