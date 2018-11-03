@@ -1,0 +1,93 @@
+/*---------底部-----------------*/
+.footerBox{
+    padding: 0;
+    margin-top: 40px;
+    background-image: url("../../images/web/foot1.jpg");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.footerBox .bgImg{
+    width: 100%;
+}
+
+.footerBox .footCon{
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 100px;
+}
+
+.footerBox .footCon div{
+    padding: 0;
+}
+
+.footerBox .footCon .logos img{
+    display: block;
+    margin: 0 auto;
+    width: 190px;
+}
+
+.footerBox .footCon .logos .hot{
+    width: 400px;
+    line-height: 60px;
+    font-size: 34px;
+    color: rgba(255,255,255,0.5);
+    position: absolute;
+    left: 60%;
+    top: 76px;
+}
+
+.footerBox .footCon .logos .hotBox{
+    float: left;
+}
+
+.footerBox .footCon .logos .hots{
+    width: 60px;
+    height: 22px;
+    line-height: 20px;
+    margin-top: 20px;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.footerBox .footCon .logos .hots .hotLine{
+    border-radius: 15px;
+    width: 80px;
+    padding-left: 3px;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.footerBox .footCon  .footBan .wchat{
+    height: 90px;
+    position: relative;
+}
+
+.footerBox .footCon  .footBan .wchat img{
+    width: 90px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    display: block;
+}
+
+.footerBox .footCon  .footBan .footTab{
+    padding-right: 20px;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.footerBox .footCon  .footBan .footTab a{
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+}
+
+.footerBox .footCon  .footBan .footTab .beian{
+    color: #fff;
+    font-size: 12px;
+    text-align: left;
+    padding-left: 25px;
+    margin-top: 32px;
+}

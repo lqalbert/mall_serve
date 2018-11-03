@@ -155,3 +155,8 @@ body{
         -webkit-transform: scale(2.5);
     }
 }
+@media (min-width: 1200px) {
+    .container{
+        width: 1300px;
+    }
+}
