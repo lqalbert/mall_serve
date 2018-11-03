@@ -47,6 +47,7 @@ body{
 .searchBox .search{
     width: 100%;
     line-height: 30px;
+    height: 30px;
     background: #9D8255;
     border-radius: 15px;
     border: 1px solid #ccc;
@@ -273,17 +274,21 @@ body{
     color: rgba(0,0,0,0.9);
     font-size: 24px;
     margin-top: 15px;
+    font-family: 微软雅黑;
+    font-weight: 100;
 }
 
 .minCon .conList .cons .description{
     font-size: 30px;
     color: rgba(0,0,0,0.8);
     line-height: 60px;
+    font-family: 微软雅黑;
 }
 
 .minCon .conList .cons .price{
     font-size: 30px;
     color: #000;
+    font-family: 微软雅黑;
 }
 
 .minCon .conList .cons .price span{
