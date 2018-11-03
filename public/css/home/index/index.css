@@ -3,7 +3,7 @@
     margin: 0;
 }
 
-.headBar{
+/* .headBar{
     max-height: 123px;
     padding: 0 0 2px 0;
     background: #000;
@@ -11,7 +11,7 @@
 
 .headBar div{
     padding: 0;
-}
+} */
 
 .indexContent{
     padding-top: 62px;
@@ -27,11 +27,11 @@
     background-size: 100% 100%;*/
 }
 
-.logoImg img{
+/* .logoImg img{
     max-width: 156px;
 }
-
-.searchBox{
+ */
+/* .searchBox{
     width: 180px;
     height: 30px;
     line-height: 30px;
@@ -60,9 +60,9 @@
     color: #fff;
     font-size: 20px;
     cursor: pointer;
-}
+} */
 
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+/* input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     color: #fff;font-size:14px;
 }
 
@@ -76,15 +76,14 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     color:#fff;font-size:14px;
-}
+} */
 
 /*---------------------导航栏---------------------*/
-#navbar{
+/* #navbar{
     color: #777;
     background: #000;
     height: auto;
     z-index: 99999;
-    /*background-image: url("../../../images/home/index/nav.png");*/
 }
 
 #navbar .row{
@@ -101,11 +100,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     font-size: 16px;
 }
 
-/*#ul .m-drop{
-    border:none;
-    box-shadow: none;
-    background: rgba(255,255,255,1);
-}*/
 
 #ul{
     margin: 10px 0;
@@ -166,7 +160,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 #navBut span{
     background: #666;
-}
+} */
 
 /*-------------------banner-----------------*/
 #banner{

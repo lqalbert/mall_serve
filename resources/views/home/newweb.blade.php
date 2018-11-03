@@ -21,7 +21,7 @@
             </div>
             <div class="col-lg-4 col-md-4">
                 <div class="searchBox">
-                    <input type="text" class="search" id="seachText" >
+                    <input type="text" class="search" id="seachText" placeholder="水嫩保湿" >
                     <img src="/images/web/search.png" alt="" id="searchButton">
                 </div>
             </div>
@@ -36,15 +36,15 @@
     <div class="container-fluid navbContent">
         <div class="container" style="padding: 0;" role="navigation">
             <ul class="nav nav-pills nav-justified">
-                <li class="active"><a href="#">首页</a></li>
-                <li><a href="/product/index?cate_id=10">臻品面膜系列</a></li>
-                <li><a href="/product/index?cate_id=3">金致焕肌系列</a></li>
-                <li><a href="/product/index?cate_id=4">水嫩保湿系列</a></li>
-                <li><a href="/product/index?cate_id=2">美妆产品</a></li>
-                <li><a href="/product/index?cate_id=28">滋润护肤</a></li>
-                <li><a href="/product/index?cate_id=25">营养饮品</a></li>
-                <li><a href="/brand/index">品牌故事</a></li>
-                <li><a href="#">联系我们</a></li>
+                <li class="active"><a href="/"><span class="ink"></span>首页</a></li>
+                <li><a href="/product/index?cate_id=10"><span class="ink"></span>臻品面膜系列</a></li>
+                <li><a href="/product/index?cate_id=3"><span class="ink"></span>金致焕肌系列</a></li>
+                <li><a href="/product/index?cate_id=4"><span class="ink"></span>水嫩保湿系列</a></li>
+                <li><a href="/product/index?cate_id=2"><span class="ink"></span>美妆产品</a></li>
+                <li><a href="/product/index?cate_id=28"><span class="ink"></span>滋润护肤</a></li>
+                <li><a href="/product/index?cate_id=25"><span class="ink"></span>营养饮品</a></li>
+                <li><a href="/brand/index"><span class="ink"></span>品牌故事</a></li>
+                <li><a href="#"><span class="ink"></span>联系我们</a></li>
             </ul>
         </div>
     </div>
@@ -54,7 +54,6 @@
 <div class="container-fluid maxBanner">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-        	
             <div class="swiper-slide">
                 <a href="#"><img src="/images/web/banner1.png" alt=""></a>
             </div>
@@ -447,9 +446,9 @@
                 <div class="col-lg-4 col-md-4 cons">
                     <div class="col-lg-12 col-md-12 bg">
                         <div class="col-lg-12 col-md-12 img">
-                        	<a href="/product/53" target="_blank">
-                            	<img src="/images/web/mianmo3.png" alt="">
-                            </a>
+                         <a href="/product/53" target="_blank">
+                            <img src="/images/web/zirun3.png" style="max-width: 300px" alt="">
+                        </a>                        
                         </div>
                         <div class="col-lg-12 col-md-12">
                             <div class="line"></div>
@@ -507,8 +506,11 @@
     </div>
 </div>
 <div class="container-fluid goldCon">
-    <div class="container">
-        <div class="textBox">
+    <a href="/product/33" target="_blank">
+        <img src="/images/web/gold1.png" alt="">
+    </a>
+    {{--<div class="container">
+        --}}{{--<div class="textBox">
             <div class="col-lg-12 col-md-12 eText">Royale</div>
             <div class="col-lg-12 col-md-12 eText">Revitalizing</div>
             <div class="col-lg-12 col-md-12 eText">Series</div>
@@ -522,13 +524,16 @@
                 <div class="col-lg-12 col-md-12 maxText">奢华能量，紧致提拉塑颜</div>
                 <div class="col-lg-12 col-md-12 minText">隐退岁月年轮，重唤年轻动力</div>
             </div>
-        </div>
-    </div>
+        </div>--}}{{--
+    </div>--}}
 </div>
 <div class="container-fluid wakeLine"></div>
 <div class="container-fluid goldCon water">
-    <div class="container">
-        <div class="textBox">
+    <a href="/product/34" target="_blank">
+        <img src="/images/web/water1.png" alt="">
+    </a>
+    {{--<div class="container">
+        --}}{{--<div class="textBox">
             <div class="col-lg-12 col-md-12 eText">Moisturizing</div>
             <div class="col-lg-12 col-md-12 eText">Hydrating</div>
             <div class="col-lg-12 col-md-12 eText">Series</div>
@@ -542,12 +547,14 @@
                 <div class="col-lg-12 col-md-12 maxText">深补水，莹润透亮</div>
                 <div class="col-lg-12 col-md-12 minText">唤醒肌肤，深层莹润，水与白不可或缺。</div>
             </div>
-        </div>
-    </div>
+        </div>--}}{{--
+    </div>--}}
 </div>
 <div class="container-fluid qidian">
-    <img src="/images/web/qidian.png" alt="">
-    <div class="qidianText">
+    <a href="/product/39" target="_blank">
+        <img src="/images/web/qidian1.png" alt="">
+    </a>
+    {{--<div class="qidianText">
         <div class="col-lg-12 col-md-12 eText">Beauty</div>
         <div class="col-lg-12 col-md-12 eText">Filter Cushion</div>
         <div class="col-lg-12 col-md-12 eText">Cream</div>
@@ -556,11 +563,13 @@
         <div class="col-lg-12 col-md-12">
             <div class="checkD"><a href="/product/39" target="_blank">查看详情</a></div>
         </div>
-    </div>
+    </div>--}}
 </div>
 <div class="container qidian fendi">
-    <img src="/images/web/fendi.png" alt="">
-    <div class="qidianText">
+    <a href="/product/37" target="_blank">
+        <img src="/images/web/fendi1.png" alt="">
+    </a>
+    {{--<div class="qidianText">
         <div class="col-lg-12 col-md-12 eText">Beauty</div>
         <div class="col-lg-12 col-md-12 eText">Filter Cushion</div>
         <div class="col-lg-12 col-md-12 eText">Cream</div>
@@ -569,7 +578,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="checkD"><a href="/product/37" target="_blank">查看详情</a></div>
         </div>
-    </div>
+    </div>--}}
 </div>
 <div class="container-fluid footerBox">
     <div class="container" style="padding: 0;position: relative">
@@ -603,7 +612,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12 col-md-12 beian">
-                            备案号：粤ICP备18050024 广州普拉她生物科技有限公司  咨询热线 400-158-2369
+                            备案号：粤ICP备18050024 广州普拉她生物科技有限公司
                         </div>
                     </div>
                 </div>
@@ -633,6 +642,21 @@
       },
 	});
 	$(document).ready(function () {
+      /*----------大导航下效果----------------*/
+      $('.navbContent li a').on('mouseenter',function () {
+      	$('.navbContent li a .ink').removeClass('animates')
+        $(this).children('.ink').addClass('animates')
+      })
+      $('.navbContent li').on('click',function () {
+      	if($(this).hasClass('active')){
+          $(this).children().css('background','rgba(200,173,126,0.8)')
+        }else{
+          $(this).children().css('background','none')
+        }
+      })
+      $('.navbContent ul').on('mouseleave',function () {
+	      $('.navbContent li a .ink').removeClass('animates')
+      })
       /*-0---------小导航效果-------------*/
       $('.minTab .tabList').on('mouseenter',function () {
         const index=$(this).index() + 1
@@ -641,7 +665,13 @@
         $('.minCon .conList').fadeOut(100)
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
       })
-
+      $('.minCon .cons .bg').on('mouseenter',function () {
+      	$(this).css('background','#fff')
+        $(this).parents().siblings().children('.bg').css('background','rgb(0,0,0,0.1)')
+      })
+      $('.minCon .conList').on('mouseleave',function () {
+        $('.minCon .cons .bg').css('background','#fff')
+      })
       /* 搜索 */
       $('#searchButton').click(function(){
 		var text = $("#seachText").val();
