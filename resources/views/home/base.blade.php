@@ -71,46 +71,46 @@
             $(this).addClass('sta')
         })*/
         /*---------------菜单鼠标事件*/
-        $('#ul li a').hover(function () {
-            $('#ul li a div').removeClass('line')
-            $(this).children('div').addClass('line')
-        })
-        $('#ul').mouseleave(function () {
-            var flg=true
-            $('#ul li a').each(function () {
-                if($(this).hasClass('sta')){
-                    $('#ul li a div').removeClass('line')
-                    $(this).children('div').addClass('line')
-                    flg=false
-                }
-            })
-            if(flg){
-                $('#ul li a div').removeClass('line')
-            }
-        })
-        $('#buyC').click(function (e) {
-            flg=true
-            if($('#buyCar').css('display')=='none'){
-                $('#buyCar').fadeIn(100);
-                $('#myCenter').fadeOut(10)
-            }else{
-                $('#buyCar').fadeOut(10)
-            }
-        })
-        $('#loginBar .countP').click(function (e) {
-            if($('#myCenter').css('display')=='none'){
-                $('#myCenter').fadeIn(100);
-                $('#buyCar').fadeOut(10)
-            }else{
-                $('#myCenter').fadeOut(10)
-            }
-        })
-        $('#goTo').click(function () {
-            window.location.href="{{URL('car/index')}}"
-        })
-        $('.buyList .del').click(function () {
-            flg=false
-        })
+//         $('#ul li a').hover(function () {
+//             $('#ul li a div').removeClass('line')
+//             $(this).children('div').addClass('line')
+//         })
+//         $('#ul').mouseleave(function () {
+//             var flg=true
+//             $('#ul li a').each(function () {
+//                 if($(this).hasClass('sta')){
+//                     $('#ul li a div').removeClass('line')
+//                     $(this).children('div').addClass('line')
+//                     flg=false
+//                 }
+//             })
+//             if(flg){
+//                 $('#ul li a div').removeClass('line')
+//             }
+//         })
+//         $('#buyC').click(function (e) {
+//             flg=true
+//             if($('#buyCar').css('display')=='none'){
+//                 $('#buyCar').fadeIn(100);
+//                 $('#myCenter').fadeOut(10)
+//             }else{
+//                 $('#buyCar').fadeOut(10)
+//             }
+//         })
+//         $('#loginBar .countP').click(function (e) {
+//             if($('#myCenter').css('display')=='none'){
+//                 $('#myCenter').fadeIn(100);
+//                 $('#buyCar').fadeOut(10)
+//             }else{
+//                 $('#myCenter').fadeOut(10)
+//             }
+//         })
+//         $('#goTo').click(function () {
+//             window.location.href="{{URL('car/index')}}"
+//         })
+//         $('.buyList .del').click(function () {
+//             flg=false
+//         })
         $(document.body).click(function (e) {
             var ee=e.srcElement?e.srcElement:e.target
             if(ee.id!='countP'){
@@ -121,24 +121,32 @@
             }
         });
         //监听滚动条
-        $(window).scroll(function () {
-            var top=$(document).scrollTop();
-            if(top>=200){
-                $('.personBar').fadeOut('slow');
-            }else{
-                $('.personBar').fadeIn('fast')
-            }
-        });
-        $('#scrollTop').on('click',function () {
-            $(document).scrollTop(0);
-        });
+//         $(window).scroll(function () {
+//             var top=$(document).scrollTop();
+//             if(top>=200){
+//                 $('.personBar').fadeOut('slow');
+//             }else{
+//                 $('.personBar').fadeIn('fast')
+//             }
+//         });
+//         $('#scrollTop').on('click',function () {
+//             $(document).scrollTop(0);
+//         });
 
         //搜索点击事件
-        $('#souI').click(function(event) {
-            var seachText = $('#searchB').val();
-            if(seachText){
-                window.location.href="{{URL('product/index?seachText=')}}"+seachText;
-            }
+//         $('#souI').click(function(event) {
+//             var seachText = $('#searchB').val();
+//             if(seachText){
+//                 window.location.href="{{URL('product/index?seachText=')}}"+seachText;
+//             }
+//         });
+
+        /* 搜索 */
+        $('#searchButton').click(function(){
+  		var text = $("#seachText").val();
+  		if(text && text.length > 0) {
+  			window.location.href="/product/index?seachText=" + text;
+  		}
         });
     })
 </script>
