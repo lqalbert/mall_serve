@@ -111,15 +111,15 @@
 //         $('.buyList .del').click(function () {
 //             flg=false
 //         })
-        $(document.body).click(function (e) {
-            var ee=e.srcElement?e.srcElement:e.target
-            if(ee.id!='countP'){
-                $('#myCenter').fadeOut(10)
-            }
-            if(ee.id!='buyC'&&flg){
-                $('#buyCar').fadeOut(10)
-            }
-        });
+//         $(document.body).click(function (e) {
+//             var ee=e.srcElement?e.srcElement:e.target
+//             if(ee.id!='countP'){
+//                 $('#myCenter').fadeOut(10)
+//             }
+//             if(ee.id!='buyC'&&flg){
+//                 $('#buyCar').fadeOut(10)
+//             }
+//         });
         //监听滚动条
 //         $(window).scroll(function () {
 //             var top=$(document).scrollTop();
