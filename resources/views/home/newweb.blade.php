@@ -626,10 +626,11 @@
         $('.minCon .conList:nth-child('+index+')').fadeIn(200)
       })
       $('.minCon .cons .bg').on('mouseenter',function () {
+      	console.log(1111)
       	$(this).css('background','#fff')
-        $(this).parents().siblings().children('.bg').css('background','rgb(0,0,0,0.1)')
+        $(this).parent().siblings().children('.bg').css('background','#D6D6D6')
       })
-      $('.minCon .conList').on('mouseleave',function () {
+      $('.minCon .conList').mouseleave(function () {
         $('.minCon .cons .bg').css('background','#fff')
       })
 	})
