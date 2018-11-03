@@ -62,7 +62,7 @@
                 	class="active"
                 @endif
                 ><a href="/brand/index"><span class="ink"></span>品牌故事</a></li>
-                <li><a href="#"><span class="ink"></span>联系我们</a></li>
+<!--                 <li><a href="#"><span class="ink"></span>联系我们</a></li> -->
             </ul>
         </div>
     </div>
