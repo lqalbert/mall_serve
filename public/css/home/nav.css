@@ -47,6 +47,7 @@ body{
 .searchBox .search{
     width: 100%;
     line-height: 30px;
+    height: 30px;
     background: #9D8255;
     border-radius: 15px;
     border: 1px solid #ccc;
