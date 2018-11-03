@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/home/index/index.css"/>
     <link rel="stylesheet" href="/css/home/index/iconfonts.css"/>
     <link rel="stylesheet" href="/css/home/nav.css"/>
+    <link rel="stylesheet" href="/css/home/foot.css"/>
     <style type="text/css">
         .container {
             width: 1300px;
