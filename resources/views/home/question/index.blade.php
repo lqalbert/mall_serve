@@ -4,7 +4,7 @@
 @endsection
 
 @section('nav')
-@include("home.nav",['bar' => $bar])
+@include("home.nav",['nav' => 'brand'])
 @endsection
 
 @section('content')
@@ -100,7 +100,7 @@
                             <div class="answer col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 护肤的基本步骤：<br>
                                 白天：洁面、爽肤水、小黑瓶/面部精华、面部乳液/白霜、眼部精华、眼霜、防晒隔离。<br>
-                                晚上：卸妆、界面、爽肤水、小黑瓶/面部精华、晚霜、眼部精华、眼霜。
+                                晚上：卸妆、洁面、爽肤水、小黑瓶/面部精华、晚霜、眼部精华、眼霜。
                             </div>
                         </div>
                         <div class="questionList col-lg-12 col-md-12 col-sm-12 col-xs-12">

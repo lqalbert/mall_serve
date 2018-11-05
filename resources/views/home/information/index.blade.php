@@ -5,7 +5,7 @@
 @endsection
 
 @section('nav')
-@include("home.nav",['bar' => $bar])
+@include("home.nav",['nav' => 'brand'])
 @endsection
 
 @section('content')

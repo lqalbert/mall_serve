@@ -42,7 +42,7 @@ class DepositAppLogicService
                 throw  new \Exception('订单返还状态设置失败');
             }
 
-            $this->service->subDeposit($order->department, $deposit);
+            $this->service->subDeposit($order->department, $deposit, "订单:". $order->order_sn);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -71,7 +71,7 @@ class DepositAppLogicService
             DB::beginTransaction();
             // 保证金是否已返
             if ($order->isDepositReturn()) {  //是
-                $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit);
+                $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit, "订单:". $order->order_sn);
                 $order->setDepositReturn(false);
                 $order->return_deposit = 0.00;
 //                 $order->save();
@@ -106,7 +106,7 @@ class DepositAppLogicService
             $returnDeposit = $this->caculReturn($order);
             try {
                 DB::beginTransaction();
-                $this->service->returnDeposit($order->department, $returnDeposit);
+                $this->service->returnDeposit($order->department, $returnDeposit, "订单:". $order->order_sn);
                 //设置已返还标志
                 $order->setDepositReturn();
                 //保存已返还的金额

@@ -4,7 +4,7 @@
 @endsection
 
 @section('nav')
-@include("home.nav",['bar' => $bar])
+@include("home.nav", ['nav'=>'cate', 'cate_id'=>0])
 @endsection
 
 @section('content')

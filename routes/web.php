@@ -254,8 +254,9 @@ Route::group($adminGroup, function(){
 
 
 
-Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
-
+// Route::get('/', 'Home\IndexController@index')->middleware('mobiledetected');
+Route::get('/','Home\IndexController@newWeb')->name('newweb')->middleware('mobiledetected');
+Route::get('/newweb','Home\IndexController@newWeb')->name('newweb')->middleware('mobiledetected');
 
 Route::get('/product/index', 'Home\ProductController@index')->name('product/index')->middleware('mobiledetected');
 Route::get('/product/product', 'Home\ProductController@product')->name('product/product')->middleware('mobiledetected');
@@ -294,7 +295,7 @@ Route::get('/questionnaire/{id}', 'Home\LoginController@questionnaire')->name('q
 //保存游客用户信息
 Route::post('/register-action', 'Home\LoginController@registerAction')->name('register-action');
 //新设计首页
-Route::get('/newweb','Home\IndexController@newWeb')->name('newweb');
+// Route::get('/newweb','Home\IndexController@newWeb')->name('newweb');
 
 // Auth::routes();
 
