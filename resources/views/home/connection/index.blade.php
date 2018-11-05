@@ -115,7 +115,7 @@
     <script>
         $("#but").click(function(){
             $.ajax({
-                url: '//connection/store',
+                url: '/connection/store',
                 type: 'POST',
                 dataType: 'json',
                 data: $("form").serialize(),
