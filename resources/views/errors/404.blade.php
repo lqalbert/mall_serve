@@ -5,7 +5,7 @@
 @endsection
 
 @section('nav')
-@include("home.nav",['bar'=>['bar1'=>'','bar2'=>'','bar3'=>'','bar4'=>'','bar5'=>'','bar6'=>'','bar7'=>'','line1'=>'','line2'=>'','line3'=>'','line4'=>'','line5'=>'','line6'=>'','line7'=>'']])
+@include("home.nav",['nav'=>'a'])
 @endsection
 
 
