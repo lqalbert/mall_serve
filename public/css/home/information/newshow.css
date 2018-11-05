@@ -106,3 +106,7 @@
 .newsContent .rightContent .rightList .msgBox{
     padding-left: 10px;
 }
+.newsContent .rightContent .rightList a {
+	color: #333;
+}
+
