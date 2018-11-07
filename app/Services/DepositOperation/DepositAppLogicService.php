@@ -29,20 +29,20 @@ class DepositAppLogicService
         $amount = $this->caculGoods($order->goods);
         try {
             DB::beginTransaction();
-            
+            $freight = $order->getDepositFreight();
             if ($this->setModel->isZero()) {
                 // 扣除部分就是 =  
-                $deposit = $algorithm->deposit($amount, $order->getDepositFreight());
+                $deposit = $algorithm->deposit($amount, $freight);
                 $order->setDepositReturn();
                 
-                $saleDeposit = $algorithm->getSaleDeposit($amount);
-                $appendDeposit = $algorithm->getAppendDeposit($amount);
+                $saleDeposit = $algorithm->getSaleDeposit($amount, $freight);
+                $appendDeposit = $algorithm->getAppendDeposit($amount, $freight);
                 
             } else {
                 // 扣除部分就是 = 保证金
-                $deposit = $algorithm->depositOther($amount, $order->getDepositFreight());
+                $deposit = $algorithm->depositOther($amount, $freight);
                 
-                $saleDeposit = $algorithm->getSaleDepositOther($amount);
+                $saleDeposit = $algorithm->getSaleDepositOther($amount, $freight);
                 $appendDeposit = $algorithm->getAppendDepositOther($amount);
             }
             
