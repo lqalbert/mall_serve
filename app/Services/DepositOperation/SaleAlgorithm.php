@@ -45,7 +45,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
     /**
      * 即时返还 扣除
      */
-    public function deposit(Object $amount, $freight)
+    public function deposit(\stdClass $amount, $freight)
     {
         return rountd($this->goodsDeposit($amount->sale) + $this->appendDeposit($amount->append) + $this->entrepotDeposit($amount) + $freight,2);
     }
@@ -54,7 +54,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
     /**
      * 其它返还 扣除
      */
-    public function depositOther(Object $amount, $freight)
+    public function depositOther(\stdClass $amount, $freight)
     {
         return round($amount->sale + $this->appendAmount($amount->append) + $freight,2);
     }

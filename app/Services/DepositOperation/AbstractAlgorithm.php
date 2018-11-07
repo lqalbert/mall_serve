@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\DepositOperation;
 
+use App\Models\DepositSet2;
+
 /**
  * 销售订单 的扣除 返还计算
  * @author hyf
@@ -12,7 +14,7 @@ abstract class AbstractAlgorithm
     
     protected $setModel = null;
     
-    public function __construct(DepositParam $model)
+    public function __construct(DepositSet2 $model)
     {
         $this->setModel = $model;
     }
@@ -40,7 +42,7 @@ abstract class AbstractAlgorithm
      */
     public function entrepotDeposit($amount)
     {
-        $saleDeposit = $this->entrepotDepositItem($amount->sal); 
+        $saleDeposit = $this->entrepotDepositItem($amount->sale); 
         $appendDeposit = $this->entrepotDepositItem($amount->append);  
         return  $saleDeposit + $appendDeposit;
     }

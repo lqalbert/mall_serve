@@ -153,16 +153,16 @@ class DepositAppLogicService
         //对应 order_type 的 id
         switch ($type) {
             case 2: //销售订单
-                return new SaleAlgorithm(app('DepositParam'));
+                return new SaleAlgorithm(resolve('App\\Models\\DepositSet2'));
                 break;
             case 3: //内购
-                return new InnerAlgorithm(app('DepositParam'));
+                return new InnerAlgorithm(resolve('App\\Models\\DepositSet2'));
                 break;
             case 4: //京东
-                return new JdAlgorithm(app('DepositParam'));
+                return new JdAlgorithm(resolve('App\\Models\\DepositSet2'));
                 break;
             default :
-                return new SaleAlgorithm(app('DepositParam'));
+                return new SaleAlgorithm(resolve('App\\Models\\DepositSet2'));
         }
     }
     

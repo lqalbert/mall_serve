@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('DepositParam', function($app){
+        $this->app->singleton('App\\Models\\DepositSet2', function($app){
            return  DepositSet2::getInstance(); 
         });
     }

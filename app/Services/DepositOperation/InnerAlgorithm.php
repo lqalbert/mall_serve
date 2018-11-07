@@ -34,7 +34,7 @@ class InnerAlgorithm extends AbstractAlgorithm
     /**
      * 即时返还 扣除
      */
-    public function deposit(Object $amount, $freight)
+    public function deposit(\stdClass $amount, $freight)
     {
         return round($this->goodsDeposit($amount->sale) + $this->entrepotDeposit($amount) + $freight,2);
     }
@@ -43,7 +43,7 @@ class InnerAlgorithm extends AbstractAlgorithm
     /**
      * 其它返还 扣除
      */
-    public function depositOther(Object $amount, $freight)
+    public function depositOther(\stdClass $amount, $freight)
     {
         return round($this->goodsDiscounted($amount->sale)+ $freight,2);
     }
