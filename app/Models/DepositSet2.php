@@ -71,7 +71,7 @@ class DepositSet2 extends Model
     
     public function getY()
     {
-        return $this->Y / 100;
+        return $this->y / 100;
     }
     
     public function getN()
