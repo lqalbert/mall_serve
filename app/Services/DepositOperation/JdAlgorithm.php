@@ -27,7 +27,7 @@ class JdAlgorithm extends AbstractAlgorithm
     
     public function jdDeposit($amount)
     {
-        return $this->calculate($amount, $this->setModel->getJ() * (1 - $this->setModel->getY()));
+        return $this->calculate($amount, rount($this->setModel->getJ() * (1 - $this->setModel->getY()), 2));
     }
     
     /**
