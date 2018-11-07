@@ -47,7 +47,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
      */
     public function deposit(\stdClass $amount, $freight)
     {
-        return rountd($this->goodsDeposit($amount->sale) + $this->appendDeposit($amount->append) + $this->entrepotDeposit($amount) + $freight,2);
+        return round($this->goodsDeposit($amount->sale) + $this->appendDeposit($amount->append) + $this->entrepotDeposit($amount) + $freight,2);
     }
     
     
