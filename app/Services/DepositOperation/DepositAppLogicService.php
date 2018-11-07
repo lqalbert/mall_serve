@@ -47,7 +47,7 @@ class DepositAppLogicService
                 throw  new \Exception('订单返还状态设置失败');
             }
             
-            $this->service->subDeposit($order->department, $deposit);
+            $this->service->subDeposit($order->department, $deposit, '订单:'.$order->sn);
             $this->detailService->setAlgorithm($algorithm);
             $this->detailService->setAmount($amount);
             $this->detailService->setDetail($order->id, $order->getDepositFreight());
@@ -96,7 +96,7 @@ class DepositAppLogicService
             $returnDeposit = $algorithm->returnDeposit($amount, $order->getDepositFreight());
             try {
                 DB::beginTransaction();
-                $this->service->returnDeposit($order->department, $returnDeposit);
+                $this->service->returnDeposit($order->department, $returnDeposit , '订单:'.$order->sn );
                 //设置已返还标志
                 $order->setDepositReturn();
                 //保存已返还的金额
@@ -129,7 +129,7 @@ class DepositAppLogicService
             DB::beginTransaction();
             // 保证金是否已返
             if ($order->isDepositReturn()) {  //是
-                $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit);
+                $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit,  '订单:'.$order->sn);
                 $order->setDepositReturn(false);
                 $order->return_deposit = 0.00;
                 //                 $order->save();
@@ -152,11 +152,11 @@ class DepositAppLogicService
     {
         //对应 order_type 的 id
         switch ($type) {
-            case 2: //销售订单
-                return new SaleAlgorithm(resolve('App\\Models\\DepositSet2'));
-                break;
-            case 3: //内购
+            case 2: //内购 
                 return new InnerAlgorithm(resolve('App\\Models\\DepositSet2'));
+                break;
+            case 3: //销售订单
+                return new SaleAlgorithm(resolve('App\\Models\\DepositSet2'));
                 break;
             case 4: //京东
                 return new JdAlgorithm(resolve('App\\Models\\DepositSet2'));
