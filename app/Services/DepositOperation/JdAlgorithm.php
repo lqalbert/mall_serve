@@ -39,11 +39,15 @@ class JdAlgorithm extends AbstractAlgorithm
         return $this->jdDeposit($amount);
     }
     
-    public function appendDiscounted($amount)
+    /**
+     * 赠品扣除
+     * @param unknown $amount
+     * @return number
+     */
+    public function appendDeposit($amount)
     {
         return 0;
     }
-    
     
     /**
      * 即时返还 扣除
