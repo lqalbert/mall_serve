@@ -39,6 +39,25 @@ class JdAlgorithm extends AbstractAlgorithm
         return $this->jdDeposit($amount);
     }
     
+    
+    /**
+     * 即时返还 扣除
+     */
+    public function deposit(\stdClass $amount, $freight)
+    {
+        return 0;
+    }
+    
+    
+    /**
+     * 其它返还 扣除
+     */
+    public function depositOther(\stdClass $amount, $freight)
+    {
+        return 0;
+    }
+    
+    
     /**
      * 返还
      * 如果是导入的订单 快递费是需要计算的 
