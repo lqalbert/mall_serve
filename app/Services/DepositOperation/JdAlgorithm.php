@@ -77,7 +77,7 @@ class JdAlgorithm extends AbstractAlgorithm
      */
     public function getSaleDeposit(\stdClass $amount, $freight)
     {
-        return round($this->goodsDeposit($amount->sale)  + $this->entrepotDepositItem($amount->sale) + $this->thirdPartDeposit($amount-sale)+ $freight,2);
+        return round($this->goodsDeposit($amount->sale)  + $this->entrepotDepositItem($amount->sale) + $this->thirdPartDeposit($amount->sale)+ $freight,2);
     }
     
     /**
