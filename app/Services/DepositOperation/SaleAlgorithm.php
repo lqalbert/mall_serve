@@ -56,7 +56,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
      */
     public function depositOther(\stdClass $amount, $freight)
     {
-        return round($amount->sale + $this->appendAmount($amount->append) + $freight,2);
+        return round($amount->sale + $this->appendDiscounted($amount->append) + $freight,2);
     }
     
     /**
