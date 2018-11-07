@@ -29,7 +29,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
     /**
      * 商品返还
      */
-    public function goodsReturn($amount)
+    public function goodsReturn($amount,$freight) //$freight占位
     {
         return $this->calculate($amount, 1 - $this->setModel->getYk()- $this->setModel->getC());
     }

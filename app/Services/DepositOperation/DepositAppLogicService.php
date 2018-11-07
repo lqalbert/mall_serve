@@ -98,7 +98,8 @@ class DepositAppLogicService
             $algorithm = $this->getAlgorithm($order->type);
             $amount = $this->caculGoods($order->goods);
             
-            $returnDeposit = $algorithm->returnDeposit($amount, $order->getDepositFreight());
+            $freight = $order->getDepositFreight();
+            $returnDeposit = $algorithm->returnDeposit($amount, $freight);
             try {
                 DB::beginTransaction();
                 $this->service->returnDeposit($order->department, $returnDeposit , '订单:'.$order->order_sn );
@@ -113,7 +114,7 @@ class DepositAppLogicService
 //                 $this->detailService->setAlgorithm($algorithm);
 //                 $this->detailService->setAmount($amount);
                 
-                $this->detailService->setReturnDeposit($order->id, $algorithm->goodsReturn($amount->sale));
+                $this->detailService->setReturnDeposit($order->id, $algorithm->goodsReturn($amount->sale, $freight));
                 $this->detailService->setAppendReturnDeposit($order->id, $algorithm->appendReturn($amount->append));
                 
                 DB::commit();

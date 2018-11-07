@@ -18,7 +18,7 @@ class InnerAlgorithm extends AbstractAlgorithm
     /**
      * 商品返还
      */
-    public function goodsReturn($amount)
+    public function goodsReturn($amount, $freight) // $freight 占位
     {
         return round($this->goodsDiscounted($amount) - $this->goodsDeposit($amount) - $this->entrepotDepositItem($amount), 2);
     }
