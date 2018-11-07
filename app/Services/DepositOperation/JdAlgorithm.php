@@ -52,4 +52,40 @@ class JdAlgorithm extends AbstractAlgorithm
         return round($amount->sale - $this->goodsDeposit($amount->sale) - $this->entrepotDeposit($amount) - $this->jdDeposit($amount->sale) - $freight, 2);
     }
     
+    /**
+     * 即时返还
+     * depositdetail用的获取商品的扣除
+     */
+    public function getSaleDeposit(\stdClass $amount)
+    {
+        return round($this->goodsDeposit($amount->sale)  + $this->entrepotDepositItem($amount->sale) + $this->thirdPartDeposit($amount-sale)+ $freight,2);
+    }
+    
+    /**
+     * 即时返还
+     * depositdetail用的获取赠品的扣除
+     */
+    public function getAppendDeposit(\stdClass $amount)
+    {
+        return 0;
+    }
+    
+    /**
+     * 其它返还
+     * depositdetail用的获取商品的扣除
+     */
+    public function getSaleDepositOther(\stdClass $amount)
+    {
+        return $this->getSaleDeposit($amount);
+    }
+    
+    /**
+     * 其它返还
+     * depositdetail用的获取赠品的扣除
+     */
+    public function getAppendDepositOther(\stdClass $amount)
+    {
+        return 0;
+    }
+    
 }

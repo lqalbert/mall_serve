@@ -16,9 +16,7 @@ class DepositAppLogicService
     {
         $this->setModel  = DepositSet2::getInstance();
         $this->service = $service;
-        $this->detailService = $detailService;
-        
-        
+        $this->detailService = $detailService;  
     }
     
     
@@ -37,9 +35,15 @@ class DepositAppLogicService
                 $deposit = $algorithm->deposit($amount, $order->getDepositFreight());
                 $order->setDepositReturn();
                 
+                $saleDeposit = $algorithm->getSaleDeposit($amount);
+                $appendDeposit = $algorithm->getAppendDeposit($amount);
+                
             } else {
                 // 扣除部分就是 = 保证金
                 $deposit = $algorithm->depositOther($amount, $order->getDepositFreight());
+                
+                $saleDeposit = $algorithm->getSaleDepositOther($amount);
+                $appendDeposit = $algorithm->getAppendDepositOther($amount);
             }
             
             $order->deposit = $deposit;
@@ -50,8 +54,9 @@ class DepositAppLogicService
             $this->service->subDeposit($order->department, $deposit, '订单:'.$order->order_sn);
             $this->detailService->setAlgorithm($algorithm);
             $this->detailService->setAmount($amount);
-            $this->detailService->setDetail($order->id, $order->getDepositFreight());
-            $this->detailService->setAppendDetail($order->id);
+            
+            $this->detailService->setDetail($order->id, $order->getDepositFreight(), $saleDeposit);
+            $this->detailService->setAppendDetail($order->id,  $appendDeposit);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

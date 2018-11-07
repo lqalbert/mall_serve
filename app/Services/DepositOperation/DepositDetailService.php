@@ -24,13 +24,12 @@ class DepositDetailService
         $this->amount = $amount;
     }
     
-    public function setDetail($id, $freight)
+    public function setDetail($id, $freight, $deposit)
     {
-        $deposit  = $this->algorithm->goodsDeposit($this->amount->sale) 
-                  + $this->algorithm->entrepotDepositItem($this->amount->sale) 
-                  + $this->algorithm->thirdPartDeposit($this->amount->sale) 
-                  + $this->algorithm->thirdPartDeposit($this->amount->sale)
-                  + $freight;
+//         $deposit  = $this->algorithm->goodsDeposit($this->amount->sale) 
+//                   + $this->algorithm->entrepotDepositItem($this->amount->sale) 
+//                   + $this->algorithm->thirdPartDeposit($this->amount->sale) 
+//                   + $freight;
         $detailModel = DepositDetail::create([
             'order_id' => $id,
             'type' => DepositDetail::TYPE_ONE,
@@ -46,15 +45,14 @@ class DepositDetailService
         return $detailModel;
     }
     
-    public function setAppendDetail($id)
+    public function setAppendDetail($id, $deposit)
     {
         if ( empty(intval($this->amount->append * 100)) ) {
             return null;
         }
-        $deposit  = $this->algorithm->appendDeposit($this->amount->append)
-        + $this->algorithm->entrepotDepositItem($this->amount->append)
-        + $this->algorithm->thirdPartDeposit($this->amount->append)
-        + $this->algorithm->thirdPartDeposit($this->amount->append);
+//         $deposit  = $this->algorithm->appendDeposit($this->amount->append)
+//         + $this->algorithm->entrepotDepositItem($this->amount->append)
+//         + $this->algorithm->thirdPartDeposit($this->amount->append);
         $detailModel = DepositDetail::create([
             'order_id' => $id,
             'type' => DepositDetail::TYPE_TWO,

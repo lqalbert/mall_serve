@@ -68,4 +68,43 @@ class SaleAlgorithm  extends AbstractAlgorithm
         return round($this->saleReturn($amount->sale) + $this->appendReturn($amount->append), 2);
     }
     
+    
+    /**
+     * 即时返还
+     * depositdetail用的获取商品的扣除
+     */
+    public function getSaleDeposit(\stdClass $amount)
+    {
+        return round($this->goodsDeposit($amount->sale)  + $this->entrepotDepositItem($amount->sale) + $freight,2);
+    }
+    
+    /**
+     * 即时返还
+     * depositdetail用的获取赠品的扣除
+     */
+    public function getAppendDeposit(\stdClass $amount)
+    {
+        return $this->appendDeposit($amount->append) + $this->entrepotDepositItem($amount->sale);
+    }
+    
+    /**
+     * 其它返还 
+     * depositdetail用的获取商品的扣除
+     */
+    public function getSaleDepositOther(\stdClass $amount)
+    {
+        return round($amount->sale + $freight,2);
+    }
+    
+    /**
+     * 其它返还
+     * depositdetail用的获取赠品的扣除
+     */
+    public function getAppendDepositOther(\stdClass $amount)
+    {
+        return $this->appendDiscounted($amount->append);
+    }
+    
+    
+    
 }
