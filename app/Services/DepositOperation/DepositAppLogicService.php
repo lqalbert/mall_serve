@@ -2,20 +2,23 @@
 namespace App\Services\DepositOperation;
 
 
-use App\Models\DepositSet;
+use App\Models\DepositSet2;
 use App\Models\OrderBasic;
 use Illuminate\Support\Facades\DB;
 
-class DepositAppLogicService 
+class DepositAppLogicService
 {
-    
     private $setModel = null;
     private $service = null;
+    private $detailService = null;
     
-    public function __construct(DepositOperationService $service)
+    public function __construct(DepositOperationService $service, DepositDetailService $detailService)
     {
-        $this->setModel  = DepositSet::getInstance();
+        $this->setModel  = DepositSet2::getInstance();
         $this->service = $service;
+        $this->detailService = $detailService;
+        
+        
     }
     
     
@@ -24,35 +27,40 @@ class DepositAppLogicService
      */
     public function depositAtCheck(OrderBasic $order)
     {
+        $algorithm = $this->getAlgorithm($order->type);
+        $amount = $this->caculGoods($order->goods);
         try {
             DB::beginTransaction();
             
             if ($this->setModel->isZero()) {
-                // 扣除部分就是 = 保证金-返还部分
-                $deposit = $this->caculDeposit($order) - $this->caculReturn($order);
+                // 扣除部分就是 =  
+                $deposit = $algorithm->deposit($amount, $order->getDepositFreight());
                 $order->setDepositReturn();
                 
             } else {
                 // 扣除部分就是 = 保证金
-                $deposit = $this->caculDeposit($order);
+                $deposit = $algorithm->depositOther($amount, $order->getDepositFreight());
             }
             
             $order->deposit = $deposit;
             if (!$order->save()) {
                 throw  new \Exception('订单返还状态设置失败');
             }
-
+            
             $this->service->subDeposit($order->department, $deposit);
+            $this->detailService->setAlgorithm($algorithm);
+            $this->detailService->setAmount($amount);
+            $this->detailService->setDetail($order->id, $order->getDepositFreight());
+            $this->detailService->setAppendDetail($order->id);
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
             throw $e;
-        }
-        
+        }  
     }
     
     /**
-     * 发货时返还 
+     * 发货时返还
      */
     public function depositAtSend(OrderBasic $order)
     {
@@ -61,6 +69,56 @@ class DepositAppLogicService
             $this->setReturn($order);
         }
     }
+    
+    /**
+     * 签收时返还
+     */
+    public function depositAtSign(OrderBasic $order)
+    {
+        //if ($this->setModel->isTwo()) {
+        //返还代码
+        $this->setReturn($order);
+        //}
+    }
+    
+    /**
+     * 返还操作
+     * @param unknown $order
+     * @throws \Exception
+     * @throws Exception
+     */
+    private function setReturn($order)
+    {
+        if (!$order->isDepositReturn()) {
+            $algorithm = $this->getAlgorithm($order->type);
+            $amount = $this->caculGoods($order->goods);
+            
+            $returnDeposit = $algorithm->returnDeposit($amount, $order->getDepositFreight());
+            try {
+                DB::beginTransaction();
+                $this->service->returnDeposit($order->department, $returnDeposit);
+                //设置已返还标志
+                $order->setDepositReturn();
+                //保存已返还的金额
+                $order->return_deposit = $returnDeposit;
+                if (!$order->save()) {
+                    throw  new \Exception('订单返还状态设置失败');
+                }
+                
+//                 $this->detailService->setAlgorithm($algorithm);
+//                 $this->detailService->setAmount($amount);
+                
+                $this->detailService->setReturnDeposit($order->id, $algorithm->goodsReturn($amount->sale));
+                $this->detailService->setAppendReturnDeposit($order->id, $algorithm->appendReturn($amount->append));
+                
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                throw $e;
+            }
+        }
+    }
+    
     
     /**
      * 在某些情况下需要退回保证金
@@ -74,7 +132,7 @@ class DepositAppLogicService
                 $this->service->returnDeposit($order->department, $order->deposit - $order->return_deposit);
                 $order->setDepositReturn(false);
                 $order->return_deposit = 0.00;
-//                 $order->save();
+                //                 $order->save();
                 if (!$order->save()) {
                     throw  new \Exception('退还保证金失败');
                 }
@@ -89,82 +147,44 @@ class DepositAppLogicService
         
     }
     
+    
+    public function getAlgorithm($type)
+    {
+        //对应 order_type 的 id
+        switch ($type) {
+            case 2: //销售订单
+                return new SaleAlgorithm(app('DepositParam'));
+                break;
+            case 3: //内购
+                return new InnerAlgorithm(app('DepositParam'));
+                break;
+            case 4: //京东
+                return new JdAlgorithm(app('DepositParam'));
+                break;
+            default :
+                return new SaleAlgorithm(app('DepositParam'));
+        }
+    }
+    
     /**
-     * 签收时返还
+     * 计算商品金额 、赠品金额
+     * @param unknown $orderGoods
+     * @return number[]
      */
-    public function depositAtSign(OrderBasic $order)
+    public function caculGoods($orderGoods = null)
     {
-        //if ($this->setModel->isTwo()) {
-            //返还代码
-            $this->setReturn($order);
-        //}
-    }
-    
-    private function setReturn($order)
-    {
-        if (!$order->isDepositReturn()) {
-            $returnDeposit = $this->caculReturn($order);
-            try {
-                DB::beginTransaction();
-                $this->service->returnDeposit($order->department, $returnDeposit);
-                //设置已返还标志
-                $order->setDepositReturn();
-                //保存已返还的金额
-                $order->return_deposit = $returnDeposit;
-                if (!$order->save()) {
-                    throw  new \Exception('订单返还状态设置失败');
-                }
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollback();
-                throw $e;
-            } 
-        }
-    }
-    
-    
-    public function caculDeposit(OrderBasic $order)
-    {
-        $orderGoods = $order->goods;
-        //算商品价格
-        if ($order->orderType->isInner()) {
-            $s = $order->discounted_goods_money;
-        } else {
-            $s = $this->caculGoods($orderGoods);
-        }
-        //算邮费
-        $s = $s + $order->getDepositFreight();
-        return $s;
-    }
-    
-    public function caculReturn($order)
-    {
-        $orderGoods = $order->goods;
-        if ($order->orderType->isInner()) {
-            $s = $order->discounted_goods_money;;
-        } else {
-            $s = $this->caculGoods($orderGoods);
-        }
-//         $s = $this->caculGoods($order->goods);
-        return round($s * $this->setModel->getReturn(), 2);
-    }
-    
-    public function caculGoods($orderGoods)
-    {
-        $s = 0;
+        $orderGoods || $orderGoods = $this->goods;
+        $a = ['sale'=>0, 'append'=>0];
+        
         foreach ($orderGoods as $goods) {
-            //             $not = round($goods['price'] * $goods['goods_number'], 2);
             $not = round($goods->price * $goods->goods_number, 2);
             if ($goods->isAppendage()) {
-                $rate = $this->setModel->getAppendage();
+                $a['append'] = $a['append'] + $not;
             } else {
-                $rate = $this->setModel->getSale();
+                $a['sale'] = $a['sale'] + $not;
             }
-            if ($rate != 0) {
-                $not = round($not * $rate, 2);
-            }
-            $s = $s + $not;
         }
-        return $s;
+        return (object) $a;
     }
+    
 }

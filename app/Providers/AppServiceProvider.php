@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Console\Commands\Deposit2;
+use App\Models\DepositSet2;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('DepositParam', function($app){
+           return  DepositSet2::getInstance(); 
+        });
     }
 }

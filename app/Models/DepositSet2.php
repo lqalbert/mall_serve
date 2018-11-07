@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Events\SyncDiscount;
 
 class DepositSet2 extends Model
 {
@@ -26,6 +27,10 @@ class DepositSet2 extends Model
         'n'
     ];
     
+    protected $events = [
+        'updated' => SyncDiscount::class
+    ];
+    
     public static function getInstance()
     {
         return self::find(1);
@@ -39,20 +44,42 @@ class DepositSet2 extends Model
         return $map[$this->type];
     }
     
-//     public function getAppendage()
-//     {
-//         return $this->appendage_rate / 100;
-//     }
+    public function getYk()
+    {
+        return $this->yk / 100;
+    }
     
-//     public function getSale()
-//     {
-//         return $this->sale_rate / 100;
-//     }
+    public function getYz()
+    {
+        return $this->yz / 100;
+    }
     
-//     public function getReturn()
-//     {
-//         return $this->return_rate / 100;
-//     }
+    public function getC()
+    {
+        return $this->c / 100;
+    }
+    
+    public function getZn()
+    {
+        return $this->zn / 100;
+    }
+    
+    public function getJ()
+    {
+        return $this->j / 100;
+    }
+    
+    public function getY()
+    {
+        return $this->Y / 100;
+    }
+    
+    public function getN()
+    {
+        return $this->n / 100;
+    }
+    
+    
     
     // 即时返还
     public function isZero()
@@ -71,4 +98,6 @@ class DepositSet2 extends Model
     {
         return $this->type == 2;
     }
+    
+    
 }

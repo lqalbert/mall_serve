@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderType extends Model
 {
+    const INNER_NAME = '内部订单';
     use SoftDeletes;
     
     protected $table = 'order_type';
@@ -48,6 +49,6 @@ class OrderType extends Model
     //人工判断一下是不是内购订单
     public function isInner()
     {
-        return $this->name == "内部订单";
+        return $this->name == self::INNER_NAME;
     }
 }
