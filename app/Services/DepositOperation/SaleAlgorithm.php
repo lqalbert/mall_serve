@@ -65,7 +65,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
     public function returnDeposit($amount,$freight) //$freight 没用只是为以参数占位)
     {
         
-        return round($this->saleReturn($amount->sale) + $this->appendReturn($amount->append), 2);
+        return round($this->goodsReturn($amount->sale) + $this->appendReturn($amount->append), 2);
     }
     
     
