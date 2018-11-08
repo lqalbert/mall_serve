@@ -174,10 +174,10 @@ class SalesPerformanceController extends Controller
                    
                    
        if($request->has('department_id')){
-           $builder = $builder->where('ob.department_id', $request->input('department_id'));
+           $builder = $builder->where('jd_order_basic.department_id', $request->input('department_id'));
        }
        if($request->has('group_id')){
-           $builder = $builder->where('ob.group_id', $request->input('group_id'));
+           $builder = $builder->where('jd_order_basic.group_id', $request->input('group_id'));
        }
         return $builder;
     }
