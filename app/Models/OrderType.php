@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OrderType extends Model
 {
     const INNER_NAME = '内部订单';
+    const SALE_NAME  = '销售订单';
     use SoftDeletes;
     
     protected $table = 'order_type';

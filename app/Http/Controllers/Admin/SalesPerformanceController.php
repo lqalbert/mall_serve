@@ -3,131 +3,223 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Models\OrderType;
 use App\Models\OrderBasic;
 
 class SalesPerformanceController extends Controller
 {
-    //
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
         $end = $request->input('end')." 23:59:59"; //'2018-02-02 23:59:59';
         $groupBy = $request->input('type');
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
-
+        
         $orderField = $request->input('orderField','cus_count');
         $orderWay  = $request->input('orderWay','desc');
-
-        $where = [];
-        $where[]=['db.created_at','>=', $start];
-        $where[]=['db.created_at','<=', $end];
-        if($request->has('department_id')){
-            $where[]=['db.department_id','=', $request->input('department_id')];
-        }
-        if($request->has('group_id')){
-            $where[]=['db.group_id','=', $request->input('group_id')];
-        }
-//        if($request->input($groupBy)){
-//            $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
-//        }
-        //退款尝试用子查询 如果加 group_id = x  department_id=y 这种可能会更快
-        $refundQuery = DB::table('order_after as oa')
-            ->join('order_basic as ob','oa.order_id','=', 'ob.id')
-            ->select('oa.fee',"ob.{$groupBy} as map_key")
-            ->where([
-                ['oa.created_at', '>=', $start],
-                ['oa.created_at', '<=', $end],
-                ['oa.status','>=',1]
-            ]);
-
-        $builder = DB::table('order_basic as db')
-            ->select(
-                DB::raw('count(distinct db.cus_id) as cus_count'),
-                DB::raw('count(db.id) as c_cus_count'),
-                DB::raw('sum(discounted_goods_money) as all_pay'), //排除了 内部订单就正确
-                DB::raw('IFNULL(sum(oa.fee),0) as refund'),
-                DB::raw('IFNULL(sum(freight),0) as s_freight'),
-                DB::raw('IFNULL(sum(book_freight),0) as b_freight'),
-                DB::raw('IFNULL(sum(assign_basic.express_fee),0) as express_fee'),
-                'db.group_name',
-                'db.department_name',
-                'db.department_id',
-                'db.group_id',
-                'db.user_id',
-                'db.user_name'
-            )
-            //如果 一个订单有多个 order_after 就会造成 DB::raw(count, sum) 重复计算,而且也是不 时间段内的退款，而是指定时间段内订单的退款
-            ->leftJoin(DB::raw("({$refundQuery->toSql()}) as oa"), "db.{$groupBy}",'=','oa.map_key')->mergeBindings($refundQuery)
-            ->leftJoin('assign_basic','assign_basic.order_id','=','db.id')
-            ->where($where)
-            ->where([
-                ['db.status','>', OrderBasic::UN_CHECKED],
-                ['db.status','<', OrderBasic::ORDER_STATUS_7],
-//                 ['db.type','<>', 2]
-            ])->whereNull('db.deleted_at')
-            ->groupBy('db.'.$groupBy);
-
-        if ($groupBy == 'department_id') {
-            $builder->join('department_basic','db.department_id','=','department_basic.id')->addSelect('department_basic.deposit');
-        }
-        //生成内部订单的 内购单数 内购金额
-        $where2 = [];
-        $where2[]=['db2.created_at','>=', $start];
-        $where2[]=['db2.created_at','<=', $end];
-        if($request->has('department_id')){
-            $where2[]=['db2.department_id','=', $request->input('department_id')];
-        }
-        if($request->has('group_id')){
-            $where2[]=['db2.group_id','=', $request->input('group_id')];
-        }
-        //内购的
-        $builder2 = DB::table('order_basic as db2')
-                       ->select(
-                           DB::raw('count(db2.id) as inner_count'), 
-                           DB::raw('IFNULL(sum(discounted_goods_money),0) as inner_sum'), 
-                           DB::raw('IFNULL(sum(freight), 0) as i_freight'),
-                           
-                           "db2.{$groupBy}",
-                           DB::raw('count(distinct db2.cus_id) as inner_cus_count'),
-                           DB::raw('sum(order_after.fee) as inner_refund'))
-                        ->leftJoin('order_after', 'db2.id', '=', 'order_after.order_id')
-                       ->where($where2)
-                       ->where([
-                           ['db2.status','>', OrderBasic::UN_CHECKED],
-                           ['db2.status','<', OrderBasic::ORDER_STATUS_7],
-                           ['db2.type','=', 2] //这种硬编码其实不好
-                       ])->whereNull('db2.deleted_at')->groupBy('db2.'.$groupBy);
-                       
-       $allBuilder = DB::table(DB::raw("({$builder->toSql()}) as re1"))
-                       ->select(DB::raw("re1.*"), 
-                                DB::raw('re2.inner_count'), 
-                                DB::raw('re2.inner_sum'), 
-//                                 DB::raw('(re1.s_freight-IFNULL(re2.i_freight,0)) as i_freight '),
-                                DB::raw('re1.s_freight as i_freight '),
-                                DB::raw('re2.inner_cus_count'),
-                                DB::raw('IFNULL((re1.c_cus_count- re2.inner_count),re1.c_cus_count) as all_sale_count'),
-                                DB::raw('(re1.cus_count - IFNULL( re2.inner_cus_count ,0)) as out_cus_cout'),
-                                DB::raw('(re1.all_pay - IFNULL(re2.inner_sum,0)) as all_pay2'),
-                                DB::raw('(re1.refund-IFNULL(re2.inner_refund,0) ) as refund2')
-                           )
-                          ->mergeBindings($builder)
-                          ->leftJoin(DB::raw("({$builder2->toSql()}) as re2"), "re1.{$groupBy}",'=', "re2.{$groupBy}")
-                          ->mergeBindings($builder2)
-                          ->orderBy($orderField, $orderWay);
         
+        if($request->has('department_id')){
+            
+        }
+        if($request->has('group_id')){
+            
+        }
+        
+        $innerOrderType = OrderType::where('name', OrderType::INNER_NAME)->first();
+        $saleOrderType = OrderType::where('name', OrderType::SALE_NAME)->first();
+        
+        $mainBuilder = $this->getMainBuilder($groupBy, $request);
+        
+        $innermallOrderBuilder = $this->getMallOrderStuff($groupBy, $start, $end, $innerOrderType->id, $request);
+        $salemallOrderBuilder = $this->getMallOrderStuff($groupBy, $start, $end, $saleOrderType->id, $request);
+        $jdOrderBuilder = $this->getJdOrderStuff($groupBy, $start, $end, $request);
+        $refundBuilder = $this->getRefundStuff($groupBy, $start, $end, $request);
+        $appendBuilder = $this->getAppendStuff($groupBy, $start, $end, $request);
+        
+        
+        $allBuilder = DB::table(DB::raw("({$mainBuilder->toSql()}) as main_re"))
+        ->select(DB::raw('main_re.*'), 
+            'sale_order.cus_count as sale_cus_count', 
+            'sale_order.order_sum as all_pay2', // 销售金额
+            'sale_order.order_count as all_sale_count',// all_sale_count 成交单数
+            'sale_order.freight as sale_freight',
+            'sale_order.book_freight as sale_book_freight',
+            'inner_order.cus_count as inner_count', //内购单数
+            'inner_order.order_sum as inner_sum', //内购金额
+            'inner_order.freight as inner_freight',
+            'inner_order.book_freight as inner_book_freight',
+            DB::raw("(IFNULL(sale_order.freight,0)  + IFNULL(inner_order.freight,0)) as i_freight"),
+            DB::raw("(IFNULL(sale_order.book_freight,0) + IFNULL(inner_order.book_freight,0)) as b_freight"),
+            DB::raw("(IFNULL(sale_order.cus_count,0) + IFNULL(inner_order.cus_count,0))  as out_cus_cout" ), //成交客户数
+            DB::raw('IFNULL(jd_order.jd_count,0)'),
+            DB::raw('IFNULL(jd_order.jd_sum,0)'),
+            DB::raw('IFNULL(refund_.refund_fee,0) as refund2'),
+            DB::raw('IFNULL(append_.append_sum,0)')
+            )
+        ->mergeBindings($mainBuilder)
+        //销售
+        ->leftJoin(DB::raw("({$salemallOrderBuilder->toSql()}) as sale_order"), "main_re.{$groupBy}",'=', "sale_order.{$groupBy}")
+        ->mergeBindings($salemallOrderBuilder)
+        //内购
+        ->leftJoin(DB::raw("({$innermallOrderBuilder->toSql()}) as inner_order"), "main_re.{$groupBy}",'=', "inner_order.{$groupBy}")
+        ->mergeBindings($innermallOrderBuilder)
+        //京东
+        ->leftJoin(DB::raw("({$jdOrderBuilder->toSql()}) as jd_order"), "main_re.{$groupBy}",'=', "jd_order.{$groupBy}")
+        ->mergeBindings($jdOrderBuilder)
+//         //退款
+        ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refund_"), "main_re.{$groupBy}",'=', "refund_.{$groupBy}")
+        ->mergeBindings($refundBuilder)
+//         //赠品
+        ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "refund_.{$groupBy}")
+        ->mergeBindings($appendBuilder)
+        ;
         
         $result = $allBuilder->paginate($pageSize);
         $items = $result->getCollection();
-
+        
         return [
             'items'=> $items,
             'total'=> $result->total()
         ];
+        
     }
+        
+    private function getMainBuilder($groupBy, $request)
+    {
+        $builder = null;
+        switch ($groupBy) {
+            case 'user_id':
+                $builder = DB::table('user_basic as ub')
+                           ->select('ub.id as user_id', 'ub.realname as user_name','gb.name as group_name', 'db.name as department_name')
+                           ->join('group_basic as gb', 'ub.group_id','=','gb.id')
+                           ->leftJoin('department_basic as db', 'ub.department_id','=','db.id')
+                           ->whereNull('ub.deleted_at')
+                           ->whereNull('gb.deleted_at')
+                           ->whereNull('db.deleted_at');
+               
+                break;
+            case 'group_id';
+                $builder = DB::table('group_basic as gb')
+                            ->select('gb.id as group_id', 'gb.name as group_name', 'db.name as department_name')
+                            ->leftJoin('department_basic as db', 'gb.department_id','=','db.id')
+                            ->whereNull('gb.deleted_at')
+                            ->whereNull('db.deleted_at');
+                
+                break;
+            case 'department_id':
+            default:
+                $builder = DB::table('department_basic as db')
+                            ->select('db.id as department_id', 'db.name as department_name', 'db.deposit')
+                            ->whereNull('db.deleted_at');
+                
+                break;
+        }
+        
+        if ($request->has('group_id')) {
+            $builder  = $builder->where('gb.id', $request->input('group_id'));
+        }
+        if ($request->has('department_id')) {
+            $builder  = $builder->where('db.id', $request->input('department_id'));
+        }
 
+        return $builder;
+    }
+    
+    private function getMallOrderStuff($groupBy, $start, $end, $types, $request)
+    {
+        $builder = DB::table('order_basic as ob')
+        ->select(
+            DB::raw('count(distinct cus_id) as cus_count'),
+            DB::raw('sum(discounted_goods_money) as order_sum'), 
+            DB::raw('count(ob.id) as order_count'),
+            DB::raw('sum(freight) as freight'),
+            DB::raw('sum(book_freight) as book_freight'),
+            $groupBy,
+            'type');
 
-
+        if($request->has('department_id')){
+            $builder = $builder->where('ob.department_id', $request->input('department_id'));
+        }
+        if($request->has('group_id')){
+            $builder = $builder->where('ob.group_id', $request->input('group_id'));
+        }
+        
+        $builder =$builder ->where([
+            ['ob.created_at','>=', $start],
+            ['ob.created_at','<=', $end],
+            ['ob.status','>', OrderBasic::UN_CHECKED],
+            ['ob.status','<', OrderBasic::ORDER_STATUS_7]
+        ])->whereNull('ob.deleted_at')
+        ->where('type', $types)
+        ->groupBy($groupBy);
+        
+        return $builder;
+    }
+    
+    private function getJdOrderStuff($groupBy, $start, $end, $request)
+    {
+        $builder = DB::table('jd_order_basic')->select(
+                        DB::raw('count(id) as jd_count'),
+                        DB::raw('sum(all_money) as jd_sum'),
+                        $groupBy
+                    )
+                   ->where([
+                       ['order_at', '>=', $start],
+                       ['order_at', '<=', $end]
+                   ])->groupBy($groupBy);
+        
+                   
+                   
+       if($request->has('department_id')){
+           $builder = $builder->where('ob.department_id', $request->input('department_id'));
+       }
+       if($request->has('group_id')){
+           $builder = $builder->where('ob.group_id', $request->input('group_id'));
+       }
+        return $builder;
+    }
+    
+    private function getRefundStuff($groupBy, $start, $end)
+    {
+        $refundQuery = DB::table('order_after as oa')
+        ->join('order_basic as ob','oa.order_id','=', 'ob.id')
+        ->select(DB::raw('sum(oa.fee) as refund_fee'),"ob.{$groupBy}")
+        ->where([
+            ['oa.created_at', '>=', $start],
+            ['oa.created_at', '<=', $end],
+            ['oa.status','>=',1]
+        ])->groupBy('ob.'.$groupBy);
+        return $refundQuery;
+    }
+    //赠品
+    private function getAppendStuff($groupBy, $start, $end, $request)
+    {
+        $appendBuilder = DB::table('order_goods as og')
+                         ->select(
+                                DB::raw('sum(og.price * goods_number) as append_sum'),
+                                'ob.'.$groupBy
+                             )
+                         ->join('order_basic as ob','og.order_id','=','ob.id')
+                         ->where('og.sale_type','1')
+                         ->where([
+                             ['ob.created_at','>=', $start],
+                             ['ob.created_at','<=', $end],
+                             ['ob.status','>', OrderBasic::UN_CHECKED],
+                             ['ob.status','<', OrderBasic::ORDER_STATUS_7]
+                         ])->whereNull('ob.deleted_at')
+                         ->groupBy($groupBy, 'type');
+         if($request->has('department_id')){
+             $builder = $builder->where('ob.department_id', $request->input('department_id'));
+         }
+         if($request->has('group_id')){
+             $builder = $builder->where('ob.group_id', $request->input('group_id'));
+         }
+         return $appendBuilder;
+    }
+    
     public function selectOrder(Request $request){
         //        var_dump($request->all());die;
         $start = $request->input('start')." 00:00:00"; //'2018-01-01 00:00:00';
@@ -139,15 +231,15 @@ class SalesPerformanceController extends Controller
         $where = [];
         $where[]=['db.created_at','>=', $start];
         $where[]=['db.created_at','<=', $end];
-
+        
         if($request->has('department_id')){
-           $where[]=['db.department_id','=', $request->input('department_id')];
+            $where[]=['db.department_id','=', $request->input('department_id')];
         }
         if($request->has('group_id')){
-           $where[]=['db.group_id','=', $request->input('group_id')];
+            $where[]=['db.group_id','=', $request->input('group_id')];
         }
         if($request->has('user_id')){
-           $where[]=['db.user_id','=', $request->input('user_id')];
+            $where[]=['db.user_id','=', $request->input('user_id')];
         }
         // if($request->input($groupBy)){
         //     $where[]=['db.'.$groupBy,'=', $request->input($groupBy)];
@@ -174,38 +266,11 @@ class SalesPerformanceController extends Controller
             ['db.status','<', OrderBasic::ORDER_STATUS_7],
             ['db.type','=', $orderType] //内部订单不统计在里面
         ])->paginate($pageSize);//->groupBy('db.'.$groupBy)
-
+        
         return [
             'items'=>$result->getCollection(),
             'total'=>$result->total()
         ];
     }
-
-    public function setTrans($groupBy, $keyValue, $start, $end, $items)
-    {
-        //退款金额
-        $userInSubQuery= DB::table('order_after as a')
-            ->join('order_basic as db','a.order_id','=','db.id')
-            ->where([
-                ['a.created_at','>=',$start],
-                ['a.created_at','<=',$end],
-                ['a.status','=',1]
-            ])->select(DB::raw("sum(a.fee) as fee"),"db.{$groupBy} as map_key")->groupby('db.'.$groupBy);
-        $inResult = $userInSubQuery->get();
-        if (!$inResult->isEmpty()) {
-            $inMap = $inResult->mapWithKeys(function($item){
-                return [$item->map_key => $item->fee];
-            });
-        } else {
-            $inMap = collect();
-        }
-        $items->each(function($itm) use($inMap, $groupBy){
-            if (!$inMap->isEmpty()) {
-                $itm->refund=  $inMap->has($itm->{$groupBy}) ? $inMap->get($itm->{$groupBy}) : 0;
-            } else {
-                $itm->refund="0";
-            }
-
-        });
-    }
+    
 }
