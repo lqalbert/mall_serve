@@ -210,12 +210,12 @@ class SalesPerformanceController extends Controller
                              ['ob.status','>', OrderBasic::UN_CHECKED],
                              ['ob.status','<', OrderBasic::ORDER_STATUS_7]
                          ])->whereNull('ob.deleted_at')
-                         ->groupBy($groupBy);
+                         ->groupBy('ob.'.$groupBy);
          if($request->has('department_id')){
-             $builder = $builder->where('ob.department_id', $request->input('department_id'));
+             $appendBuilder= $appendBuilder->where('ob.department_id', $request->input('department_id'));
          }
          if($request->has('group_id')){
-             $builder = $builder->where('ob.group_id', $request->input('group_id'));
+             $appendBuilder= $appendBuilder->where('ob.group_id', $request->input('group_id'));
          }
          return $appendBuilder;
     }
