@@ -200,22 +200,22 @@ class SalesPerformanceController extends Controller
         $appendBuilder = DB::table('order_goods as og')
                          ->select(
                                 DB::raw('sum(og.price * og.goods_number) as append_sum'),
-                                'ob.'.$groupBy
+                                'ob1.'.$groupBy
                              )
-                         ->join('order_basic as ob','og.order_id','=','ob.id')
+                         ->join('order_basic as ob1','og.order_id','=','ob1.id')
                          ->where('og.sale_type','1')
                          ->where([
-                             ['ob.created_at','>=', $start],
-                             ['ob.created_at','<=', $end],
-                             ['ob.status','>', OrderBasic::UN_CHECKED],
-                             ['ob.status','<', OrderBasic::ORDER_STATUS_7]
-                         ])->whereNull('ob.deleted_at')
-                         ->groupBy('ob.'.$groupBy);
+                             ['ob1.created_at','>=', $start],
+                             ['ob1.created_at','<=', $end],
+                             ['ob1.status','>', OrderBasic::UN_CHECKED],
+                             ['ob1.status','<', OrderBasic::ORDER_STATUS_7]
+                         ])->whereNull('ob1.deleted_at')
+                         ->groupBy('ob1.'.$groupBy);
          if($request->has('department_id')){
-             $appendBuilder= $appendBuilder->where('ob.department_id', $request->input('department_id'));
+             $appendBuilder= $appendBuilder->where('ob1.department_id', $request->input('department_id'));
          }
          if($request->has('group_id')){
-             $appendBuilder= $appendBuilder->where('ob.group_id', $request->input('group_id'));
+             $appendBuilder= $appendBuilder->where('ob1.group_id', $request->input('group_id'));
          }
          return $appendBuilder;
     }
