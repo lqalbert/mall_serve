@@ -50,7 +50,10 @@ class JdOrderGoodsMinusInventory implements ShouldQueue
                 $re = $this->updates('set entrepot_count = entrepot_count - ? , saleable_count = saleable_count - ?, sale_count = sale_count + ? ',
                     [ $v->goods_num, $v->goods_num,$v->goods_num,$v->entrepot_id, $v->sku_sn ]);
                 if($re != 0){
+                    $this->updateGoodsMinus($v->id,JdOrderGoods::MINUS_SUCCESS);
                     echo $re."行-sku_sn:".$v->sku_sn.PHP_EOL;
+                }else{
+                    $this->updateGoodsMinus($v->id,JdOrderGoods::MINUS_FAILED);
                 }
             }
         }
@@ -77,6 +80,17 @@ class JdOrderGoodsMinusInventory implements ShouldQueue
     private function updateMinusStatus($status){
         JdMatchBasic::where('flag','=',$this->flag)->update(['inventory_status'=>$status]);
     }
+
+    /**
+     * [updateGoodsMinus 更新是否扣除成功与否]
+     * @param  [type] $id     [description]
+     * @param  [type] $status [description]
+     * @return [type]         [description]
+     */
+    private function updateGoodsMinus($id,$status){
+        JdOrderGoods::where('id',$id)->update(['is_minus'=>$status]);
+    }
+
     /**
      * 要处理的失败任务。
      *

@@ -48,16 +48,19 @@ class JdOrderMatchUser implements ShouldQueue
 
         foreach ($this->jdCustomer as $k => $v) {
             $cusCtModel = CustomerContact::where('phone',$v->tel)->first(['cus_id']);
-            
+
             if(!empty($cusCtModel)){
-                
+
                 $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
-                                    ->first(['user_id','group_id','department_id'])->toArray();
-                
+                                    ->first(['user_id','group_id','department_id','cus_id'])->toArray();
+
                 $res = JdOrderBasic::where([
                                 ['order_sn','=',$v->order_sn],
                                 ['flag','=',$v->flag]
                             ])->update($cusUserl);
+
+                JdOrderCustomer::where('order_sn','=',$v->order_sn)->update(['cus_id'=>$cusCtModel->cus_id]);
+                
                 echo $res;
             }
         }
