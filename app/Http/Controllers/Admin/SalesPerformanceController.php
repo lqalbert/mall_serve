@@ -199,7 +199,7 @@ class SalesPerformanceController extends Controller
     {
         $appendBuilder = DB::table('order_goods as og')
                          ->select(
-                                DB::raw('sum(og.price * goods_number) as append_sum'),
+                                DB::raw('sum(og.price * og.goods_number) as append_sum'),
                                 'ob.'.$groupBy
                              )
                          ->join('order_basic as ob','og.order_id','=','ob.id')
