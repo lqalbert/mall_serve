@@ -56,8 +56,8 @@ class SalesPerformanceController extends Controller
             DB::raw("(IFNULL(sale_order.cus_count,0) + IFNULL(inner_order.cus_count,0))  as out_cus_cout" ), //成交客户数
             DB::raw('IFNULL(jd_order.jd_count,0) as jd_count'),
             DB::raw('IFNULL(jd_order.jd_sum,0) as jd_sum'),
-            DB::raw('IFNULL(refund_.refund_fee,0) as refund2'),
-            DB::raw('IFNULL(append_.append_sum,0) as append_sum')
+            DB::raw('IFNULL(refund_.refund_fee,0) as refund2')
+//             DB::raw('IFNULL(append_.append_sum,0) as append_sum')
             )
         ->mergeBindings($mainBuilder)
         //销售
@@ -73,8 +73,8 @@ class SalesPerformanceController extends Controller
         ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refund_"), "main_re.{$groupBy}",'=', "refund_.{$groupBy}")
         ->mergeBindings($refundBuilder)
 //         //赠品
-        ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "refund_.{$groupBy}")
-        ->mergeBindings($appendBuilder)
+//         ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "refund_.{$groupBy}")
+//         ->mergeBindings($appendBuilder)
         ;
         
         $result = $allBuilder->paginate($pageSize);
