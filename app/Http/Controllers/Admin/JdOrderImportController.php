@@ -367,24 +367,10 @@ class JdOrderImportController extends Controller
     public function manualMatch(Request $request){
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            foreach ($data as $value) {
-                $cus = reset($value['customer']);
-                $cusCtModel = CustomerContact::where('phone',$cus['tel'])->first(['cus_id']);
-                
-                if(!empty($cusCtModel)){
-                    
-                    $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
-                                        ->first(['user_id','group_id','department_id'])->toArray();
-                    
-                    $res = JdOrderBasic::where([
-                                    ['order_sn','=',$cus['order_sn']],
-                                    ['flag','=',$cus['flag']]
-                                ])->update($cusUserl);
-                    if(!$res){
-                        throw new \Exception("匹配出错");
-                    }
-                }
+            $data = $request->except('ids');
+            $res = JdOrderBasic::whereIn('id', $request->input('ids'))->update($data);
+            if(!$res){
+                throw new \Exception("设置失败");
             }
             DB::commit();
         } catch (\Exception $e) {
