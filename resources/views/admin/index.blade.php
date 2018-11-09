@@ -13,7 +13,7 @@
     <!-- Styles -->
 <!--     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
 	<!-- ><script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>< -->
-     <link href="/admin/static1.3.5/css/app.0d61db29f605971bb47a574b5e548e6e.css" rel="stylesheet">
+    <link href="/admin/static1.3.7/css/app.218f2534250ad01d3e9ae4bc36ec2c79.css" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -22,11 +22,10 @@
 <!--     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
 <!--     <script src="https://unpkg.com/element-ui@1.4/lib/index.js"></script> -->
     <!-- Scripts -->
-   	<script type="text/javascript" src="/admin/static1.3.5/js/manifest.c71f246f77e4d3a7632e.js"></script>
-    <script type="text/javascript" src="/admin/static1.3.5/js/vendor.c222a47aed3b86edf5a2.js"></script>
-    <script type="text/javascript" src="/admin/static1.3.5/js/babel-polyfill.ee5b295d04f6e15c48f7.js"></script>
-    <script type="text/javascript" src="/admin/static1.3.5/js/app.e201ad68cb8025b04aca.js"></script>
-
+   	<script type="text/javascript" src="/admin/static1.3.7/js/manifest.d3ff1368c1f2c9858b47.js"></script>
+    <script type="text/javascript" src="/admin/static1.3.7/js/vendor.35d1f163f338c4c02140.js"></script>
+    <script type="text/javascript" src="/admin/static1.3.7/js/babel-polyfill.ee5b295d04f6e15c48f7.js"></script>
+    <script type="text/javascript" src="/admin/static1.3.7/js/app.1b28415bf96f1220912e.js"></script>
     
     <script src="https://s19.cnzz.com/z_stat.php?id=1274133839&web_id=1274133839" language="JavaScript"></script>
 </body>

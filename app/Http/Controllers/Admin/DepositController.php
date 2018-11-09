@@ -14,6 +14,7 @@ use App\Services\DepositOperation\DepositOperationService;
 use App\Models\Department;
 use App\Models\DepositSet;
 use App\Alg\ModelCollection;
+use App\Models\DepositSet2;
 
 class DepositController extends Controller
 {
@@ -179,7 +180,7 @@ class DepositController extends Controller
      */
     public function setDeposit(Request $request)
     {
-        $model = DepositSet::getInstance();
+        $model = DepositSet2::getInstance();
         $model->fill($request->all());
         if ($model->save()) {
             return $this->success([]);
@@ -193,7 +194,8 @@ class DepositController extends Controller
      */
     public function getDepositSet()
     {
-        return $this->success(DepositSet::getInstance());
+        
+        return $this->success(DepositSet2::getInstance());
     }
 
 
