@@ -133,7 +133,7 @@ class SalesPerformanceController extends Controller
         $builder = DB::table('order_basic as ob')
         ->select(
             DB::raw('count(distinct cus_id) as cus_count'),
-            DB::raw('sum(discounted_goods_money) as order_sum'), 
+            DB::raw('sum(order_pay_money - freight) as order_sum'), 
             DB::raw('count(ob.id) as order_count'),
             DB::raw('sum(freight) as freight'),
             DB::raw('sum(book_freight) as book_freight'),

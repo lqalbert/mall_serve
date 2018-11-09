@@ -465,7 +465,7 @@ class SalesGoodsStatisticsController extends Controller
         $where = [
             ['order_basic.status','>=',1],
             ['order_basic.status','<=',6],
-            ['order_basic.type','=',1], //商城的订单
+            ['order_basic.type','=',4], //商城的订单
             ['order_basic.created_at',">=", $start],
             ['order_basic.created_at',"<=", $end],
             ['order_goods.status','<>',3],
@@ -489,7 +489,7 @@ class SalesGoodsStatisticsController extends Controller
         $where = [
             ['order_basic.status','>=',1],
             ['order_basic.status','<=',6],
-            ['order_basic.type','=',1], //商城订单
+            ['order_basic.type','=',4], //商城订单
             ['order_basic.created_at',">=", $start],
             ['order_basic.created_at',"<=", $end],
             ['order_goods.status','<>',3],
