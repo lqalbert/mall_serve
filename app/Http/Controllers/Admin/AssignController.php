@@ -246,10 +246,10 @@ class AssignController extends Controller
         $deltFreight = $order->updateFreight($request->input('express_fee'));
         if ($deltFreight > 0) {
             // 新的运费比原来的多， 还要再扣一部分
-            $service->subDeposit($order->department, $deltFreight, '修改运费'.'订单:'.$order->sn);
+            $service->subDeposit($order->department, $deltFreight, '修改运费'.'订单:'.$order->order_sn);
         } else {
             // 新的运费比原来的少， 要返还一部分
-            $service->returnDeposit($order->department, abs($deltFreight), '修改运费'.'订单:'.$order->sn);
+            $service->returnDeposit($order->department, abs($deltFreight), '修改运费'.'订单:'.$order->order_sn);
         }
         $re = $order->save();
         if($re){
