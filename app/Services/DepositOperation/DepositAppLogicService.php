@@ -76,7 +76,7 @@ class DepositAppLogicService
     }
     
     /**
-     * 签收时返还
+     * 签收时返还 京东的要另写一个
      */
     public function depositAtSign(OrderBasic $order)
     {
