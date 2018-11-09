@@ -248,7 +248,7 @@ class SalesPerformanceController extends Controller
         
         $result = DB::table('order_basic as db')
         ->select(
-            'db.discounted_goods_money as trade_money',
+            DB::raw('(db.order_pay_money-db.freight) as trade_money'),
             'db.freight',
             'db.user_name as track_name',
             'db.created_at as traded_at',
