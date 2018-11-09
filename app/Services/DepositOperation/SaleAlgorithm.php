@@ -39,7 +39,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
      */
     public function appendReturn($amount)
     {
-        return rund($this->calculate($amount, $this->setModel->getZn() * ( 1 - $this->setModel->getYz() )) - $this->setModel->getC()*$amount,2);
+        return round($this->calculate($amount, $this->setModel->getZn() * ( 1 - $this->setModel->getYz() )) - $this->setModel->getC()*$amount,2);
     }
     
     /**
