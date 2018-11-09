@@ -263,6 +263,18 @@ class JdOrderImportController extends Controller
         if($request->has('flag')){
             $model = $model->where('flag',$request->input('flag'));
         }
+        
+        if ($request->has('department_id')) {
+            $model = $model->where('department_id', $request->input('department_id'));
+        }
+        
+        if ($request->has('group_id')) {
+            $model = $model->where('group_id', $request->input('group_id'));
+        }
+        
+        if ($request->has('user_id')) {
+            $model = $model->where('user_id', $request->input('user_id'));
+        }
 
         $result = $model->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();

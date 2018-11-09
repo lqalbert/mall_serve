@@ -137,6 +137,10 @@ class EventServiceProvider extends ServiceProvider
         //添加保证金加扣记录
         'App\Events\AddDepositOperationLog' => [
             'App\Listeners\AddDepositOperationLogListener'
+        ],
+        
+        'App\Events\SyncDiscount' => [
+            'App\Listeners\SyncOrderTypeListener'
         ]
         
     ];
