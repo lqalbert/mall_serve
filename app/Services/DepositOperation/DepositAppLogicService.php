@@ -33,7 +33,9 @@ class DepositAppLogicService
             if ($this->setModel->isZero()) {
                 // 扣除部分就是 =  
                 $deposit = $algorithm->deposit($amount, $freight);
-                $order->setDepositReturn();
+                if ($order->type!=4) {
+                    $order->setDepositReturn();
+                }
                 
                 $saleDeposit = $algorithm->getSaleDeposit($amount, $freight);
                 $appendDeposit = $algorithm->getAppendDeposit($amount, $freight);
