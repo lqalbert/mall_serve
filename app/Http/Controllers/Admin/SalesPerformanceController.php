@@ -47,7 +47,7 @@ class SalesPerformanceController extends Controller
             'sale_order.order_count as all_sale_count',// all_sale_count 成交单数
             'sale_order.freight as sale_freight',
             'sale_order.book_freight as sale_book_freight',
-            'inner_order.cus_count as inner_count', //内购单数
+            'inner_order.order_count as inner_count', //内购单数
             'inner_order.order_sum as inner_sum', //内购金额
             'inner_order.freight as inner_freight',
             'inner_order.book_freight as inner_book_freight',
