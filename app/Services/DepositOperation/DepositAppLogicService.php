@@ -55,11 +55,12 @@ class DepositAppLogicService
             }
             
             $this->service->subDeposit($order->department, $deposit, '订单:'.$order->order_sn);
+            
             $this->detailService->setAlgorithm($algorithm);
             $this->detailService->setAmount($amount);
-            
             $this->detailService->setDetail($order->id, $order->getDepositFreight(), $saleDeposit);
             $this->detailService->setAppendDetail($order->id,  $appendDeposit);
+            
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();
@@ -88,6 +89,16 @@ class DepositAppLogicService
         //返还代码
         $this->setReturn($order);
         //}
+    }
+    
+    
+    /**
+     * 京东返还
+     * @param unknown $order
+     */
+    public function jdReturn($order)
+    {
+        //要生成明细 明细另一个表才行
     }
     
     /**

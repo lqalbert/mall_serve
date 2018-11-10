@@ -43,7 +43,8 @@ class JdOrderBasic extends Model
         "user_id",
         'flag',
         'is_brusher',
-        'cus_id'
+        'cus_id',
+        'entrepot_id'
     ];
 
     protected $guarded = [];

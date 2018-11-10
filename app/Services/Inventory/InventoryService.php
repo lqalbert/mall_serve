@@ -302,6 +302,9 @@ class InventoryService
      */
     public function jdOrder($entrepot, $products, $user, $dan=null ,$on=true)
     {
+        if ($dan) {
+            $dan = 'JD'.$dan;
+        }
         DB::beginTransaction();
         try {
             $this->inventory->jdOrder($entrepot->id, $products,$on);
