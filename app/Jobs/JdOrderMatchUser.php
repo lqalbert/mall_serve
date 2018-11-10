@@ -13,6 +13,7 @@ use App\Models\JdOrderCustomer;
 use App\Models\JdMatchBasic;
 use App\Models\CustomerContact;
 use App\Models\CustomerUser;
+use App\Services\JdOrder\JdOrderService;
 
 class JdOrderMatchUser implements ShouldQueue
 {
@@ -35,6 +36,7 @@ class JdOrderMatchUser implements ShouldQueue
     {
         $this->jdCustomer = $jdCustomer;
         $this->flag = $flag;
+        $this->jdService =  resolve('App\\Services\\JdOrder\\JdOrderService'); 
     }
 
     /**
@@ -42,33 +44,39 @@ class JdOrderMatchUser implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
-    {
-        $this->updateMinusStatus(JdOrderCustomer::MATCHING);
+      public function handle()
+      {
+          $orders = JdOrderBasic::where('flag', $flag)->get();
+          $this->jdService->match($orders);
+          $this->updateMinusStatus(JdOrderCustomer::MATCHED);
+      }
+//     public function handle()
+//     {
+//         $this->updateMinusStatus(JdOrderCustomer::MATCHING);
 
-        foreach ($this->jdCustomer as $k => $v) {
-            $cusCtModel = CustomerContact::where('phone',$v->tel)->first(['cus_id']);
+//         foreach ($this->jdCustomer as $k => $v) {
+//             $cusCtModel = CustomerContact::where('phone',$v->tel)->first(['cus_id']);
 
-            if(!empty($cusCtModel)){
+//             if(!empty($cusCtModel)){
 
-                $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
-                                    ->first(['user_id','group_id','department_id','cus_id'])->toArray();
+//                 $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
+//                                     ->first(['user_id','group_id','department_id','cus_id'])->toArray();
 
-                $res = JdOrderBasic::where([
-                                ['order_sn','=',$v->order_sn],
-                                ['flag','=',$v->flag]
-                            ])->update($cusUserl);
+//                 $res = JdOrderBasic::where([
+//                                 ['order_sn','=',$v->order_sn],
+//                                 ['flag','=',$v->flag]
+//                             ])->update($cusUserl);
 
-                JdOrderCustomer::where('order_sn','=',$v->order_sn)->update(['cus_id'=>$cusCtModel->cus_id]);
+//                 JdOrderCustomer::where('order_sn','=',$v->order_sn)->update(['cus_id'=>$cusCtModel->cus_id]);
                 
-                echo $res;
-            }
-        }
+//                 echo $res;
+//             }
+//         }
 
-        $this->updateMinusStatus(JdOrderCustomer::MATCHED);
+//         $this->updateMinusStatus(JdOrderCustomer::MATCHED);
 
 
-    }
+//     }
 
     /**
      * [updateMinusStatus 更新状态]

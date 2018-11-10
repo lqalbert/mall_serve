@@ -15,6 +15,10 @@ use App\Jobs\JdOrderMatchUser;
 use App\Jobs\JdOrderGoodsMinusInventory;
 use App\Models\CustomerContact;
 use App\Models\CustomerUser;
+use App\Console\Commands\JdOrderSave;
+use App\Services\JdOrder\JdOrderService;
+use App\Services\Inventory\InventoryService;
+use App\Services\DepositOperation\DepositOperationService;
 
 class JdOrderImportController extends Controller
 {
@@ -379,7 +383,7 @@ class JdOrderImportController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function manualMatch(Request $request){
+    public function manualMatch(Request $request,JdOrderService $service){
         DB::beginTransaction();
         try {
             $data = $request->except('ids');
@@ -387,6 +391,9 @@ class JdOrderImportController extends Controller
             if(!$res){
                 throw new \Exception("设置失败");
             }
+            $orders = JdOrderBasic::whereIn('id', $request->input('ids'))->get();
+            $service->manuMatch($order);
+            
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -394,6 +401,26 @@ class JdOrderImportController extends Controller
         }
         return  $this->success([], "匹配完成");
     
+    }
+    
+    /**
+     * 退回库存 未测试
+     */
+    public function backInventory(Request $requet, InventoryService $service)
+    {
+        $order = JdOrderBasic::findOrFail($request->input('id'));
+        $service->jdOrder($order->entrepot, $order->goods, auth()->user(), false);
+        return $this->success([]);
+    }
+    
+    /**
+     * 退回返还 未测试
+     */
+    public function backDeposit(Request $requet, DepositOperationService $service)
+    {
+        $order = JdOrderBasic::findOrFail($request->input('id'));
+        $service->returnDeposit($order->department, $order->return_deposit, '退回 订单:JD'.$order->order_sn);
+        return $this->success([]);
     }
 
 

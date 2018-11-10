@@ -134,6 +134,21 @@ class JdOrderBasic extends Model
     {
         return $this->belongsTo('App\Models\DistributionCenter');
     }
+    
+    public function setDepositReturn($on=true)
+    {
+        if ($on) {
+            $this->is_deposit_return = 1;
+        } else {
+            $this->is_deposit_return = 0;
+        }
+        
+    }
+    
+    public function isNoSence()
+    {
+        return $this->is_brusher == 1;
+    }
 
 
 

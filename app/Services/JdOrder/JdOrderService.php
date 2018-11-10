@@ -6,6 +6,8 @@ use App\Models\CustomerContact;
 use App\models\DeliveryAddress;
 use App\Services\Inventory\InventoryService;
 use App\Services\DepositOperation\DepositAppLogicService;
+use App\Models\FreightExtra;
+use App\Models\AreaInfo;
 
 class JdOrderService 
 {
@@ -17,7 +19,7 @@ class JdOrderService
     public function __construct(InventoryService $invenService, DepositAppLogicService $depositAppSerivce)
     {
         $this->inventoryService = $invenService;
-        $this->$depositService = $depositAppSerivce;
+        $this->depositService = $depositAppSerivce;
     }
     /**
      * 匹配
@@ -28,22 +30,48 @@ class JdOrderService
     {
         foreach ($orders as $order) {
             try {
+                if ($order->isNoSence()) {
+                    continue;
+                }
                 //匹配
                 $re = $this->matchOrderEmployee($order);
                 if ($re) {
                     //扣库存;
                     $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
                     //计算账面运费
+                    $order->is_deduce_inventory = 1;
                     $addressModel = $order->address;
                     $order->book_freight = $this->calculateBookFreight($addressModel->address);
-                    $order->save();
+//                     $order->save();
                     //返还
-                    
+                    $this->depositService->jdReturn($order);
                 }
                 
             } catch (Exception $e) {
                 continue;
             }
+        }
+    }
+    
+    public function manuMatch($order)
+    {
+        try {
+            foreach ($orders as $order) {
+                if ($order->isNoSence()) {
+                    continue;
+                }
+                //扣库存
+                $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
+                //计算账面运费
+                $order->is_deduce_inventory = 1;
+                $addressModel = $order->address;
+                $order->book_freight = $this->calculateBookFreight($addressModel->address);
+                //                     $order->save();
+                //返还
+                $this->depositService->jdReturn($order);
+            }
+        } catch (Exception $e) {
+            continue;
         }
     }
     
@@ -96,13 +124,29 @@ class JdOrderService
     {
         // 新疆 // 宁夏 青海省 西藏自治区
 //         mb_strpos
-        $arr = ['新疆', '宁夏','清海','西藏'];
+//         $arr = ['新疆', '宁夏','清海','西藏','内蒙'];
+        $arr = $this->getArea();
         foreach ($arr as $value) {
             if (mb_strpos($address, $value) ==0) {
                 return 18;
             }
         }
         return 10;
+    }
+    /**
+     * 偏远地区
+     */
+    private function getArea()
+    {
+        $re = FreightExtra::where('fr_id',1)->pluck('province_id');
+        if ($re->isEmpty()) {
+            return [];
+        } else {
+            $area = AreaInfo::whereIn('id', $re->toArray())->pluck('name');
+            return $area->map(function ($item, $key) {
+                return mb_substr($item, 0,2);
+            });
+        }
     }
     
     

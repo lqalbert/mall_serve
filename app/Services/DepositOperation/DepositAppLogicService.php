@@ -1,10 +1,10 @@
 <?php
 namespace App\Services\DepositOperation;
 
-
 use App\Models\DepositSet;
 use App\Models\OrderBasic;
 use Illuminate\Support\Facades\DB;
+use App\Models\JdDepositDetail;
 
 class DepositAppLogicService
 {
@@ -99,6 +99,46 @@ class DepositAppLogicService
     public function jdReturn($order)
     {
         //要生成明细 明细另一个表才行
+        $algorithm = new JdAlgorithm(resolve('App\\Models\\DepositSet2'));
+        
+        $returnDeposit = $algorithm->returnDeposit($amount, $order->book_freight);
+        
+        try {
+            DB::beginTransaction();
+            //设置已返还标志
+            $order->return_deposit = $returnDeposit;
+            $order->setDepositReturn();
+            if ($order->save()) {
+                throw  new \Exception('保存返失败');
+            }
+            $this->service->returnDeposit($order->department, $returnDeposit , '订单:JD'.$order->order_sn );
+            
+            
+            //明细
+            $deposit  = $algorithm->goodsDeposit($order->all_money)
+                + $algorithm->entrepotDepositItem($order->all_money)
+                + $algorithm->thirdPartDeposit($order->all_money)
+                + $order->book_freight;
+
+            $detailModel = JdDepositDetail::create([
+                'order_id' => $order->id,
+                'type' => DepositDetail::TYPE_ONE,
+                'amount' => $order->all_money,
+                'deposit' => $deposit,
+                'saler_point' => $algorithm->goodsDeposit($order->all_money),
+                'entrepot_point' => $algorithm->entrepotDepositItem($order->all_money),
+                'thirdpart_point' => $algorithm->thirdPartDeposit($order->all_money),
+                'freight' => $order->book_freight,
+                'return_deposit'=> $returnDeposit
+            ]);
+            
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+        
+        
     }
     
     /**
