@@ -74,8 +74,8 @@ class SalesPerformanceController extends Controller
         ->mergeBindings($refundBuilder)
 //         //赠品
         ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "append_.{$groupBy}")
-        ->mergeBindings($appendBuilder)
-        ->orderBy($orderField, $orderWay);
+        ->mergeBindings($appendBuilder);
+//         ->orderBy($orderField, $orderWay)
         ;
         
         $result = $allBuilder->paginate($pageSize);
