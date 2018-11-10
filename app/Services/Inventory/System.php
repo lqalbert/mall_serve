@@ -383,6 +383,23 @@ class System
         return $affectedRows;
     }
     
+    public function jdOrder($entrepot_id, $products, $on=true)
+    {
+        $affectedRows = 0;
+        $countoper = $on ? '-' : '+';
+        try{
+            foreach ($products as $product) {
+                $sql = ' entrepot_count=entrepot_count '.$countoper.' ?  , saleable_count = saleable_count '.$countoper. ' ? ';
+                $affectedRows = DB::update('update '. self::TABLE.' '.$sql.' where entrepot_id = ? and sku_sn = ?', 
+                    [$product->getNum(),$product->getNum(), $entrepot_id, $product->getSkuSn() ]);
+                $this->updateIsSuccess($affectedRows);
+            }
+        } catch (\Exception $e ) {
+            throw $e;
+        }
+        return true;
+    }
+    
     /**
      * 
      * @param unknown $affectedRows

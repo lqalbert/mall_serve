@@ -292,4 +292,31 @@ class InventoryService
     }
     
     
+    /**
+     * 京东库存
+     * @param unknown $entrepot
+     * @param unknown $products
+     * @param unknown $user
+     * @param string $on
+     * @throws \Exception
+     */
+    public function jdOrder($entrepot, $products, $user, $dan=null ,$on=true)
+    {
+        DB::beginTransaction();
+        try {
+            $this->inventory->jdOrder($entrepot->id, $products,$on);
+            if (!$on) { //如果是加库存
+                foreach ($products as &$model) {
+                    $model->goods_num = -$model->goods_num;
+                };
+            }
+            $this->log->jdOrder($entrepot, $products, $user, $dan);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw new \Exception('库存更新失败');
+        }
+    }
+    
+    
 }

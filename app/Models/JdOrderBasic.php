@@ -51,7 +51,7 @@ class JdOrderBasic extends Model
     //头部字段
     public static $fieldsName = [
     	"order_sn",
-        "goods_id",
+//         "goods_id",
         "goods_name",
         "goods_num",
         "pay_way",
@@ -103,15 +103,15 @@ class JdOrderBasic extends Model
     }
 
     public function other(){
-    	return $this->hasMany('App\Models\JdOrderOther', 'order_sn','order_sn');
+        return $this->hasOne('App\Models\JdOrderOther', 'order_sn','order_sn');
     }
 
     public function customer(){
-    	return $this->hasMany('App\Models\JdOrderCustomer', 'order_sn','order_sn');
+        return $this->hasOne('App\Models\JdOrderCustomer', 'order_sn','order_sn');
     }
 
     public function address(){
-    	return $this->hasMany('App\Models\JdOrderAddress', 'order_sn','order_sn');
+        return $this->hasOne('App\Models\JdOrderAddress', 'order_sn','order_sn');
     }
 
     //关联部门
@@ -127,6 +127,11 @@ class JdOrderBasic extends Model
     //关联销售员工
     public function user(){
         return $this->belongsTo('App\Models\User', 'user_id')->select(['id','realname','group_id']);
+    }
+    
+    public function entrepot()
+    {
+        return $this->belongsTo('App\Models\DistributionCenter');
     }
 
 

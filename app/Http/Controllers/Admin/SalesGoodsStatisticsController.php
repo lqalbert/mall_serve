@@ -97,8 +97,8 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function inInventory($start, $end)
     {
-        return DB::table('purchase_order_goods')->select(
-            DB::raw("sum(`goods_purchase_num`) as goods_num"),
+        return DB::table('actual_delivery_goods')->select(
+            DB::raw("sum(`actual_goods_num`) as goods_num"),
             'sku_sn')
         // ->where([
         //     ['created_at',">=", $start],

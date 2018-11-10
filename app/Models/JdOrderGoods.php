@@ -43,6 +43,21 @@ class JdOrderGoods extends Model
     {
         return $this->belongsTo('App\Models\JdOrderBasic', 'order_sn','order_sn');
     }
+    
+    public function getSkuSn()
+    {
+        return $this->sku_sn;
+    }
+    
+    public function getName()
+    {
+        return $this->goods_name;
+    }
+    
+    public function getNum()
+    {
+        return $this->goods_num;
+    }
 
 
 

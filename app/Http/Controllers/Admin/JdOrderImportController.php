@@ -119,6 +119,7 @@ class JdOrderImportController extends Controller
         $orderAddress = [];
         $this->flag = time();
         foreach ($s as $k => $v) {
+            $v['entrepot_id'] = $this->entrepot_id;
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
                 "all_money","pay_money","pay_balance","status","type","remark","express_fee","pay_way",
                 "pay_confirm_at","end_at","order_source","order_channel","install_service","service_fee",
