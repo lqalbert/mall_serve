@@ -2,7 +2,7 @@
 namespace App\Services\DepositOperation;
 
 
-use App\Models\DepositSet;
+use App\Models\DepositSet2;
 use App\Models\OrderBasic;
 use Illuminate\Support\Facades\DB;
 
