@@ -88,7 +88,7 @@ class InnerAlgorithm extends AbstractAlgorithm
      * 其它返还
      * depositdetail用的获取赠品的扣除
      */
-    public function getAppendDepositOther(\stdClass $amount)
+    public function getAppendDepositOther(\stdClass $amount, $freight)
     {
         return 0;
     }

@@ -39,7 +39,7 @@ class DepositAppLogicService
                 }
                 
                 $saleDeposit = $algorithm->getSaleDeposit($amount, $freight);
-                $appendDeposit = $algorithm->getAppendDeposit($amount, $freight);
+                $appendDeposit = $algorithm->getAppendDeposit($amount);
                 
             } else {
                 // 扣除部分就是 = 保证金
@@ -115,8 +115,6 @@ class DepositAppLogicService
                     throw  new \Exception('订单返还状态设置失败');
                 }
                 
-                $this->detailService->setAlgorithm($algorithm);
-                $this->detailService->setAmount($amount);
                 $this->detailService->setReturnDeposit($order->id, $algorithm->goodsReturn($amount->sale, $freight));
                 $this->detailService->setAppendReturnDeposit($order->id, $algorithm->appendReturn($amount->append));
                 

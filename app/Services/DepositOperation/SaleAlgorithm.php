@@ -84,7 +84,7 @@ class SaleAlgorithm  extends AbstractAlgorithm
      */
     public function getAppendDeposit(\stdClass $amount)
     {
-        return $this->appendDeposit($amount->append) + $this->entrepotDepositItem($amount->sale);
+        return $this->appendDeposit($amount->append) + $this->entrepotDepositItem($amount->append);
     }
     
     /**
