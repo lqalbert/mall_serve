@@ -115,9 +115,8 @@ class DepositAppLogicService
                     throw  new \Exception('订单返还状态设置失败');
                 }
                 
-//                 $this->detailService->setAlgorithm($algorithm);
-//                 $this->detailService->setAmount($amount);
-                
+                $this->detailService->setAlgorithm($algorithm);
+                $this->detailService->setAmount($amount);
                 $this->detailService->setReturnDeposit($order->id, $algorithm->goodsReturn($amount->sale, $freight));
                 $this->detailService->setAppendReturnDeposit($order->id, $algorithm->appendReturn($amount->append));
                 

@@ -271,7 +271,7 @@ class OrderBasic extends Model
     
     public function getDepositFreight()
     {
-        return  $this->book_freight + $this->freight;
+        return empty($this->freight) ?  $this->book_freight : $this->freight;
     }
     
     public function isDepositReturn()
