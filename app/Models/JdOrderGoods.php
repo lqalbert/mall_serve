@@ -11,6 +11,9 @@ class JdOrderGoods extends Model
     const NOT_MINUS = 0;
     const MINUSING = 1;
     const MINUSED = 2;
+    const MINUS_SUCCESS = 1;
+    const MINUS_FAILED = 2;
+
     protected $table = 'jd_order_goods';
 
     protected $dates = ['deleted_at'];
@@ -28,7 +31,8 @@ class JdOrderGoods extends Model
         "jd_entrepot_id",
         "jd_entrepot_name",
         'flag',
-        'is_brusher'
+        'is_brusher',
+        'is_minus'
     ];
 
     /**

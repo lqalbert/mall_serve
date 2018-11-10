@@ -25,7 +25,8 @@ class JdOrderCustomer extends Model
         "tel",
         "order_account",
         "flag",
-        "is_brusher"
+        "is_brusher",
+        'cus_id'
     ];
 
 
