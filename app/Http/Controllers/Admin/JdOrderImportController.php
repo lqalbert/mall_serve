@@ -19,6 +19,7 @@ use App\Console\Commands\JdOrderSave;
 use App\Services\JdOrder\JdOrderService;
 use App\Services\Inventory\InventoryService;
 use App\Services\DepositOperation\DepositOperationService;
+use App\Models\JdDepositDetail;
 
 class JdOrderImportController extends Controller
 {
@@ -127,7 +128,7 @@ class JdOrderImportController extends Controller
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
                 "all_money","pay_money","pay_balance","status","type","remark","express_fee","pay_way",
                 "pay_confirm_at","end_at","order_source","order_channel","install_service","service_fee",
-                "is_brand","is_toplife"])->map(function($item,$key){
+                "is_brand","is_toplife",'entrepot_id'])->map(function($item,$key){
                     if($key=='order_at' || $key=='pay_confirm_at' || $key=='end_at'){
                         if(!empty($item)){
                             $item = date("Y-m-d H:i:s",strtotime($item));
@@ -392,11 +393,12 @@ class JdOrderImportController extends Controller
                 throw new \Exception("设置失败");
             }
             $orders = JdOrderBasic::whereIn('id', $request->input('ids'))->get();
-            $service->manuMatch($order);
+            $service->manuMatch($orders);
             
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+//             DD($e);
             return  $this->error([], $e->getMessage());
         }
         return  $this->success([], "匹配完成");
@@ -406,21 +408,53 @@ class JdOrderImportController extends Controller
     /**
      * 退回库存 未测试
      */
-    public function backInventory(Request $requet, InventoryService $service)
+    public function backInventory(InventoryService $service, $id)
     {
-        $order = JdOrderBasic::findOrFail($request->input('id'));
-        $service->jdOrder($order->entrepot, $order->goods, auth()->user(), false);
+        $order = JdOrderBasic::findOrFail($id);
+        if ($order->isReturnInventory()) {
+            return $this->success([],'已经退回');
+        }
+        try {
+            DB::beginTransaction();
+            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), false);
+            $order->setduceInventory(false);
+            logger('[db]',[$order->is_deduce_inventory]);
+            $re = $order->save();
+            if (!$re) {
+                throw new \Exception('退回失败');
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        
         return $this->success([]);
     }
     
     /**
      * 退回返还 未测试
      */
-    public function backDeposit(Request $requet, DepositOperationService $service)
+    public function backDeposit(DepositOperationService $service, $id)
     {
-        $order = JdOrderBasic::findOrFail($request->input('id'));
+        $order = JdOrderBasic::findOrFail($id);
+        if ($order->isDepositReturn()) {
+            return $this->success([],'已经退回');
+        }
         $service->returnDeposit($order->department, $order->return_deposit, '退回 订单:JD'.$order->order_sn);
+        $order->setDepositReturn(false);
+        $order->return_deposit=0.00;
+        $order->save();
         return $this->success([]);
+    }
+    
+    public function depositDetail($id)
+    {
+        $re = JdDepositDetail::where('order_id',$id)->get();
+        return [
+            'items'=>$re,
+            'total'=>$re->count()
+        ];
     }
 
 

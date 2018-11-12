@@ -8,6 +8,8 @@ use App\Services\Inventory\InventoryService;
 use App\Services\DepositOperation\DepositAppLogicService;
 use App\Models\FreightExtra;
 use App\Models\AreaInfo;
+use App\Models\CustomerUser;
+use Illuminate\Support\Facades\DB;
 
 class JdOrderService 
 {
@@ -30,30 +32,34 @@ class JdOrderService
     {
         foreach ($orders as $order) {
             try {
+                
                 if ($order->isNoSence()) {
                     continue;
                 }
+                DB::beginTransaction();
                 //匹配
                 $re = $this->matchOrderEmployee($order);
                 if ($re) {
                     //扣库存;
                     $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
-                    //计算账面运费
+                    
                     $order->is_deduce_inventory = 1;
                     $addressModel = $order->address;
+                    //计算账面运费
                     $order->book_freight = $this->calculateBookFreight($addressModel->address);
 //                     $order->save();
                     //返还
                     $this->depositService->jdReturn($order);
                 }
-                
-            } catch (Exception $e) {
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
                 continue;
             }
         }
     }
     
-    public function manuMatch($order)
+    public function manuMatch($orders)
     {
         try {
             foreach ($orders as $order) {
@@ -70,8 +76,9 @@ class JdOrderService
                 //返还
                 $this->depositService->jdReturn($order);
             }
-        } catch (Exception $e) {
-            continue;
+        } catch (\Exception $e) {
+            throw  $e;
+//             continue;
         }
     }
     
@@ -104,6 +111,7 @@ class JdOrderService
      */
     private function setOrderEmployee(JdOrderBasic $model ,$cus_id)
     {
+        
         $cusUserModel = CustomerUser::where('cus_id', $cus_id)->select('user_id','group_id','department_id','cus_id')->first();
         $cusUser = $cusUserModel->toArray();
         $cusUser['cus_id'] = $cus_id;

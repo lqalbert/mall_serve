@@ -52,7 +52,7 @@ class JdOrderBasic extends Model
     //头部字段
     public static $fieldsName = [
     	"order_sn",
-//         "goods_id",
+        "goods_id",
         "goods_name",
         "goods_num",
         "pay_way",
@@ -145,9 +145,28 @@ class JdOrderBasic extends Model
         
     }
     
+    public function isDepositReturn()
+    {
+        return $this->is_deposit_return ==0;
+    }
+    
     public function isNoSence()
     {
         return $this->is_brusher == 1;
+    }
+    
+    public function isReturnInventory()
+    {
+        return $this->is_deduce_inventory == 0;
+    }
+    
+    public function setduceInventory($on=true)
+    {
+        if ($on) {
+            $this->is_deduce_inventory = 1;
+        } else {
+            $this->is_deduce_inventory = 0;
+        }
     }
 
 

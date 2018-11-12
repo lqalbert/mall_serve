@@ -20,6 +20,7 @@ class JdOrderMatchUser implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     private $jdCustomer;
     private $flag;
+    private $jdService= null;
     /**
      * 任务最大尝试次数
      *
@@ -46,7 +47,7 @@ class JdOrderMatchUser implements ShouldQueue
      */
       public function handle()
       {
-          $orders = JdOrderBasic::where('flag', $flag)->get();
+          $orders = JdOrderBasic::where('flag', $this->flag)->get();
           $this->jdService->match($orders);
           $this->updateMinusStatus(JdOrderCustomer::MATCHED);
       }
@@ -95,7 +96,7 @@ class JdOrderMatchUser implements ShouldQueue
      */
     public function failed(Exception $exception)
     {
-        logger("[jdMatchError]", $exception->getMessage());
+        logger("[jdMatchError]", [$exception->getMessage()]);
     }
 
 

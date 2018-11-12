@@ -243,6 +243,9 @@ Route::group($adminGroup, function(){
     Route::put('/set-brusher/{flag}/{order_sn}', 'JdOrderImportController@changeBrusher');
     Route::post('/manual-match', 'JdOrderImportController@manualMatch');
     Route::get('/deposit-detail', 'DepositDetailController@index');
+    Route::put('/jd-inventory-return/{id}', 'JdOrderImportController@backInventory');
+    Route::put('/jd-deposit-return/{id}', 'JdOrderImportController@backDeposit');
+    Route::get('/jd-deposit-detail/{id}', 'JdOrderImportController@depositDetail');
 });
 
 

@@ -1,10 +1,11 @@
 <?php
 namespace App\Services\DepositOperation;
 
-use App\Models\DepositSet;
+use App\Models\DepositSet2;
 use App\Models\OrderBasic;
 use Illuminate\Support\Facades\DB;
 use App\Models\JdDepositDetail;
+use App\Models\DepositDetail;
 
 class DepositAppLogicService
 {
@@ -101,14 +102,14 @@ class DepositAppLogicService
         //要生成明细 明细另一个表才行
         $algorithm = new JdAlgorithm(resolve('App\\Models\\DepositSet2'));
         
-        $returnDeposit = $algorithm->returnDeposit($amount, $order->book_freight);
+        $returnDeposit = $algorithm->returnJdDeposit($order->all_money, $order->book_freight);
         
         try {
             DB::beginTransaction();
             //设置已返还标志
             $order->return_deposit = $returnDeposit;
             $order->setDepositReturn();
-            if ($order->save()) {
+            if (!$order->save()) {
                 throw  new \Exception('保存返失败');
             }
             $this->service->returnDeposit($order->department, $returnDeposit , '订单:JD'.$order->order_sn );
