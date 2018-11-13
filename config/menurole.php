@@ -125,7 +125,8 @@ return [
         'Mail',
         'http://ws.pulata.com.cn:8888/login',
         'Refund',
-        'OrderList'
+        'OrderList',
+        'SampleApplication',
     ],
     'assign-staff'=>[
         'StockDetails',
@@ -147,7 +148,8 @@ return [
         'Mail',
         'http://ws.pulata.com.cn:8888/login',
         'Refund',
-        'OrderList'
+        'OrderList',
+        'SampleApplication',
     ],
     'assign-service'=>[
         'StockDetails',
@@ -168,7 +170,8 @@ return [
         'Website',
         'OrderList',
         'http://ws.pulata.com.cn:8888/login',
-        'Refund'
+        'Refund',
+        'SampleApplication',
     ],
     'finance'=>[
         'SalesPerformance',
