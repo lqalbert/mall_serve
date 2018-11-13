@@ -40,16 +40,17 @@ class JdOrderService
                 //匹配
                 $re = $this->matchOrderEmployee($order);
                 if ($re) {
+                    $this->inventoryAndDeposit($order);
                     //扣库存;
-                    $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
+//                     $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
                     
-                    $order->is_deduce_inventory = 1;
-                    $addressModel = $order->address;
-                    //计算账面运费
-                    $order->book_freight = $this->calculateBookFreight($addressModel->address);
-//                     $order->save();
-                    //返还
-                    $this->depositService->jdReturn($order);
+//                     $order->is_deduce_inventory = 1;
+//                     $addressModel = $order->address;
+//                     //计算账面运费
+//                     $order->book_freight = $this->calculateBookFreight($addressModel->address);
+// //                     $order->save();
+//                     //返还
+//                     $this->depositService->jdReturn($order);
                 }
                 DB::commit();
             } catch (\Exception $e) {
@@ -66,20 +67,44 @@ class JdOrderService
                 if ($order->isNoSence()) {
                     continue;
                 }
-                //扣库存
-                $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
-                //计算账面运费
-                $order->is_deduce_inventory = 1;
-                $addressModel = $order->address;
-                $order->book_freight = $this->calculateBookFreight($addressModel->address);
-                //                     $order->save();
-                //返还
-                $this->depositService->jdReturn($order);
+                $this->inventoryAndDeposit($order);
+                
+//                 $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
+//                 //计算账面运费
+//                 $order->is_deduce_inventory = 1;
+//                 $addressModel = $order->address;
+//                 $order->book_freight = $this->calculateBookFreight($addressModel->address);
+//                 //                     $order->save();
+//                 //返还
+//                 $this->depositService->jdReturn($order);
             }
         } catch (\Exception $e) {
             throw  $e;
 //             continue;
         }
+    }
+    
+    private function inventoryAndDeposit($order)
+    {
+        //扣库存
+        if (!$order->isReturnInventory()) {
+            $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
+            $order->setduceInventory();
+            $order->save();
+        }
+        
+        //计算账面运费
+        if (empty($order->book_freight)) {
+            $addressModel = $order->address;
+            $order->book_freight = $this->calculateBookFreight($addressModel->address);
+        }
+        
+        //                     $order->save();
+        //返还
+        if (!$order->isDepositReturn()) {
+            $this->depositService->jdReturn($order);
+        }
+        
     }
     
     private function matchOrderEmployee(JdOrderBasic $model)

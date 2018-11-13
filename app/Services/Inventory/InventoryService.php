@@ -307,7 +307,7 @@ class InventoryService
         }
         DB::beginTransaction();
         try {
-            $this->inventory->jdOrder($entrepot->id, $products,$on);
+            $this->inventory->jdOrder($entrepot->id, $products, $on);
             if (!$on) { //如果是加库存
                 foreach ($products as &$model) {
                     $model->goods_num = -$model->goods_num;

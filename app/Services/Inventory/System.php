@@ -390,6 +390,7 @@ class System
         try{
             foreach ($products as $product) {
                 $sql = 'SET entrepot_count=entrepot_count '.$countoper.' ?  , saleable_count = saleable_count '.$countoper. ' ? ';
+                logger("[ds]",[$sql]);
                 $affectedRows = DB::update('update '. self::TABLE.' '.$sql.' where entrepot_id = ? and sku_sn = ?', 
                     [$product->getNum(),$product->getNum(), $entrepot_id, $product->getSkuSn() ]);
                 $this->updateIsSuccess($affectedRows);

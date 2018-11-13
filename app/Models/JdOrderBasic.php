@@ -117,7 +117,7 @@ class JdOrderBasic extends Model
 
     //关联部门
     public function department(){
-        return $this->belongsTo('App\Models\Department', 'department_id')->select(['id','name']);
+        return $this->belongsTo('App\Models\Department', 'department_id');
     }
 
     //关联小组
@@ -147,7 +147,7 @@ class JdOrderBasic extends Model
     
     public function isDepositReturn()
     {
-        return $this->is_deposit_return ==0;
+        return $this->is_deposit_return == 1;
     }
     
     public function isNoSence()
@@ -157,7 +157,7 @@ class JdOrderBasic extends Model
     
     public function isReturnInventory()
     {
-        return $this->is_deduce_inventory == 0;
+        return $this->is_deduce_inventory == 1;
     }
     
     public function setduceInventory($on=true)

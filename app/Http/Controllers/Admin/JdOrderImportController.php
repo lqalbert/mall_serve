@@ -411,14 +411,14 @@ class JdOrderImportController extends Controller
     public function backInventory(InventoryService $service, $id)
     {
         $order = JdOrderBasic::findOrFail($id);
-        if ($order->isReturnInventory()) {
+        if (!$order->isReturnInventory()) {
             return $this->success([],'已经退回');
         }
         try {
             DB::beginTransaction();
-            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), false);
+            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn,false);
             $order->setduceInventory(false);
-            logger('[db]',[$order->is_deduce_inventory]);
+//             logger('[db]',[$order->is_deduce_inventory]);
             $re = $order->save();
             if (!$re) {
                 throw new \Exception('退回失败');
@@ -438,10 +438,10 @@ class JdOrderImportController extends Controller
     public function backDeposit(DepositOperationService $service, $id)
     {
         $order = JdOrderBasic::findOrFail($id);
-        if ($order->isDepositReturn()) {
+        if (!$order->isDepositReturn()) {
             return $this->success([],'已经退回');
         }
-        $service->returnDeposit($order->department, $order->return_deposit, '退回 订单:JD'.$order->order_sn);
+        $service->subDeposit($order->department, $order->return_deposit, '退回返还 订单:JD'.$order->order_sn);
         $order->setDepositReturn(false);
         $order->return_deposit=0.00;
         $order->save();
