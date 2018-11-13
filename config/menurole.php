@@ -185,7 +185,8 @@ return [
     ],
     'stration' => [
        'QuestionnaireManagement',
-        'AccountSettings'
+        'AccountSettings',
+        'SampleApplication',
     ],
     
     // 隐藏的角色 不起作用
