@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
         Commands\ComboUpgrade::class,
         Commands\Deposit::class,
         Commands\UpOldBookFreight::class,
-        Commands\Deposit2::class
+        Commands\Deposit2::class,
+        Commands\UpdateCustomerUser::class
     ];
 
     /**
