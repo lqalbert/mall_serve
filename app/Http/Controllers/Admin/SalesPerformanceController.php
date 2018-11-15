@@ -174,7 +174,7 @@ class SalesPerformanceController extends Controller
                    ->where([
                        ['order_at', '>=', $start],
                        ['order_at', '<=', $end]
-                   ])->groupBy($groupBy);
+                   ])->whereNull('deleted_at')->groupBy($groupBy);
         
                    
                    
