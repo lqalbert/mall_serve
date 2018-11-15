@@ -247,7 +247,9 @@ Route::group($adminGroup, function(){
     Route::put('/jd-deposit-return/{id}', 'JdOrderImportController@backDeposit');
     Route::get('/jd-deposit-detail/{id}', 'JdOrderImportController@depositDetail');
     Route::delete('/jd-order-list/{id}','JdOrderImportController@delete');
+    Route::put('/jd-order-list/{id}','JdOrderImportController@update');
     Route::put('/jd-order-cancel','JdOrderImportController@cancelMatch');
+    Route::put('/jd-re-match','JdOrderImportController@reMatch');
 });
 
 

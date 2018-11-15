@@ -89,9 +89,9 @@ class JdOrderImportController extends Controller
 	        $newData = [];
 	        foreach ($csvArr as $key => $value) {
 	            //重复的不能导入 如果数据量多了必须改成队列的方式导入
-	           if (!$this->isAlreadyHave($value[0])) {
+// 	           if (!$this->isAlreadyHave($value[0])) {
 	                $newData[] = array_combine($titleArr, $value);
-	           }
+// 	           }
 	        }
 	        // dd($titleArr);
 	        // dd($newData);
@@ -116,7 +116,7 @@ class JdOrderImportController extends Controller
     
     private function isAlreadyHave($order_sn)
     {
-        return JdOrderBasic::select('id')->where('order_sn',$order_sn)->first();
+        return JdOrderBasic::withTrashed()->select('id')->where('order_sn',$order_sn)->first();
     }
 
     /**
@@ -130,7 +130,7 @@ class JdOrderImportController extends Controller
         $orderBasic = [];
         $cusBasic = [];
         $orderAddress = [];
-        $this->flag = time();
+        $this->flag = Date('YmdHis');
         foreach ($s as $k => $v) {
             $v['entrepot_id'] = $this->entrepot_id;
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
@@ -477,9 +477,37 @@ class JdOrderImportController extends Controller
         return $this->success([]);
     }
     
+    /**
+     * 重新匹配
+     * @param Request $request
+     */
+    public function reMatch(Request $request, JdOrderService $serve)
+    {
+        $orders = JdOrderBasic::findOrFail($request->input('ids'));
+        try {
+            $serve->cancleMatch($orders);
+            $data = $request->except('ids');
+            $data['match_state'] = JdOrderBasic::MATCH_SUCCESS;
+            $res = JdOrderBasic::whereIn('id', $request->input('ids'))->update($data);
+            if(!$res){
+                throw new \Exception("设置失败");
+            }
+            $service->manuMatch($orders);
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
+    
     public function delete(Request $request, $id)
     {
-        $re = JdOrderBasic::destroy($id);
+        $model = JdOrderBasic::where('id',$id)->select('order_sn','id')->first();
+        JdOrderAddress::where('order_sn', $model->order_sn)->delete();
+        JdOrderCustomer::where('order_sn', $model->order_sn)->delete();
+        JdOrderGoods::where('order_sn', $model->order_sn)->delete();
+        JdOrderOther::where('order_sn', $model->order_sn)->delete();
+        $model->delete();
+//         $re = JdOrderBasic::delete($id);
         return $this->success([]);
     }
     
@@ -490,6 +518,13 @@ class JdOrderImportController extends Controller
             'items'=>$re,
             'total'=>$re->count()
         ];
+    }
+    
+    
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $re = JdOrderBasic::where('id',$id)->update($data);
     }
 
 

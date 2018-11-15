@@ -26,7 +26,7 @@ return [
 		[
 				'text' => '客户订单',
 				'icon'=>null,
-		    'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType', 'SampleApplication','JdOrderBasic'] // 'Refund' 'JdOrderBasic'
+		    'subIndex'=>['Customer','OrderList', 'Refund', 'OrderType', 'SampleApplication','ImportJdOrder','JdOrderBasic'] // 'Refund' 'JdOrderBasic'
 		],
 		[
 				'text' => '库存管理',

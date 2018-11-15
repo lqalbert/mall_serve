@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JdOrderCustomer extends Model
 {
-    use SoftDeletes;
+//     use SoftDeletes;
     
     const NOTMATCH = 0;
     const MATCHING = 1;
@@ -15,7 +15,7 @@ class JdOrderCustomer extends Model
 
     protected $table = 'jd_order_customer';
 
-    protected $dates = ['deleted_at'];
+//     protected $dates = ['deleted_at'];
 
     protected $hidden = [ 'updated_at','deleted_at'];
 

@@ -314,6 +314,11 @@ return [
             'text' => '预充值管理',
             'icon' => null,
             'index' => 'EarnestMoney'
-        ]
+        ],
+        [
+            'text' => '导入京东订单',
+            'icon' => null,
+            'index' => 'ImportJdOrder'
+        ],
 
 ];

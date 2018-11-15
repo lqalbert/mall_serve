@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JdOrderBasic extends Model
 {
-    use SoftDeletes;
+//     use SoftDeletes;
 
     const IS_BRUSHER = 1;//刷单
     const MATCH_FALSE = 2;
@@ -15,7 +15,7 @@ class JdOrderBasic extends Model
 
     protected $table = 'jd_order_basic';
 
-    protected $dates = ['deleted_at'];
+//     protected $dates = ['deleted_at'];
 
     protected $hidden = [ 'updated_at','deleted_at'];
     

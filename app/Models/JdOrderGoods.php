@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JdOrderGoods extends Model
 {
-    use SoftDeletes;
+//     use SoftDeletes;
     const NOT_MINUS = 0;
     const MINUSING = 1;
     const MINUSED = 2;
@@ -16,7 +16,7 @@ class JdOrderGoods extends Model
 
     protected $table = 'jd_order_goods';
 
-    protected $dates = ['deleted_at'];
+//     protected $dates = ['deleted_at'];
 
     protected $hidden = [ 'updated_at','deleted_at'];
 
