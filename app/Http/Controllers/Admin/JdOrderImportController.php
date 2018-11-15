@@ -289,6 +289,11 @@ class JdOrderImportController extends Controller
         if ($request->has('user_id')) {
             $model = $model->where('user_id', $request->input('user_id'));
         }
+        
+        $trash = $request->input('drash',0);
+        if ($trash == '1') {
+            $model = $model->withTrashed();
+        }
 
         $result = $model->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();
