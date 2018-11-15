@@ -267,6 +267,7 @@ class SalesPerformanceController extends Controller
             //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
         ->leftJoin('order_address','order_address.order_id','=','db.id')
         ->where($where)
+        ->whereNull('db.deleted_at')
         ->where([
             ['db.status','>', OrderBasic::UN_CHECKED],
             ['db.status','<', OrderBasic::ORDER_STATUS_7],

@@ -116,7 +116,7 @@ class JdOrderImportController extends Controller
     
     private function isAlreadyHave($order_sn)
     {
-        return JdOrderBasic::withTrashed()->select('id')->where('order_sn',$order_sn)->first();
+        return JdOrderBasic::select('id')->where('order_sn',$order_sn)->first();
     }
 
     /**
