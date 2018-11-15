@@ -401,6 +401,7 @@ class JdOrderImportController extends Controller
         DB::beginTransaction();
         try {
             $data = $request->except('ids');
+            $data['match_state'] = JdOrderBasic::MATCH_SUCCESS;
             $res = JdOrderBasic::whereIn('id', $request->input('ids'))->update($data);
             if(!$res){
                 throw new \Exception("设置失败");

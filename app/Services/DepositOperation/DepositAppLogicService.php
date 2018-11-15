@@ -137,6 +137,10 @@ class DepositAppLogicService
                 'return_deposit'=> $returnDeposit
             ]);
             
+            if ($detailModel==null) {
+                throw new \Exception('明细生成失败');
+            }
+            
             DB::commit();
         } catch (Exception $e) {
             DB::rollback();

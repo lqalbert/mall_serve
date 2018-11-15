@@ -11,6 +11,7 @@ class JdOrderBasic extends Model
 
     const IS_BRUSHER = 1;//刷单
     const MATCH_FALSE = 2;
+    const MATCH_SUCCESS = 1;
 
     protected $table = 'jd_order_basic';
 

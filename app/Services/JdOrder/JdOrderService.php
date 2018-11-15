@@ -146,12 +146,13 @@ class JdOrderService
             DB::beginTransaction();
             // user_id group_id department_id 需要改为0 match_state 为0
             $ids = $orders->pluck('id');
-            $re = DB::table('jd_order_basic')->whereIn('id', $ids)
-            ->update(['user_id'=>0,'group_id'=>0,'department_id'=>0,'match_state'=>0]);
+            $re = DB::table('jd_order_basic')
+                  ->whereIn('id', $ids)
+                  ->update(['user_id'=>0,'group_id'=>0,'department_id'=>0,'match_state'=>0]);
             if (0 == $re) {
                 throw new \Exception('更新订单匹配状态失败');
             }
-            //京东返还 退回
+            //退回京东返还 
             foreach ($orders as $order) {
                 $this->returnDeposit($order);
             }
