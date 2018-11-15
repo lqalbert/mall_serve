@@ -88,7 +88,10 @@ class JdOrderImportController extends Controller
 	        
 	        $newData = [];
 	        foreach ($csvArr as $key => $value) {
-	            $newData[] = array_combine($titleArr, $value);
+	            //重复的不能导入 如果数据量多了必须改成队列的方式导入
+	           // if (!$this->isAlreadyHave($value[0])) {
+	                $newData[] = array_combine($titleArr, $value);
+	           // }
 	        }
 	        // dd($titleArr);
 	        // dd($newData);
@@ -109,6 +112,11 @@ class JdOrderImportController extends Controller
             // $reader->dump();
         },'gb2312')->convert('xls');//->toArray();*/
      
+    }
+    
+    private function isAlreadyHave($order_sn)
+    {
+        return JdOrderBasic::select('id')->where('order_sn',$order_sn)->first();
     }
 
     /**
@@ -406,9 +414,9 @@ class JdOrderImportController extends Controller
     }
     
     /**
-     * 退回库存 未测试
+     * 退回库存 
      */
-    public function backInventory(InventoryService $service, $id)
+    private function backInventory(InventoryService $service, $id)
     {
         $order = JdOrderBasic::findOrFail($id);
         if (!$order->isReturnInventory()) {
@@ -433,9 +441,9 @@ class JdOrderImportController extends Controller
     }
     
     /**
-     * 退回返还 未测试
+     * 退回返还 
      */
-    public function backDeposit(DepositOperationService $service, $id)
+    private function backDeposit(DepositOperationService $service, $id)
     {
         $order = JdOrderBasic::findOrFail($id);
         if (!$order->isDepositReturn()) {
@@ -445,6 +453,27 @@ class JdOrderImportController extends Controller
         $order->setDepositReturn(false);
         $order->return_deposit=0.00;
         $order->save();
+        return $this->success([]);
+    }
+    
+    /**
+     * 取消匹配
+     * @param Request $request
+     */
+    public function cancelMatch(Request $request, JdOrderService $serve)
+    {
+        $orders = JdOrderBasic::findOrFail($request->input('ids'));
+        try {
+            $serve->cancleMatch($orders);
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
+    
+    public function delete(Request $request, $id)
+    {
+        $re = JdOrderBasic::destroy($id);
         return $this->success([]);
     }
     

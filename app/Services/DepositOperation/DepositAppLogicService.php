@@ -21,6 +21,10 @@ class DepositAppLogicService
         $this->detailService = $detailService;  
     }
     
+    public function getOperator()
+    {
+        return $this->service;
+    }
     
     /**
      * 下单时返还 -- 审核通过时  扣除部分就是 = 保证金-返还

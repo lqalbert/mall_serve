@@ -10,12 +10,15 @@ class JdOrderBasic extends Model
     use SoftDeletes;
 
     const IS_BRUSHER = 1;//刷单
+    const MATCH_FALSE = 2;
 
     protected $table = 'jd_order_basic';
 
     protected $dates = ['deleted_at'];
 
     protected $hidden = [ 'updated_at','deleted_at'];
+    
+    protected $appends = ['prefix_order_sn','match_text'];
 
     protected $fillable = [
         "order_sn",
@@ -167,6 +170,26 @@ class JdOrderBasic extends Model
         } else {
             $this->is_deduce_inventory = 0;
         }
+    }
+    
+    public function getPrefixOrderSnAttribute()
+    {
+        return 'JD'.$this->order_sn;
+    }
+    
+    public function setMatchState($on=true)
+    {
+        if ($on) {
+            $this->match_state = 1;
+        } else {
+            $this->match_state = 2;
+        } 
+    }
+    
+    public function getMatchTextAttribute()
+    {
+        $map = ['未分配','已分配','失败'];
+        return $map[$this->match_state];
     }
 
 

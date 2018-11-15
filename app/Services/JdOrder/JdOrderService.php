@@ -10,6 +10,7 @@ use App\Models\FreightExtra;
 use App\Models\AreaInfo;
 use App\Models\CustomerUser;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Collection;
 
 class JdOrderService 
 {
@@ -40,6 +41,7 @@ class JdOrderService
                 //匹配
                 $re = $this->matchOrderEmployee($order);
                 if ($re) {
+                    $order->setMatchState();
                     $this->inventoryAndDeposit($order);
                     //扣库存;
 //                     $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
@@ -51,6 +53,8 @@ class JdOrderService
 // //                     $order->save();
 //                     //返还
 //                     $this->depositService->jdReturn($order);
+                } else {
+                    $order->setMatchState(false);
                 }
                 DB::commit();
             } catch (\Exception $e) {
@@ -79,8 +83,82 @@ class JdOrderService
 //                 $this->depositService->jdReturn($order);
             }
         } catch (\Exception $e) {
+            
             throw  $e;
 //             continue;
+        }
+    }
+    
+    /**
+     * 退回库存
+     * @param JdOrderBasic $order
+     * @throws \Exception
+     * @throws Exception
+     */
+    public function returnInventory(JdOrderBasic $order)
+    {
+        if (!$order->isReturnInventory()) {
+            return ;
+        }
+        try {
+            DB::beginTransaction();
+            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn,false);
+            $order->setduceInventory(false);
+            //             logger('[db]',[$order->is_deduce_inventory]);
+            $re = $order->save();
+            if (!$re) {
+                throw new \Exception('退回失败');
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
+    /**
+     * 退回 返还
+     * @param JdOrderBasic $order
+     * @return unknown
+     */
+    public function returnDeposit(JdOrderBasic $order)
+    {
+        if (!$order->isDepositReturn()) {
+            return ;
+        }
+        $serve = $this->depositService->getOperator();
+        $serve->subDeposit($order->department, $order->return_deposit, '退回返还 订单:JD'.$order->order_sn);
+        $order->setDepositReturn(false);
+        $order->return_deposit=0.00;
+        $re = $order->save();
+        if (!$re) {
+            throw new \Exception('退回返还失败');
+        }
+    }
+    
+    /**
+     * 取消匹配
+     * @param Collection $orders
+     */
+    public function cancleMatch(Collection $orders)
+    {
+        try {
+            DB::beginTransaction();
+            // user_id group_id department_id 需要改为0 match_state 为0
+            $ids = $orders->pluck('id');
+            $re = DB::table('jd_order_basic')->whereIn('id', $ids)
+            ->update(['user_id'=>0,'group_id'=>0,'department_id'=>0,'match_state'=>0]);
+            if (0 == $re) {
+                throw new \Exception('更新订单匹配状态失败');
+            }
+            //京东返还 退回
+            foreach ($orders as $order) {
+                $this->returnDeposit($order);
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
         }
     }
     
