@@ -89,9 +89,9 @@ class JdOrderImportController extends Controller
 	        $newData = [];
 	        foreach ($csvArr as $key => $value) {
 	            //重复的不能导入 如果数据量多了必须改成队列的方式导入
-// 	           if (!$this->isAlreadyHave($value[0])) {
+	           if (!$this->isAlreadyHave($value[0])) {
 	                $newData[] = array_combine($titleArr, $value);
-// 	           }
+	           }
 	        }
 	        // dd($titleArr);
 	        // dd($newData);
