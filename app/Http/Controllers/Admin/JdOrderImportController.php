@@ -525,6 +525,7 @@ class JdOrderImportController extends Controller
     {
         $data = $request->all();
         $re = JdOrderBasic::where('id',$id)->update($data);
+        return $this->success([]);
     }
 
 
