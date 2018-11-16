@@ -296,7 +296,7 @@ class JdOrderImportController extends Controller
             $model = $model->withTrashed();
         }
 
-        $result = $model->paginate($request->input('pageSize',15));
+        $result = $model->orderBy('id','desc')->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();
         $collection->load('other','customer','address','department','group','user');
 
