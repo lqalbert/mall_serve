@@ -58,25 +58,25 @@ class UpdateCustomerUser extends Command
         
         $this->info('done1:'.$affected);
         
-        $this->info('order1:');
+//         $this->info('order1:');
         
-        $affected = 0;
-        DB::table('order_basic')
-        ->join('user_basic','order_basic.user_id','=','user_basic.id')
-        ->where(function($query){
-            $query->where('order_basic.group_id','<>','user_basic.group_id')
-            ->orWhere('order_basic.department_id', '<>', 'user_basic.department_id');
-        })->whereNull('order_basic.deleted_at')
-        ->select('order_basic.id', 'order_basic.user_id','order_basic.group_id','order_basic.department_id','user_basic.group_id as u_group_id','user_basic.department_id as u_department_id')
-        ->distinct()
-        ->orderBy('id')
-        ->chunk(100, function($result) use($affected) {
-            foreach ($result as $item) {
-                $affected += DB::update('update order_basic set group_id = ?  ,department_id = ? where id= ? ', [$item->u_group_id, $item->u_department_id, $item->id]);
-            }
-        });
+//         $affected = 0;
+//         DB::table('order_basic')
+//         ->join('user_basic','order_basic.user_id','=','user_basic.id')
+//         ->where(function($query){
+//             $query->where('order_basic.group_id','<>','user_basic.group_id')
+//             ->orWhere('order_basic.department_id', '<>', 'user_basic.department_id');
+//         })->whereNull('order_basic.deleted_at')
+//         ->select('order_basic.id', 'order_basic.user_id','order_basic.group_id','order_basic.department_id','user_basic.group_id as u_group_id','user_basic.department_id as u_department_id')
+//         ->distinct()
+//         ->orderBy('id')
+//         ->chunk(100, function($result) use($affected) {
+//             foreach ($result as $item) {
+//                 $affected += DB::update('update order_basic set group_id = ?  ,department_id = ? where id= ? ', [$item->u_group_id, $item->u_department_id, $item->id]);
+//             }
+//         });
         
-        $this->info('done2:'.$affected);
+//         $this->info('done2:'.$affected);
         
         
     }
