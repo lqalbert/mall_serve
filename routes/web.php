@@ -250,6 +250,8 @@ Route::group($adminGroup, function(){
     Route::put('/jd-order-list/{id}','JdOrderImportController@update');
     Route::put('/jd-order-cancel','JdOrderImportController@cancelMatch');
     Route::put('/jd-re-match','JdOrderImportController@reMatch');
+    
+    Route::get('/jd-order-goods', 'JdOrderGoodsController@index');
 });
 
 
