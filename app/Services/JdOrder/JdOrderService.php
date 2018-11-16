@@ -175,7 +175,7 @@ class JdOrderService
         //计算账面运费
         if (empty(intval($order->book_freight))) {
             $addressModel = $order->address;
-            $order->book_freight = $this->calculateBookFreight(mb_substr($addressModel->address,0,2));
+            $order->book_freight = $this->calculateBookFreight($addressModel->address);
         }
         
         //                     $order->save();
@@ -239,7 +239,7 @@ class JdOrderService
 //         $arr = ['新疆', '宁夏','清海','西藏','内蒙'];
         $arr = $this->getArea();
         foreach ($arr as $value) {
-            if (mb_strpos($address, $value) ==0) {
+            if (mb_strpos($address, $value) === 0) {
                 return 18;
             }
         }
