@@ -75,11 +75,11 @@ class SalesPerformanceController extends Controller
 //         //赠品
         ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "append_.{$groupBy}")
         ->mergeBindings($appendBuilder)
-        ->where([
-            ['sale_order.order_count','<>',0],
-            ['inner_order.order_sum','<>',0],
-            ['jd_count','<>',0]
-        ])
+        ->where(function($query){
+            $query->where('sale_order.order_count','<>',0)
+                ->orWhere('inner_order.order_sum','<>',0)
+                ->orWhere('jd_count','<>',0);
+        })
         ;
         
         $result = $allBuilder->paginate($pageSize);

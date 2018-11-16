@@ -395,7 +395,9 @@ class SalesGoodsStatisticsController extends Controller
             'sku_sn','department_id'
             )
         ->join('order_goods','order_basic.id','=','order_goods.order_id')
-        ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+        ->where($where)
+        ->whereNull('order_basic.deleted_at')
+        ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
     
     /**
@@ -417,7 +419,9 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
 
     /**
@@ -442,7 +446,9 @@ class SalesGoodsStatisticsController extends Controller
             'sku_sn','department_id'
             )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
 
     /**
@@ -464,7 +470,10 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')
+            ->groupBy('department_id');
     }
 
     private function depShopSaleNum($sku,$start, $end)
@@ -483,7 +492,9 @@ class SalesGoodsStatisticsController extends Controller
             'sku_sn','department_id'
             )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
     
     /**
@@ -505,7 +516,10 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
                 DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
             )->join('order_goods','order_basic.id','=','order_goods.order_id')
-            ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')
+            ->groupBy('department_id');
     }
 
     /**
