@@ -493,6 +493,7 @@ class JdOrderImportController extends Controller
             if(!$res){
                 throw new \Exception("设置失败");
             }
+            $orders = JdOrderBasic::findOrFail($request->input('ids'));
             $serve->manuMatch($orders);
         } catch (\Exception $e) {
             return $this->error([], $e->getMessage());
