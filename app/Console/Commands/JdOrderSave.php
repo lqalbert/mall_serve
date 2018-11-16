@@ -109,7 +109,13 @@ class JdOrderSave extends Command
         $jdBasicModel->type = $v->type_object->name;
         $jdBasicModel->remark = $v->express_remark;
         $jdBasicModel->flag = $this->flag;
-//         $jdBasicModel->
+        $jdBasicModel->is_educe_inventory = 1;
+        $jdBasicModel->is_deposit_return= 1;
+        $jdBasicModel->return_deposit= $v->return_deposit;
+        $jdBasicModel->book_freight= $v->getDepositFreight();
+        $jdBasicModel->entrepot_id= $v->entrepot_id;
+        $jdBasicModel->match_state= 1;
+        
         if(!empty($v->assign->toArray())){
             $jdBasicModel->express_fee = $v->assign[0]['express_fee'];
         }
