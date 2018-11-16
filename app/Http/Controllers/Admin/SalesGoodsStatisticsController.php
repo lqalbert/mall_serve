@@ -363,8 +363,7 @@ class SalesGoodsStatisticsController extends Controller
                       ->orWhere('dsp.goods_num','<>',0)
                       ->orWhere('drf.goods_num','<>',0)
                       ->orWhere('ddc.destroyNum','<>', 0);
-            })
-            ->orderBy($orderField,$orderWay)->paginate(100);
+            })->orderBy($orderField,$orderWay)->paginate(100);
 
         return [
             'items'=>$result->items(),
