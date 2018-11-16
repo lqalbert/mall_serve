@@ -173,7 +173,7 @@ class JdOrderService
         }
         
         //计算账面运费
-        if (empty($order->book_freight)) {
+        if (empty(intval($order->book_freight))) {
             $addressModel = $order->address;
             $order->book_freight = $this->calculateBookFreight(mb_substr($addressModel->address,0,2));
         }

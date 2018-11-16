@@ -109,6 +109,7 @@ class JdOrderSave extends Command
         $jdBasicModel->type = $v->type_object->name;
         $jdBasicModel->remark = $v->express_remark;
         $jdBasicModel->flag = $this->flag;
+//         $jdBasicModel->
         if(!empty($v->assign->toArray())){
             $jdBasicModel->express_fee = $v->assign[0]['express_fee'];
         }
