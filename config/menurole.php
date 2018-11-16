@@ -23,7 +23,8 @@ return [
         'Website',
         'SalesPerformance',
         'SalesQuantization',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'JdOrderBasic'
 //         'EarnestMoney'
     ],
     'human-resources' => [
@@ -48,7 +49,8 @@ return [
         'Website',
         'SalesPerformance',
         'SalesQuantization',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'JdOrderBasic'
     ],
     'sale-staff' => [
         'GoodsDetails',
@@ -58,7 +60,8 @@ return [
 //         'SysNotice',
         'Contacts',
         'Website',
-        'http://ws.pulata.com.cn:8888/login'
+        'http://ws.pulata.com.cn:8888/login',
+        'JdOrderBasic'
     ],
     'assign-buyer'=>[
         'Workbench',
@@ -103,7 +106,8 @@ return [
         'SalesGoodsStatistics',
         'SampleApplication',
         'http://ws.pulata.com.cn:8888/login',
-        'Refund'
+        'Refund',
+        'JdOrderBasic'
     ],
     'assign-captain'=>[
         'StockDetails',
@@ -147,7 +151,8 @@ return [
         'Mail',
         'http://ws.pulata.com.cn:8888/login',
         'Refund',
-        'OrderList'
+        'OrderList',
+        'JdOrderBasic'
     ],
     'assign-service'=>[
         'StockDetails',
@@ -168,7 +173,8 @@ return [
         'Website',
         'OrderList',
         'http://ws.pulata.com.cn:8888/login',
-        'Refund'
+        'Refund',
+        'JdOrderBasic'
     ],
     'finance'=>[
         'SalesPerformance',

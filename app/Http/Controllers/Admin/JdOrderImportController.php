@@ -20,6 +20,7 @@ use App\Services\JdOrder\JdOrderService;
 use App\Services\Inventory\InventoryService;
 use App\Services\DepositOperation\DepositOperationService;
 use App\Models\JdDepositDetail;
+use App\Alg\ModelCollection;
 
 class JdOrderImportController extends Controller
 {
@@ -492,7 +493,7 @@ class JdOrderImportController extends Controller
             if(!$res){
                 throw new \Exception("设置失败");
             }
-            $service->manuMatch($orders);
+            $serve->manuMatch($orders);
         } catch (\Exception $e) {
             return $this->error([], $e->getMessage());
         }
@@ -514,6 +515,7 @@ class JdOrderImportController extends Controller
     public function depositDetail($id)
     {
         $re = JdDepositDetail::where('order_id',$id)->get();
+        $re = ModelCollection::setAppends($re, ['type_text']);
         return [
             'items'=>$re,
             'total'=>$re->count()
