@@ -356,7 +356,15 @@ class SalesGoodsStatisticsController extends Controller
             ->where([
                 ['db.type',0]
                 // ['db.status',1]
-            ])->orderBy($orderField,$orderWay)->paginate(100);
+            ])->where(function($query){
+                $query->where('ds.goods_num','<>',0)
+                      ->orWhere('dis.goods_num','<>',0)
+                      ->orWhere('dss.goods_num','<>',0)
+                      ->orWhere('dsp.goods_num','<>',0)
+                      ->orWhere('drf.goods_num','<>',0)
+                      ->orWhere('ddc.destroyNum','<>', 0);
+            })
+            ->orderBy($orderField,$orderWay)->paginate(100);
 
         return [
             'items'=>$result->items(),
