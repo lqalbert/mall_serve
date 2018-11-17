@@ -41,7 +41,7 @@ class JdOrderService
                 //匹配
                 $re = $this->matchOrderEmployee($order);
                 if ($re) {
-                    $order->setMatchState();
+//                     $order->setMatchState();
                     $this->inventoryAndDeposit($order);
                     //扣库存;
 //                     $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn);
@@ -55,6 +55,7 @@ class JdOrderService
 //                     $this->depositService->jdReturn($order);
                 } else {
                     $order->setMatchState(false);
+                    $order->save();
                 }
                 DB::commit();
             } catch (\Exception $e) {
@@ -220,6 +221,7 @@ class JdOrderService
         $cusUser = $cusUserModel->toArray();
         $cusUser['cus_id'] = $cus_id;
         $model->fill($cusUser);
+        $model->setMatchState();
 //         $re = $model->save();
         if (!$model->save()) {
             throw new \Exception('设置部门小组员工失败');
