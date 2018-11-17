@@ -354,12 +354,13 @@ class SalesGoodsStatisticsController extends Controller
         $depSaleMoneyBuilder = $this->depSaleMoney($sku,$start, $end);
         $depInnerSaleBuilder = $this->depInnerSaleNum($sku,$start, $end);
         $depInnerSaleMoneyBuilder = $this->depInnerSaleMoney($sku,$start, $end);
-        $depShopSaleBuilder = $this->depShopSaleNum($sku,$start, $end);
-        $depShopSaleMoneyBuilder = $this->depShopSaleMoney($sku,$start, $end);
+//         $depShopSaleBuilder = $this->depShopSaleNum($sku,$start, $end);
+//         $depShopSaleMoneyBuilder = $this->depShopSaleMoney($sku,$start, $end);
         $depRefundBuilder = $this->depRefundNum($sku,$start, $end);
         $depSampleBuilder = $this->depSampleNum($sku,$start, $end);
         $depSampleMoneyBuilder = $this->depSampleMoney($sku,$start, $end);
         $depDestroyCountBuilder = $this->depDestroyCount($sku,$start, $end);
+        $jdOrderBuilder = $this->getJdOrderDepartment($sku,$start, $end);
 
         $result = DB::table('department_basic as db')->select(
                 'db.manager_id',
@@ -367,13 +368,13 @@ class SalesGoodsStatisticsController extends Controller
                 DB::raw("ub.realname as department_manager"),
                 DB::raw('ds.goods_num as sale_num'),
                 DB::raw('dis.goods_num as inner_num'),
-                DB::raw('dss.goods_num as shop_num'),
+                DB::raw('jd.goods_num as shop_num'),
                 DB::raw('dsp.goods_num as sample_num'),
                 DB::raw('drf.goods_num as ref_num'),
                 DB::raw('ddc.destroyNum as destroy_count'),
                 DB::raw('dsm.money as sale_money'),
                 DB::raw('dism.money*0.6 as inner_sale_money'),
-                DB::raw('dssm.money as shop_sale_money'),
+                DB::raw('jd.money as shop_sale_money'),
                 DB::raw('dspm.money as sample_sale_money')
 
             )->join('user_basic as ub','db.manager_id','=','ub.id')
@@ -385,10 +386,10 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depInnerSaleBuilder)
             ->leftJoin(DB::raw("({$depInnerSaleMoneyBuilder->toSql()}) as dism"),'db.id','=','dism.department_id')
             ->mergeBindings($depInnerSaleMoneyBuilder)
-            ->leftJoin(DB::raw("({$depShopSaleBuilder->toSql()}) as dss"),'db.id','=','dss.department_id')
-            ->mergeBindings($depShopSaleBuilder)
-            ->leftJoin(DB::raw("({$depShopSaleMoneyBuilder->toSql()}) as dssm"),'db.id','=','dssm.department_id')
-            ->mergeBindings($depShopSaleMoneyBuilder)
+//             ->leftJoin(DB::raw("({$depShopSaleBuilder->toSql()}) as dss"),'db.id','=','dss.department_id')
+//             ->mergeBindings($depShopSaleBuilder)
+//             ->leftJoin(DB::raw("({$depShopSaleMoneyBuilder->toSql()}) as dssm"),'db.id','=','dssm.department_id')
+//             ->mergeBindings($depShopSaleMoneyBuilder)
             ->leftJoin(DB::raw("({$depRefundBuilder->toSql()}) as drf"),'db.id','=','drf.department_id')
             ->mergeBindings($depRefundBuilder)
             ->leftJoin(DB::raw("({$depSampleBuilder->toSql()}) as dsp"),'db.id','=','dsp.department_id')
@@ -397,13 +398,15 @@ class SalesGoodsStatisticsController extends Controller
             ->mergeBindings($depSampleMoneyBuilder)
             ->leftJoin(DB::raw("({$depDestroyCountBuilder->toSql()}) as ddc"),'db.id','=','ddc.department_id')
             ->mergeBindings($depDestroyCountBuilder)
+            ->leftJoin(DB::raw("({$jdOrderBuilder->toSql()}) as jd"),'db.id','=','jd.department_id')
+            ->mergeBindings($jdOrderBuilder)
             ->where([
                 ['db.type',0]
                 // ['db.status',1]
             ])->where(function($query){
                 $query->where('ds.goods_num','<>',0)
                       ->orWhere('dis.goods_num','<>',0)
-                      ->orWhere('dss.goods_num','<>',0)
+                      ->orWhere('jd.goods_num','<>',0)
                       ->orWhere('dsp.goods_num','<>',0)
                       ->orWhere('drf.goods_num','<>',0)
                       ->orWhere('ddc.destroyNum','<>', 0);
@@ -518,6 +521,28 @@ class SalesGoodsStatisticsController extends Controller
             ->whereNull('order_basic.deleted_at')
             ->whereNull('order_goods.deleted_at')
             ->groupBy('department_id');
+    }
+    
+
+    
+    
+    private function getJdOrderDepartment($sku, $start, $end)
+    {
+        $builder = DB::table('jd_order_basic')
+        ->join('jd_order_goods','jd_order_basic.order_sn','=','jd_order_goods.order_sn')
+        ->select(DB::raw('sum(goods_num) as goods_num'),
+            DB::raw('sum(goods_num* goods_price) as money'),
+            'sku_sn',
+            'department_id')
+            ->where([
+                ['order_at', '>=', $start],
+                ['order_at', '<=', $end],
+                ['jd_order_goods.sku_sn','=', $sku]
+            ])->whereNull('jd_order_basic.deleted_at')
+            ->whereNull('jd_order_goods.deleted_at');
+            
+            
+        return $builder;
     }
 
     private function depShopSaleNum($sku,$start, $end)
