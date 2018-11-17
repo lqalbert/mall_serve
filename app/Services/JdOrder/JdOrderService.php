@@ -60,6 +60,8 @@ class JdOrderService
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
+                $order->setMatchState(false);
+                $order->save();
                 continue;
             }
         }
