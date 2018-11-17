@@ -18,7 +18,7 @@ class SalesPerformanceController extends Controller
         $pageSize = $request->input('pageSize', 20);
         $offset = ($request->input('page',1) -1) * $pageSize;
         
-        $orderField = $request->input('orderField','cus_count');
+        $orderField = $request->input('orderField','out_cus_cout');
         $orderWay  = $request->input('orderWay','desc');
         
         if($request->has('department_id')){
@@ -82,7 +82,7 @@ class SalesPerformanceController extends Controller
         })
         ;
         
-        $result = $allBuilder->paginate($pageSize);
+        $result = $allBuilder->orderBy($orderField, $orderWay)->paginate($pageSize);
         $items = $result->getCollection();
         
         return [
