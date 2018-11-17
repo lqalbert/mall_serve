@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JdOrderAddress extends Model
 {
-    use SoftDeletes;
+//     use SoftDeletes;
     
     protected $table = 'jd_order_address';
 
-    protected $dates = ['deleted_at'];
+//     protected $dates = ['deleted_at'];
 
     protected $hidden = [ 'updated_at','deleted_at'];
 

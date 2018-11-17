@@ -174,6 +174,10 @@ class Detail
         $this->save($entrepot, $products, $user, 'destroy_num');
     }
     
+    public function jdOrder(DistributionCenter $entrepot, $products, User $user, $dan=null)
+    {
+        $this->save($entrepot, $products, $user, 'jd_num', $dan=null);
+    }
     
     
     

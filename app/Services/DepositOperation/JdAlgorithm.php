@@ -81,6 +81,19 @@ class JdAlgorithm extends AbstractAlgorithm
     }
     
     /**
+     * 返还
+     * 如果是导入的订单 快递费是需要计算的
+     * 10  18
+     * 12
+     * 18
+     */
+    public function returnJdDeposit($amount, $freight)
+    {
+        //商品金额- 商品扣除 -仓储扣除 -京东扣除-运费扣除
+        return round($amount - $this->goodsDeposit($amount) - $this->entrepotDepositItem($amount) - $this->jdDeposit($amount) - $freight, 2);
+    }
+    
+    /**
      * 即时返还
      * depositdetail用的获取商品的扣除
      */

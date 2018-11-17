@@ -16,7 +16,7 @@
     <link href="/admin/static1.3.8/css/app.54c17c72b6dc0bfea0f71dda45b37bf2.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app"><link href="/admin/static1.3.7/css/app.e6bc265f60977a8d574c98936c34a461.css" rel="stylesheet">
+    <div id="app">
        
     </div>
 <!--     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->

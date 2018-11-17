@@ -44,7 +44,7 @@ class SalesPerformanceController extends Controller
         ->select(DB::raw('main_re.*'), 
             'sale_order.cus_count as sale_cus_count', 
             'sale_order.order_sum as all_pay2', // 销售金额
-            'sale_order.order_count as all_sale_count',// all_sale_count 成交单数
+            'sale_order.order_count as all_sale_count',// all_sale_count 成交单数 销售单数
             'sale_order.freight as sale_freight',
             'sale_order.book_freight as sale_book_freight',
             'inner_order.order_count as inner_count', //内购单数
@@ -75,9 +75,14 @@ class SalesPerformanceController extends Controller
 //         //赠品
         ->leftJoin(DB::raw("({$appendBuilder->toSql()}) as  append_"), "main_re.{$groupBy}",'=', "append_.{$groupBy}")
         ->mergeBindings($appendBuilder)
-        ->orderBy($orderField, $orderWay);
+        ->where(function($query){
+            $query->where('sale_order.order_count','<>',0)
+                ->orWhere('inner_order.order_sum','<>',0)
+                ->orWhere('jd_count','<>',0);
+        })
+        ;
         
-        $result = $allBuilder->paginate($pageSize);
+        $result = $allBuilder->orderBy($orderField, $orderWay)->paginate($pageSize);
         $items = $result->getCollection();
         
         return [
@@ -169,7 +174,7 @@ class SalesPerformanceController extends Controller
                    ->where([
                        ['order_at', '>=', $start],
                        ['order_at', '<=', $end]
-                   ])->groupBy($groupBy);
+                   ])->whereNull('deleted_at')->groupBy($groupBy);
         
                    
                    
@@ -262,6 +267,7 @@ class SalesPerformanceController extends Controller
             //            ->leftJoin('customer_contact','customer_contact.cus_id','=','db.cus_id')
         ->leftJoin('order_address','order_address.order_id','=','db.id')
         ->where($where)
+        ->whereNull('db.deleted_at')
         ->where([
             ['db.status','>', OrderBasic::UN_CHECKED],
             ['db.status','<', OrderBasic::ORDER_STATUS_7],

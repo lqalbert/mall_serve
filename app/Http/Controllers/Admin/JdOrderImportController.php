@@ -15,6 +15,12 @@ use App\Jobs\JdOrderMatchUser;
 use App\Jobs\JdOrderGoodsMinusInventory;
 use App\Models\CustomerContact;
 use App\Models\CustomerUser;
+use App\Console\Commands\JdOrderSave;
+use App\Services\JdOrder\JdOrderService;
+use App\Services\Inventory\InventoryService;
+use App\Services\DepositOperation\DepositOperationService;
+use App\Models\JdDepositDetail;
+use App\Alg\ModelCollection;
 
 class JdOrderImportController extends Controller
 {
@@ -83,7 +89,10 @@ class JdOrderImportController extends Controller
 	        
 	        $newData = [];
 	        foreach ($csvArr as $key => $value) {
-	            $newData[] = array_combine($titleArr, $value);
+	            //重复的不能导入 如果数据量多了必须改成队列的方式导入
+	           if (!$this->isAlreadyHave($value[0])) {
+	                $newData[] = array_combine($titleArr, $value);
+	           }
 	        }
 	        // dd($titleArr);
 	        // dd($newData);
@@ -105,6 +114,11 @@ class JdOrderImportController extends Controller
         },'gb2312')->convert('xls');//->toArray();*/
      
     }
+    
+    private function isAlreadyHave($order_sn)
+    {
+        return JdOrderBasic::select('id')->where('order_sn',$order_sn)->first();
+    }
 
     /**
      * [handleOrderDatas 对数据分组]
@@ -117,12 +131,13 @@ class JdOrderImportController extends Controller
         $orderBasic = [];
         $cusBasic = [];
         $orderAddress = [];
-        $this->flag = time();
+        $this->flag = Date('YmdHis');
         foreach ($s as $k => $v) {
+            $v['entrepot_id'] = $this->entrepot_id;
             $orderBasic[] = collect($v)->only(["order_sn","order_account","order_at","order_money",
                 "all_money","pay_money","pay_balance","status","type","remark","express_fee","pay_way",
                 "pay_confirm_at","end_at","order_source","order_channel","install_service","service_fee",
-                "is_brand","is_toplife"])->map(function($item,$key){
+                "is_brand","is_toplife",'entrepot_id'])->map(function($item,$key){
                     if($key=='order_at' || $key=='pay_confirm_at' || $key=='end_at'){
                         if(!empty($item)){
                             $item = date("Y-m-d H:i:s",strtotime($item));
@@ -275,10 +290,15 @@ class JdOrderImportController extends Controller
         if ($request->has('user_id')) {
             $model = $model->where('user_id', $request->input('user_id'));
         }
+        
+        $trash = $request->input('drash',0);
+        if ($trash == '1') {
+            $model = $model->withTrashed();
+        }
 
-        $result = $model->paginate($request->input('pageSize',15));
+        $result = $model->orderBy('id','desc')->paginate($request->input('pageSize',15));
         $collection = $result->getCollection();
-        $collection->load('goods','other','customer','address','department','group','user');
+        $collection->load('other','customer','address','department','group','user');
 
         $re = $collection->toArray();
 
@@ -378,35 +398,137 @@ class JdOrderImportController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function manualMatch(Request $request){
+    public function manualMatch(Request $request,JdOrderService $service){
         DB::beginTransaction();
         try {
-            $data = $request->all();
-            foreach ($data as $value) {
-                $cus = reset($value['customer']);
-                $cusCtModel = CustomerContact::where('phone',$cus['tel'])->first(['cus_id']);
-                
-                if(!empty($cusCtModel)){
-                    
-                    $cusUserl = CustomerUser::where('cus_id',$cusCtModel->cus_id)
-                                        ->first(['user_id','group_id','department_id'])->toArray();
-                    
-                    $res = JdOrderBasic::where([
-                                    ['order_sn','=',$cus['order_sn']],
-                                    ['flag','=',$cus['flag']]
-                                ])->update($cusUserl);
-                    if(!$res){
-                        throw new \Exception("匹配出错");
-                    }
-                }
+            $data = $request->except('ids');
+            $data['match_state'] = JdOrderBasic::MATCH_SUCCESS;
+            $res = JdOrderBasic::whereIn('id', $request->input('ids'))->update($data);
+            if(!$res){
+                throw new \Exception("设置失败");
             }
+            $orders = JdOrderBasic::whereIn('id', $request->input('ids'))->get();
+            $service->manuMatch($orders);
+            
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+//             DD($e);
             return  $this->error([], $e->getMessage());
         }
         return  $this->success([], "匹配完成");
     
+    }
+    
+    /**
+     * 退回库存 
+     */
+    private function backInventory(InventoryService $service, $id)
+    {
+        $order = JdOrderBasic::findOrFail($id);
+        if (!$order->isReturnInventory()) {
+            return $this->success([],'已经退回');
+        }
+        try {
+            DB::beginTransaction();
+            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn,false);
+            $order->setduceInventory(false);
+//             logger('[db]',[$order->is_deduce_inventory]);
+            $re = $order->save();
+            if (!$re) {
+                throw new \Exception('退回失败');
+            }
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->error([], $e->getMessage());
+        }
+        
+        return $this->success([]);
+    }
+    
+    /**
+     * 退回返还 
+     */
+    private function backDeposit(DepositOperationService $service, $id)
+    {
+        $order = JdOrderBasic::findOrFail($id);
+        if (!$order->isDepositReturn()) {
+            return $this->success([],'已经退回');
+        }
+        $service->subDeposit($order->department, $order->return_deposit, '退回返还 订单:JD'.$order->order_sn);
+        $order->setDepositReturn(false);
+        $order->return_deposit=0.00;
+        $order->save();
+        return $this->success([]);
+    }
+    
+    /**
+     * 取消匹配
+     * @param Request $request
+     */
+    public function cancelMatch(Request $request, JdOrderService $serve)
+    {
+        $orders = JdOrderBasic::findOrFail($request->input('ids'));
+        try {
+            $serve->cancleMatch($orders);
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
+    
+    /**
+     * 重新匹配
+     * @param Request $request
+     */
+    public function reMatch(Request $request, JdOrderService $serve)
+    {
+        $orders = JdOrderBasic::findOrFail($request->input('ids'));
+        try {
+            $serve->cancleMatch($orders);
+            $data = $request->except('ids');
+            $data['match_state'] = JdOrderBasic::MATCH_SUCCESS;
+            $res = JdOrderBasic::whereIn('id', $request->input('ids'))->update($data);
+            if(!$res){
+                throw new \Exception("设置失败");
+            }
+            $orders = JdOrderBasic::findOrFail($request->input('ids'));
+            $serve->manuMatch($orders);
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage());
+        }
+        return $this->success([]);
+    }
+    
+    public function delete(Request $request, $id)
+    {
+        $model = JdOrderBasic::where('id',$id)->select('order_sn','id')->first();
+        JdOrderAddress::where('order_sn', $model->order_sn)->delete();
+        JdOrderCustomer::where('order_sn', $model->order_sn)->delete();
+        JdOrderGoods::where('order_sn', $model->order_sn)->delete();
+        JdOrderOther::where('order_sn', $model->order_sn)->delete();
+        $model->delete();
+//         $re = JdOrderBasic::delete($id);
+        return $this->success([]);
+    }
+    
+    public function depositDetail($id)
+    {
+        $re = JdDepositDetail::where('order_id',$id)->get();
+        $re = ModelCollection::setAppends($re, ['type_text']);
+        return [
+            'items'=>$re,
+            'total'=>$re->count()
+        ];
+    }
+    
+    
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $re = JdOrderBasic::where('id',$id)->update($data);
+        return $this->success([]);
     }
 
 

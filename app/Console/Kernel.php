@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
         Commands\UpOldBookFreight::class,
         Commands\Deposit2::class,
         Commands\UpdateCustomerUser::class
+        Commands\JdOrderSave::class
     ];
 
     /**

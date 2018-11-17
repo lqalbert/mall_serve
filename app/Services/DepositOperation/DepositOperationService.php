@@ -82,7 +82,7 @@ class DepositOperationService{
 			if(!$re){
 				throw new \Exception('部门预充值添加失败');
 			}
-			$this->log->fill([
+			$log = $this->log->newInstance()->fill([
 			   'department_id'=> $department->id,
 			   'department_name'=> $department->name,
 			   'money' => $money,
@@ -91,7 +91,7 @@ class DepositOperationService{
 			    'action_type' =>  Deposit::ADD,
 			    'remark' => $remark
 			]);
-			$re = $this->log->save();
+			$re = $log->save();
 			if(!$re){
 			    throw new \Exception('部门预充值添加失败:日志失败');
 			}
@@ -116,7 +116,7 @@ class DepositOperationService{
 			if(!$re){
 				throw new \Exception('部门预充值返还失败');
 			}
-			$this->log->fill([
+			$log = $this->log->newInstance()->fill([
 			    'department_id'=> $department->id,
 			    'department_name'=> $department->name,
 			    'money' => $money,
@@ -125,7 +125,7 @@ class DepositOperationService{
 			    'action_type' =>  Deposit::TYPE_RETURN,
 			    'remark' => $remark
 			]);
-			$re = $this->log->save();
+			$re = $log->save();
 			if(!$re){
 			    throw new \Exception('部门预充值返还失败:日志失败');
 			}
@@ -156,7 +156,7 @@ class DepositOperationService{
 				throw new \Exception('部门预充值扣除失败');
 			}
 			
-			$this->log->fill([
+			$log = $this->log->newInstance()->fill([
 			    'department_id'=> $department->id,
 			    'department_name'=> $department->name,
 			    'money' => $money,
@@ -165,14 +165,17 @@ class DepositOperationService{
 			    'action_type' =>  Deposit::DEDUCTION,
 			    'remark' => $remark
 			]);
-			$re = $this->log->save();
+			
+			
+			
+			$re = $log->save();
 			if(!$re){
 			    throw new \Exception('部门预充值扣除失败:日志失败');
 			}
 			DB::commit();
 		} catch (\Exception $e) {
 			DB::rollback();
-			throw new \Exception($e->getMessage());
+			throw $e;
 		}
 	}
 
