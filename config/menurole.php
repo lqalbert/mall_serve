@@ -24,8 +24,8 @@ return [
         'SalesPerformance',
         'SalesQuantization',
         'http://ws.pulata.com.cn:8888/login',
-        'JdOrderBasic'
-//         'EarnestMoney'
+        'JdOrderBasic',
+         'EarnestMoney'
     ],
     'human-resources' => [
       

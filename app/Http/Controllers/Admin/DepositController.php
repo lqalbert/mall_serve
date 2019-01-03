@@ -29,14 +29,16 @@ class DepositController extends Controller
     	if($request->has('department_id')){
             $where[]=['department_id','=',$request->input('department_id')];
         }
-        
-        if ($request->has('start') && $request->has('end')) {
-            $where[]=['charge_time','>=',$request->input('start')];
-            $where[]=['charge_time','<=',$request->input('end')];
+        if($request->has('type_text')){
+            $where[]=['action_type','=',$request->input('type_text')];
         }
         
-        
-        
+        if ($request->has('start') && $request->has('end')) {
+            $where[]=['created_at','>=',$request->input('start')];
+            $end = date("Y-m-d",strtotime("+1 day",strtotime($request->input('end'))));
+            $where[]=['created_at','<=',$end];
+        }
+
         $page = Deposit::where($where)->orderBy('id', 'desc')->paginate($request->input('pageSize', 20));
         $collection = $page->getCollection();
         if ($request->has('append')) {

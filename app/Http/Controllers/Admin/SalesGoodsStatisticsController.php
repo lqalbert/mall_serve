@@ -46,72 +46,89 @@ class SalesGoodsStatisticsController extends Controller
         $jdBuilder = $this->getJdOrderStuff($start, $end);
 
         $result = DB::table('inventory_system as iso')->select(
-                        'iso.sku_sn','iso.goods_name',
-                        DB::raw('iso.produce_in as produce_in_total'),
-                        DB::raw('iso.entrepot_count as saleable_count'),
-                        DB::raw('sale.goods_num as sale_num'),
-                        DB::raw("inven.goods_num as invent_num"),
-                        DB::raw('inner_sale.goods_num as inner_num'),
-                        DB::raw('jd.goods_num as shop_num'),
-                        DB::raw('sample.goods_num as sample_num'),
-                        DB::raw('refu.goods_num as ref_num'),
-                        // DB::raw('inven.goods_num as invent_num'),
-                        DB::raw('sm.money as sale_money'),
-                        DB::raw('ism.money*0.6 as inner_sale_money'),
-                        DB::raw('jd.money as shop_sale_money'),
-                        DB::raw('spsm.money as sample_sale_money'),
-                        DB::raw('dc.destroyNum as destroy_count')
-                    )
-                    ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
-                    ->mergeBindings($inventoryBuilder)
-                    ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
-                    ->mergeBindings($saleBuilder)
-                    ->leftJoin(DB::raw("({$innerSaleBuilder->toSql()}) as inner_sale"),'iso.sku_sn','=','inner_sale.sku_sn')
-                    ->mergeBindings($innerSaleBuilder)
+            'iso.sku_sn','iso.goods_name',
+            DB::raw('iso.produce_in as produce_in_total'),
+            DB::raw('iso.saleable_count as saleable_count'),
+            //DB::raw('iso.entrepot_count as saleable_count'),
+            DB::raw('sale.goods_num as sale_num'),
+            DB::raw("inven.goods_num as invent_num"),
+            DB::raw('inner_sale.goods_num as inner_num'),
+            DB::raw('jd.goods_num as shop_num'),
+            DB::raw('sample.goods_num as sample_num'),
+            DB::raw('refu.goods_num as ref_num'),
+            // DB::raw('inven.goods_num as invent_num'),
+            DB::raw('sm.money as sale_money'),
+            DB::raw('ism.money*0.6 as inner_sale_money'),
+            DB::raw('jd.money as shop_sale_money'),
+            DB::raw('spsm.money as sample_sale_money'),
+            DB::raw('dc.destroyNum as destroy_count')
+        )
+            ->leftJoin(DB::raw("({$inventoryBuilder->toSql()}) as inven"),'iso.sku_sn','=','inven.sku_sn')
+            ->mergeBindings($inventoryBuilder)
+            ->leftJoin(DB::raw("({$saleBuilder->toSql()}) as sale"), 'iso.sku_sn','=','sale.sku_sn')
+            ->mergeBindings($saleBuilder)
+            ->leftJoin(DB::raw("({$innerSaleBuilder->toSql()}) as inner_sale"),'iso.sku_sn','=','inner_sale.sku_sn')
+            ->mergeBindings($innerSaleBuilder)
 //                     ->leftJoin(DB::raw("({$shopSaleBuilder->toSql()}) as shop_sale"),'iso.sku_sn','=','shop_sale.sku_sn')
 //                     ->mergeBindings($shopSaleBuilder)
-                    ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'iso.sku_sn','=','refu.sku_sn')
-                    ->mergeBindings($refundBuilder)
-                    ->leftJoin(DB::raw("({$sampleBuilder->toSql()}) as sample"), 'iso.sku_sn','=','sample.sku_sn')
-                    ->mergeBindings($sampleBuilder)
-                    ->leftJoin(DB::raw("({$saleMoneyBuilder->toSql()}) as sm"),'iso.sku_sn','=','sm.sku_sn')
-                    ->mergeBindings($saleMoneyBuilder)
-                    ->leftJoin(DB::raw("({$innerSaleMoneyBuilder->toSql()}) as ism"),'iso.sku_sn','=','ism.sku_sn')
-                    ->mergeBindings($innerSaleMoneyBuilder)
+            ->leftJoin(DB::raw("({$refundBuilder->toSql()}) as refu"),'iso.sku_sn','=','refu.sku_sn')
+            ->mergeBindings($refundBuilder)
+            ->leftJoin(DB::raw("({$sampleBuilder->toSql()}) as sample"), 'iso.sku_sn','=','sample.sku_sn')
+            ->mergeBindings($sampleBuilder)
+            ->leftJoin(DB::raw("({$saleMoneyBuilder->toSql()}) as sm"),'iso.sku_sn','=','sm.sku_sn')
+            ->mergeBindings($saleMoneyBuilder)
+            ->leftJoin(DB::raw("({$innerSaleMoneyBuilder->toSql()}) as ism"),'iso.sku_sn','=','ism.sku_sn')
+            ->mergeBindings($innerSaleMoneyBuilder)
 //                     ->leftJoin(DB::raw("({$shopSaleMoneyBuilder->toSql()}) as ssm"),'iso.sku_sn','=','ssm.sku_sn')
 //                     ->mergeBindings($shopSaleMoneyBuilder)
-                    ->leftJoin(DB::raw("({$sampleSaleMoneyBuilder->toSql()}) as spsm"),'iso.sku_sn','=','spsm.sku_sn')
-                    ->mergeBindings($sampleSaleMoneyBuilder)
-                    ->leftJoin(DB::raw("({$destroyCount->toSql()}) as dc"),'iso.sku_sn','=','dc.sku_sn')
-                    ->mergeBindings($destroyCount)
-                    ->leftJoin(DB::raw("({$jdBuilder->toSql()}) as jd"), 'iso.sku_sn','=','jd.sku_sn')
-                    ->mergeBindings($jdBuilder)
-                    ->where($where)->orderBy($orderField,$orderWay)
-                    ->paginate($pageSize);
+            ->leftJoin(DB::raw("({$sampleSaleMoneyBuilder->toSql()}) as spsm"),'iso.sku_sn','=','spsm.sku_sn')
+            ->mergeBindings($sampleSaleMoneyBuilder)
+            ->leftJoin(DB::raw("({$destroyCount->toSql()}) as dc"),'iso.sku_sn','=','dc.sku_sn')
+            ->mergeBindings($destroyCount)
+            ->leftJoin(DB::raw("({$jdBuilder->toSql()}) as jd"), 'iso.sku_sn','=','jd.sku_sn')
+            ->mergeBindings($jdBuilder)
+            ->where($where)->orderBy($orderField,$orderWay)
+            ->paginate($pageSize);
 
         return [
             'items'=>$result->items(),
             'total'=>$result->total()
         ];
     }
-    
+
     /**
      * 累计入库总数
      */
     private function inInventory($start, $end)
     {
-        return DB::table('actual_delivery_goods')->select(
-            DB::raw("sum(`actual_goods_num`) as goods_num"),
+        return DB::table('purchase_order_goods')->select(
+            DB::raw("sum(`goods_purchase_num`) as goods_num"),
             'sku_sn')
-        // ->where([
-        //     ['created_at',">=", $start],
-        //     ['created_at',"<=", $end]
-        // ])
-        ->whereNull('deleted_at')
-        ->groupBy('sku_sn'); 
+//         ->where([
+//             ['created_at',">=", $start],
+//             ['created_at',"<=", $end]
+//         ])
+            ->whereNull('deleted_at')
+            ->groupBy('sku_sn');
     }
-    
-    
+
+    /*
+        private function inInventory($start, $end)
+        {
+            return DB::table('actual_delivery_goods')->select(
+                DB::raw("sum(`actual_goods_num`) as goods_num"),
+                'sku_sn')
+            // ->where([
+            //     ['created_at',">=", $start],
+            //     ['created_at',"<=", $end]
+            // ])
+                ->where('sign_status',1)
+            ->whereNull('deleted_at')
+            ->groupBy('sku_sn');
+        }
+    */
+
+
     /**
      * 本次销售数量 销售订单
      * @param unknown $start
@@ -123,20 +140,20 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
-            )
-        ->join('order_goods','order_basic.id','=','order_goods.order_id')
-        ->where([
-            ['order_basic.status','>=',1],
-            ['order_basic.status','<=',6],
-            ['order_basic.type','=',3], //销售订单
-            ['order_basic.created_at',">=", $start],
-            ['order_basic.created_at',"<=", $end],
-            ['order_goods.status','<>',3]
-        ])->whereNull('order_basic.deleted_at')
-        ->whereNull('order_goods.deleted_at')
-        ->groupBy('sku_sn');
+        )
+            ->join('order_goods','order_basic.id','=','order_goods.order_id')
+            ->where([
+                ['order_basic.status','>=',1],
+                ['order_basic.status','<=',6],
+                ['order_basic.type','=',3], //销售订单
+                ['order_basic.created_at',">=", $start],
+                ['order_basic.created_at',"<=", $end],
+                ['order_goods.status','<>',3]
+            ])->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')
+            ->groupBy('sku_sn');
     }
-    
+
     /**
      * [saleMoney 销售订单金额]
      * @param  [type] $start [description]
@@ -145,8 +162,8 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function saleMoney($start, $end){
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
                 ['order_basic.status','>=',1],
                 ['order_basic.status','<=',6],
@@ -171,7 +188,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
-            )
+        )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
                 ['order_basic.status','>=',1],
@@ -185,7 +202,7 @@ class SalesGoodsStatisticsController extends Controller
             ->whereNull('order_goods.deleted_at')
             ->groupBy('sku_sn');
     }
-    
+
     /**
      * [innerSaleMoney 内购金额]
      * @param  [type] $start [description]
@@ -194,8 +211,8 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function innerSaleMoney($start,$end){
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
                 ['order_basic.status','>=',1],
                 ['order_basic.status','<=',6],
@@ -208,7 +225,7 @@ class SalesGoodsStatisticsController extends Controller
             ->whereNull('order_goods.deleted_at')
             ->groupBy('sku_sn');
     }
-    
+
     /**
      * 京东订单  原来的作废
      * @param unknown $groupBy
@@ -220,17 +237,17 @@ class SalesGoodsStatisticsController extends Controller
     private function getJdOrderStuff($start, $end)
     {
         $builder = DB::table('jd_order_basic')
-                   ->join('jd_order_goods','jd_order_basic.order_sn','=','jd_order_goods.order_sn')
-                   ->select(DB::raw('sum(goods_num) as goods_num'),
-                       DB::raw('sum(goods_num* goods_price) as money'),
-                       'sku_sn')
-                   ->where([
-                       ['order_at', '>=', $start],
-                       ['order_at', '<=', $end]
-                   ])->whereNull('jd_order_basic.deleted_at')
-                   ->whereNull('jd_order_goods.deleted_at')
-                   ->groupBy('sku_sn');
-        
+            ->join('jd_order_goods','jd_order_basic.order_sn','=','jd_order_goods.order_sn')
+            ->select(DB::raw('sum(goods_num) as goods_num'),
+                DB::raw('sum(goods_num* goods_price) as money'),
+                'sku_sn')
+            ->where([
+                ['order_at', '>=', $start],
+                ['order_at', '<=', $end]
+            ])->whereNull('jd_order_basic.deleted_at')
+            ->whereNull('jd_order_goods.deleted_at')
+            ->groupBy('sku_sn');
+
         return $builder;
     }
 
@@ -239,7 +256,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
-            )
+        )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
                 ['order_basic.status','>=',1],
@@ -253,7 +270,7 @@ class SalesGoodsStatisticsController extends Controller
             ->whereNull('order_goods.deleted_at')
             ->groupBy('sku_sn');
     }
-    
+
     /**
      * [shopSaleMoney 商城金额]
      * @param  [type] $start [description]
@@ -262,8 +279,8 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function shopSaleMoney($start, $end){
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where([
                 ['order_basic.status','>=',1],
                 ['order_basic.status','<=',6],
@@ -276,13 +293,13 @@ class SalesGoodsStatisticsController extends Controller
             ->whereNull('order_goods.deleted_at')
             ->groupBy('sku_sn');
     }
-    
+
     private function refundNum($start, $end)
     {
         return DB::table('order_after')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
-            )
+        )
             ->join('order_goods','order_after.order_id','=','order_goods.order_id')
             ->where([
                 // ['order_basic.status','>=',1],
@@ -292,18 +309,18 @@ class SalesGoodsStatisticsController extends Controller
                 ['order_goods.status','=',1]
             ])->groupBy('sku_sn');
     }
-    
+
     /**
      * 样品
      * @param unknown $start
      * @param unknown $end
      */
-    private function sampleNum($start, $end) 
+    private function sampleNum($start, $end)
     {
         return DB::table('sample_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn'
-            )
+        )
             ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
             ->where([
                 ['sample_basic.check_status',1],
@@ -320,8 +337,8 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function sampleSaleMoney($start,$end){
         return DB::table('sample_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
-            )->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn'
+        )->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
             ->where([
                 ['sample_basic.check_status',1],
                 ['sample_basic.check_time',">=", $start],
@@ -336,7 +353,7 @@ class SalesGoodsStatisticsController extends Controller
      */
     private function destroyCount($start,$end){
         return DB::table('order_goods')->select(
-                DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn')
+            DB::raw("sum(`destroy_num`) as destroyNum"),'sku_sn')
             ->where([
                 ['order_goods.destroy_time',">=", $start],
                 ['order_goods.destroy_time',"<=", $end],
@@ -363,21 +380,21 @@ class SalesGoodsStatisticsController extends Controller
         $jdOrderBuilder = $this->getJdOrderDepartment($sku,$start, $end);
 
         $result = DB::table('department_basic as db')->select(
-                'db.manager_id',
-                DB::raw("db.name as department_name"),
-                DB::raw("ub.realname as department_manager"),
-                DB::raw('ds.goods_num as sale_num'),
-                DB::raw('dis.goods_num as inner_num'),
-                DB::raw('jd.goods_num as shop_num'),
-                DB::raw('dsp.goods_num as sample_num'),
-                DB::raw('drf.goods_num as ref_num'),
-                DB::raw('ddc.destroyNum as destroy_count'),
-                DB::raw('dsm.money as sale_money'),
-                DB::raw('dism.money*0.6 as inner_sale_money'),
-                DB::raw('jd.money as shop_sale_money'),
-                DB::raw('dspm.money as sample_sale_money')
+            'db.manager_id',
+            DB::raw("db.name as department_name"),
+            DB::raw("ub.realname as department_manager"),
+            DB::raw('ds.goods_num as sale_num'),
+            DB::raw('dis.goods_num as inner_num'),
+            DB::raw('jd.goods_num as shop_num'),
+            DB::raw('dsp.goods_num as sample_num'),
+            DB::raw('drf.goods_num as ref_num'),
+            DB::raw('ddc.destroyNum as destroy_count'),
+            DB::raw('dsm.money as sale_money'),
+            DB::raw('dism.money*0.6 as inner_sale_money'),
+            DB::raw('jd.money as shop_sale_money'),
+            DB::raw('dspm.money as sample_sale_money')
 
-            )->join('user_basic as ub','db.manager_id','=','ub.id')
+        )->join('user_basic as ub','db.manager_id','=','ub.id')
             ->leftJoin(DB::raw("({$depSaleBuilder->toSql()}) as ds"),'db.id','=','ds.department_id')
             ->mergeBindings($depSaleBuilder)
             ->leftJoin(DB::raw("({$depSaleMoneyBuilder->toSql()}) as dsm"),'db.id','=','dsm.department_id')
@@ -405,11 +422,11 @@ class SalesGoodsStatisticsController extends Controller
                 // ['db.status',1]
             ])->where(function($query){
                 $query->where('ds.goods_num','<>',0)
-                      ->orWhere('dis.goods_num','<>',0)
-                      ->orWhere('jd.goods_num','<>',0)
-                      ->orWhere('dsp.goods_num','<>',0)
-                      ->orWhere('drf.goods_num','<>',0)
-                      ->orWhere('ddc.destroyNum','<>', 0);
+                    ->orWhere('dis.goods_num','<>',0)
+                    ->orWhere('jd.goods_num','<>',0)
+                    ->orWhere('dsp.goods_num','<>',0)
+                    ->orWhere('drf.goods_num','<>',0)
+                    ->orWhere('ddc.destroyNum','<>', 0);
             })->orderBy($orderField,$orderWay)->paginate(100);
 
         return [
@@ -440,13 +457,13 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
-            )
-        ->join('order_goods','order_basic.id','=','order_goods.order_id')
-        ->where($where)
-        ->whereNull('order_basic.deleted_at')
-        ->whereNull('order_goods.deleted_at')->groupBy('department_id');
+        )
+            ->join('order_goods','order_basic.id','=','order_goods.order_id')
+            ->where($where)
+            ->whereNull('order_basic.deleted_at')
+            ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
-    
+
     /**
      * [saleMoney 销售订单金额]
      * @param  [type] $start [description]
@@ -464,8 +481,8 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.sku_sn',$sku]
         ];
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)
             ->whereNull('order_basic.deleted_at')
             ->whereNull('order_goods.deleted_at')->groupBy('department_id');
@@ -491,7 +508,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
-            )
+        )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)
             ->whereNull('order_basic.deleted_at')
@@ -515,33 +532,33 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.sku_sn',$sku]
         ];
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)
             ->whereNull('order_basic.deleted_at')
             ->whereNull('order_goods.deleted_at')
             ->groupBy('department_id');
     }
-    
 
-    
-    
+
+
+
     private function getJdOrderDepartment($sku, $start, $end)
     {
         $builder = DB::table('jd_order_basic')
-        ->join('jd_order_goods','jd_order_basic.order_sn','=','jd_order_goods.order_sn')
-        ->select(DB::raw('sum(goods_num) as goods_num'),
-            DB::raw('sum(goods_num* goods_price) as money'),
-            'sku_sn',
-            'department_id')
+            ->join('jd_order_goods','jd_order_basic.order_sn','=','jd_order_goods.order_sn')
+            ->select(DB::raw('sum(goods_num) as goods_num'),
+                DB::raw('sum(goods_num* goods_price) as money'),
+                'sku_sn',
+                'department_id')
             ->where([
                 ['order_at', '>=', $start],
                 ['order_at', '<=', $end],
                 ['jd_order_goods.sku_sn','=', $sku]
             ])->whereNull('jd_order_basic.deleted_at')
             ->whereNull('jd_order_goods.deleted_at');
-            
-            
+
+
         return $builder;
     }
 
@@ -559,13 +576,13 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
-            )
+        )
             ->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)
             ->whereNull('order_basic.deleted_at')
             ->whereNull('order_goods.deleted_at')->groupBy('department_id');
     }
-    
+
     /**
      * [shopSaleMoney 商城金额]
      * @param  [type] $start [description]
@@ -583,8 +600,8 @@ class SalesGoodsStatisticsController extends Controller
             ['order_goods.sku_sn',$sku]
         ];
         return DB::table('order_basic')->select(
-                DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
-            )->join('order_goods','order_basic.id','=','order_goods.order_id')
+            DB::raw("sum(`goods_number`*`price`) as money"),'sku_sn','department_id'
+        )->join('order_goods','order_basic.id','=','order_goods.order_id')
             ->where($where)
             ->whereNull('order_basic.deleted_at')
             ->whereNull('order_goods.deleted_at')
@@ -610,7 +627,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('order_after')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
-            )
+        )
             ->join('order_basic','order_after.order_id','=','order_basic.id')
             ->join('order_goods','order_after.order_id','=','order_goods.order_id')
             ->where($where)->whereNull('order_basic.deleted_at')->groupBy('department_id');
@@ -621,7 +638,7 @@ class SalesGoodsStatisticsController extends Controller
      * @param unknown $start
      * @param unknown $end
      */
-    private function depSampleNum($sku,$start, $end) 
+    private function depSampleNum($sku,$start, $end)
     {
         $where = [
             ['sample_basic.check_status',1],
@@ -632,7 +649,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('sample_basic')->select(
             DB::raw("sum(`goods_number`) as goods_num"),
             'sku_sn','department_id'
-            )
+        )
             ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
             ->where($where)->groupBy('department_id');
     }
@@ -642,7 +659,7 @@ class SalesGoodsStatisticsController extends Controller
      * @param unknown $start
      * @param unknown $end
      */
-    private function depSampleMoney($sku,$start, $end) 
+    private function depSampleMoney($sku,$start, $end)
     {
         $where = [
             ['sample_basic.check_status',1],
@@ -653,7 +670,7 @@ class SalesGoodsStatisticsController extends Controller
         return DB::table('sample_basic')->select(
             DB::raw("sum(`goods_number`*`price`) as money"),
             'sku_sn','department_id'
-            )
+        )
             ->join('sample_goods','sample_basic.id','=','sample_goods.sample_id')
             ->where($where)->groupBy('department_id');
     }
@@ -758,22 +775,22 @@ class SalesGoodsStatisticsController extends Controller
                 'invent_num','sale_money','inner_sale_money',
                 'shop_sale_money','sample_sale_money','produce_in_total'])->toArray();
             // $value['destroy_count']="暂无";
-            
+
             $sku = $value['sku_sn'];
             array_push($arr, $value);
             $depGoods = $this->getDepSaleGoods($request,$sku);
             foreach ($depGoods['items'] as $n => &$v) {
                 $v = collect($v)->toArray();
                 $v = collect($v)->except([
-                'manager_id','department_manager','sale_money',
-                'inner_sale_money','shop_sale_money','sample_sale_money'])->toArray();
+                    'manager_id','department_manager','sale_money',
+                    'inner_sale_money','shop_sale_money','sample_sale_money'])->toArray();
 
                 array_unshift($v,'');
                 // array_splice($v,-1,0,['sample_num'=>"暂无"]);
                 // $v['destroy_count']="暂无";
                 array_push($arr,$v);
             }
-            
+
             unset($v);
         }
         unset($value);
