@@ -409,7 +409,6 @@ class JdOrderImportController extends Controller
             }
             $orders = JdOrderBasic::whereIn('id', $request->input('ids'))->get();
             $service->manuMatch($orders);
-            
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();

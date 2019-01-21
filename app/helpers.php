@@ -109,3 +109,13 @@ if (!function_exists('setreturn')) {
     }
 }
 
+/**
+ * 打印输出，可用于调试
+ */
+function pr($var)
+{
+    $template = PHP_SAPI !== 'cli' ? '<pre>%s</pre>' : "\n%s\n";
+    printf($template, print_r($var, true));
+}
+
+
