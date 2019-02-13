@@ -476,10 +476,11 @@ class JdOrderImportController extends Controller
         }
         return $this->success([]);
     }
-    
+
     /**
      * 重新匹配
      * @param Request $request
+     * @return array
      */
     public function reMatch(Request $request, JdOrderService $serve)
     {

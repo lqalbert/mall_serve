@@ -3,6 +3,7 @@ namespace App\Services\JdOrder;
 
 use App\Models\JdOrderBasic;
 use App\Models\CustomerContact;
+use App\Models\CustomerBasic;
 use App\models\DeliveryAddress;
 use App\Services\Inventory\InventoryService;
 use App\Services\DepositOperation\DepositAppLogicService;
@@ -50,7 +51,7 @@ class JdOrderService
                      $addressModel = $order->address;
                      //计算账面运费
                      $order->book_freight = $this->calculateBookFreight($addressModel->address);
-                      $order->save();
+//                      $order->save();
                      //返还
                      $this->depositService->jdReturn($order);
                 } else {
@@ -104,7 +105,7 @@ class JdOrderService
         }
         try {
             DB::beginTransaction();
-            $service->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn,false);
+            $this->inventoryService->jdOrder($order->entrepot, $order->goods, auth()->user(), $order->order_sn,false);
             $order->setduceInventory(false);
             //             logger('[db]',[$order->is_deduce_inventory]);
             $re = $order->save();
@@ -182,24 +183,54 @@ class JdOrderService
         
         //                     $order->save();
         //返还
-        if (!$order->isDepositReturn()) {
+        /*if (!$order->isDepositReturn()) {
             $this->depositService->jdReturn($order);
-        }
+        }*/
         
     }
     
     private function matchOrderEmployee(JdOrderBasic $model)
     {
-        $JdCustoemr = $model->customer;
+
+        /*
+         * 手动添加京东接收相关表的数据'customer_user','customer_contact','customer_basic','delivery_address'
+         * */
+        $res = DB::table('user_basic')->where('realname','京东接收')->first();
+        $res = json_decode( json_encode( $res),true);
+        $JDCustomer = $model->customer;
+        //在customer_contact表中查询出没有数据的用户ID，并添加到该表中
+        $re = CustomerContact::where('phone', $JDCustomer->tel)->first(['cus_id']);
+        $readdressModel = DeliveryAddress::where('phone', $JDCustomer->tel)
+            ->orWhere('fixed_telephone', $JDCustomer->tel)
+            ->first(['cus_id']);
+        if(!$re && !$readdressModel){
+            try{
+                DB::beginTransaction();
+                $id = DB::table('customer_basic')->insertGetId(['name'=>$JDCustomer->cus_name,'age'=>28,'type'=>'V']);
+                $res1 = DB::table('customer_contact')->insert(['cus_id'=>$id,'phone'=>$JDCustomer->tel]);
+
+                $res2 = DB::table('customer_user')->insert(
+                    ['cus_id'=>$id,'user_id'=>$res['id'],'type'=>0,'group_id'=>$res['group_id'],'department_id'=>$res['department_id'],'user_name'=>$res['realname'],'group_name'=>'京东接收组','department_name'=>'京东专营部']
+                );
+                $address = DB::table('jd_order_address')->where('tel',$JDCustomer->tel)->first();
+                $address = json_decode( json_encode( $address),true);
+                $res3 = DB::table('delivery_addresses')->insert(['cus_id'=>$id,'name'=>$address['cus_name'],'phone'=>$address['tel'],'zip_code'=>450000,'address'=>$address['address']]);
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollback();
+                throw $e;
+            }
+        }
+
         //查看联系方式
-        $cusCtModel = CustomerContact::where('phone', $JdCustoemr->tel)->first(['cus_id']);
+        $cusCtModel = CustomerContact::where('phone', $JDCustomer->tel)->first(['cus_id']);
         if($cusCtModel){ //能匹配
             $this->setOrderEmployee($model, $cusCtModel->cus_id);
             return true;
         } else { //不能
             //查看收货地址
-            $readdressModel = DeliveryAddress::where('phone', $JdCustoemr->tel)
-                                ->orWhere('fixed_telephone', $JdCustoemr->tel)
+            $readdressModel = DeliveryAddress::where('phone', $JDCustomer->tel)
+                                ->orWhere('fixed_telephone', $JDCustomer->tel)
                                 ->first(['cus_id']);
             if ($readdressModel) { //能匹配
                 $this->setOrderEmployee($model, $readdressModel->cus_id);
@@ -217,7 +248,7 @@ class JdOrderService
      */
     private function setOrderEmployee(JdOrderBasic $model ,$cus_id)
     {
-        
+
         $cusUserModel = CustomerUser::where('cus_id', $cus_id)->select('user_id','group_id','department_id','cus_id')->first();
         $cusUser = $cusUserModel->toArray();
         $cusUser['cus_id'] = $cus_id;

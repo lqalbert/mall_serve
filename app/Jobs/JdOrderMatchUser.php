@@ -47,7 +47,7 @@ class JdOrderMatchUser implements ShouldQueue
      */
       public function handle()
       {
-          $orders = JdOrderBasic::where('flag', $this->flag)->get();
+          $orders = JdOrderBasic::where('flag', $this->flag)->get();//jd_order_basic
           $this->jdService->match($orders);
           $this->updateMinusStatus(JdOrderCustomer::MATCHED);
       }

@@ -71,6 +71,10 @@ class Role extends EntrustRole
         [
             'name' => 'finance',
             'display_name' => '财务总监'
+        ],
+        [
+            'name' => 'nurse-teacher',
+            'display_name' => '护理老师'
         ]
         
     ];
