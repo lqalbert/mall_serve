@@ -250,8 +250,15 @@ Route::group($adminGroup, function(){
     Route::put('/jd-order-list/{id}','JdOrderImportController@update');
     Route::put('/jd-order-cancel','JdOrderImportController@cancelMatch');
     Route::put('/jd-re-match','JdOrderImportController@reMatch');
-    
     Route::get('/jd-order-goods', 'JdOrderGoodsController@index');
+    //护理方案
+    Route::resource('/efficacy', 'EfficacyController');
+    Route::get('/efficacy-deposit-detail/{plan_id}', 'EfficacyController@depositDetail');
+    Route::match(['get', 'post'],'/efficacy-detail', 'EfficacyController@efficacyDetail');
+    Route::match(['get', 'post'],'/efficacy-plan', 'EfficacyController@efficacyPlan');
+    Route::match(['get', 'post'],'/addOrder', 'EfficacyController@addOrder');
+    Route::resource('/personal-care', 'PersonalCareController');
+    Route::get('/personal-care-show/{id}', 'PersonalCareController@showCare');
 });
 
 

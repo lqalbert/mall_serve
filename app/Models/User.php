@@ -151,6 +151,7 @@ class User extends Authenticatable
     public function group(){
     	return $this->belongsTo('App\Models\Group', 'group_id')->select(['id','name']);
     }
+
     
     public function roles(){
     	return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');

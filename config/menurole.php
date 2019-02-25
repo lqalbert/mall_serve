@@ -197,7 +197,9 @@ return [
         'AccountSettings',
         'SampleApplication',
     ],
-    
+    'nurse-teacher'=>[
+        'Efficacy'
+    ],
     // 隐藏的角色 不起作用
     'group-member' => [],
     'department-manager' => [],

@@ -320,5 +320,10 @@ return [
             'icon' => null,
             'index' => 'ImportJdOrder'
         ],
+        [
+            'text'=>'护理方案',
+            'icon'=>null,
+            'index'=>'Efficacy'
+        ]
 
 ];

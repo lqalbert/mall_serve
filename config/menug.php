@@ -69,7 +69,7 @@ return [
 			    'text' => '统计报表',
 			    'icon' => null,
 			    'subIndex'=>['SalesPerformance','SalesQuantization','SalesGoodsStatistics']
-		]		,
+		],
         [
 			    'text' => '问卷管理',
 			    'icon' => null,
@@ -80,4 +80,9 @@ return [
 //                 'icon' => null,
 //                 'subIndex' => []
 //         ]
+        [
+            'text' => '护理方案',
+            'icon' => null,
+            'subIndex' => ['Efficacy']
+        ]
 ];

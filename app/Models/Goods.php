@@ -43,7 +43,8 @@ class Goods extends Model implements GoodsContracts
         'bubble_bag',
         'specifications',
         'combo',
-        'is_appendage'
+        'is_appendage',
+        'efficacy'
     ];
     
     //多对多
