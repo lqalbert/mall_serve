@@ -15,6 +15,7 @@ use App\Events\AddOrderOperationLog;
 use App\Models\OrderGoods;
 use App\Models\OrderAddress;
 use App\Models\GoodsDetails;
+use App\Models\CombinationGoods;
 
 class EfficacyController extends Controller
 {
@@ -211,6 +212,7 @@ class EfficacyController extends Controller
             })->toArray();
             $val->efficacy = $res[0]['efficacy'];
             $val->realname = $res[0]['goods_name'];
+            $val->sku_sn = $res[0]['sku_sn'];
             $newRe[$key] = $val;
         }
         return $newRe;
@@ -247,7 +249,7 @@ class EfficacyController extends Controller
     public function efficacyPlan(Request $request)
     {
         $arr = $request->all();
-        $this->model = $this->model->with('combinationGoods')->orderBy('id','desc');
+        $this->model = $this->model->with('CombinationGoods')->orderBy('id','desc');
         $result = $this->model->where('plan_id',$arr['plan_id'])->paginate(100);
         $collection = $result->getCollection();
         if ($request->has('appends')) {
