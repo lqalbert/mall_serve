@@ -33,8 +33,7 @@
     <script type="text/javascript" src="/admin/static1.4.1/js/babel-polyfill.ddf2a3b1d5348980e88f.js"></script>--}}
 
 
-
-    <script type="text/javascript" src="/admin/static1.5.0/js/manifest.265d66add338631da4d3.js"></script>
+    <script type="text/javascript" src="/admin/static1.5.0/js/manifest.1b7a5bbca1e5bccc896b.js"></script>
     <script type="text/javascript" src="/admin/static1.5.0/js/vendor.09779a754997a4d9e768.js"></script>
     <script type="text/javascript" src="/admin/static1.5.0/js/app.01335df9e6f5b12b256e.js"></script>
     <script type="text/javascript" src="/admin/static1.5.0/js/babel-polyfill.fa745b68c4aa8fb573ea.js"></script>
